@@ -1,5 +1,10 @@
 <?php
 /* @var $this yii\web\View */
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model \common\models\LoginForm */
+
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
 ?>
 <div class="site-banner">
     <div class="banner-overlay"></div>
@@ -37,31 +42,15 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade active in" id="signup">
-                                <form id="signup">
-                                    <div class="form-group">
-                                        <label>Username</label>
-                                        <input type="text" class="form-control" id="first_name" required="" data-validation-required-message="Please enter your name." autocomplete="off">
-                                        <div class="search_icon"><span class="ti-user"></span></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label> Email </label>
-                                        <input type="email" class="form-control" id="email" required="" data-validation-required-message="Please enter your email address." autocomplete="off">
-                                        <div class="search_icon"><span class="ti-email"></span></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Password </label>
-                                        <input type="password" class="form-control" id="password" required="" data-validation-required-message="Please enter your password" autocomplete="off">
-                                        <div class="search_icon"><span class="ti-pin"></span></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label> Confirm Password </label>
-                                        <input type="password" class="form-control" id="password" required="" data-validation-required-message="Please enter your password" autocomplete="off">
-                                        <div class="search_icon"><span class="ti-pin"></span></div>
-                                    </div>
-                                    <div>
-                                        <button type="submit" class="btn btn-larger btn-block">Sign up</button>
-                                    </div>
-                                </form>
+                                <?php $form = ActiveForm::begin(['id' => 'candidate-signup-form']); ?>
+                                <?= $form->field($model, 'user_name')->textInput() ?>
+                                <?= $form->field($model, 'email')->textInput() ?>
+                                <?= $form->field($model, 'password')->textInput() ?>
+                                <?= $form->field($model, 'confirm_password')->textInput() ?>
+                                <div>
+                                    <?= Html::submitButton('Sign up', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-signup-button']) ?>
+                                </div>
+                                <?php ActiveForm::end(); ?>
                             </div>
                         </div>
                     </div>
