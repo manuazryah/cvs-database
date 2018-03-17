@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
     </div>
     <div class="">
         <div class="form-group" style="float: right;">
-            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => 'btn btn-success', 'style' => 'margin-top: 18px; height: 36px; width:100px;']) ?>
+            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => 'btn btn-success']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
