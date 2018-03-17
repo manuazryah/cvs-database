@@ -1,26 +1,18 @@
 <?php
 
-namespace backend\modules\admin\controllers;
+namespace backend\modules\masters\controllers;
 
 use Yii;
-use common\models\AdminPosts;
-use common\models\AdminPostsSearch;
+use common\models\Country;
+use common\models\CountrySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AdminPostsController implements the CRUD actions for AdminPosts model.
+ * CountryController implements the CRUD actions for Country model.
  */
-class AdminPostsController extends Controller {
-
-        public function init() {
-                if (Yii::$app->user->isGuest)
-                        $this->redirect(['/site/index']);
-
-                if (Yii::$app->session['post']['admin'] != 1)
-                        $this->redirect(['/site/home']);
-        }
+class CountryController extends Controller {
 
         /**
          * @inheritdoc
@@ -30,28 +22,40 @@ class AdminPostsController extends Controller {
                     'verbs' => [
                         'class' => VerbFilter::className(),
                         'actions' => [
-                            'delete' => ['POST'],
+                        // 'delete' => ['POST'],
                         ],
                     ],
                 ];
         }
 
         /**
-         * Lists all AdminPosts models.
+         * Lists all Country models.
          * @return mixed
          */
-        public function actionIndex() {
-                $searchModel = new AdminPostsSearch();
+        public function actionIndex($id = null) {
+                $searchModel = new CountrySearch();
+                if (isset($id) && $id != '')
+                        $model = $this->findModel($id);
+                else
+                        $model = new Country();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                        if (isset($id) && $id != '')
+                                Yii::$app->session->setFlash('success', "Updated Successfully");
+                        else
+                                Yii::$app->session->setFlash('success', "Country created Successfully");
+                        $model = new Country();
+                        return $this->redirect(['index']);
+                }
                 return $this->render('index', [
                             'searchModel' => $searchModel,
                             'dataProvider' => $dataProvider,
+                            'model' => $model,
                 ]);
         }
 
         /**
-         * Displays a single AdminPosts model.
+         * Displays a single Country model.
          * @param integer $id
          * @return mixed
          */
@@ -62,25 +66,24 @@ class AdminPostsController extends Controller {
         }
 
         /**
-         * Creates a new AdminPosts model.
+         * Creates a new Country model.
          * If creation is successful, the browser will be redirected to the 'view' page.
          * @return mixed
          */
         public function actionCreate() {
-                $model = new AdminPosts();
+                $model = new Country();
 
-                if ($model->load(Yii::$app->request->post()) && Yii::$app->SetValues->Attributes($model)) {
-                        if ($model->validate() && $model->save()) {
-                                return $this->redirect(['view', 'id' => $model->id]);
-                        }
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                        return $this->render('create', [
+                                    'model' => $model,
+                        ]);
                 }
-                return $this->render('create', [
-                            'model' => $model,
-                ]);
         }
 
         /**
-         * Updates an existing AdminPosts model.
+         * Updates an existing Country model.
          * If update is successful, the browser will be redirected to the 'view' page.
          * @param integer $id
          * @return mixed
@@ -88,17 +91,17 @@ class AdminPostsController extends Controller {
         public function actionUpdate($id) {
                 $model = $this->findModel($id);
 
-                if ($model->load(Yii::$app->request->post()) && Yii::$app->SetValues->Attributes($model) && $model->validate() && $model->save()) {
-                        Yii::$app->session->setFlash('success', "Updated Successfully");
-                        return $this->redirect(['update', 'id' => $model->id]);
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                        return $this->render('update', [
+                                    'model' => $model,
+                        ]);
                 }
-                return $this->render('update', [
-                            'model' => $model,
-                ]);
         }
 
         /**
-         * Deletes an existing AdminPosts model.
+         * Deletes an existing Country model.
          * If deletion is successful, the browser will be redirected to the 'index' page.
          * @param integer $id
          * @return mixed
@@ -110,14 +113,14 @@ class AdminPostsController extends Controller {
         }
 
         /**
-         * Finds the AdminPosts model based on its primary key value.
+         * Finds the Country model based on its primary key value.
          * If the model is not found, a 404 HTTP exception will be thrown.
          * @param integer $id
-         * @return AdminPosts the loaded model
+         * @return Country the loaded model
          * @throws NotFoundHttpException if the model cannot be found
          */
         protected function findModel($id) {
-                if (($model = AdminPosts::findOne($id)) !== null) {
+                if (($model = Country::findOne($id)) !== null) {
                         return $model;
                 } else {
                         throw new NotFoundHttpException('The requested page does not exist.');

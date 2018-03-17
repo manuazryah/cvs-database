@@ -25,6 +25,9 @@ return [
         'admin' => [
             'class' => 'backend\modules\admin\Module',
         ],
+        'masters' => [
+            'class' => 'backend\modules\masters\Module',
+        ],
     ],
     'components' => [
         'request' => [
@@ -54,8 +57,8 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' =>
+            require(__DIR__ . '/url_rules.php')
         ],
         'assetManager' => [
             'bundles' => [
