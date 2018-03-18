@@ -48,13 +48,13 @@ class Candidate extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['user_name', 'password', 'confirm_password', 'email'], 'required', 'on' => 'create'],
-            [['gender', 'nationality', 'current_country', 'experience', 'status', 'email_varification_status'], 'integer'],
-            [['dob', 'date_of_creation', 'date_of_updation'], 'safe'],
-            [['address'], 'string'],
-            [['first_name', 'last_name', 'email', 'user_name', 'password', 'current_city', 'position', 'position_looking_for', 'sub_position', 'qualification', 'skill_set', 'upload_cv'], 'string', 'max' => 100],
-            [['phone'], 'string', 'max' => 20],
-            ['confirm_password', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+                [['user_name', 'password', 'confirm_password', 'email'], 'required', 'on' => 'create'],
+                [['gender', 'nationality', 'current_country', 'experience', 'status', 'email_varification_status'], 'integer'],
+                [['dob', 'date_of_creation', 'date_of_updation'], 'safe'],
+                [['address'], 'string'],
+                [['first_name', 'last_name', 'email', 'user_name', 'password', 'current_city', 'position', 'position_looking_for', 'sub_position', 'qualification', 'skill_set', 'upload_cv'], 'string', 'max' => 100],
+                [['phone'], 'string', 'max' => 20],
+                ['confirm_password', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
         ];
     }
 

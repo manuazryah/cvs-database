@@ -22,7 +22,7 @@ class AppAsset extends AssetBundle {
         'https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i',
     ];
     public $js = [
-        'js/jquery.min.js',
+//        'js/jquery.min.js',
         'plugins/bootstrap/js/bootstrap.min.js',
         'plugins/flexslider/jquery.flexslider-min.js',
         'js/jquery.counterup.min.js',

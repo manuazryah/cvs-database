@@ -160,7 +160,7 @@ html .select2-drop .select2-results li.select2-result-selectable .select2-result
 form .form-group .form-control{
         color: #464646;
         font-size: 14px;
-        height: 43px;
+        height: 40px;
 }
 .form-group label{
         color: #484848;
@@ -641,11 +641,17 @@ a {
         color: #fff;
 }
 .grid-view .glyphicon-trash{
-        color: red;
+        color: #337ab7;
 }
 .grid-view .glyphicon-pencil{
-        color: green;
+        color: #337ab7;
 }
 .grid-view .glyphicon-eye-open{
-        color: #2984cc;
+        color: #337ab7;
+}
+.grid-view .table>thead>tr>th, .table>thead>tr>th {
+    color: #337ab7;
+}
+.grid-view .table>thead>tr>th a {
+    color: #337ab7;
 }

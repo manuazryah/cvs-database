@@ -5,6 +5,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\Pjax;
 ?>
 <div class="site-banner">
     <div class="banner-overlay"></div>
@@ -20,37 +21,34 @@ use yii\bootstrap\ActiveForm;
                 <div id="form" class="form-fixed">
                     <div id="userform">
                         <ul class="nav nav-tabs nav-justified" role="tablist">
-                            <li><a href="#login" role="tab" data-toggle="tab" aria-expanded="false">Log in</a></li>
-                            <li class="active"><a href="#signup" role="tab" data-toggle="tab" aria-expanded="true">Sign up</a></li>
+                            <li class="<?= $flag == 0 ? 'active' : '' ?>"><a href="#login" role="tab" data-toggle="tab" aria-expanded="false">Log in</a></li>
+                            <li class="<?= $flag == 1 ? 'active' : '' ?>"><a href="#signup" role="tab" data-toggle="tab" aria-expanded="true">Sign up</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane fade" id="login">
-                                <form id="login">
-                                    <div class="form-group">
-                                        <label> Username or E-mail</label>
-                                        <input type="email" class="form-control" id="email" required="" data-validation-required-message="Please enter your email address." autocomplete="off">
-                                        <div class="search_icon"><span class="ti-user"></span></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label> Password</label>
-                                        <input type="password" class="form-control" id="password" required="" data-validation-required-message="Please enter your password" autocomplete="off">
-                                        <div class="search_icon"><span class="ti-pin"></span></div>
-                                    </div>
-                                    <div>
-                                        <button type="submit" class="btn btn-larger btn-block">Log in</button>
-                                    </div>
-                                </form>
+                            <?= \common\widgets\Alert::widget() ?>
+                            <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="login">
+                                <?php Pjax::begin() ?>
+                                <?php $form1 = ActiveForm::begin(['id' => 'candidate-login-form']); ?>
+                                <?= $form1->field($modellog, 'user_name')->textInput()->label('Username or E-mail') ?>
+                                <?= $form1->field($modellog, 'password')->passwordInput() ?>
+                                <div>
+                                    <?= Html::submitButton('Log In', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-login-button']) ?>
+                                </div>
+                                <?php ActiveForm::end(); ?>
+                                <?php Pjax::end() ?>
                             </div>
-                            <div class="tab-pane fade active in" id="signup">
+                            <div class="tab-pane fade <?= $flag == 1 ? 'active in' : '' ?>" id="signup">
+                                <?php Pjax::begin() ?>
                                 <?php $form = ActiveForm::begin(['id' => 'candidate-signup-form']); ?>
                                 <?= $form->field($model, 'user_name')->textInput() ?>
                                 <?= $form->field($model, 'email')->textInput() ?>
-                                <?= $form->field($model, 'password')->textInput() ?>
-                                <?= $form->field($model, 'confirm_password')->textInput() ?>
+                                <?= $form->field($model, 'password')->passwordInput() ?>
+                                <?= $form->field($model, 'confirm_password')->passwordInput() ?>
                                 <div>
                                     <?= Html::submitButton('Sign up', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-signup-button']) ?>
                                 </div>
                                 <?php ActiveForm::end(); ?>
+                                <?php Pjax::end() ?>
                             </div>
                         </div>
                     </div>
@@ -260,3 +258,20 @@ use yii\bootstrap\ActiveForm;
         </div>
     </section>
 </main>
+<script>
+    $(document).ready(function () {
+        $(document).on("blur", "#candidate-password", function () {
+            validatePassword();
+        });
+        $(document).on("blur", "#candidate-confirm_password", function () {
+            validatePassword();
+        });
+        function validatePassword() {
+            var password = $('#candidate-password').val().trim();
+            var confirm_password = $('#candidate-confirm_password').val().trim();
+            if (password != '' && confirm_password != '') {
+                $("#dailyentrydetails-total").val(rate * unit);
+            }
+        }
+    });
+</script>

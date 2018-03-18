@@ -29,12 +29,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -72,12 +72,29 @@ class SiteController extends Controller {
      */
     public function actionIndex() {
         $model = new Candidate();
+        $modellog = new Candidate();
         $model->scenario = 'create';
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(array('site/home'));
+        $flag = 1;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            $model->confirm_password = $model->password;
+            if ($model->save()) {
+                $this->sendMail($model);
+                Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
+                $model = new Candidate();
+            }
+        }
+        if ($modellog->load(Yii::$app->request->post())) {
+            if ($modellog->login()) {
+                return $this->redirect(array('site/home'));
+            } else {
+                $flag = 0;
+            }
         }
         return $this->render('index', [
                     'model' => $model,
+                    'modellog' => $modellog,
+                    'flag' => $flag,
         ]);
     }
 
@@ -210,6 +227,71 @@ class SiteController extends Controller {
         return $this->render('resetPassword', [
                     'model' => $model,
         ]);
+    }
+
+    public function sendMail($model) {
+
+//        echo '<a href="' . Yii::$app->homeUrl . 'site/new-password?token=' . $val . '">Click here change password</a>';
+//        exit;
+        $to = $model->email;
+
+// subject
+        $subject = 'Email verification';
+
+// message
+        echo $message = '
+<html>
+<head>
+
+  <title>Email verification</title>
+</head>
+<body>
+  <p>Thank you very much for signing up at www.eazycheque.com !</p></br>
+<p>Please click on the below link to verify your email address:</p>
+  <table>
+
+    <tr>
+     <td style="padding: 30px 0px 30px 0px;"><a style=" background: #3498db; color: #ffffff;
+  font-size: 16px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none; background-image: -webkit-linear-gradient(top, #3498db, #2980b9); background-image: -moz-linear-gradient(top, #3498db, #2980b9);background-image: -ms-linear-gradient(top, #3498db, #2980b9);background-image: -o-linear-gradient(top, #3498db, #2980b9);background-image: linear-gradient(to bottom, #3498db, #2980b9);-webkit-border-radius: 28;-moz-border-radius: 28;" href="' . Yii::$app->homeUrl . 'site/email-verification?token=' . $model->id . '" >Click here</a></td>
+    </tr>
+
+  </table>
+<p> For any queries/ support kindly email to info@gulfproaccountants.com</p>
+</body>
+</html>
+';
+        exit;
+
+// To send HTML mail, the Content-type header must be set
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
+                "From: 'info@eazycheque.com";
+        mail($to, $subject, $message, $headers);
+        return true;
+    }
+
+    public function actionEmailVerification($token) {
+
+        $user_data = Candidate::find()->where(['id' => $token])->one();
+        if (!empty($user_data)) {
+            $user_data->email_varification_status = 1;
+            $user_data->update();
+            $flag = 0;
+            Yii::$app->session->setFlash('success', 'your email id verified');
+            $modellog = new Candidate();
+            $model = new Candidate();
+            $model->scenario = 'create';
+            return $this->render('index', [
+                        'model' => $model,
+                        'modellog' => $modellog,
+                        'flag' => $flag,
+            ]);
+        } else {
+            $flag = 0;
+            $this->redirect('index');
+        }
     }
 
 }
