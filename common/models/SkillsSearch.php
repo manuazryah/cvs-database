@@ -5,20 +5,20 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Country;
+use common\models\Skills;
 
 /**
- * CountrySearch represents the model behind the search form about `common\models\Country`.
+ * SkillsSearch represents the model behind the search form about `common\models\Skills`.
  */
-class CountrySearch extends Country {
+class SkillsSearch extends Skills {
 
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
-            [['id', 'status', 'CB', 'UB'], 'integer'],
-            [['country_code', 'country_name', 'DOC', 'DOU'], 'safe'],
+            [['id', 'industry', 'status', 'CB', 'UB'], 'integer'],
+            [['skill', 'DOC', 'DOU'], 'safe'],
         ];
     }
 
@@ -38,7 +38,7 @@ class CountrySearch extends Country {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = Country::find()->orderBy(['id' => SORT_DESC]);
+        $query = Skills::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -59,6 +59,7 @@ class CountrySearch extends Country {
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'industry' => $this->industry,
             'status' => $this->status,
             'CB' => $this->CB,
             'UB' => $this->UB,
@@ -66,8 +67,7 @@ class CountrySearch extends Country {
             'DOU' => $this->DOU,
         ]);
 
-        $query->andFilterWhere(['like', 'country_code', $this->country_code])
-                ->andFilterWhere(['like', 'country_name', $this->country_name]);
+        $query->andFilterWhere(['like', 'skill', $this->skill]);
 
         return $dataProvider;
     }

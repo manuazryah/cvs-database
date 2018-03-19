@@ -5,13 +5,13 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\CountrySearch */
+/* @var $searchModel common\models\IndustrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Countries';
+$this->title = 'Industries';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="country-index">
+<div class="industry-index">
 
     <div class="row">
         <div class="col-md-12">
@@ -23,33 +23,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 </div>
                 <div class="panel-body">
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
                     <?=
                     $this->render('_form', [
                         'model' => $model,
                     ])
                     ?>
-
                     <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-//                                                'id',
-                            'country_code',
-                            'country_name',
+//                            'id',
+                            'industry_name',
                             [
                                 'attribute' => 'status',
                                 'format' => 'raw',
-                                'filter' => [1 => 'Enabled', 0 => 'disabled'],
+                                'filter' => [1 => 'Enabled', 0 => 'Disabled', 2 => 'Not Approved'],
                                 'value' => function ($model) {
-                                    return $model->status == 1 ? 'Enabled' : 'disabled';
+                                    if ($model->status == 0) {
+                                        return 'Disabled';
+                                    } elseif ($model->status == 1) {
+                                        return 'Enabled';
+                                    } elseif ($model->status == 2) {
+                                        return 'Not Approved';
+                                    } else {
+                                        return '';
+                                    }
                                 },
                             ],
-//                                                'CB',
-                            // 'UB',
+//                            'CB',
+//                            'UB',
                             // 'DOC',
                             // 'DOU',
                             ['class' => 'yii\grid\ActionColumn',

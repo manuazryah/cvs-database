@@ -3,15 +3,17 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use common\models\Country;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\CountrySearch */
+/* @var $searchModel common\models\CitySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Countries';
+$this->title = 'Cities';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="country-index">
+<div class="city-index">
 
     <div class="row">
         <div class="col-md-12">
@@ -23,23 +25,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 </div>
                 <div class="panel-body">
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
                     <?=
                     $this->render('_form', [
                         'model' => $model,
                     ])
                     ?>
-
                     <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-//                                                'id',
-                            'country_code',
-                            'country_name',
+//                                                            'id',
+                            [
+                                'attribute' => 'country',
+                                'label' => 'Country Name',
+                                'value' => 'country0.country_name',
+                                'filter' => ArrayHelper::map(Country::find()->asArray()->all(), 'id', 'country_name'),
+                            ],
+                            'city',
                             [
                                 'attribute' => 'status',
                                 'format' => 'raw',
@@ -48,7 +52,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->status == 1 ? 'Enabled' : 'disabled';
                                 },
                             ],
-//                                                'CB',
                             // 'UB',
                             // 'DOC',
                             // 'DOU',

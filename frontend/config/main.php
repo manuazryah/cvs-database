@@ -22,9 +22,6 @@ return [
                 ]
             ],
         ],
-        'candidate' => [
-            'class' => 'frontend\modules\candidate\Module',
-        ],
     ],
     'components' => [
         'request' => [
@@ -42,7 +39,7 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                    [
+                [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],

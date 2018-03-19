@@ -29,12 +29,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -86,7 +86,7 @@ class SiteController extends Controller {
         }
         if ($modellog->load(Yii::$app->request->post())) {
             if ($modellog->login()) {
-                return $this->redirect(array('site/home'));
+                return $this->redirect(['candidate/index']);
             } else {
                 $flag = 0;
             }

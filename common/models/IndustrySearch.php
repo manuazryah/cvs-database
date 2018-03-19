@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Country;
+use common\models\Industry;
 
 /**
- * CountrySearch represents the model behind the search form about `common\models\Country`.
+ * IndustrySearch represents the model behind the search form about `common\models\Industry`.
  */
-class CountrySearch extends Country {
+class IndustrySearch extends Industry {
 
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class CountrySearch extends Country {
     public function rules() {
         return [
             [['id', 'status', 'CB', 'UB'], 'integer'],
-            [['country_code', 'country_name', 'DOC', 'DOU'], 'safe'],
+            [['industry_name', 'DOC', 'DOU'], 'safe'],
         ];
     }
 
@@ -38,7 +38,7 @@ class CountrySearch extends Country {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = Country::find()->orderBy(['id' => SORT_DESC]);
+        $query = Industry::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -66,8 +66,7 @@ class CountrySearch extends Country {
             'DOU' => $this->DOU,
         ]);
 
-        $query->andFilterWhere(['like', 'country_code', $this->country_code])
-                ->andFilterWhere(['like', 'country_name', $this->country_name]);
+        $query->andFilterWhere(['like', 'industry_name', $this->industry_name]);
 
         return $dataProvider;
     }

@@ -5,13 +5,13 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\CountrySearch */
+/* @var $searchModel common\models\CoursesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Countries';
+$this->title = 'Courses';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="country-index">
+<div class="courses-index">
 
     <div class="row">
         <div class="col-md-12">
@@ -23,23 +23,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 </div>
                 <div class="panel-body">
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
                     <?=
                     $this->render('_form', [
                         'model' => $model,
                     ])
                     ?>
-
                     <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-//                                                'id',
-                            'country_code',
-                            'country_name',
+//                                                            'id',
+//            'country',
+                            'cource_code',
+                            'course_name',
                             [
                                 'attribute' => 'status',
                                 'format' => 'raw',
@@ -48,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->status == 1 ? 'Enabled' : 'disabled';
                                 },
                             ],
-//                                                'CB',
+                            // 'CB',
                             // 'UB',
                             // 'DOC',
                             // 'DOU',

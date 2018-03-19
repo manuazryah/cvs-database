@@ -3,16 +3,16 @@
 namespace backend\modules\masters\controllers;
 
 use Yii;
-use common\models\Country;
-use common\models\CountrySearch;
+use common\models\Courses;
+use common\models\CoursesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CountryController implements the CRUD actions for Country model.
+ * CoursesController implements the CRUD actions for Courses model.
  */
-class CountryController extends Controller {
+class CoursesController extends Controller {
 
     /**
      * @inheritdoc
@@ -22,29 +22,29 @@ class CountryController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                // 'delete' => ['POST'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
     }
 
     /**
-     * Lists all Country models.
+     * Lists all Courses models.
      * @return mixed
      */
     public function actionIndex($id = null) {
-        $searchModel = new CountrySearch();
+        $searchModel = new CoursesSearch();
         if (isset($id) && $id != '')
             $model = $this->findModel($id);
         else
-            $model = new Country();
+            $model = new Courses();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post()) && Yii::$app->SetValues->Attributes($model) && $model->save()) {
             if (isset($id) && $id != '')
                 Yii::$app->session->setFlash('success', "Updated Successfully");
             else
-                Yii::$app->session->setFlash('success', "Country created Successfully");
-            $model = new Country();
+                Yii::$app->session->setFlash('success', "Course created Successfully");
+            $model = new Courses();
             return $this->redirect(['index']);
         }
         return $this->render('index', [
@@ -55,7 +55,7 @@ class CountryController extends Controller {
     }
 
     /**
-     * Displays a single Country model.
+     * Displays a single Courses model.
      * @param integer $id
      * @return mixed
      */
@@ -66,12 +66,12 @@ class CountryController extends Controller {
     }
 
     /**
-     * Creates a new Country model.
+     * Creates a new Courses model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate() {
-        $model = new Country();
+        $model = new Courses();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -83,7 +83,7 @@ class CountryController extends Controller {
     }
 
     /**
-     * Updates an existing Country model.
+     * Updates an existing Courses model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -101,7 +101,7 @@ class CountryController extends Controller {
     }
 
     /**
-     * Deletes an existing Country model.
+     * Deletes an existing Courses model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -113,14 +113,14 @@ class CountryController extends Controller {
     }
 
     /**
-     * Finds the Country model based on its primary key value.
+     * Finds the Courses model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Country the loaded model
+     * @return Courses the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = Country::findOne($id)) !== null) {
+        if (($model = Courses::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
