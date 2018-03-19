@@ -17,33 +17,34 @@ use Yii;
  * @property string $date_of_updation
  * @property int $email_varification_status
  */
-class Candidate extends \yii\db\ActiveRecord
-{
+class Candidate extends \yii\db\ActiveRecord {
+
+    public $password_repeat;
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'candidate';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['status', 'email_varification_status'], 'integer'],
-            [['date_of_creation', 'date_of_updation'], 'safe'],
-            [['email', 'user_name', 'password', 'user_id'], 'string', 'max' => 100],
+                [['email', 'user_name', 'password', 'password_repeat'], 'required'],
+                [['status', 'email_varification_status'], 'integer'],
+                [['date_of_creation', 'date_of_updation'], 'safe'],
+                [['email', 'user_name', 'password', 'user_id'], 'string', 'max' => 100],
+                ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'email' => 'Email',
@@ -56,4 +57,5 @@ class Candidate extends \yii\db\ActiveRecord
             'email_varification_status' => 'Email Varification Status',
         ];
     }
+
 }

@@ -29,12 +29,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -72,13 +72,15 @@ class SiteController extends Controller {
      */
     public function actionIndex() {
         $model = new Candidate();
-        $modellog = new Candidate();
-        $model->scenario = 'create';
+        $modellog = new LoginForm();
+//        $model->scenario = 'create';
         $flag = 1;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->password = Yii::$app->security->generatePasswordHash($model->password);
-            $model->confirm_password = $model->password;
+            $model->password_repeat = $model->password;
             if ($model->save()) {
+                $model->user_id = sprintf("%05s", $model->id);
+                $model->update();
                 $this->sendMail($model);
                 Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
                 $model = new Candidate();
@@ -280,18 +282,10 @@ class SiteController extends Controller {
             $user_data->update();
             $flag = 0;
             Yii::$app->session->setFlash('success', 'your email id verified');
-            $modellog = new Candidate();
-            $model = new Candidate();
-            $model->scenario = 'create';
-            return $this->render('index', [
-                        'model' => $model,
-                        'modellog' => $modellog,
-                        'flag' => $flag,
-            ]);
         } else {
             $flag = 0;
-            $this->redirect('index');
         }
+        $this->redirect('index');
     }
 
 }
