@@ -29,12 +29,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -71,23 +71,24 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
+        $model_register = new Candidate();
         $model = new Candidate();
-        $modellog = new LoginForm();
-//        $model->scenario = 'create';
+        $model_register->scenario = 'create';
+        $model->scenario = 'login';
         $flag = 1;
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->password = Yii::$app->security->generatePasswordHash($model->password);
-            $model->password_repeat = $model->password;
-            if ($model->save()) {
-                $model->user_id = sprintf("%05s", $model->id);
-                $model->update();
+        if ($model_register->load(Yii::$app->request->post()) && $model_register->validate()) {
+            $model_register->password = Yii::$app->security->generatePasswordHash($model_register->password);
+            $model_register->password_repeat = $model_register->password;
+            if ($model_register->save()) {
+                $model_register->user_id = sprintf("%05s", $model_register->id);
+                $model_register->update();
                 $this->sendMail($model);
                 Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
-                $model = new Candidate();
+                $model_register = new Candidate();
             }
         }
-        if ($modellog->load(Yii::$app->request->post())) {
-            if ($modellog->login()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->login()) {
                 return $this->redirect(['candidate/index']);
             } else {
                 $flag = 0;
@@ -95,7 +96,7 @@ class SiteController extends Controller {
         }
         return $this->render('index', [
                     'model' => $model,
-                    'modellog' => $modellog,
+                    'model_register' => $model_register,
                     'flag' => $flag,
         ]);
     }

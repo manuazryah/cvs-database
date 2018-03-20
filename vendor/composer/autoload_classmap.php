@@ -191,6 +191,7 @@ return array(
     'PHPUnit_Util_TestSuiteIterator' => $vendorDir . '/phpunit/phpunit/src/Util/TestSuiteIterator.php',
     'PHPUnit_Util_Type' => $vendorDir . '/phpunit/phpunit/src/Util/Type.php',
     'PHPUnit_Util_XML' => $vendorDir . '/phpunit/phpunit/src/Util/XML.php',
+    'PHP_Timer' => $vendorDir . '/phpunit/php-timer/src/Timer.php',
     'PHP_Token' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_TokenWithScope' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_TokenWithScopeAndVisibility' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',

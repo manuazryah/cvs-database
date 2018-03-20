@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\web\IdentityInterface;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "candidate".
@@ -17,9 +19,13 @@ use Yii;
  * @property string $date_of_updation
  * @property int $email_varification_status
  */
-class Candidate extends \yii\db\ActiveRecord {
+class Candidate extends ActiveRecord implements IdentityInterface {
 
     public $password_repeat;
+    private $_user;
+    public $rememberMe = true;
+    public $created_at;
+    public $updated_at;
 
     /**
      * {@inheritdoc}
@@ -33,12 +39,25 @@ class Candidate extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-                [['email', 'user_name', 'password', 'password_repeat'], 'required'],
-                [['status', 'email_varification_status'], 'integer'],
-                [['date_of_creation', 'date_of_updation'], 'safe'],
-                [['email', 'user_name', 'password', 'user_id'], 'string', 'max' => 100],
-                ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+            [['email', 'user_name', 'password', 'password_repeat'], 'required', 'on' => 'create'],
+            [['status', 'email_varification_status'], 'integer'],
+            [['date_of_creation', 'date_of_updation'], 'safe'],
+            [['email', 'user_name', 'password', 'user_id'], 'string', 'max' => 100],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match", 'on' => 'create'],
+            [['user_name', 'password'], 'required', 'on' => 'login'],
+            [['password'], 'validatePassword', 'on' => 'login'],
         ];
+    }
+
+    public function validatePassword($attribute, $params) {
+        if (!$this->hasErrors()) {
+            $user = $this->getUser();
+            if (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            } else {
+                Yii::$app->session['candidate'] = $user->attributes;
+            }
+        }
     }
 
     /**
@@ -56,6 +75,70 @@ class Candidate extends \yii\db\ActiveRecord {
             'date_of_updation' => 'Date Of Updation',
             'email_varification_status' => 'Email Varification Status',
         ];
+    }
+
+    public function login() {
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), /* $this->rememberMe ? 3600 * 24 * 30 : */ 0);
+        } else {
+            return false;
+        }
+    }
+
+    protected function getUser() {
+        if ($this->_user === null) {
+            $this->_user = static::find()->where('user_name = :uname and status = :stat', ['uname' => $this->user_name, 'stat' => '1'])->one();
+        }
+        return $this->_user;
+    }
+
+    public function validatedata($data) {
+        if ($data == '') {
+            $this->addError('password', 'Incorrect username or password');
+            return true;
+        }
+    }
+
+    /**
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByUsername($username) {
+        return static::findOne(['user_name' => $username, 'status' => 1]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentity($id) {
+        return static::findOne(['id' => $id, 'status' => 1]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentityByAccessToken($token, $type = null) {
+        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+    }
+
+    public function getId() {
+        return $this->getPrimaryKey();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAuthKey() {
+        return $this->auth_key;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validateAuthKey($authKey) {
+        return $this->getAuthKey() === $authKey;
     }
 
 }

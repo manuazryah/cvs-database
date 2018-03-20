@@ -29,8 +29,8 @@ use yii\widgets\Pjax;
                             <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="login">
                                 <?php Pjax::begin() ?>
                                 <?php $form1 = ActiveForm::begin(['id' => 'candidate-login-form']); ?>
-                                <?= $form1->field($modellog, 'username')->textInput()->label('Username or E-mail') ?>
-                                <?= $form1->field($modellog, 'password')->passwordInput() ?>
+                                <?= $form1->field($model, 'user_name')->textInput()->label('Username or E-mail') ?>
+                                <?= $form1->field($model, 'password')->passwordInput() ?>
                                 <div>
                                     <?= Html::submitButton('Log In', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-login-button']) ?>
                                 </div>
@@ -40,10 +40,10 @@ use yii\widgets\Pjax;
                             <div class="tab-pane fade <?= $flag == 1 ? 'active in' : '' ?>" id="signup">
                                 <?php Pjax::begin() ?>
                                 <?php $form = ActiveForm::begin(['id' => 'candidate-signup-form']); ?>
-                                <?= $form->field($model, 'user_name')->textInput() ?>
-                                <?= $form->field($model, 'email')->textInput() ?>
-                                <?= $form->field($model, 'password')->passwordInput() ?>
-                                <?= $form->field($model, 'password_repeat')->passwordInput() ?>
+                                <?= $form->field($model_register, 'user_name')->textInput() ?>
+                                <?= $form->field($model_register, 'email')->textInput() ?>
+                                <?= $form->field($model_register, 'password')->passwordInput() ?>
+                                <?= $form->field($model_register, 'password_repeat')->passwordInput() ?>
                                 <div>
                                     <?= Html::submitButton('Sign up', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-signup-button']) ?>
                                 </div>

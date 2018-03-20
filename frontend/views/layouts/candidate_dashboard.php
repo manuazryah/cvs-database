@@ -46,12 +46,20 @@ AppAsset::register($this);
                                     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="register-employer.php">My Account <i class=" fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="">User Details</a></li>
-                                            <li><?= Html::a('Profile Edit', ['update']) ?></li>
+                                            <li><?= Html::a('Profile Edit', ['update-profile']) ?></li>
                                             <li><a href="">Online CV</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="">Sign Out</a></li>
-                                    <li><a href="#">Hi User Name</a></li>
+                                    <?php
+                                    echo '<li>'
+                                    . Html::beginForm(['/candidate/logout'], 'post', ['style' => '']) . '<a>'
+                                    . Html::submitButton(
+                                            'Sign out', ['class' => '', 'style' => 'background: white;border: none;color: #333;padding-top: 10px;']
+                                    ) . '</a>'
+                                    . Html::endForm()
+                                    . '</li>';
+                                    ?>
+                                    <li><a href="">Hi <b><?= Yii::$app->session['candidate']['id'] != '' ? Yii::$app->session['candidate']['user_name'] : '' ?></b></a></li>
                                 </ul>
                             </div>
                         </nav>

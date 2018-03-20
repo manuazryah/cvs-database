@@ -18,13 +18,13 @@ a{
     text-decoration: none;
 }
 a:focus, a:hover{
-    text-decoration: none; 
+    text-decoration: none;
     color: inherit;
 }
 .padding-left{ padding-left: 0px; padding-right: 0px;}
 
 .b-r{ border-right: solid 1px #d7d7d7;}
-.border{ 
+.border{
     border: solid 1px #1a6068;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -72,7 +72,7 @@ ul.unstyled li.active a{ color: #2190c9; font-weight: 500;}
 .padding0px{ padding-bottom: 0px !important;}
 .p-l{ padding-left: 0px !important; }
 .p-r{ padding-right: 0px !important; }
-.borderfull-width{ 
+.borderfull-width{
     border: solid 1px #e1e1e1;
     position: relative;
     overflow: hidden;
@@ -131,7 +131,7 @@ input[type=checkbox], input[type=radio]{     margin-top: 6px;
 }
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
     background: transparent;
-}   
+}
 .navbar-default .navbar-toggle, .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus{
     background-color: #2190c9;
     border-color: #2190c9;
@@ -281,7 +281,7 @@ input[type=checkbox], input[type=radio]{     margin-top: 6px;
     margin-right: 3px;
     border: none;
     border-radius: 3px 3px 0 0;
-    background-color: #ebebeb; 
+    background-color: #ebebeb;
     color: #7d7d7d;
     font-size: 13px;
 }
@@ -441,7 +441,7 @@ a.table-btn-default:hover, a.table-btn-default:focus{ background-color: #2190c9;
     color: #fff;
     line-height: 24px;
 }
-.page-title .with{ 
+.page-title .with{
     background-color: #1b72ba;
     left: 100px;
     padding: 8px;
@@ -455,7 +455,7 @@ a.table-btn-default:hover, a.table-btn-default:focus{ background-color: #2190c9;
     padding-top: 10px;
     padding-right: 25px;
 }
-.overflow{ 
+.overflow{
     overflow: hidden;
 }
 .overflow .fact-box {
@@ -493,7 +493,7 @@ a.table-btn-default:hover, a.table-btn-default:focus{ background-color: #2190c9;
     font-weight: 700;
 }
 .page-heading2 h1 span{ color: #1b72ba; font-weight: 300;}
-.page-heading2 strong{ 
+.page-heading2 strong{
     font-size: 30px;
     color: #333333;
     text-transform: uppercase;
@@ -507,7 +507,7 @@ a.table-btn-default:hover, a.table-btn-default:focus{ background-color: #2190c9;
     padding: 25px;
     box-shadow: 0 0 77px -40px rgba(0,0,0,0.9);
 }
-.testi-box img{ 
+.testi-box img{
     margin: 0 auto;
     position: relative;
     top: -65px;
@@ -630,7 +630,7 @@ hr {
     line-height: 24px;
     border-left: solid 1px #2190c9;
     padding: 10px 15px;
-    margin: 15px 0px; 
+    margin: 15px 0px;
     font-weight: 500;
 }
 /***********footer**************/
@@ -980,6 +980,7 @@ ul.bottom_link li a {
 .panel-body hr{
     margin-top: 15px;
     margin-bottom: 20px;
+    width: 100% ! important;
 }
 .panel-body .form-control{
     border: solid 2px #e1e1e1;
@@ -1076,12 +1077,12 @@ label span{ color: #7d7d7d; font-weight: 500;}
     color: #787878;
 }
 .packege i{ padding-right: 8px; color: #333;}
-.page_details{ padding-bottom: 25px;} 
-.page_details h4{ 
+.page_details{ padding-bottom: 25px;}
+.page_details h4{
     color: #333;
     font-size: 16px;
 }
-.page_details p{ 
+.page_details p{
     color: #787878;
     font-size: 13px;
 }
@@ -1126,7 +1127,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     font-size: 13px;
     color: #333;
     font-weight: 500;
-} 
+}
 .filter p, .bottom_text p{ padding-top: 3px;  color: #7d7d7d; font-size: 13px;}
 .listing-banner{
     background: url(../images/listing-banner.jpg) no-repeat left top/cover;
@@ -1162,7 +1163,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .text-shorting .work-time{ margin: 0px;}
 /*********employer profile page css**********/
 .employer-banner{
-    background: url(../images/employer-banner.jpg) no-repeat left top/cover; 
+    background: url(../images/employer-banner.jpg) no-repeat left top/cover;
 }
 .post-banner {
     background: url(../images/post-banner.jpg) no-repeat left top/cover;
@@ -1657,4 +1658,8 @@ label span{ color: #7d7d7d; font-weight: 500;}
 }
 .site-banner .job-search .search_icon{
     top: 21px;
+}
+#addScnt{
+    background: #0671a0;
+    color: white;
 }
