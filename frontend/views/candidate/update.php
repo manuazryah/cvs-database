@@ -121,7 +121,7 @@ $this->params['breadcrumbs'][] = 'Update';
                     <hr class="appoint_history" />
                     <div id="p_scents">
                         <input type="hidden" id="delete_port_vals"  name="delete_port_vals" value="">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered order-list" id="myTable">
                             <thead>
                                 <tr>
                                     <th>Course</th>
@@ -138,7 +138,6 @@ $this->params['breadcrumbs'][] = 'Update';
 
                                     foreach ($model_education as $data) {
                                         ?>
-                                    <span>
                                         <tr>
                                             <td>
                                                 <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][label][]" value="<?= $data->label; ?>" required>
@@ -157,37 +156,50 @@ $this->params['breadcrumbs'][] = 'Update';
                                             </td>
                                             <td><a id="remScnt" val="<?= $data->id; ?>" class="btn btn-icon btn-red remScnt" ><i class="fa-remove"></i></a></td>
                                         </tr>
-                                    </span>
-                                    <?php
+                                        <?php
+                                    }
                                 }
-                            }
-                            ?>
-                            <span>
+                                ?>
+                                <?php
+                                $course_datas = common\models\Courses::find()->where(['status' => 1])->all();
+                                $country_datas = common\models\Country::find()->where(['status' => 1])->all();
+                                ?>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" name="create[label][]">
+                                        <select class="form-control" name="create[course][]">
+                                            <option value="">Select Course</option>
+                                            <?php foreach ($course_datas as $course_data) { ?>
+                                                <option value="<?= $course_data->id ?>"><?= $course_data->course_name ?></option>
+                                            <?php }
+                                            ?>
+                                        </select>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="create[label][]">
+                                        <input type="text" class="form-control" name="create[college][]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="create[label][]">
+                                        <select class="form-control" name="create[country][]">
+                                            <option value="">Select Country</option>
+                                            <?php foreach ($country_datas as $country_data) { ?>
+                                                <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
+                                            <?php }
+                                            ?>
+                                        </select>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="create[label][]">
+                                        <input type="text" class="form-control" name="create[from_date][]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="create[label][]">
+                                        <input type="text" class="form-control" name="create[to_date][]">
                                     </td>
                                     <td></td>
                                 </tr>
-                            </span>
                             </tbody>
                         </table>
                     </div>
                     <br/>
                     <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
-                        <a id="addScnt" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add Education</a>
+                        <a id="addeducation" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add Education</a>
                     </div><br/>
                     <hr class="appoint_history" />
                     <div class="clearfix"></div>
@@ -254,44 +266,36 @@ $this->params['breadcrumbs'][] = 'Update';
 </script>
 <script>
     $(document).ready(function () {
-        /*
-         * Add more bnutton function
-         */
-        var scntDiv = $('#p_scents');
-        var i = $('#p_scents span').size() + 1;
-        $('#addScnt').on('click', function () {
-            var ver = '<span>\n\
-                                <div class="form-group">\n\
-                                <label class="control-label" for=""></label>\n\
-                                <input type="text" id="" class="form-control" name="create[label][]" required>\n\
-                                </div> \n\
-                                <div class="form-group">\n\
-                                <label class="control-label" for=""></label>\n\
-                                <input type="text" class="form-control" name="create[valuee][]" required>\n\
-                                </div> \n\
-                                <div class="form-group ">\n\
-                                <label class="control-label"></label>\n\
-                                <input type="text" id="" class="form-control" name="create[comment][]" required>\n\
-                                </div>\n\
-                                <div class="form-group">\n\
-                                <a id="remScnt" class="btn btn-icon btn-red remScnt" ><i class="fa-remove"></i></a>\n\
-                                 </div><br/>\n\
-                                </span>';
-            $(ver).appendTo(scntDiv);
-            i++;
-            return false;
+        var counter = 0;
+
+        $("#addeducation").on("click", function () {
+
+            var counter = $('#myTable tr').length - 2;
+
+            $("#ibtnDel").on("click", function () {
+                counter = -1
+            });
+
+
+            var newRow = $("<tr>");
+            var cols = "";
+
+            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
+            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
+            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
+            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
+            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
+
+            cols += '<td><a id="ibtnDel"><i class="fa fa-remove"></i></a></td>';
+            newRow.append(cols);
+            $("table.order-list").append(newRow);
+            counter++;
         });
-        $('#p_scents').on('click', '.remScnt', function () {
-            if (i > 2) {
-                $(this).parents('span').remove();
-                i--;
-            }
-            if (this.hasAttribute("val")) {
-                var valu = $(this).attr('val');
-                $('#delete_port_vals').val($('#delete_port_vals').val() + valu + ',');
-                var value = $('#delete_port_vals').val();
-            }
-            return false;
+
+        $("table.order-list").on("click", "#ibtnDel", function (event) {
+            $(this).closest("tr").remove();
         });
+
+
     });
 </script>

@@ -1659,7 +1659,10 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .site-banner .job-search .search_icon{
     top: 21px;
 }
-#addScnt{
+#addeducation{
     background: #0671a0;
     color: white;
+}
+#ibtnDel{
+    color: red;
 }
