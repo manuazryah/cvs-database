@@ -4,45 +4,51 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="panel-body" style="border: solid 1px #e1e1e1;border-radius: 2px;padding: 22px;position: relative;margin-bottom: 20px;">
-                        <table style="width: 100%">
-                            <tr>
-                                <td style="width: 90%">
-                                    <table style="width: 100%">
-                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?= $model->name ?></h4></strong></td></tr>
-                                        <tr>
-                                            <td style="line-height: 30px;"><strong>Title : </strong><?= $model->title ?></td>
-                                            <td style="line-height: 30px;"><strong>Nationality : </strong><?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="line-height: 30px;"><strong>Current Country : </strong><?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?></td>
-                                            <td style="line-height: 30px;"><strong>Current City:</strong> <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="line-height: 30px;"><strong>Expected Salary : </strong> <?= $model->expected_salary ?></td>
-                                            <td style="line-height: 30px;"><strong>Job Type : </strong> <?= $model->job_type != '' ? \common\models\JobType::findOne($model->job_type)->job_type : '' ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="line-height: 30px;"><strong>Gender : </strong> <?= $model->gender != '' ? \common\models\Gender::findOne($model->gender)->gender : '' ?></td>
-                                            <td style="line-height: 30px;"><strong>DOB : </strong> <?= $model->dob ?></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td style="width: 10%">
-                                    <?php
-                                    if ($model->photo != '') {
-                                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
-                                        if (file_exists($dirPath)) {
-                                            echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
-                                        } else {
-                                            echo '';
-                                        }
-                                    }
-                                    ?>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="col-md-12">
+                            <h4><?= $model->name ?></h4>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="page-heading">
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Title:</strong> <?= $model->title ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Nationality:</strong> <?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Current Country:</strong><?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Current City:</strong> <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Expected Salary :</strong> <?= $model->expected_salary ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Job Type:</strong> <?= $model->job_type != '' ? \common\models\JobType::findOne($model->job_type)->job_type : '' ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Gender:</strong> <?= $model->gender != '' ? \common\models\Gender::findOne($model->gender)->gender : '' ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>DOB:</strong> <?= $model->dob ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 author">
+                            <?php
+                            if ($model->photo != '') {
+                                $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                                if (file_exists($dirPath)) {
+                                    echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                } else {
+                                    echo '';
+                                }
+                            }
+                            ?>
+                        </div>
                         <div class="clearfix"></div>
-                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 4px 30px 7px;"></div>
+                        <div class="col-md-12"><div class="borderfull-width"></div></div>
                         <div class="col-md-12">
                             <div class="page-heading">
                                 <h4>Job Status</h4>
