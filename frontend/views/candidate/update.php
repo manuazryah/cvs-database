@@ -9,13 +9,20 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\Candidate */
 
-$this->title = 'Update Candidate: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Candidates', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$course_datas = common\models\Courses::find()->where(['status' => 1])->all();
+$country_datas = common\models\Country::find()->where(['status' => 1])->all();
 ?>
-<main id="maincontent">
-    <section class="resume">
+<div class="page_banner banner employer-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="banner-heading">Profile Edit</div>
+            </div>
+        </div>
+    </div>
+</div>
+<main id="maincontent" class="my-account">
+    <section class="manage">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -26,8 +33,20 @@ $this->params['breadcrumbs'][] = 'Update';
                                 ]
                     ]);
                     ?>
-                    <div class="form-group col-md-12 p-l p-r">
+                    <div class="form-group col-md-6 p-l">
                         <?= $form->field($model, 'title')->textInput() ?>
+                    </div>
+                    <div class="form-group col-md-6 p-r">
+                        <?php
+                        if ($model->photo != '') {
+                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                            if (file_exists($dirPath)) {
+                                echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                            } else {
+                                echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                            }
+                        }
+                        ?>
                     </div>
                     <div class="form-group col-md-6 p-l">
                         <?= $form->field($model, 'name')->textInput() ?>
@@ -93,25 +112,30 @@ $this->params['breadcrumbs'][] = 'Update';
                         }
                         ?>
                         <?= $form->field($model, 'skill')->dropDownList($skills, ['prompt' => 'Choose Skills', 'multiple' => 'multiple']) ?>
-                        <?php // $form->field($model, 'skill')->dropDownList(['prompt' => 'Choose Skill'], ['multiple' => 'multiple'])  ?>
+                        <?php // $form->field($model, 'skill')->dropDownList(['prompt' => 'Choose Skill'], ['multiple' => 'multiple'])   ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
                         <?= $form->field($model, 'extra_curricular_activities')->textarea(['rows' => 3]) ?>
                     </div>
                     <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
+                        <?php $languages = ArrayHelper::map(\common\models\Languages::findAll(['status' => 1]), 'id', 'language'); ?>
+                        <?php
+                        if (isset($model->languages_known) && $model->languages_known != '') {
+                            $model->languages_known = explode(',', $model->languages_known);
+                        }
+                        ?>
+                        <?= $form->field($model, 'languages_known')->dropDownList($languages, ['prompt' => '-Choose a Language-', 'multiple' => 'multiple']) ?>
                     </div>
                     <div class="form-group col-md-6 p-r">
-                        <?php $languages = ArrayHelper::map(\common\models\Languages::findAll(['status' => 1]), 'id', 'language'); ?>
-                        <?= $form->field($model, 'languages_known')->dropDownList($languages) ?>
-                    </div>
-                    <div class="form-group col-md-6 p-l">
                         <?php
                         if (isset($model->driving_licences) && $model->driving_licences != '') {
                             $model->driving_licences = explode(',', $model->driving_licences);
                         }
                         ?>
-                        <?= $form->field($model, 'driving_licences')->dropDownList($countries, ['prompt' => '-Choose a Country-', 'multiple' => 'multiple']) ?>
+                        <?= $form->field($model, 'driving_licences')->dropDownList($countries, ['multiple' => 'multiple']) ?>
+                    </div>
+                    <div class="form-group col-md-6 p-l">
+                        <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="form-group col-md-6 p-r">
                         <?= $form->field($model, 'photo')->fileInput(['maxlength' => true]) ?>
@@ -138,31 +162,39 @@ $this->params['breadcrumbs'][] = 'Update';
 
                                     foreach ($model_education as $data) {
                                         ?>
-                                        <tr>
+                                        <tr id="edurow-<?= $data->id; ?>">
                                             <td>
-                                                <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][label][]" value="<?= $data->label; ?>" required>
+                                                <select class="form-control" name="updatee[<?= $data->id; ?>][course][]">
+                                                    <option value="">Select Course</option>
+                                                    <?php foreach ($course_datas as $course_data) { ?>
+                                                        <option value="<?= $course_data->id ?>" <?= $data->course_name == $course_data->id ? 'selected' : '' ?>><?= $course_data->course_name ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][label][]" value="<?= $data->label; ?>" required>
+                                                <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][college][]" value="<?= $data->collage_university ?>">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][label][]" value="<?= $data->label; ?>" required>
+                                                <select class="form-control" name="updatee[<?= $data->id; ?>][country][]">
+                                                    <option value="">Select Country</option>
+                                                    <?php foreach ($country_datas as $country_data) { ?>
+                                                        <option value="<?= $country_data->id ?>" <?= $data->country == $country_data->id ? 'selected' : '' ?>><?= $country_data->country_name ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][label][]" value="<?= $data->label; ?>" required>
+                                                <input type="date" name="updatee[<?= $data->id; ?>][from_date][]" class="form-control" value="<?= $data->from_year ?>">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][label][]" value="<?= $data->label; ?>" required>
+                                                <input type="date" name="updatee[<?= $data->id; ?>][to_date][]" class="form-control" value="<?= $data->to_year ?>">
                                             </td>
-                                            <td><a id="remScnt" val="<?= $data->id; ?>" class="btn btn-icon btn-red remScnt" ><i class="fa-remove"></i></a></td>
+                                            <td><a id="eduremove-<?= $data->id; ?>" class="eduremove"><i class="fa fa-remove"></i></a></td>
                                         </tr>
                                         <?php
                                     }
                                 }
-                                ?>
-                                <?php
-                                $course_datas = common\models\Courses::find()->where(['status' => 1])->all();
-                                $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                                 ?>
                                 <tr>
                                     <td>
@@ -187,10 +219,10 @@ $this->params['breadcrumbs'][] = 'Update';
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="create[from_date][]">
+                                        <input type="date" name="create[from_date][]" class="form-control">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="create[to_date][]">
+                                        <input type="date" name="create[to_date][]" class="form-control">
                                     </td>
                                     <td></td>
                                 </tr>
@@ -201,7 +233,77 @@ $this->params['breadcrumbs'][] = 'Update';
                     <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
                         <a id="addeducation" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add Education</a>
                     </div><br/>
+                    <div class="clearfix"></div>
+                    <h4>Work Experience</h4>
                     <hr class="appoint_history" />
+                    <div id="p_experience">
+                        <table class="table table-bordered experience-list" id="experienceTable">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Designation</th>
+                                    <th>From Year</th>
+                                    <th>To Year</th>
+                                    <th>Job Responsibility</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+//                                var_dump(count($model_experience));
+//                                exit;
+                                if (!empty($model_experience)) {
+                                    foreach ($model_experience as $datas) {
+                                        if ($datas->id != '') {
+                                            ?>
+                                            <tr id="exprow-<?= $datas->id; ?>">
+                                                <td>
+                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][company_name][]" value="<?= $datas->company_name ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][designation][]" value="<?= $datas->designation ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control" value="<?= $datas->from_date ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" value="<?= $datas->to_date ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">
+                                                </td>
+                                                <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    }
+                                }
+                                ?>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" name="expcreate[company_name][]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="expcreate[designation][]">
+                                    </td>
+                                    <td>
+                                        <input type="date" name="expcreate[from_date][]" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="date" name="expcreate[to_date][]" class="form-control">
+                                    </td>
+                                    <td>
+                                        <textarea rows="4" cols="50" name="expcreate[job_responsibility][]"></textarea>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
+                        <a id="addexperience" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add Experience</a>
+                    </div><br/>
                     <div class="clearfix"></div>
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-default']) ?>
                     <?php ActiveForm::end(); ?>
@@ -230,6 +332,12 @@ $this->params['breadcrumbs'][] = 'Update';
             $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
         });
         $("#candidateprofile-driving_licences").select2({
+            allowClear: true
+        }).on('select2-open', function ()
+        {
+            $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
+        });
+        $("#candidateprofile-languages_known").select2({
             allowClear: true
         }).on('select2-open', function ()
         {
@@ -275,25 +383,83 @@ $this->params['breadcrumbs'][] = 'Update';
             $("#ibtnDel").on("click", function () {
                 counter = -1
             });
-
-
-            var newRow = $("<tr>");
-            var cols = "";
-
-            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
-            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
-            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
-            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
-            cols += '<td><input type="text" class="form-control" name="create[label][]"></td>';
-
-            cols += '<td><a id="ibtnDel"><i class="fa fa-remove"></i></a></td>';
-            newRow.append(cols);
-            $("table.order-list").append(newRow);
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {},
+                url: '<?= Yii::$app->homeUrl ?>candidate/get-acadamics',
+                success: function (data) {
+                    $("table.order-list").append(data);
+                }
+            });
             counter++;
         });
 
         $("table.order-list").on("click", "#ibtnDel", function (event) {
             $(this).closest("tr").remove();
+        });
+
+        $(document).on('click', '.eduremove', function () {
+            var current_row_id = $(this).attr('id').match(/\d+/); // 123456
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {id: current_row_id},
+                url: '<?= Yii::$app->homeUrl ?>candidate/remove-acadamics',
+                success: function (data) {
+                    if (data == 1) {
+                        $('#edurow-' + current_row_id).remove();
+                    }
+                }
+            });
+        });
+
+
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var counter = 0;
+
+        $("#addexperience").on("click", function () {
+            var counter = $('#experienceTable tr').length - 2;
+
+            $("#ibtnDele").on("click", function () {
+                counter = -1
+            });
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {},
+                url: '<?= Yii::$app->homeUrl ?>candidate/get-experience',
+                success: function (data) {
+                    $("table.experience-list").append(data);
+                }
+            });
+            counter++;
+        });
+
+        $("table.experience-list").on("click", "#ibtnDele", function (event) {
+            $(this).closest("tr").remove();
+        });
+
+        $(document).on('click', '.expremove', function () {
+            var current_row_id = $(this).attr('id').match(/\d+/); // 123456
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {id: current_row_id},
+                url: '<?= Yii::$app->homeUrl ?>candidate/remove-experience',
+                success: function (data) {
+                    if (data == 1) {
+                        $('#exprow-' + current_row_id).remove();
+                    }
+                }
+            });
         });
 
 

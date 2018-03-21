@@ -11,6 +11,8 @@ use yii\filters\VerbFilter;
 use common\models\CandidateProfile;
 use common\models\CandidateEducation;
 use common\models\WorkExperiance;
+use yii\web\UploadedFile;
+use kartik\mpdf\Pdf;
 
 ;
 
@@ -52,15 +54,16 @@ class CandidateController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        if (empty(Yii::$app->session['candidate'])) {
-            return $this->redirect(array('site/index'));
-        }
-        $searchModel = new CandidateSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $id = Yii::$app->session['candidate']['id'];
+        $user = Candidate::findOne($id);
+        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+                    'model' => $model,
+                    'model_education' => $model_education,
+                    'model_experience' => $model_experience,
+                    'user' => $user,
         ]);
     }
 
@@ -101,24 +104,235 @@ class CandidateController extends Controller {
     public function actionUpdateProfile() {
         $id = Yii::$app->session['candidate']['id'];
         $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
-        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
         if (empty($model)) {
             $model = new CandidateProfile();
-        }
-        if (empty($model)) {
-            $model_education = new CandidateEducation();
+            $photo_ = '';
+        } else {
+            $photo_ = $model->photo;
         }
         if ($model->load(Yii::$app->request->post())) {
+            $data = Yii::$app->request->post();
             $this->SetDatas($model);
-            if ($model->validate() && $model->save()) {
-
+            $files = UploadedFile::getInstance($model, 'photo');
+            if (empty($files)) {
+                $model->photo = $photo_;
+            } else {
+                $model->photo = $files->extension;
             }
-        } return $this->render('update', [
+            if ($model->validate() && $model->save()) {
+                if (!empty($files)) {
+                    $this->upload($model, $files);
+                }
+                $this->AddAcadamics($model, $data);
+                $this->AcadamicsUpdate($model, $data);
+                $this->AddExperiences($model, $data);
+                $this->ExperienceUpdate($model, $data);
+            }
+        }
+        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        if (empty($model_education)) {
+            $model_education = new CandidateEducation();
+        }
+        if (empty($model_experience)) {
+            $model_experience = new WorkExperiance();
+        }
+        return $this->render('update', [
                     'model' => $model,
                     'model_education' => $model_education,
+                    'model_experience' => $model_experience,
         ]);
     }
 
+    /**
+     * Upload Material photos.
+     * @return mixed
+     */
+    public function Upload($model, $files) {
+        if (isset($files) && !empty($files)) {
+            $files->saveAs(Yii::$app->basePath . '/../uploads/candidate/profile_picture/' . $model->id . '.' . $files->extension);
+        }
+        return TRUE;
+    }
+
+    /**
+     * Set New Academics Informations into array for saving
+     * @return mixed
+     */
+    public function AddAcadamics($model, $data) {
+        if (isset($data['create']) && $data['create'] != '') {
+            $create = $data['create'];
+            $arr = [];
+            $i = 0;
+            foreach ($create['course'] as $val) {
+                $arr[$i]['course'] = $val;
+                $i++;
+            }
+            $i = 0;
+            foreach ($create['college'] as $val) {
+                $arr[$i]['college'] = $val;
+                $i++;
+            }
+            $i = 0;
+            foreach ($create['country'] as $val) {
+                $arr[$i]['country'] = $val;
+                $i++;
+            }
+            $i = 0;
+            foreach ($create['from_date'] as $val) {
+                $arr[$i]['from_date'] = $val;
+                $i++;
+            }
+            $i = 0;
+            foreach ($create['to_date'] as $val) {
+                $arr[$i]['to_date'] = $val;
+                $i++;
+            }
+            $this->SaveAcadamics($arr, $model);
+        }
+    }
+
+    /**
+     * Save New Academics Informations
+     * @return mixed
+     */
+    public function SaveAcadamics($arr, $model) {
+        foreach ($arr as $val) {
+            $aditional = new CandidateEducation();
+            $aditional->candidate_id = $model->candidate_id;
+            $aditional->course_name = $val['course'];
+            $aditional->collage_university = $val['college'];
+            $aditional->country = $val['country'];
+            $aditional->from_year = $val['from_date'];
+            $aditional->to_year = $val['to_date'];
+            if (!empty($aditional->course_name)) {
+                $aditional->save();
+            }
+        }
+        return TRUE;
+    }
+
+    /**
+     * Update Existing Academics Informations
+     * @return mixed
+     */
+    public function AcadamicsUpdate($model, $data) {
+        if (isset($data['updatee']) && $data['updatee'] != '') {
+            $update = $data['updatee'];
+            $arr = [];
+            $i = 0;
+            foreach ($update as $key => $val) {
+                $arr[$key]['course'] = $val['course'][0];
+                $arr[$key]['college'] = $val['college'][0];
+                $arr[$key]['country'] = $val['country'][0];
+                $arr[$key]['from_date'] = $val['from_date'][0];
+                $arr[$key]['to_date'] = $val['to_date'][0];
+                $i++;
+            }
+            foreach ($arr as $key => $value) {
+                $aditional = CandidateEducation::findOne($key);
+                $aditional->course_name = $value['course'];
+                $aditional->collage_university = $value['college'];
+                $aditional->country = $value['country'];
+                $aditional->from_year = $value['from_date'];
+                $aditional->to_year = $value['to_date'];
+                $aditional->save();
+            }
+        }
+        return TRUE;
+    }
+
+    /**
+     * Ser New Experience Informations into temporary array for saving
+     * @return mixed
+     */
+    public function AddExperiences($model, $data) {
+        if (isset($data['expcreate']) && $data['expcreate'] != '') {
+            $create = $data['expcreate'];
+            $arr = [];
+            $i = 0;
+            foreach ($create['company_name'] as $val) {
+                $arr[$i]['company_name'] = $val;
+                $i++;
+            }
+            $i = 0;
+            foreach ($create['designation'] as $val) {
+                $arr[$i]['designation'] = $val;
+                $i++;
+            }
+            $i = 0;
+            foreach ($create['job_responsibility'] as $val) {
+                $arr[$i]['job_responsibility'] = $val;
+                $i++;
+            }
+            $i = 0;
+            foreach ($create['from_date'] as $val) {
+                $arr[$i]['from_date'] = $val;
+                $i++;
+            }
+            $i = 0;
+            foreach ($create['to_date'] as $val) {
+                $arr[$i]['to_date'] = $val;
+                $i++;
+            }
+            $this->SaveExperience($arr, $model);
+        }
+    }
+
+    /**
+     * Save Experience Informations into work experience table
+     * @return mixed
+     */
+    public function SaveExperience($arr, $model) {
+        foreach ($arr as $val) {
+            $aditional = new WorkExperiance();
+            $aditional->candidate_id = $model->candidate_id;
+            $aditional->company_name = $val['company_name'];
+            $aditional->designation = $val['designation'];
+            $aditional->job_responsibility = $val['job_responsibility'];
+            $aditional->from_date = $val['from_date'];
+            $aditional->to_date = $val['to_date'];
+            if (!empty($aditional->company_name)) {
+                $aditional->save();
+            }
+        }
+        return TRUE;
+    }
+
+    /**
+     * Update Existing Experience Informations
+     * @return mixed
+     */
+    public function ExperienceUpdate($model, $data) {
+        if (isset($data['expupdatee']) && $data['expupdatee'] != '') {
+            $update = $data['expupdatee'];
+            $arr = [];
+            $i = 0;
+            foreach ($update as $key => $val) {
+                $arr[$key]['company_name'] = $val['company_name'][0];
+                $arr[$key]['designation'] = $val['designation'][0];
+                $arr[$key]['job_responsibility'] = $val['job_responsibility'][0];
+                $arr[$key]['from_date'] = $val['from_date'][0];
+                $arr[$key]['to_date'] = $val['to_date'][0];
+                $i++;
+            }
+            foreach ($arr as $key => $value) {
+                $aditional = WorkExperiance::findOne($key);
+                $aditional->company_name = $value['company_name'];
+                $aditional->designation = $value['designation'];
+                $aditional->job_responsibility = $value['job_responsibility'];
+                $aditional->from_date = $value['from_date'];
+                $aditional->to_date = $value['to_date'];
+                $aditional->save();
+            }
+        }
+        return TRUE;
+    }
+
+    /**
+     * This Function set candidate id,industry,skills and delivery licenses into model
+     * @return mixed
+     */
     public function SetDatas($model) {
         if ($model != null) {
             $model->candidate_id = Yii::$app->session['candidate']['id'];
@@ -133,6 +347,9 @@ class CandidateController extends Controller {
             }
             if (isset($model->driving_licences) && $model->driving_licences != '') {
                 $model->driving_licences = implode(",", $model->driving_licences);
+            }
+            if (isset($model->languages_known) && $model->languages_known != '') {
+                $model->languages_known = implode(",", $model->languages_known);
             }
         }
         return $model;
@@ -165,11 +382,19 @@ class CandidateController extends Controller {
         }
     }
 
+    /**
+     * Logout Candidate and unset candidate session
+     * @return mixed
+     */
     public function actionLogout() {
         unset(Yii::$app->session['candidate']);
         return $this->redirect(['site/index']);
     }
 
+    /**
+     * This function find skills based on industry
+     * @return skills
+     */
     public function actionGetSkills() {
         if (Yii::$app->request->isAjax) {
             $industries = $_POST['industry'];
@@ -186,6 +411,10 @@ class CandidateController extends Controller {
         }
     }
 
+    /**
+     * This function find cities based on Country
+     * @return countries
+     */
     public function actionGetCity() {
         if (Yii::$app->request->isAjax) {
             $country = $_POST['country'];
@@ -200,6 +429,128 @@ class CandidateController extends Controller {
             }
             echo $options;
         }
+    }
+
+    /**
+     * This function add new row for new academic entry
+     * @return new row
+     */
+    public function actionGetAcadamics() {
+        if (Yii::$app->request->isAjax) {
+            $course_datas = \common\models\Courses::find()->where(['status' => 1])->all();
+            $country_datas = \common\models\Country::find()->where(['status' => 1])->all();
+            $new_row = $this->renderPartial('academics_row', [
+                'course_datas' => $course_datas,
+                'country_datas' => $country_datas,
+            ]);
+            return $new_row;
+        }
+    }
+
+    /**
+     * This function remove an existing academic entry
+     * @return
+     */
+    public function actionRemoveAcadamics() {
+        if (Yii::$app->request->isAjax) {
+            $id = $_POST['id'];
+            $model = CandidateEducation::find()->where(['id' => $id])->one();
+            $flag = 0;
+            if (!empty($model)) {
+                if ($model->delete()) {
+                    $flag = 1;
+                }
+            }
+            return $flag;
+        }
+    }
+
+    /**
+     * This function add new row for new work experience entry
+     * @return new row
+     */
+    public function actionGetExperience() {
+        if (Yii::$app->request->isAjax) {
+            $new_row = $this->renderPartial('experince_row', [
+            ]);
+            return $new_row;
+        }
+    }
+
+    /**
+     * This function remove existing work experience entry
+     * @return
+     */
+    public function actionRemoveExperience() {
+        if (Yii::$app->request->isAjax) {
+            $id = $_POST['id'];
+            $model = WorkExperiance::find()->where(['id' => $id])->one();
+            $flag = 0;
+            if (!empty($model)) {
+                if ($model->delete()) {
+                    $flag = 1;
+                }
+            }
+            return $flag;
+        }
+    }
+
+    /**
+     * Online CV View and contain options for download.
+     * @return mixed
+     */
+    public function actionOnlineCurriculumVitae() {
+        $id = Yii::$app->session['candidate']['id'];
+        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        return $this->render('cv', [
+                    'model' => $model,
+                    'model_education' => $model_education,
+                    'model_experience' => $model_experience,
+        ]);
+    }
+
+    public function actionReport() {
+        // get your HTML raw content without any layouts or scripts
+        $id = Yii::$app->session['candidate']['id'];
+        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $content = $this->renderPartial('_pdfview', [
+            'model' => $model,
+            'model_education' => $model_education,
+            'model_experience' => $model_experience,
+        ]);
+
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_CORE,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => Yii::$app->homeUrl . 'css/style.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            // set mPDF properties on the fly
+            'options' => ['title' => 'Krajee Report Title'],
+            // call mPDF methods on the fly
+            'methods' => [
+                'SetHeader' => ['Krajee Report Header'],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+
+        // return the pdf output as per the destination setting
+        return $pdf->render();
     }
 
 }

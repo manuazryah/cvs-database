@@ -1663,6 +1663,22 @@ label span{ color: #7d7d7d; font-weight: 500;}
     background: #0671a0;
     color: white;
 }
+#addexperience{
+    background: #0671a0;
+    color: white;
+}
 #ibtnDel{
     color: red;
+}
+#ibtnDele{
+    color: red;
+}
+.inner-tbl1 tr{
+    border:none;
+}
+.cv-downlod{
+    margin: 20px;
+}
+.cv-downlod h5{
+    padding-top: 5px;
 }

@@ -27,7 +27,7 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-md-3">
                         <div class="site-logo">
-                            <a href="index.php"><img src="images/home/site-logo.png" alt="" class="img-responsive" /></a>
+                            <a href="index.php"><img src="<?= Yii::$app->homeUrl ?>images/home/site-logo.png" alt="" class="img-responsive" /></a>
                         </div>
                     </div>
                     <div class="col-md-6">
