@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\CandidateSearch */
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="Resume">
                         <h1>My Account</h1>
                         <ul class="unstyled">
-                            <li class="active">
+                            <li>
                                 <?= Html::a('<i class="fa fa-caret-right"></i>  My Profile', ['index']) ?>
                             </li>
                             <li>
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <li>
                                 <?= Html::a('<i class="fa fa-caret-right"></i>  Online CV', ['online-curriculum-vitae']) ?>
                             </li>
-                            <li>
+                            <li class="active">
                                 <?= Html::a('<i class="fa fa-caret-right"></i>  Reset Password', ['reset-password']) ?>
                             </li>
                             <?php
@@ -52,6 +52,29 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <div class="col-md-9">
+                    <div class="job_title">Reset Your <span class="color">Password</span></div>
+                    <div class="profile-login-bg">
+                        <?= \common\widgets\Alert::widget(); ?>
+                        <?php
+                        $form = ActiveForm::begin();
+                        ?>
+                        <div class="row p_b30">
+                            <div class="col-md-4 col-sm-4">
+                                <?= $form->field($model, 'password')->passwordInput()->label('Old Password *') ?>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <?= $form->field($model, 'new_password')->passwordInput()->label('new_password *') ?>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <?= $form->field($model, 'confirm_password')->passwordInput()->label('confirm_password *') ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <?= Html::submitButton('Submit', ['class' => 'btn btn-large btn-default']) ?>
+                            <?= Html::a('Reset', ['reset-password'], ['class' => 'btn btn-large btn-default']) ?>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,19 +3,19 @@
 namespace frontend\controllers;
 
 use Yii;
-use common\models\CandidateProfile;
-use common\models\CandidateProfileSearch;
+use common\models\Employer;
+use common\models\EmployerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CandidateProfileController implements the CRUD actions for CandidateProfile model.
+ * EmployerController implements the CRUD actions for Employer model.
  */
-class CandidateProfileController extends Controller
+class EmployerController extends Controller
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -30,12 +30,12 @@ class CandidateProfileController extends Controller
     }
 
     /**
-     * Lists all CandidateProfile models.
+     * Lists all Employer models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CandidateProfileSearch();
+        $searchModel = new EmployerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,9 +45,10 @@ class CandidateProfileController extends Controller
     }
 
     /**
-     * Displays a single CandidateProfile model.
+     * Displays a single Employer model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
@@ -57,28 +58,29 @@ class CandidateProfileController extends Controller
     }
 
     /**
-     * Creates a new CandidateProfile model.
+     * Creates a new Employer model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new CandidateProfile();
+        $model = new Employer();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Updates an existing CandidateProfile model.
+     * Updates an existing Employer model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
@@ -86,18 +88,19 @@ class CandidateProfileController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Deletes an existing CandidateProfile model.
+     * Deletes an existing Employer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
@@ -107,18 +110,18 @@ class CandidateProfileController extends Controller
     }
 
     /**
-     * Finds the CandidateProfile model based on its primary key value.
+     * Finds the Employer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return CandidateProfile the loaded model
+     * @return Employer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = CandidateProfile::findOne($id)) !== null) {
+        if (($model = Employer::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

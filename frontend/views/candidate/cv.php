@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 ?>
 <div class="page_banner banner resume-banner">
     <div class="container">
@@ -243,29 +244,20 @@ use yii\helpers\Html;
                 </div>
                 <div class="col-md-4">
                     <div class="panel-body">
-                        <div class="job_title block1">
-                            Contact
-                        </div>
-                        <p></p>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Full Name" />
-                        </div>
-                        <div class="form-group">
-                            <input  type="tel" class="form-control" placeholder="Phone" />
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Email Address" />
-                        </div>
-                        <a href="#" class="btn btn-default btn-block">Submit Message</a>
                         <div class="row cv-downlod">
                             <div class="col-md-6 p-l"><h5>Download CV</h5></div>
                             <div class="col-md-6 p-r">
-                                <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" >', ['report'], ['target' => '_blank']) ?>
-                                <a href="#" class=""><img width="50" src="<?= Yii::$app->homeUrl ?>images/word-icon.png" ></a>
+                                <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" >', ['pdf-export'], ['target' => '_blank']) ?>
+                                <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/word-icon.png" >', ['word-export'], ['target' => '_blank']) ?>
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <a href="#" class="btn btn-cv btn-block">Upload Your CV</a>
+                        <?php $form = ActiveForm::begin(); ?>
+                        <div class="form-group">
+                            <?= $form->field($model, 'upload_resume')->fileInput(['style' => 'padding: 25px;'])->label(FALSE) ?>
+                        </div>
+                        <?= Html::submitButton('Upload Your CV', ['class' => 'btn btn-cv btn-block']) ?>
+                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>

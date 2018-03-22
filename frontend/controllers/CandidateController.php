@@ -504,6 +504,15 @@ class CandidateController extends Controller {
         $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
         $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
         $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        if ($model->load(Yii::$app->request->post())) {
+            $files = UploadedFile::getInstance($model, 'upload_resume');
+            if (isset($files) && !empty($files) && $model->id != '') {
+                $model->upload_resume = $files->extension;
+                if ($model->update()) {
+                    $files->saveAs(Yii::$app->basePath . '/../uploads/candidate/resume/' . $model->id . '.' . $files->extension);
+                }
+            }
+        }
         return $this->render('cv', [
                     'model' => $model,
                     'model_education' => $model_education,
@@ -511,7 +520,7 @@ class CandidateController extends Controller {
         ]);
     }
 
-    public function actionReport() {
+    public function actionPdfExport() {
         // get your HTML raw content without any layouts or scripts
         $id = Yii::$app->session['candidate']['id'];
         $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
@@ -522,8 +531,6 @@ class CandidateController extends Controller {
             'model_education' => $model_education,
             'model_experience' => $model_experience,
         ]);
-//        echo $content;
-//        exit;
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE,
@@ -535,13 +542,47 @@ class CandidateController extends Controller {
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => ''],
             'methods' => [
-                'SetHeader' => ['Online CV'],
+                'SetHeader' => ['Curriculum Vitae'],
                 'SetFooter' => ['{PAGENO}'],
             ]
         ]);
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         Yii::$app->response->headers->add('Content-Type', 'application/pdf');
         return $pdf->render();
+    }
+
+    /*
+     * Generate report based on service
+     */
+
+    public function actionWordExport() {
+        header("Content-type: application/vnd.ms-word");
+        header("Content-Disposition: attachment;Filename=cv.doc");
+        $id = Yii::$app->session['candidate']['id'];
+        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $content = $this->renderPartial('_wordview', [
+            'model' => $model,
+            'model_education' => $model_education,
+            'model_experience' => $model_experience,
+        ]);
+        echo $content;
+        exit;
+    }
+
+    /*
+     * Reset candidate Password
+     */
+
+    public function actionResetPassword() {
+        $model = new \common\models\ResetCandidatePassword();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            Yii::$app->session->setFlash('success', "Password Changed successfully.");
+        }
+        return $this->render('reset_password', [
+                    'model' => $model,
+        ]);
     }
 
 }

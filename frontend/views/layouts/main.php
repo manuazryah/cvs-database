@@ -42,27 +42,18 @@ AppAsset::register($this);
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav scrollto">
-                                    <li><a href="">Home</a></li>
-                                    <li><a href="register-employer.php">Employers</a></li>
-                                    <li><a href="register-jobseaker.php">Job Sekeers</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="contact.php">Contact Us</a></li>
-                                    <!--                                    <li class="dropdown">
-                                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Browse Jobs <i class="fa fa-angle-down"></i></a>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li><a href="manage_application.html">Manage Applications</a></li>
-                                                                                <li><a href="manage_job.html">Manage jobs</a></li>
-                                                                                <li><a href="job_listing.html">Job Listing</a></li>
-                                                                                <li><a href="job.html">Job Page</a></li>
-                                                                            </ul>
-                                                                        </li>-->
+                                    <li><?= Html::a('Home', ['/site/index']) ?></li>
+                                    <li><?= Html::a('Employers', ['/employer/index']) ?></li>
+                                    <li><?= Html::a('Job Sekeers', ['/site/index']) ?></li>
+                                    <li><?= Html::a('Blog', ['/site/index']) ?></li>
+                                    <li><?= Html::a('Contact Us', ['/site/index']) ?></li>
                                 </ul>
                             </div>
                         </nav>
                     </div>
                     <div class="col-md-3 text-right who">
-                        <a href="index.php" class="login active">Jobseeker</a>
-                        <a href="employer.php" class="signup">Employer</a>
+                        <?= Html::a('Jobseeker', ['/site/index'], ['class' => 'login active']) ?>
+                        <?= Html::a('Jobseeker', ['/employer/index'], ['class' => 'signup']) ?>
                     </div>
                 </div>
             </div>

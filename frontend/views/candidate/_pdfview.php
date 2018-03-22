@@ -2,7 +2,7 @@
     <section class="resume">
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="panel-body" style="border: solid 1px #e1e1e1;border-radius: 2px;padding: 22px;position: relative;margin-bottom: 20px;">
                         <table style="width: 100%">
                             <tr>
@@ -42,183 +42,223 @@
                             </tr>
                         </table>
                         <div class="clearfix"></div>
-                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 4px 30px 7px;"></div>
-                        <div class="col-md-12">
-                            <div class="page-heading">
-                                <h4>Job Status</h4>
-                                <div class="contact_details col-md-12 p-l">
-                                    <span><?= $model->job_status ?></span>
-                                </div>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Executive summary</h4>
-                                <div class="contact_details col-md-12 p-l">
-                                    <span><?= $model->executive_summary ?></span>
-                                </div>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Industry</h4>
-                                <div class="contact_details col-md-12 p-l">
-                                    <span>
-                                        <?php
-                                        $industry = explode(',', $model->industry);
-                                        $result = '';
-                                        $i = 0;
-                                        if (!empty($industry)) {
-                                            foreach ($industry as $val) {
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Job Status</strong></th>
+                            </tr>
+                            <tr>
+                                <td style="line-height: 30px;"><?= $model->job_status ?></td>
+                            </tr>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Executive summary</strong></th>
+                            </tr>
+                            <tr>
+                                <td style="line-height: 30px;"><?= $model->executive_summary ?></td>
+                            </tr>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Industry</strong></th>
+                            </tr>
+                            <tr>
+                                <td style="line-height: 30px;">
+                                    <?php
+                                    $industry = explode(',', $model->industry);
+                                    $result = '';
+                                    $i = 0;
+                                    if (!empty($industry)) {
+                                        foreach ($industry as $val) {
 
-                                                if ($i != 0) {
-                                                    $result .= ', ';
-                                                }
-                                                $industries = common\models\Industry::findOne($val);
-                                                $result .= $industries->industry_name;
-                                                $i++;
+                                            if ($i != 0) {
+                                                $result .= ', ';
                                             }
+                                            $industries = common\models\Industry::findOne($val);
+                                            $result .= $industries->industry_name;
+                                            $i++;
                                         }
-                                        echo $result;
-                                        ?>
-                                    </span>
-                                </div>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Key Skills</h4>
-                                <div class="contact_details col-md-12 p-l">
-                                    <span>
-                                        <?php
-                                        $skill = explode(',', $model->skill);
-                                        $result1 = '';
-                                        $i = 0;
-                                        if (!empty($skill)) {
-                                            foreach ($skill as $value) {
-
-                                                if ($i != 0) {
-                                                    $result1 .= ', ';
-                                                }
-                                                $skills = common\models\Skills::findOne($value);
-                                                $result1 .= $skills->skill;
-                                                $i++;
-                                            }
-                                        }
-                                        echo $result1;
-                                        ?>
-                                    </span>
-                                </div>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Work Experience</h4>
-                                <?php
-                                if (!empty($model_experience)) {
-                                    foreach ($model_experience as $experience) {
-                                        ?>
-                                        <div class="contact_details">
-                                            <span><strong><?= $experience->designation ?> at <?= $experience->company_name ?></strong></span>
-                                            <span>From : <?= date("M Y", strtotime($experience->from_date)) ?> to <?= date("M Y", strtotime($experience->to_date)) ?></span>
-                                            <span>Job Responsibilities:</span>
-                                            <span><?= $experience->job_responsibility ?></span>
-                                        </div>
-                                        <?php
                                     }
-                                }
-                                ?>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Education - Academic</h4>
-                                <?php
-                                if (!empty($model_education)) {
+                                    echo $result;
                                     ?>
-                                    <table class="table inner-tbl1">
-                                        <tr>
-                                            <th>Course Name</th>
-                                            <th>Colege/ University</th>
-                                            <th>Country</th>
-                                            <th>From Year</th>
-                                            <th>To Year</th>
-                                        </tr>
-                                        <?php foreach ($model_education as $education) { ?>
-                                            <tr>
-                                                <td><?= $education->course_name != '' ? \common\models\Courses::findOne($education->course_name)->cource_code : '' ?></td>
-                                                <td><?= $education->collage_university ?></td>
-                                                <td><?= $education->country != '' ? \common\models\Country::findOne($education->country)->country_name : '' ?></td>
-                                                <td><?= date("M Y", strtotime($education->from_year)) ?></td>
-                                                <td><?= date("M Y", strtotime($education->to_year)) ?></td>
-                                            </tr>
-                                        <?php }
-                                        ?>
-                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Key Skills</strong></th>
+                            </tr>
+                            <tr>
+                                <td style="line-height: 30px;">
+                                    <?php
+                                    $skill = explode(',', $model->skill);
+                                    $result1 = '';
+                                    $i = 0;
+                                    if (!empty($skill)) {
+                                        foreach ($skill as $value) {
+
+                                            if ($i != 0) {
+                                                $result1 .= ', ';
+                                            }
+                                            $skills = common\models\Skills::findOne($value);
+                                            $result1 .= $skills->skill;
+                                            $i++;
+                                        }
+                                    }
+                                    echo $result1;
+                                    ?>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Work Experience</strong></th>
+                            </tr>
+                            <?php
+                            if (!empty($model_experience)) {
+                                foreach ($model_experience as $experience) {
+                                    ?>
+                                    <tr>
+                                        <td style="line-height: 30px;">
+                                            <span><?= $experience->designation ?> at <?= $experience->company_name ?></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 30px;">
+                                            <span>From : <?= date("M Y", strtotime($experience->from_date)) ?> to <?= date("M Y", strtotime($experience->to_date)) ?></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 30px;">
+                                            <span>Job Responsibilities:</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height: 30px;">
+                                            <span><?= $experience->job_responsibility ?></span>
+                                        </td>
+                                    </tr>
                                     <?php
                                 }
+                            }
+                            ?>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th colspan="5" style="line-height: 30px;"><strong>Education - Academic</strong></th>
+                            </tr>
+                            <?php
+                            if (!empty($model_education)) {
                                 ?>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Interests/ Hobbies</h4>
-                                <div class="contact_details col-md-12 p-l">
-                                    <span><?= $model->hobbies ?></span>
-                                </div>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Extra Curricular Activities</h4>
-                                <div class="contact_details col-md-12 p-l">
-                                    <span><?= $model->extra_curricular_activities ?></span>
-                                </div>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Languages Known</h4>
-                                <div class="contact_details col-md-12 p-l">
-                                    <span>
-                                        <?php
-                                        $language = explode(',', $model->languages_known);
-                                        $result2 = '';
-                                        $i = 0;
-                                        if (!empty($language)) {
-                                            foreach ($language as $language_data) {
+                                <tr>
+                                    <th style="line-height: 35px;">Course Name</th>
+                                    <th style="line-height: 35px;">Colege/ University</th>
+                                    <th style="line-height: 35px;">Country</th>
+                                    <th style="line-height: 35px;">From Year</th>
+                                    <th style="line-height: 35px;">To Year</th>
+                                </tr>
+                                <?php foreach ($model_education as $education) { ?>
+                                    <tr>
+                                        <td><?= $education->course_name != '' ? \common\models\Courses::findOne($education->course_name)->cource_code : '' ?></td>
+                                        <td><?= $education->collage_university ?></td>
+                                        <td><?= $education->country != '' ? \common\models\Country::findOne($education->country)->country_name : '' ?></td>
+                                        <td><?= date("M Y", strtotime($education->from_year)) ?></td>
+                                        <td><?= date("M Y", strtotime($education->to_year)) ?></td>
+                                    </tr>
+                                <?php }
+                                ?>
+                                <?php
+                            }
+                            ?>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Interests/ Hobbies</strong></th>
+                            </tr>
+                            <tr>
+                                <td style="line-height: 30px;"><?= $model->hobbies ?></td>
+                            </tr>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Extra Curricular Activities</strong></th>
+                            </tr>
+                            <tr>
+                                <td style="line-height: 30px;"><?= $model->extra_curricular_activities ?></td>
+                            </tr>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Languages Known</strong></th>
+                            </tr>
+                            <tr>
+                                <td style="line-height: 30px;">
+                                    <?php
+                                    $language = explode(',', $model->languages_known);
+                                    $result2 = '';
+                                    $i = 0;
+                                    if (!empty($language)) {
+                                        foreach ($language as $language_data) {
 
-                                                if ($i != 0) {
-                                                    $result2 .= ', ';
-                                                }
-                                                $languages = common\models\Languages::findOne($language_data);
-                                                $result2 .= $languages->language;
-                                                $i++;
+                                            if ($i != 0) {
+                                                $result2 .= ', ';
                                             }
+                                            $languages = common\models\Languages::findOne($language_data);
+                                            $result2 .= $languages->language;
+                                            $i++;
                                         }
-                                        echo $result2;
-                                        ?>
-                                    </span>
-                                </div>
-                                <div class="borderfull-width"></div>
-                            </div>
-                            <div class="page-heading">
-                                <h4>Driving License</h4>
-                                <div class="contact_details col-md-12 p-l">
-                                    <span>
-                                        <?php
-                                        $driving_licence = explode(',', $model->driving_licences);
-                                        $result3 = '';
-                                        $i = 0;
-                                        if (!empty($driving_licence)) {
-                                            foreach ($driving_licence as $driving_licence_data) {
+                                    }
+                                    echo $result2;
+                                    ?>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="clearfix"></div>
+                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                        <table style="width: 100%">
+                            <tr>
+                                <th style="line-height: 30px;"><strong>Driving License</strong></th>
+                            </tr>
+                            <tr>
+                                <td style="line-height: 30px;">
+                                    <?php
+                                    $driving_licence = explode(',', $model->driving_licences);
+                                    $result3 = '';
+                                    $i = 0;
+                                    if (!empty($driving_licence)) {
+                                        foreach ($driving_licence as $driving_licence_data) {
 
-                                                if ($i != 0) {
-                                                    $result3 .= ', ';
-                                                }
-                                                $driving_licences = common\models\Country::findOne($driving_licence_data);
-                                                $result3 .= $driving_licences->country_name;
-                                                $i++;
+                                            if ($i != 0) {
+                                                $result3 .= ', ';
                                             }
+                                            $driving_licences = common\models\Country::findOne($driving_licence_data);
+                                            $result3 .= $driving_licences->country_name;
+                                            $i++;
                                         }
-                                        echo $result3;
-                                        ?>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                                    }
+                                    echo $result3;
+                                    ?>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div>

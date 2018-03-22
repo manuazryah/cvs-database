@@ -48,6 +48,7 @@ AppAsset::register($this);
                                             <li><?= Html::a('User Details', ['index']) ?></li>
                                             <li><?= Html::a('Profile Edit', ['update-profile']) ?></li>
                                             <li><?= Html::a('Online CV', ['online-curriculum-vitae']) ?></li>
+                                            <li><?= Html::a('Reset Password', ['reset-password']) ?></li>
                                         </ul>
                                     </li>
                                     <?php
