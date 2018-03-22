@@ -1,69 +1,69 @@
 /*************************************** Login Start *********************************************/
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900');
 body {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
 }
 .login-bg{
-        background: #3a75a5;
+    background: #3a75a5;
 
 
-        background-size: cover;
-        background-repeat: no-repeat;
-        overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
 }
 .log-layout #wrapper {
-        right: 0px;
-        margin: 0px auto;
-        padding-top: 5%;
-        max-width: 500px;
-        position: relative;
-        margin-top: 70px;
+    right: 0px;
+    margin: 0px auto;
+    padding-top: 5%;
+    max-width: 500px;
+    position: relative;
+    margin-top: 20px;
 
 }
 #login .login_content {
-        margin: 0 auto;
-        padding: 25px 0 0;
-        position: relative;
-        text-shadow: 0 1px 0 #fff;
-        min-width: 280px;
-        background: #fff;
-        padding: 42px 36px 5px 36px;
-        box-shadow: 0px 0px 50px rgba(0,0,0,0.2);
-        border-radius: 5px;
+    margin: 0 auto;
+    padding: 25px 0 0;
+    position: relative;
+    text-shadow: 0 1px 0 #fff;
+    min-width: 280px;
+    background: #fff;
+    padding: 42px 36px 5px 36px;
+    box-shadow: 0px 0px 50px rgba(0,0,0,0.2);
+    border-radius: 5px;
 }
 #login .login_content form {
-        margin: 20px 0;
-        position: relative;
+    margin: 20px 0;
+    position: relative;
 }
 #login .login_content form {
-        margin: 20px 0;
-        position: relative;
+    margin: 20px 0;
+    position: relative;
 }
 #login .login_content h1 {
-        font: normal 25px Helvetica, Arial, sans-serif;
-        letter-spacing: -0.05em;
-        line-height: 20px;
-        margin: 10px 0 30px;
-        font-family: 'Montserrat', sans-serif;
-        /* text-transform: uppercase; */
-        font-weight: 500;
-        color: #6b6b6b;
-        font-size: 15px;
-        /* float: left; */
-        text-align: left;
+    font: normal 25px Helvetica, Arial, sans-serif;
+    letter-spacing: -0.05em;
+    line-height: 20px;
+    margin: 10px 0 30px;
+    font-family: 'Montserrat', sans-serif;
+    /* text-transform: uppercase; */
+    font-weight: 500;
+    color: #6b6b6b;
+    font-size: 15px;
+    /* float: left; */
+    text-align: left;
 }
 *, *:before, *:after {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 #login .login_content h1:before, .login_content h1:after {
-        content: "";
-        height: 1px;
-        position: absolute;
-        top: 10px;
-        width: 20%;
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: 10px;
+    width: 20%;
 }
 /*#login .login_content h1:before {
         background: rgb(126, 126, 126);
@@ -92,48 +92,48 @@ body {
 }*/
 #login .login_content form div a {
 
-        font-size: 14px;
-        margin: 10px 15px 0 0;
-        color: #3a74a5;
+    font-size: 14px;
+    margin: 10px 15px 0 0;
+    color: #3a74a5;
 }
 .separator {
-        border-top: 1px solid #D8D8D8;
-        margin-top: 20px;
-        padding-top: 20px;
+    border-top: 1px solid #D8D8D8;
+    margin-top: 20px;
+    padding-top: 20px;
 }
 .log-layout .login_content form div a {
-        font-size: 12px;
-        margin: 10px 15px 0 0;
+    font-size: 12px;
+    margin: 10px 15px 0 0;
 }
 .log-layout a {
-        color: #5A738E;
-        text-decoration: none;
+    color: #5A738E;
+    text-decoration: none;
 }
 .log-layout .help-block{
-        text-align: left;
-        font-size: 12px;
+    text-align: left;
+    font-size: 12px;
 }
 .log-layout .form-group {
-        margin-bottom: 25px;
+    margin-bottom: 25px;
 }
 .log-layout .form-control{
-        height: 42px;
+    height: 42px;
 }
 .log-layout .submit{
-        padding: 10px 40px;
-        background-color: #3a74a5;
-        border-color: #3a74a5;
-        text-transform: uppercase;
-        font-weight: 600;
-        float: left;
-        color:#fff;
+    padding: 10px 40px;
+    background-color: #3a74a5;
+    border-color: #3a74a5;
+    text-transform: uppercase;
+    font-weight: 600;
+    float: left;
+    color:#fff;
 }
 .control-label{
-        display: inline-block;
-        max-width: 100%;
-        margin-bottom: 5px;
-        font-weight: 500;
-        text-align: left !important;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 500;
+    text-align: left !important;
 
 }
 
