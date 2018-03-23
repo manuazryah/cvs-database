@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use yii\web\Response;
+use common\models\PackagesSearch;
+use common\models\EmployerPackages;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -33,21 +35,14 @@ class EmployerController extends Controller {
         ];
     }
 
-    public function beforeAction($action) {
-        if (!parent::beforeAction($action)) {
-            return false;
-        }
-        if (!empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] != '') {
-            return $this->redirect(array('employer/home'));
-        }
-        return true;
-    }
-
     /**
      * Lists all Employer models.
      * @return mixed
      */
     public function actionIndex() {
+        if (!empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] != '') {
+            return $this->redirect(array('employer/home'));
+        }
         $this->layout = 'employer_login_dashboard';
         $model = new Employer();
         $model->scenario = 'login';
@@ -137,8 +132,7 @@ class EmployerController extends Controller {
     }
 
     public function actionHome() {
-
-        if (Yii::$app->user->isGuest) {
+        if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
             return $this->redirect(array('employer/index'));
         }
         return $this->render('dashboard');
@@ -209,7 +203,7 @@ class EmployerController extends Controller {
      */
     public function actionChangePassword() {
         $model = new \common\models\ChangeEmployerPassword();
-        $id = Yii::$app->user->identity->id;
+        $id = Yii::$app->session['employer_data']['id'];
         $user = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -239,6 +233,70 @@ class EmployerController extends Controller {
             $flag = 0;
         }
         $this->redirect(['/employer/index']);
+    }
+
+    /**
+     * Lists All Plans When the user not select any plan.Otherwise show the selected plan.
+     * @return mixed
+     */
+    public function actionUserPlans() {
+        if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
+            return $this->redirect(array('employer/index'));
+        }
+        $user_package = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
+        $searchModel = new PackagesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (empty($user_package)) {
+            return $this->render('user_plans', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            return $this->render('update_user_plans', [
+                        'user_package' => $user_package,
+            ]);
+        }
+    }
+
+    /**
+     * Add selected plans into user plans table.
+     * @return mixed
+     */
+    public function actionSelectPlan($id) {
+        if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
+            return $this->redirect(array('employer/index'));
+        }
+        $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
+        $package = \common\models\Packages::find()->where(['id' => $id])->one();
+        $model = new EmployerPackages();
+        $model->employer_id = Yii::$app->session['employer_data']['id'];
+        $model->package = $package->id;
+        $model->start_date = date('Y-m-d');
+        $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
+        $model->no_of_days = $package->no_of_days;
+        $model->no_of_days_left = $package->no_of_days;
+        $model->no_of_views = $package->no_of_profile_view;
+        $model->no_of_views_left = $package->no_of_profile_view;
+        $model->created_date = date('Y-m-d');
+        if ($model->save()) {
+            $this->PlanHistory($model, $package);
+            Yii::$app->session->setFlash('success', 'Plan selected successfully');
+            return $this->redirect(['/employer/user-plans']);
+        }
+    }
+
+    /**
+     * Add selected plans into user plans table.
+     * @return mixed
+     */
+    public function PlanHistory($model, $package) {
+        $plans = new \common\models\UserPlanHistory();
+        $plans->user_id = $model->employer_id;
+        $plans->plan = $package->id;
+        $plans->start_date = $model->start_date;
+        $plans->end_date = $model->end_date;
+        $plans->save();
+        return;
     }
 
 }

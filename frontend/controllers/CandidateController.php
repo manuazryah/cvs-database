@@ -585,4 +585,51 @@ class CandidateController extends Controller {
         ]);
     }
 
+    /*
+     * Add new industry suggetion from candidate side
+     */
+
+    public function actionAddIndustry() {
+        $model = new \common\models\Industry();
+        if (Yii::$app->request->post()) {
+            $model->industry_name = Yii::$app->request->post()['industry_name'];
+            if ($model->validate() && $model->save()) {
+                echo json_encode(array("con" => "1", 'id' => $model->id, 'name' => $model->industry_name)); //Success
+                exit;
+            } else {
+                $array = $model->getErrors();
+                $error = isset($array['name']['0']) ? $array['name']['0'] : 'Internal error';
+                echo json_encode(array("con" => "2", 'error' => $error));
+                exit;
+            }
+        }
+        return $this->renderAjax('add-industry', [
+                    'model' => $model,
+        ]);
+    }
+
+    /*
+     * Add new skills suggetion from candidate side
+     */
+
+    public function actionAddSkill() {
+        $model = new \common\models\Skills();
+        if (Yii::$app->request->post()) {
+            $model->industry = Yii::$app->request->post()['industry'];
+            $model->skill = Yii::$app->request->post()['skill'];
+            if ($model->validate() && $model->save()) {
+                echo json_encode(array("con" => "1", 'id' => $model->id, 'name' => $model->skill)); //Success
+                exit;
+            } else {
+                $array = $model->getErrors();
+                $error = isset($array['name']['0']) ? $array['name']['0'] : 'Internal error';
+                echo json_encode(array("con" => "2", 'error' => $error));
+                exit;
+            }
+        }
+        return $this->renderAjax('add-skill', [
+                    'model' => $model,
+        ]);
+    }
+
 }

@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use common\models\Country;
 use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
+use common\components\ModalViewWidget;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Candidate */
@@ -12,6 +14,22 @@ use kartik\date\DatePicker;
 $course_datas = common\models\Courses::find()->where(['status' => 1])->all();
 $country_datas = common\models\Country::find()->where(['status' => 1])->all();
 ?>
+<style>
+    .marg-bot-0 .form-group{
+        margin-bottom: 0px;
+    }
+    .candidate_prof_add{
+        background: white;
+        padding: 0px;
+        float: right;
+        border-color: white;
+        color: #067db1;
+        font-weight: 500;
+    }
+    .candidate_prof_add:hover{
+        color: #067db1;
+    }
+</style>
 <div class="page_banner banner employer-banner">
     <div class="container">
         <div class="row">
@@ -26,6 +44,9 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <?php
+                    echo ModalViewWidget::widget();
+                    ?>
                     <?php
                     $form = ActiveForm::begin([
                                 'options' => [
@@ -94,7 +115,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                     <div class="form-group col-md-12 p-l p-r">
                         <?= $form->field($model, 'executive_summary')->textarea(['rows' => 3]) ?>
                     </div>
-                    <div class="form-group col-md-12 p-l p-r">
+                    <div class="form-group col-md-12 p-l p-r marg-bot-0">
                         <?php
                         $skills = [];
                         if (isset($model->industry) && $model->industry != '') {
@@ -102,8 +123,9 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                             $skills = ArrayHelper::map(\common\models\Skills::find()->where(['in', 'industry', $model->industry])->all(), 'id', 'skill');
                         }
                         ?>
-                        <?php $industries = ArrayHelper::map(\common\models\Industry::findAll(['status' => 1]), 'id', 'industry_name'); ?>
+                        <?php $industries = ArrayHelper::map(\common\models\Industry::find()->where(['status' => 1])->andWhere(['>', 'id', 0])->all(), 'id', 'industry_name'); ?>
                         <?= $form->field($model, 'industry')->dropDownList($industries, ['prompt' => 'Choose Industry', 'multiple' => 'multiple']) ?>
+                        <?= Html::button('<span> Add Industry</span>', ['value' => Url::to('../candidate/add-industry'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
                         <?php
@@ -112,7 +134,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         }
                         ?>
                         <?= $form->field($model, 'skill')->dropDownList($skills, ['prompt' => 'Choose Skills', 'multiple' => 'multiple']) ?>
-                        <?php // $form->field($model, 'skill')->dropDownList(['prompt' => 'Choose Skill'], ['multiple' => 'multiple'])   ?>
+                        <?= Html::button('<span> Add Skills</span>', ['value' => Url::to('../candidate/add-skill'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
                         <?= $form->field($model, 'extra_curricular_activities')->textarea(['rows' => 3]) ?>
@@ -461,7 +483,12 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                 }
             });
         });
+        $(document).on('click', '.modalButton', function () {
 
+            $('#modal').modal('show')
+                    .find('#modalContent')
+                    .load($(this).attr("value"));
+        });
 
     });
 </script>

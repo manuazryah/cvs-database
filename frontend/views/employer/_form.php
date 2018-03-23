@@ -10,7 +10,6 @@ use yii\helpers\ArrayHelper;
 ?>
 
 <div class="employer-form">
-
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class='col-md-3 col-sm-6 col-xs-12'>

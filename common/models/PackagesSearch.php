@@ -10,13 +10,12 @@ use common\models\Packages;
 /**
  * PackagesSearch represents the model behind the search form about `common\models\Packages`.
  */
-class PackagesSearch extends Packages
-{
+class PackagesSearch extends Packages {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'no_of_days', 'no_of_profile_view', 'status', 'CB', 'UB'], 'integer'],
             [['package_name', 'DOC', 'DOU'], 'safe'],
@@ -27,8 +26,7 @@ class PackagesSearch extends Packages
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,14 +38,15 @@ class PackagesSearch extends Packages
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
-        $query = Packages::find();
+    public function search($params) {
+        $query = Packages::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => array('pageSize' => 20, 'params' => ['q' => $q, 'page' => Yii::$app->request->get('page'),
+                ],),
         ]);
 
         $this->load($params);
@@ -75,4 +74,5 @@ class PackagesSearch extends Packages
 
         return $dataProvider;
     }
+
 }

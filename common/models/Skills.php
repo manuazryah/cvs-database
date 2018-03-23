@@ -18,22 +18,21 @@ use Yii;
  *
  * @property Industry $industry0
  */
-class Skills extends \yii\db\ActiveRecord
-{
+class Skills extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'skills';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
+            [['skill'], 'required'],
             [['industry', 'status', 'CB', 'UB'], 'integer'],
             [['DOC', 'DOU'], 'safe'],
             [['skill'], 'string', 'max' => 100],
@@ -44,8 +43,7 @@ class Skills extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'industry' => 'Industry',
@@ -61,8 +59,8 @@ class Skills extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIndustry0()
-    {
+    public function getIndustry0() {
         return $this->hasOne(Industry::className(), ['id' => 'industry']);
     }
+
 }

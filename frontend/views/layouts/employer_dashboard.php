@@ -66,7 +66,7 @@ EmployerAsset::register($this);
                         <li>
                             <a href="">
                                 <i class="fa fa-tachometer"></i>
-                                <span class="title">Administration</span>
+                                <span class="title">Dashboard</span>
                             </a>
                             <ul>
                                 <li>
@@ -75,6 +75,9 @@ EmployerAsset::register($this);
 
                                 <li>
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Change Password', ['/employer/change-password'], ['class' => 'title']) ?>
+                                </li>
+                                <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Plan Details', ['/employer/user-plans'], ['class' => 'title']) ?>
                                 </li>
                             </ul>
                         </li>

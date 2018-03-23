@@ -18,22 +18,21 @@ use Yii;
  * @property string $DOC
  * @property string $DOU
  */
-class Packages extends \yii\db\ActiveRecord
-{
+class Packages extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'packages';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
+            [['no_of_days', 'no_of_profile_view', 'package_price', 'package_name'], 'required'],
             [['no_of_days', 'no_of_profile_view', 'status', 'CB', 'UB'], 'integer'],
             [['package_price'], 'number'],
             [['DOC', 'DOU'], 'safe'],
@@ -44,8 +43,7 @@ class Packages extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'package_name' => 'Package Name',
@@ -59,4 +57,5 @@ class Packages extends \yii\db\ActiveRecord
             'DOU' => 'Dou',
         ];
     }
+
 }
