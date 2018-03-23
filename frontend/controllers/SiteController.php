@@ -249,7 +249,7 @@ class SiteController extends Controller {
   <title>Email verification</title>
 </head>
 <body>
-  <p>Thank you very much for signing up at www.eazycheque.com !</p></br>
+  <p>Thank you very much for signing up at www.cv-database.com !</p></br>
 <p>Please click on the below link to verify your email address:</p>
   <table>
 
@@ -261,7 +261,7 @@ class SiteController extends Controller {
     </tr>
 
   </table>
-<p> For any queries/ support kindly email to info@gulfproaccountants.com</p>
+<p> For any queries/ support kindly email to info@cvdatabase.com</p>
 </body>
 </html>
 ';

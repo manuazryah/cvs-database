@@ -43,7 +43,7 @@ AppAsset::register($this);
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav scrollto">
                                     <li><a href="">Home</a></li>
-                                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="register-employer.php">My Account <i class=" fa fa-angle-down"></i></a>
+                                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">My Account <i class=" fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu">
                                             <li><?= Html::a('User Details', ['index']) ?></li>
                                             <li><?= Html::a('Profile Edit', ['update-profile']) ?></li>

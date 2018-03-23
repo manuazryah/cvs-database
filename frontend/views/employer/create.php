@@ -21,7 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <h1>Dear user, sign up to access the employer area!</h1>
                 <?= \common\widgets\Alert::widget(); ?>
-                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                <?php
+                $form = ActiveForm::begin([
+                            'id' => 'register-form',
+                            'enableAjaxValidation' => true,
+                ]);
+                ?>
                 <div class="row">
                     <div class="col-md-6">
                         <?= $form->field($model, 'first_name')->textInput(['autofocus' => '', 'placeholder' => 'First Name']) ?>

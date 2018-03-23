@@ -52,7 +52,11 @@ class Candidate extends ActiveRecord implements IdentityInterface {
     public function validatePassword($attribute, $params) {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
+            if (!$user) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            } elseif ($user->email_varification_status != 1) {
+                $this->addError($attribute, 'Your email id is not varified. Please check your mail.');
+            } elseif (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             } else {
                 Yii::$app->session['candidate'] = $user->attributes;
@@ -87,7 +91,7 @@ class Candidate extends ActiveRecord implements IdentityInterface {
 
     protected function getUser() {
         if ($this->_user === null) {
-            $this->_user = static::find()->where('user_name = :uname and status = :stat', ['uname' => $this->user_name, 'stat' => '1'])->one();
+            $this->_user = static::find()->where('user_name = :uname and status = :stat', ['uname' => $this->user_name, 'stat' => '1'])->orWhere('email = :uname and status = :stat', ['uname' => $this->user_name, 'stat' => '1'])->one();
         }
         return $this->_user;
     }

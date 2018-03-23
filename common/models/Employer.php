@@ -48,7 +48,7 @@ use yii\db\ActiveRecord;
             [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'update'],
             [['country', 'status'], 'integer'],
             [['address'], 'string'],
-            [['DOC', 'DOU'], 'safe'],
+            [['DOC', 'DOU', 'email_varification'], 'safe'],
             [['first_name', 'last_name', 'email', 'password', 'company_name', 'location', 'company_email', 'position'], 'string', 'max' => 100],
             [['phone', 'company_phone_number'], 'string', 'max' => 20],
             [['email'], 'unique', 'on' => 'create'],
@@ -62,10 +62,14 @@ use yii\db\ActiveRecord;
     public function validatePassword($attribute, $params) {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
+            if (!$user) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            } elseif ($user->email_varification != 1) {
+                $this->addError($attribute, 'Your email id is not varified. Please check your mail.');
+            } elseif (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             } else {
-                Yii::$app->session['user_data'] = $user->attributes;
+                Yii::$app->session['employer_data'] = $user->attributes;
             }
         }
     }

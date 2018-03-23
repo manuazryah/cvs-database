@@ -8,6 +8,8 @@ use common\models\EmployerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm;
+use yii\web\Response;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -31,14 +33,21 @@ class EmployerController extends Controller {
         ];
     }
 
+    public function beforeAction($action) {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        if (!empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] != '') {
+            return $this->redirect(array('employer/home'));
+        }
+        return true;
+    }
+
     /**
      * Lists all Employer models.
      * @return mixed
      */
     public function actionIndex() {
-        if (!Yii::$app->user->isGuest) {
-            return $this->redirect(array('employer/home'));
-        }
         $this->layout = 'employer_login_dashboard';
         $model = new Employer();
         $model->scenario = 'login';
@@ -72,18 +81,59 @@ class EmployerController extends Controller {
         $model = new Employer();
         $this->layout = 'employer_login_dashboard';
         $model->scenario = 'create';
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
         if ($model->load(Yii::$app->request->post())) {
             if ($model->isNewRecord) {
                 $model->password = Yii::$app->security->generatePasswordHash($model->password);
             }
             if ($model->validate() && $model->save()) {
-                return $this->redirect(['index']);
+                $this->sendMail($model);
+                Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
+//                return $this->redirect(['index']);
+                $model = new Employer();
             }
         }
 
         return $this->render('create', [
                     'model' => $model,
         ]);
+    }
+
+    public function sendMail($model) {
+        $to = $model->email;
+        $subject = 'Email verification';
+        echo $message = '
+<html>
+<head>
+
+  <title>Email verification</title>
+</head>
+<body>
+  <p>Thank you very much for signing up at www.cv-database.com !</p></br>
+<p>Please click on the below link to verify your email address:</p>
+  <table>
+
+    <tr>
+     <td style="padding: 30px 0px 30px 0px;"><a style=" background: #3498db; color: #ffffff;
+  font-size: 16px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none; background-image: -webkit-linear-gradient(top, #3498db, #2980b9); background-image: -moz-linear-gradient(top, #3498db, #2980b9);background-image: -ms-linear-gradient(top, #3498db, #2980b9);background-image: -o-linear-gradient(top, #3498db, #2980b9);background-image: linear-gradient(to bottom, #3498db, #2980b9);-webkit-border-radius: 28;-moz-border-radius: 28;" href="' . Yii::$app->homeUrl . 'employer/email-verification?token=' . $model->id . '" >Click here</a></td>
+    </tr>
+
+  </table>
+<p> For any queries/ support kindly email to info@cvdatabase.com</p>
+</body>
+</html>
+';
+        exit;
+        $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
+                "From: 'info@eazycheque.com";
+        mail($to, $subject, $message, $headers);
+        return true;
     }
 
     public function actionHome() {
@@ -148,7 +198,7 @@ class EmployerController extends Controller {
      * @return string
      */
     public function actionLogout() {
-        Yii::$app->user->logout();
+        unset(Yii::$app->session['employer_data']);
         return $this->redirect(['/site/index']);
     }
 
@@ -170,6 +220,25 @@ class EmployerController extends Controller {
                     'model' => $model,
                     'user' => $user,
         ]);
+    }
+
+    /**
+     * Employer Email Verification
+     *
+     * @return string
+     */
+    public function actionEmailVerification($token) {
+
+        $user_data = Employer::find()->where(['id' => $token])->one();
+        if (!empty($user_data)) {
+            $user_data->email_varification = 1;
+            $user_data->update();
+            $flag = 0;
+            Yii::$app->session->setFlash('success', 'your email id verified');
+        } else {
+            $flag = 0;
+        }
+        $this->redirect(['/employer/index']);
     }
 
 }
