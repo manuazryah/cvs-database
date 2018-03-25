@@ -111,6 +111,8 @@ class CandidateController extends Controller {
             $photo_ = $model->photo;
         }
         if ($model->load(Yii::$app->request->post())) {
+            var_dump(Yii::$app->request->post());
+            exit;
             $data = Yii::$app->request->post();
             $this->SetDatas($model);
             $files = UploadedFile::getInstance($model, 'photo');

@@ -12,6 +12,8 @@ use yii\widgets\ActiveForm;
 use yii\web\Response;
 use common\models\PackagesSearch;
 use common\models\EmployerPackages;
+use common\models\CandidateProfile;
+use common\models\CandidateProfileSearch;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -132,10 +134,16 @@ class EmployerController extends Controller {
     }
 
     public function actionHome() {
+        $searchModel = new CandidateProfileSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
             return $this->redirect(array('employer/index'));
         }
-        return $this->render('dashboard');
+        return $this->render('dashboard', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

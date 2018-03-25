@@ -658,3 +658,216 @@ a {
 .mrg-top-btn{
     margin-top: 37px;
 }
+
+/**************************** Employer Dashboard Start *********************************/
+.mailbox-env .box {
+    border: 1px solid #e1e1e1;
+    padding-top: 15px;
+    margin-bottom: 30px;
+}
+.mailbox-env .btn-default {
+    background-color: #2caef3;
+    padding: 8px 30px;
+    color: #fff;
+    border-radius: 0px;
+    font-weight: 300;
+    /* box-shadow: inset 0 -8px 5px -5px rgba(0,0,0,0.4); */
+    font-size: 16px;
+    letter-spacing: 1px;
+    border: none;
+}
+.shortlist-f-link {
+    background: #f3f5f4;
+}
+.f-right {
+    float: right;
+}
+.shortlist-f-link a {
+    color: #2caef3;
+    float: right;
+}
+.pbtm5 {
+    padding-bottom: 5px;
+}
+.ptop5 {
+    padding-top: 5px !important;
+}
+.btop {
+    border-top: 1px solid #e1e1e1;
+}
+.brit {
+    border-right: 1px solid #e1e1e1;
+}
+.top-box-btm p {
+    margin-bottom: 0px;
+    padding: 5px 0;
+    color: #7d7d7d;
+    font-size: 13px;
+    line-height: 26px;
+}
+.pad0 {
+    padding: 0px;
+}
+.txt-right {
+    text-align: right;
+}
+.blft {
+    border-left: 1px solid #e1e1e1;
+}
+.prit0 {
+    padding-right: 0px;
+}
+.p-l {
+    padding-left: 0px !important;
+}
+.page_listing {
+    overflow: hidden;
+    border-bottom: 0px;
+}
+.sorting_content {
+    border: solid 1px #e1e1e1;
+    padding-top: 15px;
+    overflow: hidden;
+    /* border-bottom: solid 1px #e1e1e1; */
+    margin-bottom: 15px;
+}
+.bottom_text {
+    overflow: hidden;
+}
+.candidate .sorting_content .button1 {
+    display: block;
+    text-align: center;
+    background: black;
+    color: white;
+    padding: 5px 0 0px 0;
+    cursor: initial;
+}
+.candidate .sorting_content .button2 {
+    display: block;
+    background: #0d96de;
+    color: white;
+    padding: 10px 0;
+    /* cursor: initial; */
+    margin-top: 10px;
+    position: relative;
+    text-align: center;
+}
+.candidate .sorting_content .button3 {
+    display: block;
+    background: #2caef3;
+    color: white;
+    padding: 10px 0;
+    /* cursor: initial; */
+    margin-top: 10px;
+    position: relative;
+    text-align: center;
+}
+.bottom-box {
+    display: inline-block;
+    border-top: 1px solid #e1e1e1;
+    padding: 7px 15px;
+    background: #f3f5f4;
+}
+.filter p{
+    padding-top: 3px;
+    color: #7d7d7d;
+    font-size: 13px;
+}
+.bottom_text p {
+    padding-top: 3px;
+    color: #7d7d7d;
+    font-size: 13px;
+    line-height: 27px;
+}
+.tab-image {
+    float: left;
+    text-align: center;
+    margin-right: 20px;
+}
+.text-shorting h1 {
+    font-size: 16px;
+    color: #333;
+    line-height: 22px;
+    font-weight: 500;
+    margin: 0px;
+}
+ul.unstyled {
+    margin: 0px;
+    padding: 0px;
+    line-height: 25px;
+}
+ul.unstyled li {
+    display: inline-block;
+    padding: 0 50px 0 0;
+    color: #7d7d7d;
+    font-size: 13px;
+}
+ul.unstyled li {
+    list-style: none;
+}
+.job-search .form-group {
+    margin-bottom: 20px;
+}
+.contact_details strong{
+    line-height: 35px;
+}
+.candidate .sorting_content .button1 span {
+    background: #1b71ba;
+    width: 100%;
+    display: block;
+    padding: 10px 0;
+    cursor: pointer;
+}
+.candidate .sorting_content .button2 span {
+    position: absolute;
+    top: 5px;
+    right: 30px;
+    /* float: left; */
+    color: #ffffff;
+}
+.candidate .sorting_content .button3 span {
+    position: absolute;
+    top: 13px;
+    right: 50px;
+    /* float: left; */
+    color: #ffffff;
+}
+.job_title {
+    color: #333;
+    font-size: 20px;
+    line-height: 33px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.borderfull-width {
+    border: solid 1px #e1e1e1;
+    position: relative;
+    overflow: hidden;
+    top: 15px;
+    margin-bottom: 35px;
+}
+.page-heading {
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+.page-heading span {
+    font-size: 14px;
+    color: #7d7d7d;
+}
+.color-drk {
+    color: black !important;
+}
+.page-heading p {
+    color: #7d7d7d;
+    font-size: 13px;
+    line-height: 26px;
+}
+.category {
+    overflow: hidden;
+}
+input[type=checkbox], input[type=radio] {
+    margin-top: 6px;
+    float: left;
+    margin-right: 10px;
+}
+/**************************** Employer Dashboard End *********************************/
