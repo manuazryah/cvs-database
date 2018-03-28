@@ -1421,9 +1421,9 @@ label span{ color: #7d7d7d; font-weight: 500;}
     z-index: 1;
     margin: 0 auto;
     text-align: center;
-    background: white;
+    /*background: white;*/
     padding: 0px;
-    box-shadow: 0px 0px 4px 1px #8e8d8d63;
+    /*box-shadow: 0px 0px 4px 1px #8e8d8d63;*/
 }
 .header-stricky .container{
     position: relative;
@@ -1681,4 +1681,27 @@ label span{ color: #7d7d7d; font-weight: 500;}
 }
 .cv-downlod h5{
     padding-top: 5px;
+}
+.btn-submit{
+    float: right;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #8BC34A;
+    padding: 10px 25px;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 500;
+    /* box-shadow: inset 0 -8px 5px -5px rgba(0,0,0,0.4); */
+    font-size: 16px;
+    letter-spacing: 1px;
+    border: none;
+}
+.btn-submit:hover{
+    color: #fff;
+}
+#experienceTable th{
+    padding: 10px;
+}
+#myTable th{
+    padding: 10px !important;
 }

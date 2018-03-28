@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use common\models\AdminPosts;
 use common\models\AdminUsers;
 use common\models\ForgotPasswordTokens;
+use common\models\LoginHistory;
 
 /**
  * Site controller
@@ -78,7 +79,7 @@ class SiteController extends Controller {
     public function setSession() {
         $post = AdminPosts::findOne(Yii::$app->user->identity->post_id);
         Yii::$app->session['post'] = $post->attributes;
-
+        Yii::$app->SetValues->setLoginHistory(Yii::$app->user->identity->id, 1);
         return true;
     }
 
@@ -117,8 +118,10 @@ class SiteController extends Controller {
      * @return string
      */
     public function actionLogout() {
+        Yii::$app->SetValues->updateLoginHistory();
         Yii::$app->user->logout();
-
+        unset(Yii::$app->session['log-history']);
+        unset(Yii::$app->session['post']);
         return $this->goHome();
     }
 

@@ -44,8 +44,7 @@ class CoursesSearch extends Courses {
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => array('pageSize' => 20, 'params' => ['q' => $q, 'page' => Yii::$app->request->get('page'),
-                ],),
+            'pagination' => array('pageSize' => 20),
         ]);
 
         $this->load($params);

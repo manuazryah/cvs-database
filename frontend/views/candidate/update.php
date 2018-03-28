@@ -125,7 +125,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         ?>
                         <?php $industries = ArrayHelper::map(\common\models\Industry::find()->where(['status' => 1])->andWhere(['>', 'id', 0])->all(), 'id', 'industry_name'); ?>
                         <?= $form->field($model, 'industry')->dropDownList($industries, ['prompt' => 'Choose Industry', 'multiple' => 'multiple']) ?>
-                        <?= Html::button('<span> Add Industry</span>', ['value' => Url::to('../candidate/add-industry'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
+                        <?= Html::button('<span> Not in the list ? Request New</span>', ['value' => Url::to('../candidate/add-industry'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
                         <?php
@@ -134,7 +134,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         }
                         ?>
                         <?= $form->field($model, 'skill')->dropDownList($skills, ['prompt' => 'Choose Skills', 'multiple' => 'multiple']) ?>
-                        <?= Html::button('<span> Add Skills</span>', ['value' => Url::to('../candidate/add-skill'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
+                        <?= Html::button('<span> Not in the list ? Request New</span>', ['value' => Url::to('../candidate/add-skill'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
                         <?= $form->field($model, 'extra_curricular_activities')->textarea(['rows' => 3]) ?>
@@ -160,7 +160,28 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="form-group col-md-6 p-r">
-                        <?= $form->field($model, 'photo')->fileInput(['maxlength' => true]) ?>
+                        <div class="col-md-6 p-l">
+                            <?php
+                            if ($model->photo != '') {
+                                $label = 'Change Photo';
+                            } else {
+                                $label = 'Photo';
+                            }
+                            ?>
+                            <?= $form->field($model, 'photo')->fileInput(['maxlength' => true])->label($label) ?>
+                        </div>
+                        <div class="col-md-6 p-r">
+                            <?php
+                            if ($model->photo != '') {
+                                $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                                if (file_exists($dirPath)) {
+                                    echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                } else {
+                                    echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                                }
+                            }
+                            ?>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <h4>Education - Academic</h4>
@@ -253,7 +274,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                     </div>
                     <br/>
                     <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
-                        <a id="addeducation" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add Education</a>
+                        <a id="addeducation" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add More</a>
                     </div><br/>
                     <div class="clearfix"></div>
                     <h4>Work Experience</h4>
@@ -324,10 +345,10 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                     </div>
                     <br/>
                     <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
-                        <a id="addexperience" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add Experience</a>
+                        <a id="addexperience" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add More</a>
                     </div><br/>
                     <div class="clearfix"></div>
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-default']) ?>
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-submit']) ?>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>

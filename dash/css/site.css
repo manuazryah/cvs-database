@@ -733,6 +733,7 @@ a {
 }
 .bottom_text {
     overflow: hidden;
+    margin-bottom: 25px;
 }
 .candidate .sorting_content .button1 {
     display: block;
@@ -869,5 +870,10 @@ input[type=checkbox], input[type=radio] {
     margin-top: 6px;
     float: left;
     margin-right: 10px;
+}
+.check-label label{
+    display: block !important;
+    clear: both !important;
+    color: #979898;
 }
 /**************************** Employer Dashboard End *********************************/

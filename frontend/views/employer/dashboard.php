@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ListView;
+use yii\widgets\Pjax;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\AdminUsersSearch */
@@ -21,21 +23,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 </div>
                 <div class="panel-body">
-
+                    <?= \common\widgets\Alert::widget() ?>
+                    <?php
+                    $form1 = ActiveForm::begin([
+                                'method' => 'post',
+                                'id' => 'filter-search',
+                    ]);
+                    ?>
                     <section class="mailbox-env">
                         <div class="row">
                             <div class="box">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="job-search">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Job title / keywords">
-                                            <div class="search_icon"><span class="ti-briefcase"></span></div>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="City / zip code">
-                                            <div class="search_icon"><span class="ti-location-pin"></span></div>
-                                        </div>
-                                        <a href="#" class="btn btn-default">Search</a>
+                                        <?= $form1->field($model_filter, 'keyword')->textInput(['placeholder' => 'Job title / keywords'])->label(FALSE) ?>
+                                        <?= $form1->field($model_filter, 'location')->textInput(['placeholder' => 'Country / City'])->label(FALSE) ?>
+                                        <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -56,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                             <div class="box ptop5">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 top-box-btm">
-                                    <div class="col-lg-4 brit"><p>Search Result : <span>Total 234,222 CVs Found</span></p></div>
+                                    <div class="col-lg-4 brit"><p>Search Result : <span>Total <?= $dataProvider->getTotalCount() ?> CVs Found</span></p></div>
                                     <div class="col-lg-8 pad0">
                                         <div class="col-lg-7"><p class="color-drk txt-center">You have 50/50 Credits for CV Download</p></div>
                                         <div class="col-lg-5 blft txt-right"><p>Your Credit Expiry on 03 Dec 2018</p></div>
@@ -67,200 +69,121 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 box">
-                                <div class="job_title">Categories</div>
+                                <div class="job_title">Industries</div>
                                 <div class="borderfull-width"></div>
                                 <div class="clearfix"></div>
-                                <div class="page-heading">
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Executive" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Executive">Executive</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Manager" name="ossm" checked="">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Manager">Manager</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Developer" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Developer">Developer</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Designer" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Designer">Designer</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Java" name="ossm" checked="">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Java">Java Developer</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Civil" name="ossm" checked="">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Civil">Civil Engineert</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Architect" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Architect">Architect</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Data" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Data">Data Entry Operator</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="SEO" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="SEO">SEO</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="hr" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="hr">HR </label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Assistent" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Assistent">Assistent Manager HR </label>
-                                        </div>
-                                    </div>
+                                <div class="page-heading check-label">
+                                    <?php
+                                    $industries = common\models\Industry::find()->where(['status' => 1])->andWhere(['<>', 'id', 0])->all();
+                                    $arr_industry = [];
+                                    if (!empty($industries)) {
+//                                        foreach ($industries as $industry) {
+//                                            $arr_industry[$industry['id']] = $industry['industry_name'];
+//                                        }
+                                        foreach ($industries as $industry) {
+                                            if ($model_filter->industries != '' && isset($model_filter->industries)) {
+                                                if (in_array($industry->id, $model_filter->industries)) {
+                                                    $check1 = 'checked';
+                                                } else {
+                                                    $check1 = '';
+                                                }
+                                            } else {
+                                                $check1 = '';
+                                            }
+                                            ?>
+                                            <label><input type="checkbox" <?= $check1 ?> name="CvFilter[industries][]" value="<?= $industry->id ?>"> <?= $industry->industry_name ?></label>
+                                            <?php
+                                        }
+                                    }
+//                                    echo $form1->field($model_filter, 'industries[]')->checkboxList($arr_industry, ['class' => 'check-label'])->label(FALSE);
+                                    ?>
                                 </div>
                                 <div class="job_title">Skills</div>
                                 <div class="borderfull-width"></div>
-                                <div class="page-heading">
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="PHP" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="PHP">PHP</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="HTML" name="ossm" checked="">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="HTML">HTML</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="CSS" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="CSS">CSS</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="JavaScript" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="JavaScript">JavaScript</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="jQueary" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="jQueary">jQueary</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="MySQL" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="MySQL">MySQL</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="Wordpress" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="Wordpress">Wordpress</label>
-                                        </div>
-                                    </div>
+                                <div class="page-heading check-label">
+                                    <?php
+                                    $skills = common\models\Skills::find()->where(['status' => 1])->andWhere(['<>', 'industry', 0])->all();
+                                    $arr_skill = [];
+                                    if (!empty($skills)) {
+//                                        foreach ($skills as $skill) {
+//                                            $arr_skill[$skill['id']] = $skill['skill'];
+//                                        }
+                                        foreach ($skills as $skill) {
+                                            if ($model_filter->skills != '' && isset($model_filter->skills)) {
+                                                if (in_array($skill->id, $model_filter->skills)) {
+                                                    $check2 = 'checked';
+                                                } else {
+                                                    $check2 = '';
+                                                }
+                                            } else {
+                                                $check2 = '';
+                                            }
+                                            ?>
+                                            <label><input type="checkbox" <?= $check2 ?> name="CvFilter[skills][]" value="<?= $skill->id ?>"> <?= $skill->skill ?></label>
+                                            <?php
+                                        }
+                                    }
+//                                    echo $form1->field($model_filter, 'skills[]')->checkboxList($arr_skill, ['class' => 'check-label'])->label(FALSE);
+                                    ?>
                                 </div>
                                 <div class="job_title">Job Type</div>
                                 <div class="borderfull-width"></div>
-                                <div class="page-heading">
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="cb_9" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="cb_9">All Type</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="cb_8" name="ossm" checked="">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="cb_8">Full Time</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="cb_7" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="cb_7">part Time</label>
-                                        </div>
-                                    </div>
-                                    <div class="category">
-                                        <div class="col-md-1 p-l p-r">
-                                            <input type="checkbox" id="cb_6" name="ossm">
-                                        </div>
-                                        <div class="col-md-11 p-l p-r">
-                                            <label for="cb_6">Freelancer</label>
-                                        </div>
-                                    </div>
+                                <div class="page-heading check-label">
+                                    <?php
+                                    $job_categories = common\models\JobType::find()->where(['status' => 1])->all();
+                                    $arr_job = [];
+                                    if (!empty($job_categories)) {
+                                        foreach ($job_categories as $job_category) {
+                                            if ($model_filter->job_types != '' && isset($model_filter->job_types)) {
+                                                if (in_array($job_category->id, $model_filter->job_types)) {
+                                                    $check2 = 'checked';
+                                                } else {
+                                                    $check2 = '';
+                                                }
+                                            } else {
+                                                $check2 = '';
+                                            }
+                                            ?>
+                                            <label><input type="checkbox" <?= $check2 ?> name="CvFilter[job_types][]" value="<?= $job_category->id ?>"> <?= $job_category->job_type ?></label>
+                                            <?php
+                                        }
+                                    }
+//                                    echo $form1->field($model_filter, 'job_types[]')->checkboxList($arr_job, ['class' => 'check-label'])->label(FALSE);
+                                    ?>
                                 </div>
                             </div>
+                            <?php // Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
                                 <div class="col-md-12 col-sm-12 p-l">
                                     <div class="page-heading">
-                                        <p><span class="color-drk">Your Search Filter</span>: "Sales", "UAE", "Dubai", "Male","1 year - 5year Experienced"</p>
+                                        <?php
+                                        $your_search_filter = '';
+                                        if (isset($model_filter->keyword) && $model_filter->keyword != '') {
+                                            $your_search_filter .= '"' . $model_filter->keyword . '", ';
+                                        }
+                                        if (isset($model_filter->location) && $model_filter->location != '') {
+                                            $your_search_filter .= '"' . $model_filter->location . '", ';
+                                        }
+                                        if (isset($model_filter->industries) && $model_filter->industries != '') {
+                                            foreach ($model_filter->industries as $indus_value) {
+                                                $your_search_filter .= '"' . common\models\Industry::findOne($indus_value)->industry_name . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->skills) && $model_filter->skills != '') {
+                                            foreach ($model_filter->skills as $skills_value) {
+                                                $your_search_filter .= '"' . common\models\Skills::findOne($skills_value)->skill . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->job_types) && $model_filter->job_types != '') {
+                                            foreach ($model_filter->job_types as $job_type_value) {
+                                                $your_search_filter .= '"' . common\models\JobType::findOne($job_type_value)->job_type . '", ';
+                                            }
+                                        }
+//                                        if ($your_search_filter != '') {
+//                                            $your_search_filter = rtrim($your_search_filter, ',');
+//                                        }
+                                        ?>
+                                        <p><span class="color-drk">Your Search Filter</span>: <?= $your_search_filter ?></p>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -275,10 +198,18 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                     </section>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('input[type="checkbox"]').change(function () {
+            $("#filter-search").submit();
+        });
+    });
+</script>
 
 

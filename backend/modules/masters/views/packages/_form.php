@@ -12,16 +12,19 @@ use yii\widgets\ActiveForm;
     <?= \common\widgets\Alert::widget() ?>
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-        <div class='col-md-3 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'package_name')->textInput(['maxlength' => true]) ?>
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'package_name')->textInput(['maxlength' => true]) ?>
 
         </div>
-        <div class='col-md-3 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'no_of_days')->textInput() ?>
+        <div class='col-md-2 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'no_of_days')->textInput() ?>
 
         </div>
-        <div class='col-md-3 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'no_of_profile_view')->textInput() ?>
+        <div class='col-md-2 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'no_of_profile_view')->textInput() ?>
 
         </div>
-        <div class='col-md-3 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'package_price')->textInput(['maxlength' => true]) ?>
+        <div class='col-md-2 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'package_price')->textInput(['maxlength' => true]) ?>
+
+        </div>
+        <div class='col-md-2 col-sm-6 col-xs-12 left_padd'>    <?= $form->field($model, 'no_of_downloads')->textInput(['maxlength' => true]) ?>
 
         </div>
     </div>

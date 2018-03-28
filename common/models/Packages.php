@@ -32,7 +32,7 @@ class Packages extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['no_of_days', 'no_of_profile_view', 'package_price', 'package_name'], 'required'],
+            [['no_of_days', 'no_of_profile_view', 'package_price', 'package_name', 'no_of_downloads'], 'required'],
             [['no_of_days', 'no_of_profile_view', 'status', 'CB', 'UB'], 'integer'],
             [['package_price'], 'number'],
             [['DOC', 'DOU'], 'safe'],
@@ -50,6 +50,7 @@ class Packages extends \yii\db\ActiveRecord {
             'no_of_days' => 'No Of Days',
             'no_of_profile_view' => 'No Of Profile View',
             'package_price' => 'Package Price',
+            'no_of_downloads' => 'No Of CV Downloads',
             'status' => 'Status',
             'CB' => 'Cb',
             'UB' => 'Ub',

@@ -150,4 +150,30 @@ class SetValues extends Component {
         }
     }
 
+    public function setLoginHistory($client_id, $type) {
+        $log_history = new \common\models\LoginHistory();
+        $log_history->client_id = $client_id;
+        $log_history->client_type = $type;
+        $log_history->ip_address = $_SERVER['REMOTE_ADDR'];
+        $geopluginURL = 'http://www.geoplugin.net/php.gp?ip=' . $log_history->ip_address;
+        $addrDetailsArr = unserialize(file_get_contents($geopluginURL));
+        $log_history->country = $addrDetailsArr['geoplugin_countryName'];
+        $log_history->log_in_time = date('Y-m-d h:i:s');
+        if ($log_history->save()) {
+            Yii::$app->session['log-history'] = $log_history->attributes;
+        }
+        return;
+    }
+
+    public function updateLoginHistory() {
+        if (!empty(Yii::$app->session['log-history']) && Yii::$app->session['log-history']['id'] != '') {
+            $model = \common\models\LoginHistory::find()->where(['id' => Yii::$app->session['log-history']['id']])->one();
+            if (!empty($model)) {
+                $model->log_out_time = date('Y-m-d h:i:s');
+                $model->update();
+            }
+        }
+        return;
+    }
+
 }

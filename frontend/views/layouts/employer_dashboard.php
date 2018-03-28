@@ -61,27 +61,16 @@ EmployerAsset::register($this);
 
 
                     </header>
-
                     <ul id="main-menu" class="main-menu">
                         <li>
-                            <a href="">
-                                <i class="fa fa-tachometer"></i>
-                                <span class="title">Dashboard</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Edit Profile', ['/employer/update'], ['class' => 'title']) ?>
-                                </li>
-
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Change Password', ['/employer/change-password'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Plan Details', ['/employer/user-plans'], ['class' => 'title']) ?>
-                                </li>
-                            </ul>
+                            <?= Html::a('<i class="fa fa-edit"></i> <span class="title">Edit Profile</span>', ['/employer/update'], ['class' => 'title']) ?>
                         </li>
-
+                        <li>
+                            <?= Html::a('<i class="fa fa-lock"></i> <span class="title">Change Password</span>', ['/employer/change-password'], ['class' => 'title']) ?>
+                        </li>
+                        <li>
+                            <?= Html::a('<i class="fa fa-list"></i> <span class="title">Plan Details</span>', ['/employer/user-plans'], ['class' => 'title']) ?>
+                        </li>
                     </ul>
                 </div>
 

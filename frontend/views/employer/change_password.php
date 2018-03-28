@@ -29,10 +29,10 @@ $this->title = 'Change Password';
                                 <?= $form->field($model, 'password')->passwordInput()->label('Old Password *') ?>
                             </div>
                             <div class="col-md-4 col-sm-4 col-xs-12">
-                                <?= $form->field($model, 'new_password')->passwordInput()->label('new_password *') ?>
+                                <?= $form->field($model, 'new_password')->passwordInput()->label('New Password *') ?>
                             </div>
                             <div class="ol-md-4 col-sm-4 col-xs-12">
-                                <?= $form->field($model, 'confirm_password')->passwordInput()->label('confirm_password *') ?>
+                                <?= $form->field($model, 'confirm_password')->passwordInput()->label('Confirm Password *') ?>
                             </div>
                         </div>
                         <div class="form-group ">

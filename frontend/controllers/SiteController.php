@@ -14,6 +14,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Candidate;
+use common\models\LoginHistory;
 
 /**
  * Site controller
@@ -89,7 +90,8 @@ class SiteController extends Controller {
         }
         if ($model->load(Yii::$app->request->post())) {
             if ($model->login()) {
-                return $this->redirect(['candidate/index']);
+                Yii::$app->SetValues->setLoginHistory(Yii::$app->session['candidate']['id'], 2);
+                return $this->redirect(['candidate/update-profile']);
             } else {
                 $flag = 0;
             }
@@ -242,7 +244,7 @@ class SiteController extends Controller {
         $subject = 'Email verification';
 
 // message
-        echo $message = '
+        $message = '
 <html>
 <head>
 
@@ -265,8 +267,7 @@ class SiteController extends Controller {
 </body>
 </html>
 ';
-        exit;
-
+//        exit;
 // To send HTML mail, the Content-type header must be set
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .

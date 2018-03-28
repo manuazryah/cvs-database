@@ -17,7 +17,7 @@ class PackagesSearch extends Packages {
      */
     public function rules() {
         return [
-            [['id', 'no_of_days', 'no_of_profile_view', 'status', 'CB', 'UB'], 'integer'],
+            [['id', 'no_of_days', 'no_of_profile_view', 'status', 'CB', 'UB', 'no_of_downloads'], 'integer'],
             [['package_name', 'DOC', 'DOU'], 'safe'],
             [['package_price'], 'number'],
         ];
@@ -45,8 +45,7 @@ class PackagesSearch extends Packages {
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => array('pageSize' => 20, 'params' => ['q' => $q, 'page' => Yii::$app->request->get('page'),
-                ],),
+            'pagination' => array('pageSize' => 20),
         ]);
 
         $this->load($params);
@@ -62,6 +61,7 @@ class PackagesSearch extends Packages {
             'id' => $this->id,
             'no_of_days' => $this->no_of_days,
             'no_of_profile_view' => $this->no_of_profile_view,
+            'no_of_downloads' => $this->no_of_downloads,
             'package_price' => $this->package_price,
             'status' => $this->status,
             'CB' => $this->CB,

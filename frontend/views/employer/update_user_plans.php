@@ -47,9 +47,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= $user_package->end_date ?></td>
                         </tr>
                         <tr>
-                            <th>Number of Days</th>
+                            <th>Number of Downloads</th>
                             <th>:</th>
-                            <td><?= $user_package->no_of_days ?></td>
+                            <td><?= $user_package->no_of_downloads ?></td>
                             <th>Number of Views</th>
                             <th>:</th>
                             <td><?= $user_package->no_of_views ?></td>
@@ -58,12 +58,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= $user_package->created_date ?></td>
                         </tr>
                         <tr>
-                            <th>Balnce Days</th>
+                            <th>Balance Downloads</th>
                             <th>:</th>
-                            <td><?= $user_package->no_of_days ?></td>
+                            <td><?= $user_package->no_of_downloads_left ?></td>
                             <th>Balance Views</th>
                             <th>:</th>
-                            <td><?= $user_package->no_of_views ?></td>
+                            <td><?= $user_package->no_of_views_left ?></td>
                             <th>:</th>
                             <th>Date of Updation</th>
                             <td><?= $user_package->updated_date ?></td>

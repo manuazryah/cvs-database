@@ -389,6 +389,9 @@ class CandidateController extends Controller {
      * @return mixed
      */
     public function actionLogout() {
+        Yii::$app->SetValues->updateLoginHistory();
+        Yii::$app->user->logout();
+        unset(Yii::$app->session['log-history']);
         unset(Yii::$app->session['candidate']);
         return $this->redirect(['site/index']);
     }
