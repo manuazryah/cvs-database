@@ -3,16 +3,16 @@
 namespace backend\modules\masters\controllers;
 
 use Yii;
-use common\models\JobStatus;
-use common\models\JobStatusSearch;
+use common\models\ExpectedSalary;
+use common\models\ExpectedSalarySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * JobStatusController implements the CRUD actions for JobStatus model.
+ * ExpectedSalaryController implements the CRUD actions for ExpectedSalary model.
  */
-class JobStatusController extends Controller {
+class ExpectedSalaryController extends Controller {
 
     /**
      * @inheritdoc
@@ -29,22 +29,23 @@ class JobStatusController extends Controller {
     }
 
     /**
-     * Lists all JobStatus models.
+     * Lists all ExpectedSalary models.
      * @return mixed
      */
     public function actionIndex($id = NULL) {
-        $searchModel = new JobStatusSearch();
-        if (isset($id) && $id != '')
+        $searchModel = new ExpectedSalarySearch();
+        if (isset($id) && $id != '') {
             $model = $this->findModel($id);
-        else
-            $model = new JobStatus();
+        } else {
+            $model = new ExpectedSalary();
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post()) && Yii::$app->SetValues->Attributes($model) && $model->save()) {
             if (isset($id) && $id != '')
                 Yii::$app->session->setFlash('success', "Updated Successfully");
             else
-                Yii::$app->session->setFlash('success', "Job Status created Successfully");
-            $model = new JobStatus();
+                Yii::$app->session->setFlash('success', "Salary Range created Successfully");
+            $model = new ExpectedSalary();
             return $this->redirect(['index']);
         }
         return $this->render('index', [
@@ -55,7 +56,7 @@ class JobStatusController extends Controller {
     }
 
     /**
-     * Displays a single JobStatus model.
+     * Displays a single ExpectedSalary model.
      * @param integer $id
      * @return mixed
      */
@@ -66,12 +67,12 @@ class JobStatusController extends Controller {
     }
 
     /**
-     * Creates a new JobStatus model.
+     * Creates a new ExpectedSalary model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate() {
-        $model = new JobStatus();
+        $model = new ExpectedSalary();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -83,7 +84,7 @@ class JobStatusController extends Controller {
     }
 
     /**
-     * Updates an existing JobStatus model.
+     * Updates an existing ExpectedSalary model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -101,7 +102,7 @@ class JobStatusController extends Controller {
     }
 
     /**
-     * Deletes an existing JobStatus model.
+     * Deletes an existing ExpectedSalary model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -113,14 +114,14 @@ class JobStatusController extends Controller {
     }
 
     /**
-     * Finds the JobStatus model based on its primary key value.
+     * Finds the ExpectedSalary model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return JobStatus the loaded model
+     * @return ExpectedSalary the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = JobStatus::findOne($id)) !== null) {
+        if (($model = ExpectedSalary::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

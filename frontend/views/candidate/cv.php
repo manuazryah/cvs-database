@@ -68,7 +68,7 @@ use yii\widgets\ActiveForm;
                             <div class="page-heading">
                                 <h4>Job Status</h4>
                                 <div class="contact_details col-md-12 p-l">
-                                    <span><?= $model->job_status ?></span>
+                                    <span><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                                 </div>
                                 <div class="borderfull-width"></div>
                             </div>
@@ -84,21 +84,23 @@ use yii\widgets\ActiveForm;
                                 <div class="contact_details col-md-12 p-l">
                                     <span>
                                         <?php
-                                        $industry = explode(',', $model->industry);
-                                        $result = '';
-                                        $i = 0;
-                                        if (!empty($industry)) {
-                                            foreach ($industry as $val) {
+                                        if ($model->industry != '') {
+                                            $industry = explode(',', $model->industry);
+                                            $result = '';
+                                            $i = 0;
+                                            if (!empty($industry)) {
+                                                foreach ($industry as $val) {
 
-                                                if ($i != 0) {
-                                                    $result .= ', ';
+                                                    if ($i != 0) {
+                                                        $result .= ', ';
+                                                    }
+                                                    $industries = common\models\Industry::findOne($val);
+                                                    $result .= $industries->industry_name;
+                                                    $i++;
                                                 }
-                                                $industries = common\models\Industry::findOne($val);
-                                                $result .= $industries->industry_name;
-                                                $i++;
                                             }
+                                            echo $result;
                                         }
-                                        echo $result;
                                         ?>
                                     </span>
                                 </div>
@@ -109,21 +111,23 @@ use yii\widgets\ActiveForm;
                                 <div class="contact_details col-md-12 p-l">
                                     <span>
                                         <?php
-                                        $skill = explode(',', $model->skill);
-                                        $result1 = '';
-                                        $i = 0;
-                                        if (!empty($skill)) {
-                                            foreach ($skill as $value) {
+                                        if ($model->skill != '') {
+                                            $skill = explode(',', $model->skill);
+                                            $result1 = '';
+                                            $i = 0;
+                                            if (!empty($skill)) {
+                                                foreach ($skill as $value) {
 
-                                                if ($i != 0) {
-                                                    $result1 .= ', ';
+                                                    if ($i != 0) {
+                                                        $result1 .= ', ';
+                                                    }
+                                                    $skills = common\models\Skills::findOne($value);
+                                                    $result1 .= $skills->skill;
+                                                    $i++;
                                                 }
-                                                $skills = common\models\Skills::findOne($value);
-                                                $result1 .= $skills->skill;
-                                                $i++;
                                             }
+                                            echo $result1;
                                         }
-                                        echo $result1;
                                         ?>
                                     </span>
                                 </div>
@@ -195,21 +199,23 @@ use yii\widgets\ActiveForm;
                                 <div class="contact_details col-md-12 p-l">
                                     <span>
                                         <?php
-                                        $language = explode(',', $model->languages_known);
-                                        $result2 = '';
-                                        $i = 0;
-                                        if (!empty($language)) {
-                                            foreach ($language as $language_data) {
+                                        if ($model->languages_known != '') {
+                                            $language = explode(',', $model->languages_known);
+                                            $result2 = '';
+                                            $i = 0;
+                                            if (!empty($language)) {
+                                                foreach ($language as $language_data) {
 
-                                                if ($i != 0) {
-                                                    $result2 .= ', ';
+                                                    if ($i != 0) {
+                                                        $result2 .= ', ';
+                                                    }
+                                                    $languages = common\models\Languages::findOne($language_data);
+                                                    $result2 .= $languages->language;
+                                                    $i++;
                                                 }
-                                                $languages = common\models\Languages::findOne($language_data);
-                                                $result2 .= $languages->language;
-                                                $i++;
                                             }
+                                            echo $result2;
                                         }
-                                        echo $result2;
                                         ?>
                                     </span>
                                 </div>
@@ -220,21 +226,23 @@ use yii\widgets\ActiveForm;
                                 <div class="contact_details col-md-12 p-l">
                                     <span>
                                         <?php
-                                        $driving_licence = explode(',', $model->driving_licences);
-                                        $result3 = '';
-                                        $i = 0;
-                                        if (!empty($driving_licence)) {
-                                            foreach ($driving_licence as $driving_licence_data) {
+                                        if ($model->driving_licences != '') {
+                                            $driving_licence = explode(',', $model->driving_licences);
+                                            $result3 = '';
+                                            $i = 0;
+                                            if (!empty($driving_licence)) {
+                                                foreach ($driving_licence as $driving_licence_data) {
 
-                                                if ($i != 0) {
-                                                    $result3 .= ', ';
+                                                    if ($i != 0) {
+                                                        $result3 .= ', ';
+                                                    }
+                                                    $driving_licences = common\models\Country::findOne($driving_licence_data);
+                                                    $result3 .= $driving_licences->country_name;
+                                                    $i++;
                                                 }
-                                                $driving_licences = common\models\Country::findOne($driving_licence_data);
-                                                $result3 .= $driving_licences->country_name;
-                                                $i++;
                                             }
+                                            echo $result3;
                                         }
-                                        echo $result3;
                                         ?>
                                     </span>
                                 </div>
@@ -252,15 +260,52 @@ use yii\widgets\ActiveForm;
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <?php $form = ActiveForm::begin(); ?>
-                        <div class="form-group">
-                            <?= $form->field($model, 'upload_resume')->fileInput(['style' => 'padding: 25px;'])->label(FALSE) ?>
-                        </div>
-                        <?= Html::submitButton('Upload Your CV', ['class' => 'btn btn-cv btn-block']) ?>
+                        <?php
+                        $form = ActiveForm::begin([
+                                    'method' => 'post',
+                                    'id' => 'cv-upload',
+                        ]);
+                        ?>
+                        <?php
+                        if ($model->upload_resume != '') {
+                            $label = 'Change Your CV';
+                        } else {
+                            $label = 'Upload Your CV';
+                        }
+                        ?>
+                        <label class="btn btn-cv btn-block"><?= $label ?><?= $form->field($model, 'upload_resume')->fileInput(['maxlength' => true, 'style' => 'display:none;'])->label(FALSE) ?></label>
+                        <?php // Html::submitButton('Upload Your CV', ['class' => 'btn btn-cv btn-block']) ?>
                         <?php ActiveForm::end(); ?>
+                        <?php
+                        if ($model->upload_resume != '') {
+                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
+                            if (file_exists($dirPath)) {
+                                ?>
+                                <a class="btn btn-downld" href="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>Download Uploded CV</span></a>
+                                <?php
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </main>
+<script type="text/javascript">
+    $('#candidateprofile-upload_resume').bind('change', function (e) {
+        var fileExtension = ['pdf', 'doc'];
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            alert("Only formats are allowed : " + fileExtension.join(', '));
+        } else {
+            var f = this.files[0]
+            if (f.size > 2097152 || f.fileSize > 2097152)
+            {
+                alert("Allowed file size exceeded. (Max. 2 MB)")
+                this.value = null;
+            } else {
+                $("#cv-upload").submit();
+            }
+        }
+    });
+</script>

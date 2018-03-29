@@ -69,7 +69,7 @@ EmployerAsset::register($this);
                             <?= Html::a('<i class="fa fa-lock"></i> <span class="title">Change Password</span>', ['/employer/change-password'], ['class' => 'title']) ?>
                         </li>
                         <li>
-                            <?= Html::a('<i class="fa fa-list"></i> <span class="title">Plan Details</span>', ['/employer/user-plans'], ['class' => 'title']) ?>
+                            <?= Html::a('<i class="fa fa-list"></i> <span class="title">Package Details</span>', ['/employer/user-plans'], ['class' => 'title']) ?>
                         </li>
                     </ul>
                 </div>

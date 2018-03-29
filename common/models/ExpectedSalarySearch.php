@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\JobStatus;
+use common\models\ExpectedSalary;
 
 /**
- * JobStatusSearch represents the model behind the search form about `common\models\JobStatus`.
+ * ExpectedSalarySearch represents the model behind the search form about `common\models\ExpectedSalary`.
  */
-class JobStatusSearch extends JobStatus {
+class ExpectedSalarySearch extends ExpectedSalary {
 
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class JobStatusSearch extends JobStatus {
     public function rules() {
         return [
             [['id', 'status', 'CB', 'UB'], 'integer'],
-            [['job_status', 'DOC', 'DOU'], 'safe'],
+            [['salary_range', 'DOC', 'DOU'], 'safe'],
         ];
     }
 
@@ -38,7 +38,7 @@ class JobStatusSearch extends JobStatus {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = JobStatus::find()->orderBy(['id' => SORT_DESC]);
+        $query = ExpectedSalary::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -65,7 +65,7 @@ class JobStatusSearch extends JobStatus {
             'DOU' => $this->DOU,
         ]);
 
-        $query->andFilterWhere(['like', 'job_status', $this->job_status]);
+        $query->andFilterWhere(['like', 'salary_range', $this->salary_range]);
 
         return $dataProvider;
     }

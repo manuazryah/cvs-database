@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel common\models\PackagesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Plan Details';
+$this->title = 'Package Details';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="packages-index">

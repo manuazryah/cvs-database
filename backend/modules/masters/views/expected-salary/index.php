@@ -5,13 +5,13 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\JobStatusSearch */
+/* @var $searchModel common\models\ExpectedSalarySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Job Statuses';
+$this->title = 'Salary Ranges';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="job-status-index">
+<div class="expected-salary-index">
 
     <div class="row">
         <div class="col-md-12">
@@ -34,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filterModel' => $searchModel,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-//                                                            'id',
-                            'job_status',
+//                            'id',
+                            'salary_range',
                             [
                                 'attribute' => 'status',
                                 'format' => 'raw',
@@ -44,9 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->status == 1 ? 'Enabled' : 'disabled';
                                 },
                             ],
-//                            'status',
-//                            'CB',
-//                            'UB',
+                            // 'CB',
+                            // 'UB',
                             // 'DOC',
                             // 'DOU',
                             ['class' => 'yii\grid\ActionColumn',

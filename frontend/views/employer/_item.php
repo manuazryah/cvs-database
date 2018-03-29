@@ -16,14 +16,47 @@ if (!empty($log_history)) {
 } else {
     $last_login = '';
 }
+$model_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->all();
+$tot_diff = 0;
+$month = 0;
+$year = 0;
+foreach ($model_experiences as $experiences) {
+    $date1 = $experiences->from_date;
+    $date2 = $experiences->to_date;
+
+    $ts1 = strtotime($date1);
+    $ts2 = strtotime($date2);
+
+    $year1 = date('Y', $ts1);
+    $year2 = date('Y', $ts2);
+
+    $month1 = date('m', $ts1);
+    $month2 = date('m', $ts2);
+    $tot_diff += (($year2 - $year1) * 12) + ($month2 - $month1);
+}
+if ($tot_diff > 0) {
+    $month = $tot_diff % 12;
+    $year = (int) ($tot_diff / 12);
+}
 ?>
 <div class="sorting_content">
     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
         <div class="overflow">
             <div class="bottom_text">
-                <div class="tab-image"><img src="images/candidates/candidate-2.png" alt="" class="img-responsive"></div>
+                <div class="tab-image">
+                    <?php
+                    if ($model->photo != '') {
+                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                        if (file_exists($dirPath)) {
+                            echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                        } else {
+                            echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                        }
+                    }
+                    ?>
+                </div>
                 <div class="text-shorting">
-                    <h1><?= $model->name ?></h1>
+                    <h1><strong><?= $model->name ?></strong></h1>
                     <ul class="unstyled">
                         <li><?= $model->title ?></li>
                     </ul>
@@ -36,7 +69,10 @@ if (!empty($log_history)) {
                 </div>
                 <p class="col-md-12 p-l"><?= $model->executive_summary ?></p>
                 <div class="contact_details col-md-12 col-sm-12 p-l">
-                    <span><strong>Job Status:</strong> <?= $model->job_status ?></span>
+                    <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
+                </div>
+                <div class="contact_details col-md-12 col-sm-12 p-l">
+                    <span><strong>Total Experience:</strong> <?= $year . ' Year ' . $month . ' Month' ?></span>
                 </div>
             </div>
         </div>

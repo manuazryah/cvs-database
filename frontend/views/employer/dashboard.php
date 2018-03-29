@@ -60,8 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 top-box-btm">
                                     <div class="col-lg-4 brit"><p>Search Result : <span>Total <?= $dataProvider->getTotalCount() ?> CVs Found</span></p></div>
                                     <div class="col-lg-8 pad0">
-                                        <div class="col-lg-7"><p class="color-drk txt-center">You have 50/50 Credits for CV Download</p></div>
-                                        <div class="col-lg-5 blft txt-right"><p>Your Credit Expiry on 03 Dec 2018</p></div>
+                                        <div class="col-lg-7"><p class="color-drk txt-center">You have <?= $user_plans->no_of_downloads_left ?>/<?= $user_plans->no_of_downloads ?> Credits for CV Download</p></div>
+                                        <div class="col-lg-5 blft txt-right"><p>Your Credit Expiry on <?= date("d M Y", strtotime($user_plans->end_date)) ?></p></div>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>

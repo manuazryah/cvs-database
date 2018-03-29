@@ -58,16 +58,28 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         <?= $form->field($model, 'title')->textInput() ?>
                     </div>
                     <div class="form-group col-md-6 p-r">
-                        <?php
-                        if ($model->photo != '') {
-                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
-                            if (file_exists($dirPath)) {
-                                echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                        <div class="col-md-6 p-l">
+                            <?php
+                            if ($model->photo != '') {
+                                $label = 'Change Photo';
                             } else {
-                                echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                                $label = 'Photo';
                             }
-                        }
-                        ?>
+                            ?>
+                            <?= $form->field($model, 'photo')->fileInput(['maxlength' => true])->label($label) ?>
+                        </div>
+                        <div class="col-md-6 p-r">
+                            <?php
+                            if ($model->photo != '') {
+                                $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                                if (file_exists($dirPath)) {
+                                    echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                } else {
+                                    echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                                }
+                            }
+                            ?>
+                        </div>
                     </div>
                     <div class="form-group col-md-6 p-l">
                         <?= $form->field($model, 'name')->textInput() ?>
@@ -103,14 +115,16 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         <?= $form->field($model, 'current_city')->dropDownList(['prompt' => '-Choose a City-']) ?>
                     </div>
                     <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'expected_salary')->textInput(['maxlength' => true]) ?>
+                        <?php $salaty_ranges = ArrayHelper::map(common\models\ExpectedSalary::findAll(['status' => 1]), 'id', 'salary_range'); ?>
+                        <?= $form->field($model, 'expected_salary')->dropDownList($salaty_ranges, ['prompt' => '-Choose expected salary-']) ?>
                     </div>
                     <div class="form-group col-md-6 p-r">
                         <?php $job_types = ArrayHelper::map(\common\models\JobType::findAll(['status' => 1]), 'id', 'job_type'); ?>
                         <?= $form->field($model, 'job_type')->dropDownList($job_types) ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
-                        <?= $form->field($model, 'job_status')->textInput(['maxlength' => true]) ?>
+                        <?php $jobstatus = ArrayHelper::map(common\models\JobStatus::findAll(['status' => 1]), 'id', 'job_status'); ?>
+                        <?= $form->field($model, 'job_status')->dropDownList($jobstatus, ['prompt' => '-Choose a Job Status-']) ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
                         <?= $form->field($model, 'executive_summary')->textarea(['rows' => 3]) ?>
@@ -160,28 +174,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="form-group col-md-6 p-r">
-                        <div class="col-md-6 p-l">
-                            <?php
-                            if ($model->photo != '') {
-                                $label = 'Change Photo';
-                            } else {
-                                $label = 'Photo';
-                            }
-                            ?>
-                            <?= $form->field($model, 'photo')->fileInput(['maxlength' => true])->label($label) ?>
-                        </div>
-                        <div class="col-md-6 p-r">
-                            <?php
-                            if ($model->photo != '') {
-                                $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
-                                if (file_exists($dirPath)) {
-                                    echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
-                                } else {
-                                    echo '<img width="100px" height="100" style="float: right;" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
-                                }
-                            }
-                            ?>
-                        </div>
+                        <?php // $form->field($model, 'total_experience')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="clearfix"></div>
                     <h4>Education - Academic</h4>
@@ -380,12 +373,14 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
         {
             $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
         });
+
         $("#candidateprofile-languages_known").select2({
             allowClear: true
         }).on('select2-open', function ()
         {
             $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
         });
+
         $(document).on('change', '#candidateprofile-industry', function () {
             var industry = $(this).val();
             $.ajax({

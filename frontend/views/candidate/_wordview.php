@@ -89,7 +89,7 @@
                                     <th style="line-height: 30px;"><strong>Job Status</strong></th>
                                 </tr>
                                 <tr>
-                                    <td style="line-height: 30px;"><?= $model->job_status ?></td>
+                                    <td style="line-height: 30px;"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></td>
                                 </tr>
                             </table>
                             <div class="clearfix"></div>
@@ -109,21 +109,23 @@
                                 <tr>
                                     <td style="line-height: 30px;">
                                         <?php
-                                        $industry = explode(',', $model->industry);
-                                        $result = '';
-                                        $i = 0;
-                                        if (!empty($industry)) {
-                                            foreach ($industry as $val) {
+                                        if ($model->industry != '') {
+                                            $industry = explode(',', $model->industry);
+                                            $result = '';
+                                            $i = 0;
+                                            if (!empty($industry)) {
+                                                foreach ($industry as $val) {
 
-                                                if ($i != 0) {
-                                                    $result .= ', ';
+                                                    if ($i != 0) {
+                                                        $result .= ', ';
+                                                    }
+                                                    $industries = common\models\Industry::findOne($val);
+                                                    $result .= $industries->industry_name;
+                                                    $i++;
                                                 }
-                                                $industries = common\models\Industry::findOne($val);
-                                                $result .= $industries->industry_name;
-                                                $i++;
                                             }
+                                            echo $result;
                                         }
-                                        echo $result;
                                         ?>
                                     </td>
                                 </tr>
@@ -136,21 +138,23 @@
                                 <tr>
                                     <td style="line-height: 30px;">
                                         <?php
-                                        $skill = explode(',', $model->skill);
-                                        $result1 = '';
-                                        $i = 0;
-                                        if (!empty($skill)) {
-                                            foreach ($skill as $value) {
+                                        if ($model->skill != '') {
+                                            $skill = explode(',', $model->skill);
+                                            $result1 = '';
+                                            $i = 0;
+                                            if (!empty($skill)) {
+                                                foreach ($skill as $value) {
 
-                                                if ($i != 0) {
-                                                    $result1 .= ', ';
+                                                    if ($i != 0) {
+                                                        $result1 .= ', ';
+                                                    }
+                                                    $skills = common\models\Skills::findOne($value);
+                                                    $result1 .= $skills->skill;
+                                                    $i++;
                                                 }
-                                                $skills = common\models\Skills::findOne($value);
-                                                $result1 .= $skills->skill;
-                                                $i++;
                                             }
+                                            echo $result1;
                                         }
-                                        echo $result1;
                                         ?>
                                     </td>
                                 </tr>
@@ -244,21 +248,23 @@
                                 <tr>
                                     <td style="line-height: 30px;">
                                         <?php
-                                        $language = explode(',', $model->languages_known);
-                                        $result2 = '';
-                                        $i = 0;
-                                        if (!empty($language)) {
-                                            foreach ($language as $language_data) {
+                                        if ($model->languages_known != '') {
+                                            $language = explode(',', $model->languages_known);
+                                            $result2 = '';
+                                            $i = 0;
+                                            if (!empty($language)) {
+                                                foreach ($language as $language_data) {
 
-                                                if ($i != 0) {
-                                                    $result2 .= ', ';
+                                                    if ($i != 0) {
+                                                        $result2 .= ', ';
+                                                    }
+                                                    $languages = common\models\Languages::findOne($language_data);
+                                                    $result2 .= $languages->language;
+                                                    $i++;
                                                 }
-                                                $languages = common\models\Languages::findOne($language_data);
-                                                $result2 .= $languages->language;
-                                                $i++;
                                             }
+                                            echo $result2;
                                         }
-                                        echo $result2;
                                         ?>
                                     </td>
                                 </tr>
@@ -271,21 +277,23 @@
                                 <tr>
                                     <td style="line-height: 30px;">
                                         <?php
-                                        $driving_licence = explode(',', $model->driving_licences);
-                                        $result3 = '';
-                                        $i = 0;
-                                        if (!empty($driving_licence)) {
-                                            foreach ($driving_licence as $driving_licence_data) {
+                                        if ($model->driving_licences != '') {
+                                            $driving_licence = explode(',', $model->driving_licences);
+                                            $result3 = '';
+                                            $i = 0;
+                                            if (!empty($driving_licence)) {
+                                                foreach ($driving_licence as $driving_licence_data) {
 
-                                                if ($i != 0) {
-                                                    $result3 .= ', ';
+                                                    if ($i != 0) {
+                                                        $result3 .= ', ';
+                                                    }
+                                                    $driving_licences = common\models\Country::findOne($driving_licence_data);
+                                                    $result3 .= $driving_licences->country_name;
+                                                    $i++;
                                                 }
-                                                $driving_licences = common\models\Country::findOne($driving_licence_data);
-                                                $result3 .= $driving_licences->country_name;
-                                                $i++;
                                             }
+                                            echo $result3;
                                         }
-                                        echo $result3;
                                         ?>
                                     </td>
                                 </tr>

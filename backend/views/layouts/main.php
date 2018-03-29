@@ -101,7 +101,13 @@ AppAsset::register($this);
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Skills', ['/masters/skills/index'], ['class' => 'title']) ?>
                                 </li>
                                 <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Job Status', ['/masters/job-status/index'], ['class' => 'title']) ?>
+                                </li>
+                                <li>
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Packages', ['/masters/packages/index'], ['class' => 'title']) ?>
+                                </li>
+                                <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Expected Salary', ['/masters/expected-salary/index'], ['class' => 'title']) ?>
                                 </li>
                             </ul>
                         </li>

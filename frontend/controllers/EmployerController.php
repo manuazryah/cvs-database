@@ -138,13 +138,14 @@ class EmployerController extends Controller {
     }
 
     public function actionHome() {
-        $searchModel = new CandidateProfileSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $model = new CvSearch();
-        $model_filter = new CvFilter();
         if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
             return $this->redirect(array('employer/index'));
         }
+        $searchModel = new CandidateProfileSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
+        $model = new CvSearch();
+        $model_filter = new CvFilter();
         if ($model_filter->load(Yii::$app->request->post())) {
             if ($model_filter->keyword != '') {
                 $dataProvider->query->andWhere(['title' => $model_filter->keyword]);
@@ -171,6 +172,7 @@ class EmployerController extends Controller {
                     'dataProvider' => $dataProvider,
                     'model' => $model,
                     'model_filter' => $model_filter,
+                    'user_plans' => $user_plans,
         ]);
     }
 
@@ -350,18 +352,13 @@ class EmployerController extends Controller {
             return $this->redirect(array('employer/index'));
         }
         $user_package = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
-        $searchModel = new PackagesSearch();
+        $searchModel = new \common\models\UserPlanHistorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if (empty($user_package)) {
-            return $this->render('user_plans', [
-                        'searchModel' => $searchModel,
-                        'dataProvider' => $dataProvider,
-            ]);
-        } else {
-            return $this->render('update_user_plans', [
-                        'user_package' => $user_package,
-            ]);
-        }
+        return $this->render('update_user_plans', [
+                    'user_package' => $user_package,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -374,19 +371,24 @@ class EmployerController extends Controller {
         }
         $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
         $package = \common\models\Packages::find()->where(['id' => $id])->one();
-        $model = new EmployerPackages();
-        $model->employer_id = Yii::$app->session['employer_data']['id'];
-        $model->package = $package->id;
-        $model->start_date = date('Y-m-d');
-        $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
-        $model->no_of_days = $package->no_of_days;
-        $model->no_of_days_left = $package->no_of_days;
-        $model->no_of_views = $package->no_of_profile_view;
-        $model->no_of_views_left = $package->no_of_profile_view;
-        $model->created_date = date('Y-m-d');
-        if ($model->save()) {
-            $this->PlanHistory($model, $package);
-            Yii::$app->session->setFlash('success', 'Plan selected successfully');
+        $model = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
+        if (!empty($model)) {
+            $model->package = $package->id;
+            $model->start_date = date('Y-m-d');
+            $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
+            $model->no_of_days = $package->no_of_days;
+            $model->no_of_days_left = $package->no_of_days;
+            $model->no_of_views = $package->no_of_profile_view;
+            $model->no_of_views_left = $package->no_of_profile_view;
+            $model->no_of_downloads = $package->no_of_downloads;
+            $model->no_of_downloads_left = $package->no_of_downloads;
+            $model->created_date = date('Y-m-d');
+            if ($model->save()) {
+                $this->PlanHistory($model, $package);
+                Yii::$app->session->setFlash('success', 'Plan selected successfully');
+                return $this->redirect(['/employer/user-plans']);
+            }
+        } else {
             return $this->redirect(['/employer/user-plans']);
         }
     }
@@ -415,15 +417,37 @@ class EmployerController extends Controller {
             return $this->redirect(Yii::$app->request->referrer);
             Yii::$app->session->setFlash('error', "You Can't view CVs.Please Select a Package");
         } else {
-            if ($packages->no_of_views_left >= 1) {
-                $packages->no_of_views_left = $packages->no_of_views_left - 1;
-                $packages->update();
-                return $this->redirect(['view-cvs', 'id' => $id]);
+            $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $id])->one();
+            if (empty($view_cv)) {
+                if ($packages->end_date >= date('Y-m-d')) {
+                    if ($packages->no_of_views_left >= 1) {
+                        $packages->no_of_views_left = $packages->no_of_views_left - 1;
+                        $packages->update();
+                        $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
+                        return $this->redirect(['view-cvs', 'id' => $id]);
+                    } else {
+                        Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
+                        return $this->redirect(Yii::$app->request->referrer);
+                    }
+                } else {
+                    Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
             } else {
-                Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
-                return $this->redirect(Yii::$app->request->referrer);
+                $view_cv->date_of_view = date('Y-m-d');
+                $view_cv->update();
+                return $this->redirect(['view-cvs', 'id' => $id]);
             }
         }
+    }
+
+    public function SaveViewHistory($employer, $candidate) {
+        $model = new \common\models\CvViewHistory();
+        $model->employer_id = $employer;
+        $model->candidate_id = $candidate;
+        $model->date_of_view = date('Y-m-d');
+        $model->save();
+        return;
     }
 
     public function actionViewCvs($id) {
@@ -435,6 +459,16 @@ class EmployerController extends Controller {
                     'model' => $model,
                     'model_education' => $model_education,
                     'model_experience' => $model_experience,
+        ]);
+    }
+
+    public function actionUpgradePackage() {
+        $searchModel = new PackagesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['!=', 'id', 1]);
+        return $this->render('user_plans', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 

@@ -733,7 +733,7 @@ a {
 }
 .bottom_text {
     overflow: hidden;
-    margin-bottom: 25px;
+    margin-bottom: 0px;
 }
 .candidate .sorting_content .button1 {
     display: block;
@@ -876,4 +876,12 @@ input[type=checkbox], input[type=radio] {
     clear: both !important;
     color: #979898;
 }
+.sorting_content strong{
+    color:#000000 !important;
+}
 /**************************** Employer Dashboard End *********************************/
+#pack-histry .panel-heading{
+    margin: 20px 0px;
+    border-bottom: none;
+    color: #000;
+}
