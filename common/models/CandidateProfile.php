@@ -44,15 +44,15 @@ class CandidateProfile extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['title', 'nationality', 'name', 'dob', 'gender'], 'required'],
-            [['candidate_id', 'nationality', 'current_country', 'job_type', 'gender', 'status', 'total_experience'], 'integer'],
-            [['candidate_id', 'nationality', 'current_country', 'job_type', 'gender'], 'integer'],
-            [['dob', 'date_of_updation', 'industry', 'skill', 'languages_known', 'driving_licences', 'current_city', 'upload_resume'], 'safe'],
-            [['executive_summary', 'extra_curricular_activities'], 'string'],
-            [['expected_salary', 'photo', 'job_status', 'title'], 'string', 'max' => 100],
-            [['hobbies'], 'string', 'max' => 200],
-            [['photo'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
-            [['candidate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Candidate::className(), 'targetAttribute' => ['candidate_id' => 'id']],
+                [['title', 'nationality', 'name', 'dob', 'gender'], 'required'],
+                [['candidate_id', 'nationality', 'current_country', 'job_type', 'gender', 'status', 'total_experience'], 'integer'],
+                [['candidate_id', 'nationality', 'current_country', 'job_type', 'gender', 'name_view'], 'integer'],
+                [['dob', 'date_of_updation', 'industry', 'skill', 'languages_known', 'driving_licences', 'current_city', 'upload_resume'], 'safe'],
+                [['executive_summary', 'extra_curricular_activities'], 'string'],
+                [['expected_salary', 'photo', 'job_status', 'title'], 'string', 'max' => 100],
+                [['hobbies'], 'string', 'max' => 200],
+                [['photo'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
+                [['candidate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Candidate::className(), 'targetAttribute' => ['candidate_id' => 'id']],
         ];
     }
 
@@ -81,6 +81,7 @@ class CandidateProfile extends \yii\db\ActiveRecord {
             'driving_licences' => 'Driving Licences',
             'title' => 'Title',
             'date_of_updation' => 'Date Of Updation',
+            'name_view' => 'Hide Name In Public',
         ];
     }
 

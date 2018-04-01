@@ -90,6 +90,7 @@ class EmployerController extends Controller {
                 $model->password = Yii::$app->security->generatePasswordHash($model->password);
             }
             if ($model->validate() && $model->save()) {
+                $this->addPackage($model);
                 $this->sendMail($model);
                 Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
 //                return $this->redirect(['index']);
@@ -100,6 +101,26 @@ class EmployerController extends Controller {
         return $this->render('create', [
                     'model' => $model,
         ]);
+    }
+
+    public function addPackage($data) {
+        $package = \common\models\Packages::findOne(1);
+        $model = new EmployerPackages();
+        $model->employer_id = $data->id;
+        $model->package = $package->id;
+        $model->start_date = date('Y-m-d');
+        $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
+        $model->no_of_days = $package->no_of_days;
+        $model->no_of_days_left = $package->no_of_days;
+        $model->no_of_views = $package->no_of_profile_view;
+        $model->no_of_views_left = $package->no_of_profile_view;
+        $model->no_of_downloads = $package->no_of_downloads;
+        $model->no_of_downloads_left = $package->no_of_downloads;
+        $model->created_date = date('Y-m-d');
+        if ($model->save()) {
+            $this->PlanHistory($model, $package);
+        }
+        return;
     }
 
     public function sendMail($model) {
@@ -354,6 +375,7 @@ class EmployerController extends Controller {
         $user_package = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         $searchModel = new \common\models\UserPlanHistorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['user_id' => Yii::$app->session['employer_data']['id']]);
         return $this->render('update_user_plans', [
                     'user_package' => $user_package,
                     'searchModel' => $searchModel,
@@ -470,6 +492,31 @@ class EmployerController extends Controller {
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionGetShortList() {
+        if (Yii::$app->request->isAjax) {
+            $candidate_id = $_POST['candidate_id'];
+            $data = $this->renderPartial('_form_short_list', [
+                'candidate_id' => $candidate_id,
+            ]);
+            echo $data;
+        }
+    }
+
+    public function actionSaveShortlist() {
+        if (Yii::$app->request->isAjax) {
+            $candidate_id = $_POST['candidate_id'];
+            $folder_name = $_POST['folder_name'];
+            $model = new \common\models\ShortList();
+            if (!empty(Yii::$app->session['employer_data']['id'] && $candidate_id)) {
+                $model->candidate_id = $candidate_id;
+                $model->employer_id = Yii::$app->session['employer_data']['id'];
+                $model->folder_name = $folder_name;
+                $model->short_list_date = date('Y-m-d');
+                $model->save();
+            }
+        }
     }
 
 }

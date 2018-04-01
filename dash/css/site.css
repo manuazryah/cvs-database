@@ -740,14 +740,14 @@ a {
     text-align: center;
     background: black;
     color: white;
-    padding: 5px 0 0px 0;
+    padding: 15px 0px 15px 0;
     cursor: initial;
 }
 .candidate .sorting_content .button2 {
     display: block;
     background: #0d96de;
     color: white;
-    padding: 10px 0;
+    padding: 15px 0;
     /* cursor: initial; */
     margin-top: 10px;
     position: relative;
@@ -757,7 +757,7 @@ a {
     display: block;
     background: #2caef3;
     color: white;
-    padding: 10px 0;
+    padding: 15px 0;
     /* cursor: initial; */
     margin-top: 10px;
     position: relative;
@@ -828,7 +828,7 @@ ul.unstyled li {
 }
 .candidate .sorting_content .button3 span {
     position: absolute;
-    top: 13px;
+    top: 18px;
     right: 50px;
     /* float: left; */
     color: #ffffff;
@@ -884,4 +884,18 @@ input[type=checkbox], input[type=radio] {
     margin: 20px 0px;
     border-bottom: none;
     color: #000;
+}
+#modal-6 .modal-dialog .modal-content {
+    padding: 22px 30px;
+    top: 50px;
+}
+#modal-6 .modal-header{
+    border-bottom: 2px solid #bfbebe;
+    min-height: 16.43px;
+}
+#modal-6 .modal-footer {
+    border-top: none !important;
+}
+#modal-6 .form-group {
+    margin-bottom: 0px;
 }

@@ -22,6 +22,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 
                 </div>
+                <!-- Modal 6 (Long Modal)-->
+                <div class="modal fade" id="modal-6">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                        </div>
+                    </div>
+                </div>
                 <div class="panel-body">
                     <?= \common\widgets\Alert::widget() ?>
                     <?php
@@ -209,7 +217,40 @@ $this->params['breadcrumbs'][] = $this->title;
         $('input[type="checkbox"]').change(function () {
             $("#filter-search").submit();
         });
-    });
+        $(document).on('click', '#short-list-modal', function (e) {
+            e.preventDefault();
+            var candidate_id = $(this).attr('data-val');
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id},
+                url: '<?= Yii::$app->homeUrl ?>employer/get-short-list',
+                success: function (data) {
+                    $(".modal-content").html(data);
+                    $('#modal-6').modal('show', {backdrop: 'static'});
+                }
+            });
+        });
+
+        $(document).on('submit', '#shortlist-form', function (e) {
+            alert('fef');
+            e.preventDefault();
+            var candidate_id = $('#shortlist-candate_id').val();
+            var folder_name = $('#shortlist-folder_name').val();
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id, folder_name: folder_name},
+                url: '<?= Yii::$app->homeUrl ?>employer/save-shortlist',
+                success: function (data) {
+                    $('#modal-6').modal('hide');
+                }
+            });
+        });
+    }
+    );
 </script>
 
 

@@ -81,14 +81,19 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                             ?>
                         </div>
                     </div>
-                    <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'name')->textInput() ?>
+                    <div class="form-group col-md-12 p-l p-r">
+                        <div class="form-group col-md-6 p-l">
+                            <?= $form->field($model, 'name')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-6 p-r" style="padding-top:34px;">
+                            <?= $form->field($model, 'name_view')->checkbox(); ?>
+                        </div>
                     </div>
-                    <div class="form-group col-md-6 p-r">
+                    <div class="form-group col-md-6 p-l">
                         <?php $gender = ArrayHelper::map(\common\models\Gender::findAll(['status' => 1]), 'id', 'gender'); ?>
                         <?= $form->field($model, 'gender')->dropDownList($gender) ?>
                     </div>
-                    <div class="form-group col-md-6 p-l">
+                    <div class="form-group col-md-6 p-r">
                         <?php
                         if (!isset($model->dob) && $model->dob != '') {
                             $model->dob = date('d-M-Y');
@@ -104,25 +109,25 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         ])->label('DOB');
                         ?>
                     </div>
-                    <div class="form-group col-md-6 p-r">
+                    <div class="form-group col-md-6 p-l">
                         <?php $countries = ArrayHelper::map(Country::findAll(['status' => 1]), 'id', 'country_name'); ?>
                         <?= $form->field($model, 'nationality')->dropDownList($countries, ['prompt' => '-Choose a Nationality-']) ?>
                     </div>
-                    <div class="form-group col-md-6 p-l">
+                    <div class="form-group col-md-6 p-r">
                         <?= $form->field($model, 'current_country')->dropDownList($countries, ['prompt' => '-Choose a Country-']) ?>
                     </div>
-                    <div class="form-group col-md-6 p-r">
+                    <div class="form-group col-md-6 p-l">
                         <?= $form->field($model, 'current_city')->dropDownList(['prompt' => '-Choose a City-']) ?>
                     </div>
-                    <div class="form-group col-md-6 p-l">
+                    <div class="form-group col-md-6 p-r">
                         <?php $salaty_ranges = ArrayHelper::map(common\models\ExpectedSalary::findAll(['status' => 1]), 'id', 'salary_range'); ?>
                         <?= $form->field($model, 'expected_salary')->dropDownList($salaty_ranges, ['prompt' => '-Choose expected salary-']) ?>
                     </div>
-                    <div class="form-group col-md-6 p-r">
+                    <div class="form-group col-md-6 p-l">
                         <?php $job_types = ArrayHelper::map(\common\models\JobType::findAll(['status' => 1]), 'id', 'job_type'); ?>
                         <?= $form->field($model, 'job_type')->dropDownList($job_types) ?>
                     </div>
-                    <div class="form-group col-md-12 p-l p-r">
+                    <div class="form-group col-md-6 p-r">
                         <?php $jobstatus = ArrayHelper::map(common\models\JobStatus::findAll(['status' => 1]), 'id', 'job_status'); ?>
                         <?= $form->field($model, 'job_status')->dropDownList($jobstatus, ['prompt' => '-Choose a Job Status-']) ?>
                     </div>

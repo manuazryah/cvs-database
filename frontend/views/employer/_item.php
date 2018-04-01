@@ -38,6 +38,11 @@ if ($tot_diff > 0) {
     $month = $tot_diff % 12;
     $year = (int) ($tot_diff / 12);
 }
+if ($model->name_view == 1) {
+    $name = '**********';
+} else {
+    $name = $model->name;
+}
 ?>
 <div class="sorting_content">
     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
@@ -56,9 +61,9 @@ if ($tot_diff > 0) {
                     ?>
                 </div>
                 <div class="text-shorting">
-                    <h1><strong><?= $model->name ?></strong></h1>
+                    <h1><strong><?= $name ?></strong></h1>
                     <ul class="unstyled">
-                        <li><?= $model->title ?></li>
+                        <li><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></li>
                     </ul>
                 </div>
                 <div class="contact_details col-md-4 col-sm-4 p-l">
@@ -80,7 +85,7 @@ if ($tot_diff > 0) {
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 p-l">
         <div class="button-box">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                <a href="" class="button1">Shortlist to Folder <br><span>CVs for sales</span></a>
+                <a href="" class="button1" id="short-list-modal" data-val="<?= $model->candidate_id ?>">Shortlist to Folder</a>
                 <a href="" class="button2">Quick Download <br><span><i class="fas fa-file-pdf"></i></span></a>
                 <?= Html::a('View CV <br><span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => $model->id], ['class' => 'button3']) ?>
             </div>
