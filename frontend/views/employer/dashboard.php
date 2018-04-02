@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div>
                                 <div class="col-lg-12 btop ptop5 pbtm5 shortlist-f-link">
                                     <div class="col-lg-4 pad0 f-right">
-                                        <a href="" class="">See Shortlisted CVs/ Folders<i class="fa fa-shortlist"></i></a>
+                                        <?= Html::a('See Shortlisted CVs/ Folders<i class="fa fa-shortlist"></i>', ['shortlist-folder'], ['target' => '_blank']) ?>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -234,7 +234,6 @@ $this->params['breadcrumbs'][] = $this->title;
         });
 
         $(document).on('submit', '#shortlist-form', function (e) {
-            alert('fef');
             e.preventDefault();
             var candidate_id = $('#shortlist-candate_id').val();
             var folder_name = $('#shortlist-folder_name').val();
@@ -246,6 +245,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 url: '<?= Yii::$app->homeUrl ?>employer/save-shortlist',
                 success: function (data) {
                     $('#modal-6').modal('hide');
+                    location.reload();
                 }
             });
         });

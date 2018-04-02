@@ -72,7 +72,7 @@ if ($model->name_view == 1) {
                 <div class="contact_details col-md-6 col-sm-6 p-l">
                     <span><strong>Currently:</strong> <?= $model->current_country != '' ? common\models\Country::findOne($model->current_country)->country_name : '' ?> <?= $model->current_city != '' ? ', ' . common\models\City::findOne($model->current_city)->city : '' ?></span>
                 </div>
-                <p class="col-md-12 p-l"><?= $model->executive_summary ?></p>
+                <p class="col-md-12 p-l"><?= strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary; ?></p>
                 <div class="contact_details col-md-12 col-sm-12 p-l">
                     <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                 </div>
@@ -85,7 +85,16 @@ if ($model->name_view == 1) {
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 p-l">
         <div class="button-box">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                <a href="" class="button1" id="short-list-modal" data-val="<?= $model->candidate_id ?>">Shortlist to Folder</a>
+                <?php
+                $shortlist = common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
+                if (empty($shortlist)) {
+                    ?>
+                    <a href="" class="button1" id="short-list-modal" data-val="<?= $model->candidate_id ?>">Shortlist to Folder</a>
+                <?php } else {
+                    ?>
+                    <p class="button1">Already Shortlisted</p>
+                <?php }
+                ?>
                 <a href="" class="button2">Quick Download <br><span><i class="fas fa-file-pdf"></i></span></a>
                 <?= Html::a('View CV <br><span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => $model->id], ['class' => 'button3']) ?>
             </div>

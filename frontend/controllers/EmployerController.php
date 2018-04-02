@@ -519,4 +519,11 @@ class EmployerController extends Controller {
         }
     }
 
+    public function actionShortlistFolder() {
+        $model = \common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->all();
+        return $this->render('shortlist-folder', [
+                    'model' => $model,
+        ]);
+    }
+
 }

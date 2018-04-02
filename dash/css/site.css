@@ -899,3 +899,10 @@ input[type=checkbox], input[type=radio] {
 #modal-6 .form-group {
     margin-bottom: 0px;
 }
+.cv-folder-list .fa-folder-open{
+    color: #ffcf67;
+    font-size: 25px;
+}
+.cv-folder-list .text-aln{
+    text-align: center;
+}

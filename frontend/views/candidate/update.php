@@ -199,41 +199,42 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                             </thead>
                             <tbody>
                                 <?php
-                                if (!empty($model_education)) {
-
+                                if (!empty($model_education) && !$model->isNewRecord) {
                                     foreach ($model_education as $data) {
-                                        ?>
-                                        <tr id="edurow-<?= $data->id; ?>">
-                                            <td>
-                                                <select class="form-control" name="updatee[<?= $data->id; ?>][course][]">
-                                                    <option value="">Select Course</option>
-                                                    <?php foreach ($course_datas as $course_data) { ?>
-                                                        <option value="<?= $course_data->id ?>" <?= $data->course_name == $course_data->id ? 'selected' : '' ?>><?= $course_data->course_name ?></option>
-                                                    <?php }
-                                                    ?>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][college][]" value="<?= $data->collage_university ?>">
-                                            </td>
-                                            <td>
-                                                <select class="form-control" name="updatee[<?= $data->id; ?>][country][]">
-                                                    <option value="">Select Country</option>
-                                                    <?php foreach ($country_datas as $country_data) { ?>
-                                                        <option value="<?= $country_data->id ?>" <?= $data->country == $country_data->id ? 'selected' : '' ?>><?= $country_data->country_name ?></option>
-                                                    <?php }
-                                                    ?>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="date" name="updatee[<?= $data->id; ?>][from_date][]" class="form-control" value="<?= $data->from_year ?>">
-                                            </td>
-                                            <td>
-                                                <input type="date" name="updatee[<?= $data->id; ?>][to_date][]" class="form-control" value="<?= $data->to_year ?>">
-                                            </td>
-                                            <td><a id="eduremove-<?= $data->id; ?>" class="eduremove"><i class="fa fa-remove"></i></a></td>
-                                        </tr>
-                                        <?php
+                                        if (!empty($data)) {
+                                            ?>
+                                            <tr id="edurow-<?= $data->id; ?>">
+                                                <td>
+                                                    <select class="form-control" name="updatee[<?= $data->id; ?>][course][]">
+                                                        <option value="">Select Course</option>
+                                                        <?php foreach ($course_datas as $course_data) { ?>
+                                                            <option value="<?= $course_data->id ?>" <?= $data->course_name == $course_data->id ? 'selected' : '' ?>><?= $course_data->course_name ?></option>
+                                                        <?php }
+                                                        ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][college][]" value="<?= $data->collage_university ?>">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="updatee[<?= $data->id; ?>][country][]">
+                                                        <option value="">Select Country</option>
+                                                        <?php foreach ($country_datas as $country_data) { ?>
+                                                            <option value="<?= $country_data->id ?>" <?= $data->country == $country_data->id ? 'selected' : '' ?>><?= $country_data->country_name ?></option>
+                                                        <?php }
+                                                        ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="updatee[<?= $data->id; ?>][from_date][]" class="form-control" value="<?= $data->from_year ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="updatee[<?= $data->id; ?>][to_date][]" class="form-control" value="<?= $data->to_year ?>">
+                                                </td>
+                                                <td><a id="eduremove-<?= $data->id; ?>" class="eduremove"><i class="fa fa-remove"></i></a></td>
+                                            </tr>
+                                            <?php
+                                        }
                                     }
                                 }
                                 ?>

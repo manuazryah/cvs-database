@@ -231,12 +231,14 @@ class CandidateController extends Controller {
             }
             foreach ($arr as $key => $value) {
                 $aditional = CandidateEducation::findOne($key);
-                $aditional->course_name = $value['course'];
-                $aditional->collage_university = $value['college'];
-                $aditional->country = $value['country'];
-                $aditional->from_year = $value['from_date'];
-                $aditional->to_year = $value['to_date'];
-                $aditional->save();
+                if (!empty($aditional)) {
+                    $aditional->course_name = $value['course'];
+                    $aditional->collage_university = $value['college'];
+                    $aditional->country = $value['country'];
+                    $aditional->from_year = $value['from_date'];
+                    $aditional->to_year = $value['to_date'];
+                    $aditional->save();
+                }
             }
         }
         return TRUE;

@@ -30,12 +30,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -72,9 +72,8 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $model_register = new Candidate();
+        $model_register = new \common\models\CandidateRegister();
         $model = new Candidate();
-        $model_register->scenario = 'create';
         $model->scenario = 'login';
         $flag = 1;
         if ($model_register->load(Yii::$app->request->post()) && $model_register->validate()) {
