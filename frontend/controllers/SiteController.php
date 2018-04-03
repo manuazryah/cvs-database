@@ -30,12 +30,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -82,7 +82,7 @@ class SiteController extends Controller {
             if ($model_register->save()) {
                 $model_register->user_id = sprintf("%05s", $model_register->id);
                 $model_register->update();
-                $this->sendMail($model);
+                $this->sendMail($model_register);
                 Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
                 $model_register = new Candidate();
             }
@@ -258,7 +258,7 @@ class SiteController extends Controller {
      <td style="padding: 30px 0px 30px 0px;"><a style=" background: #3498db; color: #ffffff;
   font-size: 16px;
   padding: 10px 20px 10px 20px;
-  text-decoration: none; background-image: -webkit-linear-gradient(top, #3498db, #2980b9); background-image: -moz-linear-gradient(top, #3498db, #2980b9);background-image: -ms-linear-gradient(top, #3498db, #2980b9);background-image: -o-linear-gradient(top, #3498db, #2980b9);background-image: linear-gradient(to bottom, #3498db, #2980b9);-webkit-border-radius: 28;-moz-border-radius: 28;" href="' . Yii::$app->homeUrl . 'site/email-verification?token=' . $model->id . '" >Click here</a></td>
+  text-decoration: none; background-image: -webkit-linear-gradient(top, #3498db, #2980b9); background-image: -moz-linear-gradient(top, #3498db, #2980b9);background-image: -ms-linear-gradient(top, #3498db, #2980b9);background-image: -o-linear-gradient(top, #3498db, #2980b9);background-image: linear-gradient(to bottom, #3498db, #2980b9);-webkit-border-radius: 28;-moz-border-radius: 28;" href="http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'site/email-verification?token=' . $model->id . '" >Click here</a></td>
     </tr>
 
   </table>

@@ -18,10 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
 
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+                <!--                <div class="panel-heading">
+                                    <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 
-                </div>
+                                </div>-->
                 <div class="panel-body">
                     <section class="resume">
                         <div class="">
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <tr>
                                                 <td style="width: 90%">
                                                     <table style="width: 100%">
-                                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?= $model->name ?></h4></strong></td></tr>
+                                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?php // $model->name  ?></h4></strong></td></tr>
                                                         <tr>
                                                             <td style="line-height: 30px;"><strong>Title : </strong><?= $model->title ?></td>
                                                             <td style="line-height: 30px;"><strong>Nationality : </strong><?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></td>

@@ -12,9 +12,8 @@ use yii\helpers\ArrayHelper;
 
 $this->title = 'Featured CVs';
 $this->params['breadcrumbs'][] = $this->title;
-$countries = ArrayHelper::map(common\models\Country::find()->all(), 'id', 'country_name');
-$cities = ArrayHelper::map(common\models\City::find()->all(), 'id', 'city');
-$items = array_merge($countries, $cities);
+$countries = common\models\Country::find()->all();
+$cities = common\models\City::find()->all();
 ?>
 <div class="admin-users-index">
 
@@ -49,26 +48,29 @@ $items = array_merge($countries, $cities);
                                     <div class="job-search">
                                         <?= $form1->field($model_filter, 'keyword')->textInput(['placeholder' => 'Job title / keywords'])->label(FALSE) ?>
                                         <div class="form-group field-cvfilter-location">
-                                            <select id="cvfilter-location" class="form-control select2-offscreen" name="CvFilter[location][]" multiple="multiple" size="4" tabindex="-1">
-                                                <option value="">-Choose a country / City-</option>
+                                            <label class="control-label" for="cvfilter-location">Location</label>
+                                            <select id="cvfilter-location" class="form-control" name="CvFilter[location]" multiple="multiple">
+                                                <option value="">-Choose Country / City-</option>
                                                 <?php
-                                                if (!empty($items)) {
-                                                    foreach ($items as $item) {
-                                                        $select = '';
-                                                        if (isset($model_filter->location) && $model_filter->location != '') {
-                                                            if (in_array($item, $model_filter->location)) {
-                                                                $select = 'selected="selected"';
-                                                            }
-                                                        }
+                                                if (!empty($countries)) {
+                                                    foreach ($countries as $country) {
                                                         ?>
-                                                        <option value="<?= $item ?>" <?= $select ?>><?= $item ?></option>
+                                                        <option value="<?= $country->country_name ?>"><?= $country->country_name ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                                if (!empty($cities)) {
+                                                    foreach ($cities as $city) {
+                                                        ?>
+                                                        <option value="<?= $city->city ?>"><?= $city->city ?></option>
                                                         <?php
                                                     }
                                                 }
                                                 ?>
                                             </select>
+                                            <div class="help-block"></div>
                                         </div>
-                                        <?php // $form1->field($model_filter, 'location')->textInput(['placeholder' => 'Country / City'])->label(FALSE)   ?>
+                                        <?php // $form1->field($model_filter, 'location')->textInput(['placeholder' => 'Country / City'])->label(FALSE)  ?>
                                         <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                                     </div>
                                 </div>
@@ -280,7 +282,7 @@ $items = array_merge($countries, $cities);
                                     ?>
                                 </div>
                             </div>
-                            <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])      ?>
+                            <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])    ?>
                             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
                                 <div class="col-md-12 col-sm-12 p-l">
                                     <div class="page-heading">
@@ -290,9 +292,7 @@ $items = array_merge($countries, $cities);
                                             $your_search_filter .= '"' . $model_filter->keyword . '", ';
                                         }
                                         if (isset($model_filter->location) && $model_filter->location != '') {
-                                            foreach ($model_filter->location as $loc_value) {
-                                                $your_search_filter .= '"' . $loc_value . '", ';
-                                            }
+                                            $your_search_filter .= '"' . $model_filter->location . '", ';
                                         }
                                         if (isset($model_filter->industries) && $model_filter->industries != '') {
                                             foreach ($model_filter->industries as $indus_value) {
@@ -309,6 +309,9 @@ $items = array_merge($countries, $cities);
                                                 $your_search_filter .= '"' . common\models\JobType::findOne($job_type_value)->job_type . '", ';
                                             }
                                         }
+//                                        if ($your_search_filter != '') {
+//                                            $your_search_filter = rtrim($your_search_filter, ',');
+//                                        }
                                         ?>
                                         <p><span class="color-drk">Your Search Filter</span>: <?= $your_search_filter ?></p>
                                     </div>
@@ -371,9 +374,9 @@ $items = array_merge($countries, $cities);
     }
     );
 </script>
-<link rel="stylesheet" href="<?= Yii::$app->homeUrl; ?>css/select2.css">
-<link rel="stylesheet" href="<?= Yii::$app->homeUrl; ?>css/select2-bootstrap.css">
-<script src="<?= Yii::$app->homeUrl; ?>js/select2.min.js"></script>
+<link rel="stylesheet" href="<?= Yii::$app->homeUrl; ?>dash/css/select2.css">
+<link rel="stylesheet" href="<?= Yii::$app->homeUrl; ?>dash/css/select2-bootstrap.css">
+<script src="<?= Yii::$app->homeUrl; ?>dash/js/select2.min.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function ($)
     {
@@ -383,7 +386,6 @@ $items = array_merge($countries, $cities);
         {
             $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
         });
-
     });
 </script>
 

@@ -43,6 +43,12 @@ if ($model->name_view == 1) {
 } else {
     $name = $model->name;
 }
+$short_list_data = \common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
+if (count($short_list_data) > 0) {
+    $msg = count($short_list_data) . ' Other Employers Shortlisted this CV';
+} else {
+    $msg = 'No Other Employers Shortlisted this CV';
+}
 ?>
 <div class="sorting_content">
     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
@@ -92,10 +98,10 @@ if ($model->name_view == 1) {
                     <a href="" class="button1" id="short-list-modal" data-val="<?= $model->candidate_id ?>">Shortlist to Folder</a>
                 <?php } else {
                     ?>
-                    <p class="button1">Already Shortlisted</p>
+                    <p class="button5">Already Shortlisted</p>
                 <?php }
                 ?>
-                <a href="" class="button2">Quick Download <br><span><i class="fas fa-file-pdf"></i></span></a>
+                <?= Html::a('Quick Download <br><span><i class="fas fa-file-pdf"></i>', ['quick-download', 'id' => $model->id], ['class' => 'button2']) ?>
                 <?= Html::a('View CV <br><span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => $model->id], ['class' => 'button3']) ?>
             </div>
         </div>
@@ -105,7 +111,7 @@ if ($model->name_view == 1) {
             <span><i>Last Logged in : <?= $last_login ?></i></span>
         </div>
         <div class="last-login col-md-6 col-sm-6 p-l">
-            <span><em>4 Other Employers Shortlisted this CV</em></span>
+            <span><em><?= $msg ?></em></span>
         </div>
     </div>
 </div>

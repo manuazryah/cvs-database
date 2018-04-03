@@ -741,7 +741,7 @@ a {
     background: black;
     color: white;
     padding: 15px 0px 15px 0;
-    cursor: initial;
+    cursor: pointer;
 }
 .candidate .sorting_content .button2 {
     display: block;
@@ -762,6 +762,13 @@ a {
     margin-top: 10px;
     position: relative;
     text-align: center;
+}
+.button5 {
+    text-align: center;
+    color: #4CAF50;
+    padding: 15px 0;
+    margin-top: 10px;
+    font-weight: 600;
 }
 .bottom-box {
     display: inline-block;
@@ -835,10 +842,10 @@ ul.unstyled li {
 }
 .job_title {
     color: #333;
-    font-size: 20px;
-    line-height: 33px;
+    font-size: 15px;
+    line-height: 10px;
     font-weight: 500;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 .borderfull-width {
     border: solid 1px #e1e1e1;
@@ -905,4 +912,19 @@ input[type=checkbox], input[type=radio] {
 }
 .cv-folder-list .text-aln{
     text-align: center;
+}
+.cv-folder-list .text-aln .folder-box{
+    border: 1px solid #e8e8e8;
+    padding: 10px 0px;
+    max-height: 65px;
+    position: relative;
+}
+.cv-folder-list .text-aln .folder-box .folder-box-remove{
+    position: absolute;
+    right: 3px;
+    top: 2px;
+}
+.cv-folder-list .fa-file-word-o {
+    color: #2196F3;
+    font-size: 32px;
 }

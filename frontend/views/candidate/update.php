@@ -296,7 +296,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
 //                                exit;
                                 if (!empty($model_experience)) {
                                     foreach ($model_experience as $datas) {
-                                        if ($datas->id != '') {
+                                        if ($datas) {
                                             ?>
                                             <tr id="exprow-<?= $datas->id; ?>">
                                                 <td>

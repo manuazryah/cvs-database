@@ -41,7 +41,7 @@ class Candidate extends ActiveRecord implements IdentityInterface {
         return [
             [['email', 'user_name', 'password', 'password_repeat'], 'required', 'on' => 'create'],
             [['status', 'email_varification_status'], 'integer'],
-            [['date_of_creation', 'date_of_updation'], 'safe'],
+            [['date_of_creation', 'date_of_updation', 'phone'], 'safe'],
             [['email', 'user_name', 'password', 'user_id'], 'string', 'max' => 100],
             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match", 'on' => 'create'],
             [['user_name', 'password'], 'required', 'on' => 'login'],

@@ -22,12 +22,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-body">
                     <?php
                     foreach ($model as $value) {
-                        $folder = strlen($value->folder_name) > 8 ? substr($value->folder_name, 0, 8) : $value->folder_name;
+                        $folder = 'view cv'
                         ?>
                         <div class="col-md-1 text-aln">
                             <div class="folder-box">
                                 <div class="folder-box-remove"><i class="fa fa-remove"></i></div>
-                                    <?= Html::a('<i class="fa fa-folder-open"></i><br/><span>' . $folder . '</span>', ['open-folder', 'folder' => $value->folder_name], ['title' => $value->folder_name]) ?>
+                                    <?= Html::a('<i class="fa fa-file-word-o"></i><br/><span>' . $folder . '</span>', ['view-folder-cvs', 'id' => $value->candidate_id], ['class' => '']) ?>
                             </div>
                         </div>
                     <?php }
