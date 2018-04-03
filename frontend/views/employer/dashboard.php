@@ -378,6 +378,7 @@ $items = array_merge($countries, $cities);
     jQuery(document).ready(function ($)
     {
         $("#cvfilter-location").select2({
+            placeholder: 'Choose Country / City',
             allowClear: true
         }).on('select2-open', function ()
         {
