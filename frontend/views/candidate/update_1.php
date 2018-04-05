@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use common\components\ModalViewWidget;
 use yii\helpers\Url;
+use dosamigos\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Candidate */
@@ -132,7 +133,13 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         <?= $form->field($model, 'job_status')->dropDownList($jobstatus, ['prompt' => '-Choose a Job Status-']) ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
-                        <?= $form->field($model, 'executive_summary')->textarea(['rows' => 3]) ?>
+                        <?=
+                        $form->field($model, 'executive_summary')->widget(CKEditor::className(), [
+                            'options' => ['rows' => 3],
+                            'preset' => 'basic'
+                        ])
+                        ?>
+                        <?php // $form->field($model, 'executive_summary')->textarea(['rows' => 3])  ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r marg-bot-0">
                         <?php
@@ -179,7 +186,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
                     </div>
                     <div class="form-group col-md-6 p-r">
-                        <?php // $form->field($model, 'total_experience')->textInput(['maxlength' => true]) ?>
+                        <?php // $form->field($model, 'total_experience')->textInput(['maxlength' => true])   ?>
                     </div>
                     <div class="clearfix"></div>
                     <h4>Education - Academic</h4>
@@ -312,7 +319,19 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                                                     <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" value="<?= $datas->to_date ?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">
+                                                    <?php
+                                                    $nm = 'expupdatee[' . $datas->id . '][job_responsibility][]';
+                                                    ?>
+                                                    <?=
+                                                    CKEditor::widget([
+                                                        'name' => $nm,
+                                                        'value' => $datas->job_responsibility,
+                                                        'options' => ['rows' => 0],
+                                                        'preset' => 'basic',
+                                                        'clientOptions' => ['height' => 100]
+                                                    ]);
+                                                    ?>
+                                                    <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                      ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
                                                 </td>
                                                 <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
                                             </tr>
@@ -335,7 +354,14 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                                         <input type="date" name="expcreate[to_date][]" class="form-control">
                                     </td>
                                     <td>
-                                        <textarea rows="4" cols="50" name="expcreate[job_responsibility][]"></textarea>
+                                        <?=
+                                        CKEditor::widget([
+                                            'name' => 'expcreate[job_responsibility][]',
+                                            'options' => ['rows' => 0],
+                                            'preset' => 'basic',
+                                            'clientOptions' => ['height' => 100]
+                                        ]);
+                                        ?>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -481,6 +507,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                 url: '<?= Yii::$app->homeUrl ?>candidate/get-experience',
                 success: function (data) {
                     $("table.experience-list").append(data);
+                    $('.txtEditor').ckeditor();
                 }
             });
             counter++;

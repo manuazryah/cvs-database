@@ -1725,3 +1725,6 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .btn-cv .form-group{
     margin-bottom: 0px !important;
 }
+.select2-container-multi .select2-choices .select2-search-field input {
+    padding: 6px !important;
+}

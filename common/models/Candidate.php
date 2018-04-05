@@ -39,9 +39,11 @@ class Candidate extends ActiveRecord implements IdentityInterface {
      */
     public function rules() {
         return [
-            [['email', 'user_name', 'password', 'password_repeat'], 'required', 'on' => 'create'],
+            [['email', 'user_name', 'password', 'password_repeat', 'phone'], 'required', 'on' => 'create'],
+            [['email', 'user_name', 'phone', 'address'], 'required', 'on' => 'update'],
+            [['email'], 'unique', 'on' => 'update'],
             [['status', 'email_varification_status'], 'integer'],
-            [['date_of_creation', 'date_of_updation', 'phone'], 'safe'],
+            [['date_of_creation', 'date_of_updation', 'phone', 'address', 'alternate_phone', 'alternate_address'], 'safe'],
             [['email', 'user_name', 'password', 'user_id'], 'string', 'max' => 100],
             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match", 'on' => 'create'],
             [['user_name', 'password'], 'required', 'on' => 'login'],
@@ -71,10 +73,14 @@ class Candidate extends ActiveRecord implements IdentityInterface {
         return [
             'id' => 'ID',
             'email' => 'Email',
-            'user_name' => 'User Name',
+            'user_name' => 'Name',
             'password' => 'Password',
             'user_id' => 'User ID',
             'status' => 'Status',
+            'phone' => 'Phone',
+            'address' => 'Address',
+            'alternate_phone' => 'Alternate Phone (optional)',
+            'alternate_address' => 'Alternate Address (optional)',
             'date_of_creation' => 'Date Of Creation',
             'date_of_updation' => 'Date Of Updation',
             'email_varification_status' => 'Email Varification Status',
@@ -91,7 +97,7 @@ class Candidate extends ActiveRecord implements IdentityInterface {
 
     protected function getUser() {
         if ($this->_user === null) {
-            $this->_user = static::find()->where('user_name = :uname and status = :stat', ['uname' => $this->user_name, 'stat' => '1'])->orWhere('email = :uname and status = :stat', ['uname' => $this->user_name, 'stat' => '1'])->one();
+            $this->_user = static::find()->where('email = :uname and status = :stat', ['uname' => $this->user_name, 'stat' => '1'])->one();
         }
         return $this->_user;
     }

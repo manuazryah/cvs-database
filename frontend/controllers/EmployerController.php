@@ -383,7 +383,6 @@ class EmployerController extends Controller {
      */
     public function actionLogout() {
         Yii::$app->SetValues->updateLoginHistory();
-        Yii::$app->user->logout();
         unset(Yii::$app->session['log-history']);
         unset(Yii::$app->session['employer_data']);
         return $this->redirect(['/site/index']);
@@ -510,6 +509,7 @@ class EmployerController extends Controller {
                         $packages->no_of_views_left = $packages->no_of_views_left - 1;
                         $packages->update();
                         $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
+                        $this->CandidateEmail($id);
                         return $this->redirect(['view-cvs', 'id' => $id]);
                     } else {
                         Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
@@ -522,9 +522,62 @@ class EmployerController extends Controller {
             } else {
                 $view_cv->date_of_view = date('Y-m-d');
                 $view_cv->update();
+                $this->CandidateEmail($id);
                 return $this->redirect(['view-cvs', 'id' => $id]);
             }
         }
+    }
+
+    public function CandidateEmail($candidate_id) {
+        $candidate = \common\models\Candidate::find()->where(['id' => $candidate_id])->one();
+        $employer = Employer::find()->where(['id' => Yii::$app->session['employer_data']['id']])->one();
+        if (!empty($candidate) && !empty($employer)) {
+            $to = $candidate->email;
+            $subject = 'CVS Job Notification';
+
+// message
+            echo $message = '
+<html>
+<head>
+
+  <title>CVS Job Notification</title>
+</head>
+<body>
+  <p>Your CV is viewed. The company details given below.</p></br>
+  <table>
+  <tr>
+  <td>Company Name</td>
+  <td>:</td>
+  <td>' . $employer->company_name . '</td>
+  </tr>
+   <tr>
+  <td>Company Email</td>
+  <td>:</td>
+  <td>' . $employer->company_email . '</td>
+  </tr>
+  <tr>
+  <td>Phone Number</td>
+  <td>:</td>
+  <td>' . $employer->company_phone_number . '</td>
+  </tr>
+  <tr>
+  <td>Address</td>
+  <td>:</td>
+  <td>' . $employer->address . '</td>
+  </tr>
+  </table>
+</body>
+</html>
+';
+            exit;
+// To send HTML mail, the Content-type header must be set
+            $headers = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
+                    "From: 'info@eazycheque.com";
+            mail($to, $subject, $message, $headers);
+        }
+        return true;
+        exit;
     }
 
     public function SaveViewHistory($employer, $candidate) {
@@ -540,11 +593,12 @@ class EmployerController extends Controller {
         $model = \common\models\CandidateProfile::findOne($id);
         $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
         $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
-
+        $contact_info = \common\models\Candidate::find()->where(['id' => $id])->one();
         return $this->render('cv-view', [
                     'model' => $model,
                     'model_education' => $model_education,
                     'model_experience' => $model_experience,
+                    'contact_info' => $contact_info,
         ]);
     }
 
@@ -584,9 +638,22 @@ class EmployerController extends Controller {
     }
 
     public function actionShortlistFolder() {
-        $model = \common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name')->all();
+        if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
+            return $this->redirect(array('employer/index'));
+        }
+        $searchModel = new \common\models\ShortListSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name');
+        $model_filter = new CvFilter();
+        if ($model_filter->load(Yii::$app->request->post())) {
+            if ($model_filter->cv_folder != '') {
+                $dataProvider->query->andWhere(['folder_name' => $model_filter->cv_folder]);
+            }
+        }
         return $this->render('shortlist-folder', [
-                    'model' => $model,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'model_filter' => $model_filter,
         ]);
     }
 

@@ -928,3 +928,13 @@ input[type=checkbox], input[type=radio] {
     color: #2196F3;
     font-size: 32px;
 }
+/*.contact-table table.table tr {
+    border: none;
+}*/
+.contact-table table.table th {
+    width: 20%;
+}
+.contact-table .table>thead>tr>td, .table>tbody>tr>td, .table>tfood>tr>td, .table>thead>tr>th, .table>tbody>tr>th, .table>tfood>tr>th {
+    border: none;
+    font-size: 14px;
+}

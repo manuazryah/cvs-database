@@ -45,7 +45,7 @@ AppAsset::register($this);
                                     <li><a href="">Home</a></li>
                                     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">My Account <i class=" fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu">
-                                            <!--<li><?php // Html::a('User Details', ['index'])  ?></li>-->
+                                            <li><?= Html::a('User Details', ['index']) ?></li>
                                             <li><?= Html::a('Profile Edit', ['update-profile']) ?></li>
                                             <li><?= Html::a('Online CV', ['online-curriculum-vitae']) ?></li>
                                             <li><?= Html::a('Reset Password', ['reset-password']) ?></li>

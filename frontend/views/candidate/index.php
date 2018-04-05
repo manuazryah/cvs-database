@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\CandidateSearch */
@@ -23,35 +23,35 @@ $this->params['breadcrumbs'][] = $this->title;
     <section class="manage">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="Resume">
-                        <h1>My Account</h1>
-                        <ul class="unstyled">
-                            <li class="active">
-                                <?= Html::a('<i class="fa fa-caret-right"></i>  My Profile', ['index']) ?>
-                            </li>
-                            <li>
-                                <?= Html::a('<i class="fa fa-caret-right"></i>  Edit Profile', ['update-profile']) ?>
-                            </li>
-                            <li>
-                                <?= Html::a('<i class="fa fa-caret-right"></i>  Online CV', ['online-curriculum-vitae']) ?>
-                            </li>
-                            <li>
-                                <?= Html::a('<i class="fa fa-caret-right"></i>  Reset Password', ['reset-password']) ?>
-                            </li>
-                            <?php
-                            echo '<li class="border-none">'
-                            . Html::beginForm(['/candidate/logout'], 'post', ['style' => '']) . '<a><i class="fa fa-caret-right"></i>'
-                            . Html::submitButton(
-                                    'Sign out', ['class' => '', 'style' => 'background: white;border: none;']
-                            ) . '</a>'
-                            . Html::endForm()
-                            . '</li>';
-                            ?>
-                        </ul>
+                <div class="col-md-12">
+                    <?php
+                    $form = ActiveForm::begin([
+                                'options' => [
+                                    'class' => 'panel-body user-details-form'
+                                ]
+                    ]);
+                    ?>
+                    <div class="form-group col-md-6 p-l">
+                        <?= $form->field($model, 'user_name')->textInput() ?>
                     </div>
-                </div>
-                <div class="col-md-9">
+                    <div class="form-group col-md-6 p-r">
+                        <?= $form->field($model, 'email')->textInput() ?>
+                    </div>
+                    <div class="form-group col-md-6 p-l">
+                        <?= $form->field($model, 'phone')->textInput() ?>
+                    </div>
+                    <div class="form-group col-md-6 p-r">
+                        <?= $form->field($model, 'alternate_phone')->textInput() ?>
+                    </div>
+                    <div class="form-group col-md-12 p-l p-r">
+                        <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?>
+                    </div>
+                    <div class="form-group col-md-12 p-l p-r">
+                        <?= $form->field($model, 'alternate_address')->textarea(['rows' => 3]) ?>
+                    </div>
+                    <div class="clearfix"></div>
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-submit']) ?>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>

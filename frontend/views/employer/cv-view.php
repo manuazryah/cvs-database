@@ -32,22 +32,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <tr>
                                                 <td style="width: 90%">
                                                     <table style="width: 100%">
-                                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?php // $model->name  ?></h4></strong></td></tr>
+                                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?php // $model->name                     ?></h4></strong></td></tr>
                                                         <tr>
                                                             <td style="line-height: 30px;"><strong>Title : </strong><?= $model->title ?></td>
+                                                            <td style="line-height: 30px;"><strong>Name : </strong><?= $contact_info->user_name ?></td>
+                                                        </tr>
+                                                        <tr>
                                                             <td style="line-height: 30px;"><strong>Nationality : </strong><?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></td>
+                                                            <td style="line-height: 30px;"><strong>Email:</strong> <?= $contact_info->email ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td style="line-height: 30px;"><strong>Current Country : </strong><?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?></td>
                                                             <td style="line-height: 30px;"><strong>Current City:</strong> <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="line-height: 30px;"><strong>Expected Salary : </strong> <?= $model->expected_salary ?></td>
+                                                            <td style="line-height: 30px;"><strong>Expected Salary : </strong> <?= $model->expected_salary != '' ? \common\models\ExpectedSalary::findOne($model->expected_salary)->salary_range : '' ?></td>
                                                             <td style="line-height: 30px;"><strong>Job Type : </strong> <?= $model->job_type != '' ? \common\models\JobType::findOne($model->job_type)->job_type : '' ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td style="line-height: 30px;"><strong>Gender : </strong> <?= $model->gender != '' ? \common\models\Gender::findOne($model->gender)->gender : '' ?></td>
                                                             <td style="line-height: 30px;"><strong>DOB : </strong> <?= $model->dob ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="line-height: 30px;"><strong>Phone : </strong> <?= $contact_info->phone ?></td>
+                                                            <td style="line-height: 30px;"></td>
                                                         </tr>
                                                     </table>
                                                 </td>

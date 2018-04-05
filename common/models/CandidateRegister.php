@@ -37,11 +37,12 @@ class CandidateRegister extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-                [['email', 'user_name', 'password', 'password_repeat'], 'required'],
-                [['status', 'email_varification_status'], 'integer'],
-                [['date_of_creation', 'date_of_updation'], 'safe'],
-                [['email', 'user_name', 'password', 'user_id'], 'string', 'max' => 100],
-                ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+            [['email', 'user_name', 'password', 'password_repeat'], 'required'],
+            [['status', 'email_varification_status'], 'integer'],
+            [['date_of_creation', 'date_of_updation'], 'safe'],
+            [['email'], 'unique'],
+            [['email', 'user_name', 'password', 'user_id'], 'string', 'max' => 100],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
         ];
     }
 
@@ -52,7 +53,7 @@ class CandidateRegister extends \yii\db\ActiveRecord {
         return [
             'id' => 'ID',
             'email' => 'Email',
-            'user_name' => 'User Name',
+            'user_name' => 'Name',
             'password' => 'Password',
             'user_id' => 'User ID',
             'status' => 'Status',

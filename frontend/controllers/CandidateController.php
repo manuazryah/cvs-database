@@ -55,15 +55,13 @@ class CandidateController extends Controller {
      */
     public function actionIndex() {
         $id = Yii::$app->session['candidate']['id'];
-        $user = Candidate::findOne($id);
-        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
-        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
-        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $model = Candidate::findOne($id);
+        $model->scenario = 'update';
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+
+        }
         return $this->render('index', [
                     'model' => $model,
-                    'model_education' => $model_education,
-                    'model_experience' => $model_experience,
-                    'user' => $user,
         ]);
     }
 
@@ -103,6 +101,7 @@ class CandidateController extends Controller {
      */
     public function actionUpdateProfile() {
         $id = Yii::$app->session['candidate']['id'];
+        $user = Candidate::findOne($id);
         $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
         if (empty($model)) {
             $model = new CandidateProfile();
@@ -141,6 +140,7 @@ class CandidateController extends Controller {
                     'model' => $model,
                     'model_education' => $model_education,
                     'model_experience' => $model_experience,
+                    'user' => $user,
         ]);
     }
 
@@ -390,7 +390,6 @@ class CandidateController extends Controller {
      */
     public function actionLogout() {
         Yii::$app->SetValues->updateLoginHistory();
-        Yii::$app->user->logout();
         unset(Yii::$app->session['log-history']);
         unset(Yii::$app->session['candidate']);
         return $this->redirect(['site/index']);
@@ -598,6 +597,7 @@ class CandidateController extends Controller {
         $model = new \common\models\Industry();
         if (Yii::$app->request->post()) {
             $model->industry_name = Yii::$app->request->post()['industry_name'];
+            $model->status = 0;
             if ($model->validate() && $model->save()) {
                 echo json_encode(array("con" => "1", 'id' => $model->id, 'name' => $model->industry_name)); //Success
                 exit;
@@ -622,6 +622,7 @@ class CandidateController extends Controller {
         if (Yii::$app->request->post()) {
             $model->industry = Yii::$app->request->post()['industry'];
             $model->skill = Yii::$app->request->post()['skill'];
+            $model->status = 0;
             if ($model->validate() && $model->save()) {
                 echo json_encode(array("con" => "1", 'id' => $model->id, 'name' => $model->skill)); //Success
                 exit;
