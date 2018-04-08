@@ -7,12 +7,17 @@ use yii\helpers\ArrayHelper;
 use kartik\date\DatePicker;
 use common\components\ModalViewWidget;
 use yii\helpers\Url;
+use dosamigos\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Candidate */
 
 $course_datas = common\models\Courses::find()->where(['status' => 1])->all();
 $country_datas = common\models\Country::find()->where(['status' => 1])->all();
+$city_datas = [];
+if ($model->current_country != '') {
+    $city_datas = ArrayHelper::map(\common\models\City::find()->where(['country' => $model->current_country])->all(), 'id', 'city');
+}
 ?>
 <style>
     .marg-bot-0 .form-group{
@@ -90,10 +95,20 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         </div>
                     </div>
                     <div class="form-group col-md-6 p-l">
+                        <?php $countries = ArrayHelper::map(Country::findAll(['status' => 1]), 'id', 'country_name'); ?>
+                        <?= $form->field($model, 'nationality')->dropDownList($countries, ['prompt' => '-Choose a Nationality-']) ?>
+                    </div>
+                    <div class="form-group col-md-6 p-r">
+                        <?= $form->field($model, 'current_country')->dropDownList($countries, ['prompt' => '-Choose a Country-']) ?>
+                    </div>
+                    <div class="form-group col-md-6 p-l">
+                        <?= $form->field($model, 'current_city')->dropDownList($city_datas, ['prompt' => '-Choose a City-']) ?>
+                    </div>
+                    <div class="form-group col-md-6 p-r">
                         <?php $gender = ArrayHelper::map(\common\models\Gender::findAll(['status' => 1]), 'id', 'gender'); ?>
                         <?= $form->field($model, 'gender')->dropDownList($gender) ?>
                     </div>
-                    <div class="form-group col-md-6 p-r">
+                    <div class="form-group col-md-6 p-l">
                         <?php
                         if (!isset($model->dob) && $model->dob != '') {
                             $model->dob = date('d-M-Y');
@@ -109,16 +124,6 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         ])->label('DOB');
                         ?>
                     </div>
-                    <div class="form-group col-md-6 p-l">
-                        <?php $countries = ArrayHelper::map(Country::findAll(['status' => 1]), 'id', 'country_name'); ?>
-                        <?= $form->field($model, 'nationality')->dropDownList($countries, ['prompt' => '-Choose a Nationality-']) ?>
-                    </div>
-                    <div class="form-group col-md-6 p-r">
-                        <?= $form->field($model, 'current_country')->dropDownList($countries, ['prompt' => '-Choose a Country-']) ?>
-                    </div>
-                    <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'current_city')->dropDownList(['prompt' => '-Choose a City-']) ?>
-                    </div>
                     <div class="form-group col-md-6 p-r">
                         <?php $salaty_ranges = ArrayHelper::map(common\models\ExpectedSalary::findAll(['status' => 1]), 'id', 'salary_range'); ?>
                         <?= $form->field($model, 'expected_salary')->dropDownList($salaty_ranges, ['prompt' => '-Choose expected salary-']) ?>
@@ -132,7 +137,13 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         <?= $form->field($model, 'job_status')->dropDownList($jobstatus, ['prompt' => '-Choose a Job Status-']) ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r">
-                        <?= $form->field($model, 'executive_summary')->textarea(['rows' => 3]) ?>
+                        <?=
+                        $form->field($model, 'executive_summary')->widget(CKEditor::className(), [
+                            'options' => ['rows' => 3],
+                            'preset' => 'basic'
+                        ])
+                        ?>
+                        <?php // $form->field($model, 'executive_summary')->textarea(['rows' => 3])  ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r marg-bot-0">
                         <?php
@@ -155,32 +166,96 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                         <?= $form->field($model, 'skill')->dropDownList($skills, ['prompt' => 'Choose Skills', 'multiple' => 'multiple']) ?>
                         <?= Html::button('<span> Not in the list ? Request New</span>', ['value' => Url::to('../candidate/add-skill'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                     </div>
-                    <div class="form-group col-md-12 p-l p-r">
-                        <?= $form->field($model, 'extra_curricular_activities')->textarea(['rows' => 3]) ?>
+                    <h4>Work Experience</h4>
+                    <hr class="appoint_history" />
+                    <div id="p_experience">
+                        <table class="table table-bordered experience-list" id="experienceTable">
+                            <thead>
+                                <tr>
+                                    <th>Designation</th>
+                                    <th>Company Name</th>
+                                    <th>Country</th>
+                                    <th>From Year</th>
+                                    <th>To Year</th>
+                                    <th>Job Responsibility</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+//                                var_dump(count($model_experience));
+//                                exit;
+                                if (!empty($model_experience)) {
+                                    foreach ($model_experience as $datas) {
+                                        if (!empty($datas)) {
+                                            ?>
+                                            <tr id="exprow-<?= $datas->id; ?>">
+                                                <td>
+                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][designation][]" value="<?= $datas->designation ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][company_name][]" value="<?= $datas->company_name ?>">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="expupdatee[<?= $datas->id; ?>][country][]">
+                                                        <option value="">Select Country</option>
+                                                        <?php foreach ($country_datas as $country_data) { ?>
+                                                            <option value="<?= $country_data->id ?>" <?= $datas->country == $country_data->id ? 'selected' : '' ?>><?= $country_data->country_name ?></option>
+                                                        <?php }
+                                                        ?>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control" value="<?= $datas->from_date ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" value="<?= $datas->to_date ?>">
+                                                </td>
+                                                <td>
+                                                    <textarea name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" rows="4"><?= $datas->job_responsibility ?></textarea>
+                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                    ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
+                                                </td>
+                                                <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    }
+                                }
+                                ?>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" name="expcreate[designation][]">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="expcreate[company_name][]">
+                                    </td>
+                                    <td>
+                                        <select class="form-control" name="expcreate[country][]">
+                                            <option value="">Select Country</option>
+                                            <?php foreach ($country_datas as $country_data) { ?>
+                                                <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
+                                            <?php }
+                                            ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="date" name="expcreate[from_date][]" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="date" name="expcreate[to_date][]" class="form-control">
+                                    </td>
+                                    <td>
+                                        <textarea name="expcreate[job_responsibility][]" rows="4"></textarea>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="form-group col-md-6 p-l">
-                        <?php $languages = ArrayHelper::map(\common\models\Languages::findAll(['status' => 1]), 'id', 'language'); ?>
-                        <?php
-                        if (isset($model->languages_known) && $model->languages_known != '') {
-                            $model->languages_known = explode(',', $model->languages_known);
-                        }
-                        ?>
-                        <?= $form->field($model, 'languages_known')->dropDownList($languages, ['prompt' => '-Choose a Language-', 'multiple' => 'multiple']) ?>
-                    </div>
-                    <div class="form-group col-md-6 p-r">
-                        <?php
-                        if (isset($model->driving_licences) && $model->driving_licences != '') {
-                            $model->driving_licences = explode(',', $model->driving_licences);
-                        }
-                        ?>
-                        <?= $form->field($model, 'driving_licences')->dropDownList($countries, ['multiple' => 'multiple']) ?>
-                    </div>
-                    <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
-                    </div>
-                    <div class="form-group col-md-6 p-r">
-                        <?php // $form->field($model, 'total_experience')->textInput(['maxlength' => true]) ?>
-                    </div>
+                    <br/>
+                    <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
+                        <a id="addexperience" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add More</a>
+                    </div><br/>
                     <div class="clearfix"></div>
                     <h4>Education - Academic</h4>
                     <hr class="appoint_history" />
@@ -275,77 +350,53 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                     <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
                         <a id="addeducation" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add More</a>
                     </div><br/>
-                    <div class="clearfix"></div>
-                    <h4>Work Experience</h4>
-                    <hr class="appoint_history" />
-                    <div id="p_experience">
-                        <table class="table table-bordered experience-list" id="experienceTable">
-                            <thead>
-                                <tr>
-                                    <th>Company Name</th>
-                                    <th>Designation</th>
-                                    <th>From Year</th>
-                                    <th>To Year</th>
-                                    <th>Job Responsibility</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-//                                var_dump(count($model_experience));
-//                                exit;
-                                if (!empty($model_experience)) {
-                                    foreach ($model_experience as $datas) {
-                                        if ($datas) {
-                                            ?>
-                                            <tr id="exprow-<?= $datas->id; ?>">
-                                                <td>
-                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][company_name][]" value="<?= $datas->company_name ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][designation][]" value="<?= $datas->designation ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control" value="<?= $datas->from_date ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" value="<?= $datas->to_date ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">
-                                                </td>
-                                                <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
-                                            </tr>
-                                            <?php
-                                        }
-                                    }
-                                }
-                                ?>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control" name="expcreate[company_name][]">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" name="expcreate[designation][]">
-                                    </td>
-                                    <td>
-                                        <input type="date" name="expcreate[from_date][]" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="date" name="expcreate[to_date][]" class="form-control">
-                                    </td>
-                                    <td>
-                                        <textarea rows="4" cols="50" name="expcreate[job_responsibility][]"></textarea>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="form-group col-md-12 p-l p-r">
+                        <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
                     </div>
-                    <br/>
-                    <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
-                        <a id="addexperience" class="btn btn-icon btn-blue addScnt" ><i class="fa fa-plus"></i> Add More</a>
-                    </div><br/>
+                    <div class="form-group col-md-12 p-l p-r">
+                        <?= $form->field($model, 'extra_curricular_activities')->textarea(['rows' => 3]) ?>
+                    </div>
+                    <div class="form-group col-md-6 p-l">
+                        <?php $languages = ArrayHelper::map(\common\models\Languages::findAll(['status' => 1]), 'id', 'language'); ?>
+                        <?php
+                        if (isset($model->languages_known) && $model->languages_known != '') {
+                            $model->languages_known = explode(',', $model->languages_known);
+                        }
+                        ?>
+                        <?= $form->field($model, 'languages_known')->dropDownList($languages, ['prompt' => '-Choose a Language-', 'multiple' => 'multiple']) ?>
+                    </div>
+                    <div class="form-group col-md-6 p-r">
+                        <?php
+                        if (isset($model->driving_licences) && $model->driving_licences != '') {
+                            $model->driving_licences = explode(',', $model->driving_licences);
+                        }
+                        ?>
+                        <?= $form->field($model, 'driving_licences')->dropDownList($countries, ['multiple' => 'multiple']) ?>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-md-6 p-l">
+                        <?php
+                        if ($model->upload_resume != '') {
+                            $label = 'Change Your CV';
+                        } else {
+                            $label = 'Upload Your CV';
+                        }
+                        ?>
+                        <?= $form->field($model, 'upload_resume')->fileInput(['maxlength' => true])->label($label) ?>
+                    </div>
+                    <div class="form-group col-md-6 p-r">
+                        <?php
+//                        if ($model->upload_resume != '') {
+//                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
+//                            if (file_exists($dirPath)) {
+//
+                        ?>
+                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                       ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                        <?php
+//                            }
+//                        }
+                        ?>
+                    </div>
                     <div class="clearfix"></div>
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-submit']) ?>
                     <?php ActiveForm::end(); ?>
@@ -481,6 +532,7 @@ $country_datas = common\models\Country::find()->where(['status' => 1])->all();
                 url: '<?= Yii::$app->homeUrl ?>candidate/get-experience',
                 success: function (data) {
                     $("table.experience-list").append(data);
+                    $('.txtEditor').ckeditor();
                 }
             });
             counter++;

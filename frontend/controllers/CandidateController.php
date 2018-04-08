@@ -106,26 +106,38 @@ class CandidateController extends Controller {
         if (empty($model)) {
             $model = new CandidateProfile();
             $photo_ = '';
+            $cv_ = '';
         } else {
             $photo_ = $model->photo;
+            $cv_ = $model->upload_resume;
         }
         if ($model->load(Yii::$app->request->post())) {
             $data = Yii::$app->request->post();
             $this->SetDatas($model);
             $files = UploadedFile::getInstance($model, 'photo');
+            $files_resume = UploadedFile::getInstance($model, 'upload_resume');
             if (empty($files)) {
                 $model->photo = $photo_;
             } else {
                 $model->photo = $files->extension;
             }
+            if (empty($files_resume)) {
+                $model->upload_resume = $cv_;
+            } else {
+                $model->upload_resume = $files_resume->extension;
+            }
             if ($model->validate() && $model->save()) {
                 if (!empty($files)) {
                     $this->upload($model, $files);
+                }
+                if (isset($files_resume) && !empty($files_resume)) {
+                    $files_resume->saveAs(Yii::$app->basePath . '/../uploads/candidate/resume/' . $model->id . '.' . $files_resume->extension);
                 }
                 $this->AddAcadamics($model, $data);
                 $this->AcadamicsUpdate($model, $data);
                 $this->AddExperiences($model, $data);
                 $this->ExperienceUpdate($model, $data);
+                $this->CalculateTotalExperience($model);
             }
         }
         $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
@@ -153,6 +165,32 @@ class CandidateController extends Controller {
             $files->saveAs(Yii::$app->basePath . '/../uploads/candidate/profile_picture/' . $model->id . '.' . $files->extension);
         }
         return TRUE;
+    }
+
+    public function CalculateTotalExperience($model) {
+        $model_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->all();
+        $tot_diff = 0;
+        $tot_experience = 0;
+        foreach ($model_experiences as $experiences) {
+            $date1 = $experiences->from_date;
+            $date2 = $experiences->to_date;
+
+            $ts1 = strtotime($date1);
+            $ts2 = strtotime($date2);
+
+            $year1 = date('Y', $ts1);
+            $year2 = date('Y', $ts2);
+
+            $month1 = date('m', $ts1);
+            $month2 = date('m', $ts2);
+            $tot_diff += (($year2 - $year1) * 12) + ($month2 - $month1);
+        }
+        if ($tot_diff > 0) {
+            $tot_experience = $tot_diff / 12;
+        }
+        $model->total_experience = sprintf('%0.2f', $tot_experience);
+        $model->update();
+        return;
     }
 
     /**
@@ -277,6 +315,11 @@ class CandidateController extends Controller {
                 $arr[$i]['to_date'] = $val;
                 $i++;
             }
+            $i = 0;
+            foreach ($create['country'] as $val) {
+                $arr[$i]['country'] = $val;
+                $i++;
+            }
             $this->SaveExperience($arr, $model);
         }
     }
@@ -294,6 +337,7 @@ class CandidateController extends Controller {
             $aditional->job_responsibility = $val['job_responsibility'];
             $aditional->from_date = $val['from_date'];
             $aditional->to_date = $val['to_date'];
+            $aditional->country = $val['country'];
             if (!empty($aditional->company_name)) {
                 $aditional->save();
             }
@@ -316,6 +360,7 @@ class CandidateController extends Controller {
                 $arr[$key]['job_responsibility'] = $val['job_responsibility'][0];
                 $arr[$key]['from_date'] = $val['from_date'][0];
                 $arr[$key]['to_date'] = $val['to_date'][0];
+                $arr[$key]['country'] = $val['country'][0];
                 $i++;
             }
             foreach ($arr as $key => $value) {
@@ -325,6 +370,7 @@ class CandidateController extends Controller {
                 $aditional->job_responsibility = $value['job_responsibility'];
                 $aditional->from_date = $value['from_date'];
                 $aditional->to_date = $value['to_date'];
+                $aditional->country = $value['country'];
                 $aditional->save();
             }
         }
@@ -475,7 +521,9 @@ class CandidateController extends Controller {
      */
     public function actionGetExperience() {
         if (Yii::$app->request->isAjax) {
+            $country_datas = \common\models\Country::find()->where(['status' => 1])->all();
             $new_row = $this->renderPartial('experince_row', [
+                'country_datas' => $country_datas,
             ]);
             return $new_row;
         }

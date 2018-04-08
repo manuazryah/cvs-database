@@ -207,6 +207,54 @@ $items = array_merge($countries, $cities);
                                     }
                                     ?>
                                 </div>
+                                <div class="job_title">Nationality</div>
+                                <div class="borderfull-width"></div>
+                                <div class="page-heading check-label">
+                                    <?php
+                                    $nationalities = common\models\Country::find()->where(['status' => 1])->all();
+                                    $arr_nation = [];
+                                    if (!empty($nationalities)) {
+                                        foreach ($nationalities as $nationality) {
+                                            if ($model_filter->nationality != '' && isset($model_filter->nationality)) {
+                                                if (in_array($nationality->id, $model_filter->nationality)) {
+                                                    $check4 = 'checked';
+                                                } else {
+                                                    $check4 = '';
+                                                }
+                                            } else {
+                                                $check4 = '';
+                                            }
+                                            ?>
+                                            <label><input type="checkbox" <?= $check4 ?> name="CvFilter[nationality][]" value="<?= $nationality->id ?>"> <?= $nationality->country_name ?></label>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <div class="job_title">Experience</div>
+                                <div class="borderfull-width"></div>
+                                <div class="page-heading check-label">
+                                    <?php
+                                    $experiences = \common\models\ExperienceSearch::find()->where(['status' => 1])->all();
+                                    $arr_experiences = [];
+                                    if (!empty($experiences)) {
+                                        foreach ($experiences as $experience) {
+                                            if ($model_filter->experience != '' && isset($model_filter->experience)) {
+                                                if (in_array($experience->id, $model_filter->experience)) {
+                                                    $check8 = 'checked';
+                                                } else {
+                                                    $check8 = '';
+                                                }
+                                            } else {
+                                                $check8 = '';
+                                            }
+                                            ?>
+                                            <label><input type="checkbox" <?= $check8 ?> name="CvFilter[experience][]" value="<?= $experience->id ?>"> <?= $experience->experience_search ?></label>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
                                 <div class="job_title">Gender</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
@@ -217,15 +265,15 @@ $items = array_merge($countries, $cities);
                                         foreach ($genders as $gender) {
                                             if ($model_filter->gender != '' && isset($model_filter->gender)) {
                                                 if (in_array($gender->id, $model_filter->gender)) {
-                                                    $check4 = 'checked';
+                                                    $check7 = 'checked';
                                                 } else {
-                                                    $check4 = '';
+                                                    $check7 = '';
                                                 }
                                             } else {
-                                                $check4 = '';
+                                                $check7 = '';
                                             }
                                             ?>
-                                            <label><input type="checkbox" <?= $check4 ?> name="CvFilter[gender][]" value="<?= $gender->id ?>"> <?= $gender->gender ?></label>
+                                            <label><input type="checkbox" <?= $check7 ?> name="CvFilter[gender][]" value="<?= $gender->id ?>"> <?= $gender->gender ?></label>
                                             <?php
                                         }
                                     }
@@ -241,15 +289,15 @@ $items = array_merge($countries, $cities);
                                         foreach ($languages as $language) {
                                             if ($model_filter->language != '' && isset($model_filter->language)) {
                                                 if (in_array($language->id, $model_filter->language)) {
-                                                    $check4 = 'checked';
+                                                    $check5 = 'checked';
                                                 } else {
-                                                    $check4 = '';
+                                                    $check5 = '';
                                                 }
                                             } else {
-                                                $check4 = '';
+                                                $check5 = '';
                                             }
                                             ?>
-                                            <label><input type="checkbox" <?= $check4 ?> name="CvFilter[language][]" value="<?= $language->id ?>"> <?= $language->language ?></label>
+                                            <label><input type="checkbox" <?= $check5 ?> name="CvFilter[language][]" value="<?= $language->id ?>"> <?= $language->language ?></label>
                                             <?php
                                         }
                                     }
@@ -265,15 +313,15 @@ $items = array_merge($countries, $cities);
                                         foreach ($job_status_datas as $job_status_data) {
                                             if ($model_filter->job_status != '' && isset($model_filter->job_status)) {
                                                 if (in_array($job_status_data->id, $model_filter->job_status)) {
-                                                    $check5 = 'checked';
+                                                    $check6 = 'checked';
                                                 } else {
-                                                    $check5 = '';
+                                                    $check6 = '';
                                                 }
                                             } else {
-                                                $check5 = '';
+                                                $check6 = '';
                                             }
                                             ?>
-                                            <label><input type="checkbox" <?= $check5 ?> name="CvFilter[job_status][]" value="<?= $job_status_data->id ?>"> <?= $job_status_data->job_status ?></label>
+                                            <label><input type="checkbox" <?= $check6 ?> name="CvFilter[job_status][]" value="<?= $job_status_data->id ?>"> <?= $job_status_data->job_status ?></label>
                                             <?php
                                         }
                                     }

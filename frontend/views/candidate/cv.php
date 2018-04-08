@@ -246,6 +246,28 @@ use yii\widgets\ActiveForm;
                                         ?>
                                     </span>
                                 </div>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading">
+                                <h4>Uploded CV</h4>
+                                <div class="contact_details col-md-12 p-l">
+                                    <?php
+                                    if ($model->upload_resume != '') {
+                                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
+                                        if (file_exists($dirPath)) {
+                                            if ($model->upload_resume != '') {
+                                                if ($model->upload_resume == doc || $model->upload_resume == docx) {
+                                                    ?>
+                                                                                 <!--<iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>"></iframe>-->
+                                                <?php } elseif ($model->upload_resume == pdf) { ?>
+                                                                        <!--<iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px"  />-->
+                                                    <?php
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -253,39 +275,14 @@ use yii\widgets\ActiveForm;
                 <div class="col-md-4">
                     <div class="panel-body">
                         <div class="row cv-downlod">
-                            <div class="col-md-6 p-l"><h5>Download CV</h5></div>
-                            <div class="col-md-6 p-r">
+                            <div class="col-md-12 p-l p-r"><h5 class="cv-dwn-head">Download Profile</h5></div>
+                            <div class="col-md-12 p-r p-l">
                                 <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" >', ['pdf-export'], ['target' => '_blank']) ?>
                                 <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/word-icon.png" >', ['word-export'], ['target' => '_blank']) ?>
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <?php
-                        $form = ActiveForm::begin([
-                                    'method' => 'post',
-                                    'id' => 'cv-upload',
-                        ]);
-                        ?>
-                        <?php
-                        if ($model->upload_resume != '') {
-                            $label = 'Change Your CV';
-                        } else {
-                            $label = 'Upload Your CV';
-                        }
-                        ?>
-                        <label class="btn btn-cv btn-block"><?= $label ?><?= $form->field($model, 'upload_resume')->fileInput(['maxlength' => true, 'style' => 'display:none;'])->label(FALSE) ?></label>
-                        <?php // Html::submitButton('Upload Your CV', ['class' => 'btn btn-cv btn-block']) ?>
-                        <?php ActiveForm::end(); ?>
-                        <?php
-                        if ($model->upload_resume != '') {
-                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
-                            if (file_exists($dirPath)) {
-                                ?>
-                                <a class="btn btn-downld" href="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>Download Uploded CV</span></a>
-                                <?php
-                            }
-                        }
-                        ?>
+                        <?= Html::a('Profile Update', ['update-profile'], ['target' => '_blank', 'class' => 'btn btn-cv btn-block']) ?>
                     </div>
                 </div>
             </div>

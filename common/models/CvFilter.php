@@ -20,13 +20,15 @@ class CvFilter extends Model {
     public $language;
     public $job_status;
     public $cv_folder;
+    public $nationality;
+    public $experience;
 
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
-            [['industries', 'skills', 'job_types', 'keyword', 'location', 'salary_range', 'gender', 'language', 'job_status', 'cv_folder'], 'safe'],
+            [['industries', 'skills', 'job_types', 'keyword', 'location', 'salary_range', 'gender', 'language', 'job_status', 'cv_folder', 'nationality', 'experience'], 'safe'],
         ];
     }
 

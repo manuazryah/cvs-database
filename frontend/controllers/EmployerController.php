@@ -112,8 +112,8 @@ class EmployerController extends Controller {
         $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
         $model->no_of_days = $package->no_of_days;
         $model->no_of_days_left = $package->no_of_days;
-        $model->no_of_views = $package->no_of_profile_view;
-        $model->no_of_views_left = $package->no_of_profile_view;
+//        $model->no_of_views = $package->no_of_profile_view;
+//        $model->no_of_views_left = $package->no_of_profile_view;
         $model->no_of_downloads = $package->no_of_downloads;
         $model->no_of_downloads_left = $package->no_of_downloads;
         $model->created_date = date('Y-m-d');
@@ -203,6 +203,14 @@ class EmployerController extends Controller {
                 $filter_job_status = $this->getFilterJobStatus($model_filter);
                 $dataProvider->query->andWhere(['id' => $filter_job_status]);
             }
+            if ($model_filter->nationality != '') {
+                $filter_nationality = $this->getFilterNationality($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_nationality]);
+            }
+//            if ($model_filter->experience != '') {
+//                $filter_experience = $this->getFilterExperience($model_filter);
+//                $dataProvider->query->andWhere(['id' => $filter_experience]);
+//            }
         }
         return $this->render('dashboard', [
                     'searchModel' => $searchModel,
@@ -211,6 +219,60 @@ class EmployerController extends Controller {
                     'model_filter' => $model_filter,
                     'user_plans' => $user_plans,
         ]);
+    }
+
+//    public function getFilterExperience($data) {
+//        var_dump($data->experience);
+//        $cv_data = [];
+//        $query = new yii\db\Query();
+//        $query->select(['*'])
+//                ->from('candidate_profile');
+//        foreach ($data->experience as $value) {
+//            if ($value == 1) {
+//                $query->orWhere(['>=', 'total_experience', 1]);
+//                $query->orWhere(['<', 'total_experience', 2]);
+//            }
+//            if ($value == 2) {
+//                $query->orWhere(['>=', 'total_experience', 2]);
+//                $query->orWhere(['<', 'total_experience', 5]);
+//            }
+//            if ($value == 3) {
+//                $query->orWhere(['>=', 'total_experience', 6]);
+//                $query->orWhere(['<', 'total_experience', 10]);
+//            }
+//            if ($value == 4) {
+//                $query->orWhere(['>=', 'total_experience', 1]);
+//                $query->orWhere(['<', 'total_experience', 15]);
+//            }
+//            if ($value == 5) {
+//                $query->orWhere(['>=', 'total_experience', 16]);
+//                $query->orWhere(['<', 'total_experience', 20]);
+//            }
+//        }
+//        $command = $query->createCommand();
+//        $result = $command->queryAll();
+//        var_dump($result);
+//        exit;
+//        $str = implode(", ", $data->experience);
+//        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `nationality`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+//        if (!empty($result)) {
+//            foreach ($result as $ind_val) {
+//                $cv_data[] = $ind_val['id'];
+//            }
+//        }
+//        return $cv_data;
+//    }
+
+    public function getFilterNationality($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->nationality);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `nationality`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
     }
 
     public function getFilterJobStatus($data) {
@@ -463,8 +525,8 @@ class EmployerController extends Controller {
             $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
             $model->no_of_days = $package->no_of_days;
             $model->no_of_days_left = $package->no_of_days;
-            $model->no_of_views = $package->no_of_profile_view;
-            $model->no_of_views_left = $package->no_of_profile_view;
+//            $model->no_of_views = $package->no_of_profile_view;
+//            $model->no_of_views_left = $package->no_of_profile_view;
             $model->no_of_downloads = $package->no_of_downloads;
             $model->no_of_downloads_left = $package->no_of_downloads;
             $model->created_date = date('Y-m-d');
@@ -505,11 +567,11 @@ class EmployerController extends Controller {
             $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $id])->one();
             if (empty($view_cv)) {
                 if ($packages->end_date >= date('Y-m-d')) {
-                    if ($packages->no_of_views_left >= 1) {
-                        $packages->no_of_views_left = $packages->no_of_views_left - 1;
+                    if ($packages->no_of_downloads_left >= 1) {
+                        $packages->no_of_downloads_left = $packages->no_of_downloads_left - 1;
                         $packages->update();
                         $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
-                        $this->CandidateEmail($id);
+//                           $this->CandidateEmail($id);
                         return $this->redirect(['view-cvs', 'id' => $id]);
                     } else {
                         Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
@@ -522,7 +584,7 @@ class EmployerController extends Controller {
             } else {
                 $view_cv->date_of_view = date('Y-m-d');
                 $view_cv->update();
-                $this->CandidateEmail($id);
+//                $this->CandidateEmail($id);
                 return $this->redirect(['view-cvs', 'id' => $id]);
             }
         }
@@ -536,7 +598,7 @@ class EmployerController extends Controller {
             $subject = 'CVS Job Notification';
 
 // message
-            echo $message = '
+            $message = '
 <html>
 <head>
 
@@ -569,7 +631,7 @@ class EmployerController extends Controller {
 </body>
 </html>
 ';
-            exit;
+
 // To send HTML mail, the Content-type header must be set
             $headers = 'MIME-Version: 1.0' . "\r\n";
             $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
@@ -637,7 +699,7 @@ class EmployerController extends Controller {
         }
     }
 
-    public function actionShortlistFolder() {
+    public function actionShortlistFolder($folder = NULL) {
         if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
             return $this->redirect(array('employer/index'));
         }
@@ -645,10 +707,8 @@ class EmployerController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name');
         $model_filter = new CvFilter();
-        if ($model_filter->load(Yii::$app->request->post())) {
-            if ($model_filter->cv_folder != '') {
-                $dataProvider->query->andWhere(['folder_name' => $model_filter->cv_folder]);
-            }
+        if ($folder != '') {
+            $dataProvider->query->andWhere(['folder_name' => $folder]);
         }
         return $this->render('shortlist-folder', [
                     'searchModel' => $searchModel,

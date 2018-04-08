@@ -43,43 +43,28 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="job_title">Folders</div>
                                 <div class="borderfull-width"></div>
                                 <div class="clearfix"></div>
-                                <div class="page-heading check-label">
-                                    <?php
-                                    $folders = common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name')->all();
-                                    $arr_fldr = [];
-                                    if (!empty($folders)) {
-                                        foreach ($folders as $folder) {
-                                            if ($model_filter->cv_folder != '' && isset($model_filter->cv_folder)) {
-                                                if (in_array($folder->folder_name, $model_filter->cv_folder)) {
-                                                    $check1 = 'checked';
-                                                } else {
-                                                    $check1 = '';
-                                                }
-                                            } else {
-                                                $check1 = '';
-                                            }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check1 ?> name="CvFilter[cv_folder][]" value="<?= $folder->folder_name ?>"> <?= $folder->folder_name ?></label>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
-                                <div class="col-md-12 col-sm-12 p-l">
-                                    <div class="page-heading">
+                                <div class="page-heading check-label shortlist-folder-label">
+                                    <ul>
+                                        <li>
+                                            <?= Html::a('<i class="fa fa-folder-open"></i>  All', ['shortlist-folder'], ['class' => 'btn btn-folder-view']) ?>
+                                        </li>
                                         <?php
-                                        $your_search_filter = '';
-                                        if (isset($model_filter->cv_folder) && $model_filter->cv_folder != '') {
-                                            foreach ($model_filter->cv_folder as $loc_value) {
-                                                $your_search_filter .= '"' . $loc_value . '", ';
+                                        $folders = common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name')->all();
+                                        $arr_fldr = [];
+                                        if (!empty($folders)) {
+                                            foreach ($folders as $folder) {
+                                                ?>
+                                                <li>
+                                                    <?= Html::a('<i class="fa fa-folder-open"></i>  ' . $folder->folder_name, ['shortlist-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view']) ?>
+                                                </li>
+                                                <?php
                                             }
                                         }
                                         ?>
-                                        <p><span class="color-drk">Your Search Filter</span>: <?= $your_search_filter ?></p>
-                                    </div>
+                                    </ul>
                                 </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
                                 <div class="clearfix"></div>
                                 <div class="page_listing candidate">
                                     <?php

@@ -56,23 +56,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th>Number of Downloads</th>
                                 <th>:</th>
                                 <td><?= $user_package->no_of_downloads ?></td>
-                                <th>Number of Views</th>
+                                <th>Remaining Downloads</th>
                                 <th>:</th>
-                                <td><?= $user_package->no_of_views ?></td>
+                                <td><?= $user_package->no_of_downloads_left ?></td>
                                 <th>:</th>
                                 <th>Date of Creation</th>
                                 <td><?= $user_package->created_date ?></td>
                             </tr>
                             <tr>
-                                <th>Balance Downloads</th>
-                                <th>:</th>
-                                <td><?= $user_package->no_of_downloads_left ?></td>
-                                <th>Balance Views</th>
-                                <th>:</th>
-                                <td><?= $user_package->no_of_views_left ?></td>
-                                <th>:</th>
                                 <th>Date of Updation</th>
+                                <th>:</th>
                                 <td><?= $user_package->updated_date ?></td>
+                                <th></th>
+                                <th></th>
+                                <td></td>
+                                <th></th>
+                                <th></th>
+                                <td></td>
                             </tr>
                         </table>
                     </div>

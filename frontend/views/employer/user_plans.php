@@ -3,14 +3,20 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PackagesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Package Details';
+$this->title = 'Upgrade Package';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style>
+    .summary{
+        display: none;
+    }
+</style>
 <div class="packages-index">
 
     <div class="row">
@@ -24,37 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="panel-body">
                     <?= \common\widgets\Alert::widget() ?>
-                    <?=
-                    GridView::widget([
+                    <?php
+                    echo ListView::widget([
                         'dataProvider' => $dataProvider,
-                        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
-                            'package_name',
-                            'no_of_days',
-                            'no_of_profile_view',
-                            'package_price',
-                            [
-                                'class' => 'yii\grid\ActionColumn',
-                                'contentOptions' => ['style' => 'width:100px;'],
-                                'header' => 'Actions',
-                                'template' => '{select}',
-                                'buttons' => [
-                                    'select' => function ($url, $model) {
-                                        return Html::a('Select', $url, [
-                                                    'title' => Yii::t('app', 'select'),
-                                                    'class' => 'btn btn-secondary',
-                                                    'style' => 'padding: 4px 10px;border-radius: 5px;',
-                                        ]);
-                                    },
-                                ],
-                                'urlCreator' => function ($action, $model) {
-                                    if ($action === 'select') {
-                                        $url = Url::to(['select-plan', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id)]);
-                                        return $url;
-                                    }
-                                }
-                            ],
-                        ],
+                        'itemView' => '_package_view',
                     ]);
                     ?>
                 </div>

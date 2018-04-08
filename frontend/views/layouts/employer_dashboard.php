@@ -63,6 +63,9 @@ EmployerAsset::register($this);
                     </header>
                     <ul id="main-menu" class="main-menu">
                         <li>
+                            <?= Html::a('<i class="fa fa-search"></i> <span class="title">Search CV</span>', ['/employer/home'], ['class' => 'title']) ?>
+                        </li>
+                        <li>
                             <?= Html::a('<i class="fa fa-edit"></i> <span class="title">Edit Profile</span>', ['/employer/update'], ['class' => 'title']) ?>
                         </li>
                         <li>

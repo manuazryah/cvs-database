@@ -18,23 +18,21 @@ use Yii;
  *
  * @property Candidate $candidate
  */
-class WorkExperiance extends \yii\db\ActiveRecord
-{
+class WorkExperiance extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'work_experiance';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['candidate_id'], 'integer'],
+            [['candidate_id', 'country'], 'integer'],
             [['from_date', 'to_date', 'date_of_updation'], 'safe'],
             [['job_responsibility'], 'string'],
             [['company_name', 'designation'], 'string', 'max' => 100],
@@ -45,8 +43,7 @@ class WorkExperiance extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'candidate_id' => 'Candidate ID',
@@ -54,6 +51,7 @@ class WorkExperiance extends \yii\db\ActiveRecord
             'designation' => 'Designation',
             'from_date' => 'From Date',
             'to_date' => 'To Date',
+            'country' => 'Country',
             'job_responsibility' => 'Job Responsibility',
             'date_of_updation' => 'Date Of Updation',
         ];
@@ -62,8 +60,8 @@ class WorkExperiance extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCandidate()
-    {
+    public function getCandidate() {
         return $this->hasOne(Candidate::className(), ['id' => 'candidate_id']);
     }
+
 }

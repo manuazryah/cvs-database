@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row">
             <div class="col-md-12">
                 <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'industry')->textInput(['value' => 0]) ?>
+                <?= $form->field($model, 'industry')->hiddenInput(['value' => 0])->label(FALSE) ?>
                 <?= $form->field($model, 'skill')->textInput(['maxlength' => true]) ?>
                 <?= Html::submitButton('Submit', ['class' => 'btn btn-success mrg-top-btn', 'id' => 'add_skill']) ?>
                 <?php ActiveForm::end(); ?>

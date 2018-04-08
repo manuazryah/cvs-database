@@ -43,6 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="form-group col-md-6 p-r">
                         <?= $form->field($model, 'alternate_phone')->textInput() ?>
                     </div>
+                    <div class="form-group col-md-6 p-l">
+                        <?= $form->field($model, 'facebook_link')->textInput() ?>
+                    </div>
+                    <div class="form-group col-md-6 p-r">
+                        <?= $form->field($model, 'linked_in_link')->textInput() ?>
+                    </div>
                     <div class="form-group col-md-12 p-l p-r">
                         <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?>
                     </div>

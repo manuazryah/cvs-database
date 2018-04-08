@@ -1114,7 +1114,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
                               font-size: 13px;
 }
 .contact_details span i{ padding-right: 8px; color: #333;}
-.contact_details span a{ color: #2190c9; text-decoration: underline; font-weight: 500;}
+/*.contact_details span a{ color: #2190c9; text-decoration: underline; font-weight: 500;}*/
 .resume .panel-body{ margin-bottom: 20px;}
 .resume2 .borderfull-width{
     margin: 0px;
@@ -1712,10 +1712,8 @@ label span{ color: #7d7d7d; font-weight: 500;}
     padding: 4px 10px 8px 18px !important;
 }
 .btn-downld{
-    background: #2196F3;
-    width: 100%;
     padding: 15px 0px;
-    color: #fff;
+    color: #2196F3 !important;
     font-weight: 500;
     font-size: 16px;
 }
@@ -1727,4 +1725,10 @@ label span{ color: #7d7d7d; font-weight: 500;}
 }
 .select2-container-multi .select2-choices .select2-search-field input {
     padding: 6px !important;
+}
+.cv-dwn-head{
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-size: 17px;
+    color: #2a7fbd;
 }
