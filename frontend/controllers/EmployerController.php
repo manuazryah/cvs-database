@@ -207,10 +207,10 @@ class EmployerController extends Controller {
                 $filter_nationality = $this->getFilterNationality($model_filter);
                 $dataProvider->query->andWhere(['id' => $filter_nationality]);
             }
-//            if ($model_filter->experience != '') {
-//                $filter_experience = $this->getFilterExperience($model_filter);
-//                $dataProvider->query->andWhere(['id' => $filter_experience]);
-//            }
+            if ($model_filter->experience != '') {
+                $filter_experience = $this->getFilterExperience($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_experience]);
+            }
         }
         return $this->render('dashboard', [
                     'searchModel' => $searchModel,
@@ -221,47 +221,78 @@ class EmployerController extends Controller {
         ]);
     }
 
-//    public function getFilterExperience($data) {
-//        var_dump($data->experience);
-//        $cv_data = [];
-//        $query = new yii\db\Query();
-//        $query->select(['*'])
-//                ->from('candidate_profile');
-//        foreach ($data->experience as $value) {
-//            if ($value == 1) {
-//                $query->orWhere(['>=', 'total_experience', 1]);
-//                $query->orWhere(['<', 'total_experience', 2]);
-//            }
-//            if ($value == 2) {
-//                $query->orWhere(['>=', 'total_experience', 2]);
-//                $query->orWhere(['<', 'total_experience', 5]);
-//            }
-//            if ($value == 3) {
-//                $query->orWhere(['>=', 'total_experience', 6]);
-//                $query->orWhere(['<', 'total_experience', 10]);
-//            }
-//            if ($value == 4) {
-//                $query->orWhere(['>=', 'total_experience', 1]);
-//                $query->orWhere(['<', 'total_experience', 15]);
-//            }
-//            if ($value == 5) {
-//                $query->orWhere(['>=', 'total_experience', 16]);
-//                $query->orWhere(['<', 'total_experience', 20]);
-//            }
-//        }
-//        $command = $query->createCommand();
-//        $result = $command->queryAll();
-//        var_dump($result);
-//        exit;
-//        $str = implode(", ", $data->experience);
-//        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `nationality`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-//        if (!empty($result)) {
-//            foreach ($result as $ind_val) {
-//                $cv_data[] = $ind_val['id'];
-//            }
-//        }
-//        return $cv_data;
-//    }
+    public function getFilterExperience($data) {
+        $cv_data = [];
+        $query = new yii\db\Query();
+        foreach ($data->experience as $value) {
+            if ($value == 1) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 1])
+                        ->andWhere(['<', 'total_experience', 2]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 2) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 2])
+                        ->andWhere(['<', 'total_experience', 5]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 3) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 5])
+                        ->andWhere(['<', 'total_experience', 10]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 4) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 10])
+                        ->andWhere(['<', 'total_experience', 15]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 5) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 15])
+                        ->andWhere(['<', 'total_experience', 20]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+        }
+        return $cv_data;
+    }
 
     public function getFilterNationality($data) {
         $cv_data = [];
@@ -360,28 +391,15 @@ class EmployerController extends Controller {
     }
 
     public function getLocations($data) {
-        $country_data = [];
         $city_data = [];
         $cv_data = [];
-        $countries = \common\models\Country::find()->select('id')->where(['country_name' => $data])->all();
-        if (!empty($countries)) {
-            foreach ($countries as $country) {
-                $country_data[] = $country->id;
-            }
-        }
-        $cities = \common\models\City::find()->where(['city' => $data])->all();
+        $cities = \common\models\City::find()->where(['id' => $data])->all();
         if (!empty($cities)) {
             foreach ($cities as $city) {
                 $city_data[] = $city->id;
             }
         }
-        $query1 = \common\models\CandidateProfile::find()->select('id')->where(['nationality' => $country_data])->orWhere(['current_country' => $country_data])->all();
         $query2 = \common\models\CandidateProfile::find()->select('id')->where(['current_city' => $city_data])->all();
-        if (!empty($query1)) {
-            foreach ($query1 as $query1_data) {
-                $cv_data[] = $query1_data->id;
-            }
-        }
         if (!empty($query2)) {
             foreach ($query2 as $query2_data) {
                 $cv_data[] = $query2_data->id;

@@ -161,7 +161,7 @@ use yii\widgets\Pjax;
                         <ul class="slides list-inline">
                             <li>
                                 <div class="testi-box clearfix text-center">
-                                    <img src="images/home/t1.png" alt="" class="img-responsive">
+                                    <img src="<?= yii::$app->homeUrl; ?>images/home/t1.png" alt="" class="img-responsive">
                                     <div class="content">
                                         <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
                                         <div class="content-hr"></div>

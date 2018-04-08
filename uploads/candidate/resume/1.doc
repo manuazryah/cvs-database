@@ -53,14 +53,14 @@
                                             <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;">Manu</h4></strong></td></tr>
                                             <tr>
                                                 <td style="line-height: 30px;"><strong>Title : </strong>Chartered Accountant</td>
-                                                <td style="line-height: 30px;"><strong>Nationality : </strong>UAE</td>
+                                                <td style="line-height: 30px;"><strong>Nationality : </strong>INDIA</td>
                                             </tr>
                                             <tr>
-                                                <td style="line-height: 30px;"><strong>Current Country : </strong>UAE</td>
+                                                <td style="line-height: 30px;"><strong>Current Country : </strong>INDIA</td>
                                                 <td style="line-height: 30px;"><strong>Current City:</strong> </td>
                                             </tr>
                                             <tr>
-                                                <td style="line-height: 30px;"><strong>Expected Salary : </strong> 5000</td>
+                                                <td style="line-height: 30px;"><strong>Expected Salary : </strong> 5</td>
                                                 <td style="line-height: 30px;"><strong>Job Type : </strong> Full Time</td>
                                             </tr>
                                             <tr>
@@ -79,7 +79,7 @@
                                     <th style="line-height: 30px;"><strong>Job Status</strong></th>
                                 </tr>
                                 <tr>
-                                    <td style="line-height: 30px;">ssdgdgg</td>
+                                    <td style="line-height: 30px;">Not employed looking for job</td>
                                 </tr>
                             </table>
                             <div class="clearfix"></div>
@@ -88,7 +88,8 @@
                                     <th style="line-height: 30px;"><strong>Executive summary</strong></th>
                                 </tr>
                                 <tr>
-                                    <td style="line-height: 30px;">dgdhgjgh</td>
+                                    <td style="line-height: 30px;"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis ultricies nec pellentesque eu.</p>
+</td>
                                 </tr>
                             </table>
                             <div class="clearfix"></div>
@@ -108,7 +109,7 @@
                                 </tr>
                                 <tr>
                                     <td style="line-height: 30px;">
-                                        Tally                                    </td>
+                                                                            </td>
                                 </tr>
                             </table>
                             <div class="clearfix"></div>
@@ -123,7 +124,7 @@
                                         </tr>
                                         <tr>
                                             <td style="line-height: 30px;">
-                                                <span>From : Mar 2018 to Mar 2018</span>
+                                                <span>From : Feb 2015 to Mar 2016</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -133,7 +134,7 @@
                                         </tr>
                                         <tr>
                                             <td style="line-height: 30px;">
-                                                <span>rrrrrrrrrrrrrrrrrrrrrrrrrrrrssss</span>
+                                                <span>aaa</span>
                                             </td>
                                         </tr>
                                                                                 <tr>
@@ -143,7 +144,7 @@
                                         </tr>
                                         <tr>
                                             <td style="line-height: 30px;">
-                                                <span>From : Mar 2018 to Mar 2018</span>
+                                                <span>From : Mar 2010 to Jan 2015</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -153,7 +154,7 @@
                                         </tr>
                                         <tr>
                                             <td style="line-height: 30px;">
-                                                <span>Developer</span>
+                                                <span>bbb</span>
                                             </td>
                                         </tr>
                                                                     </table>
@@ -173,15 +174,15 @@
                                             <td>MCA</td>
                                             <td>aaaabbbb</td>
                                             <td>UAE</td>
-                                            <td>Mar 2018</td>
-                                            <td>Mar 2018</td>
+                                            <td>Apr 2012</td>
+                                            <td>Mar 2015</td>
                                         </tr>
                                                                             <tr>
                                             <td>BCA</td>
                                             <td>bbbbbcccc</td>
                                             <td>UAE</td>
-                                            <td>Mar 2018</td>
-                                            <td>Apr 2018</td>
+                                            <td>Mar 2010</td>
+                                            <td>Mar 2012</td>
                                         </tr>
                                                                                                     </table>
                             <div class="clearfix"></div>

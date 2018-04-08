@@ -12,9 +12,10 @@ use yii\helpers\ArrayHelper;
 
 $this->title = 'Featured CVs';
 $this->params['breadcrumbs'][] = $this->title;
-$countries = ArrayHelper::map(common\models\Country::find()->all(), 'id', 'country_name');
-$cities = ArrayHelper::map(common\models\City::find()->all(), 'id', 'city');
-$items = array_merge($countries, $cities);
+$city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => SORT_ASC])->all(), 'id', function($model) {
+            return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];
+        }
+);
 ?>
 <div class="admin-users-index">
 
@@ -48,27 +49,7 @@ $items = array_merge($countries, $cities);
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="job-search">
                                         <?= $form1->field($model_filter, 'keyword')->textInput(['placeholder' => 'Job title / keywords'])->label(FALSE) ?>
-                                        <div class="form-group field-cvfilter-location">
-                                            <select id="cvfilter-location" class="form-control select2-offscreen" name="CvFilter[location][]" multiple="multiple" size="4" tabindex="-1">
-                                                <option value="">-Choose a country / City-</option>
-                                                <?php
-                                                if (!empty($items)) {
-                                                    foreach ($items as $item) {
-                                                        $select = '';
-                                                        if (isset($model_filter->location) && $model_filter->location != '') {
-                                                            if (in_array($item, $model_filter->location)) {
-                                                                $select = 'selected="selected"';
-                                                            }
-                                                        }
-                                                        ?>
-                                                        <option value="<?= $item ?>" <?= $select ?>><?= $item ?></option>
-                                                        <?php
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        <?php // $form1->field($model_filter, 'location')->textInput(['placeholder' => 'Country / City'])->label(FALSE)   ?>
+                                        <?= $form1->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-'])->label(FALSE) ?>
                                         <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                                     </div>
                                 </div>
@@ -328,7 +309,7 @@ $items = array_merge($countries, $cities);
                                     ?>
                                 </div>
                             </div>
-                            <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])      ?>
+                            <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])       ?>
                             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
                                 <div class="col-md-12 col-sm-12 p-l">
                                     <div class="page-heading">
@@ -338,9 +319,8 @@ $items = array_merge($countries, $cities);
                                             $your_search_filter .= '"' . $model_filter->keyword . '", ';
                                         }
                                         if (isset($model_filter->location) && $model_filter->location != '') {
-                                            foreach ($model_filter->location as $loc_value) {
-                                                $your_search_filter .= '"' . $loc_value . '", ';
-                                            }
+                                            $city = \common\models\City::findOne($model_filter->location);
+                                            $your_search_filter .= '"' . common\models\Country::findOne($city->country)->country_name . ' - ' . $city->city . '", ';
                                         }
                                         if (isset($model_filter->industries) && $model_filter->industries != '') {
                                             foreach ($model_filter->industries as $indus_value) {

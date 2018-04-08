@@ -256,11 +256,12 @@ use yii\widgets\ActiveForm;
                                         $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
                                         if (file_exists($dirPath)) {
                                             if ($model->upload_resume != '') {
-                                                if ($model->upload_resume == doc || $model->upload_resume == docx) {
+                                                if ($model->upload_resume == 'doc' || $model->upload_resume == 'docx') {
                                                     ?>
-                                                                                 <!--<iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>"></iframe>-->
-                                                <?php } elseif ($model->upload_resume == pdf) { ?>
-                                                                        <!--<iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px"  />-->
+                                                                    <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
+                                                    <iframe src="https://docs.google.com/viewer?embedded=true&url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>
+                                                <?php } elseif ($model->upload_resume == 'pdf') { ?>
+                                                    <iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px" frameborder="0" ></iframe>
                                                     <?php
                                                 }
                                             }
