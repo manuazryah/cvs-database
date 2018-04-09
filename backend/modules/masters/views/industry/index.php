@@ -75,6 +75,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     ],
                                         ]);
                                     },
+//                                    'approve' => function ($url, $model) {
+//                                        if ($model->status == 2) {
+//                                            return Html::a('<span class="fa fa-check"></span>', $url, [
+//                                                        'title' => Yii::t('app', 'approve'),
+//                                                        'style' => 'color: green;',
+//                                                        'data' => [
+//                                                            'confirm' => 'Are you sure you want approve this industry?',
+//                                                        ],
+//                                            ]);
+//                                        }
+//                                    },
                                 ],
                                 'urlCreator' => function ($action, $model) {
                                     if ($action === 'update') {
@@ -85,6 +96,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $url = Url::to(['delete', 'id' => $model->id]);
                                         return $url;
                                     }
+//                                    if ($action === 'approve') {
+//                                        $url = Url::to(['approve', 'id' => $model->id]);
+//                                        return $url;
+//                                    }
                                 }],
                         ],
                     ]);

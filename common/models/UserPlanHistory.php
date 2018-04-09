@@ -13,38 +13,37 @@ use Yii;
  * @property string $start_date
  * @property string $end_date
  */
-class UserPlanHistory extends \yii\db\ActiveRecord
-{
+class UserPlanHistory extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'user_plan_history';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['user_id', 'plan'], 'integer'],
-            [['start_date', 'end_date'], 'safe'],
+            [['user_id', 'plan', 'total_credits', 'remaining_credits', 'status'], 'integer'],
+            [['start_date', 'end_date', 'transaction_id'], 'safe'],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
             'plan' => 'Plan',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
+            'transaction_id' => 'Transaction',
         ];
     }
+
 }

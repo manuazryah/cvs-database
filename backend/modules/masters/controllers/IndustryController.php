@@ -127,4 +127,14 @@ class IndustryController extends Controller {
         }
     }
 
+    public function actionApprove($id) {
+        $model = $this->findModel($id);
+        if (!empty($model)) {
+            $model->status = 1;
+            $model->save();
+            Yii::$app->session->setFlash('success', "Industry Approved Successfully");
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
 }

@@ -45,32 +45,29 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th>Package Name</th>
                                 <th>:</th>
                                 <td><?= \common\models\Packages::findOne($user_package->package)->package_name ?></td>
+                                <th>Transaction</th>
+                                <th>:</th>
+                                <td><?= $user_package->transaction_id ?></td>
                                 <th>Start Date</th>
-                                <th>:</th>
                                 <td><?= $user_package->start_date ?></td>
-                                <th>:</th>
-                                <th>End Date</th>
-                                <td><?= $user_package->end_date ?></td>
                             </tr>
                             <tr>
-                                <th>Number of Downloads</th>
+                                <th>End Date</th>
+                                <th>:</th>
+                                <td><?= $user_package->end_date ?></td>
+                                <th>Total Credits</th>
                                 <th>:</th>
                                 <td><?= $user_package->no_of_downloads ?></td>
-                                <th>Remaining Downloads</th>
-                                <th>:</th>
+                                <th>Remaining Credits</th>
                                 <td><?= $user_package->no_of_downloads_left ?></td>
-                                <th>:</th>
-                                <th>Date of Creation</th>
-                                <td><?= $user_package->created_date ?></td>
                             </tr>
                             <tr>
+                                <th>Date of Creation</th>
+                                <th>:</th>
+                                <td><?= $user_package->created_date ?></td>
                                 <th>Date of Updation</th>
                                 <th>:</th>
                                 <td><?= $user_package->updated_date ?></td>
-                                <th></th>
-                                <th></th>
-                                <td></td>
-                                <th></th>
                                 <th></th>
                                 <td></td>
                             </tr>
@@ -97,8 +94,37 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return common\models\Packages::findOne($data->plan)->package_name;
                                     },
                                 ],
-                                'start_date',
-                                'end_date',
+                                'transaction_id',
+                                [
+                                    'attribute' => 'start_date',
+                                    'value' => function ($data) {
+                                        return date("d-M-Y", strtotime($data->start_date));
+                                    },
+                                ],
+                                [
+                                    'attribute' => 'end_date',
+                                    'value' => function ($data) {
+                                        return date("d-M-Y", strtotime($data->end_date));
+                                    },
+                                ],
+                                [
+                                    'attribute' => 'remaining_credits',
+                                    'label' => 'Credits Remaining',
+                                    'value' => function ($data) {
+                                        return $data->remaining_credits . '/' . $data->total_credits . ' Downloads';
+                                    },
+                                ],
+                                [
+                                    'attribute' => 'status',
+                                    'label' => 'Credits Remaining',
+                                    'value' => function ($data) {
+                                        if ($data->status == 0) {
+                                            return 'Expired / 0 Credits Remaining';
+                                        } else {
+                                            return '';
+                                        }
+                                    },
+                                ],
                             ],
                         ]);
                         ?>

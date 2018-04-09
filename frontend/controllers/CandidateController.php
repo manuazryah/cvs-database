@@ -645,7 +645,7 @@ class CandidateController extends Controller {
         $model = new \common\models\Industry();
         if (Yii::$app->request->post()) {
             $model->industry_name = Yii::$app->request->post()['industry_name'];
-            $model->status = 0;
+            $model->status = 2;
             if ($model->validate() && $model->save()) {
                 echo json_encode(array("con" => "1", 'id' => $model->id, 'name' => $model->industry_name)); //Success
                 exit;
@@ -670,7 +670,7 @@ class CandidateController extends Controller {
         if (Yii::$app->request->post()) {
             $model->industry = Yii::$app->request->post()['industry'];
             $model->skill = Yii::$app->request->post()['skill'];
-            $model->status = 0;
+            $model->status = 2;
             if ($model->validate() && $model->save()) {
                 echo json_encode(array("con" => "1", 'id' => $model->id, 'name' => $model->skill)); //Success
                 exit;

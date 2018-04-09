@@ -47,9 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'status',
                                 'format' => 'raw',
-                                'filter' => [1 => 'Enabled', 0 => 'disabled'],
+                                'filter' => [1 => 'Enabled', 0 => 'Disabled', 2 => 'Not Approved'],
                                 'value' => function ($model) {
-                                    return $model->status == 1 ? 'Enabled' : 'disabled';
+                                    if ($model->status == 0) {
+                                        return 'Disabled';
+                                    } elseif ($model->status == 1) {
+                                        return 'Enabled';
+                                    } elseif ($model->status == 2) {
+                                        return 'Not Approved';
+                                    } else {
+                                        return '';
+                                    }
                                 },
                             ],
 //                            'CB',

@@ -19,33 +19,30 @@ use Yii;
  * @property string $created_date
  * @property string $updated_date
  */
-class EmployerPackages extends \yii\db\ActiveRecord
-{
+class EmployerPackages extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'employer_packages';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['employer_id', 'package'], 'required'],
             [['employer_id', 'package', 'no_of_days', 'no_of_days_left', 'no_of_views', 'no_of_views_left'], 'integer'],
-            [['start_date', 'end_date', 'created_date', 'updated_date'], 'safe'],
+            [['start_date', 'end_date', 'created_date', 'updated_date', 'transaction_id'], 'safe'],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'employer_id' => 'Employer ID',
@@ -58,6 +55,8 @@ class EmployerPackages extends \yii\db\ActiveRecord
             'no_of_views_left' => 'No Of Views Left',
             'created_date' => 'Created Date',
             'updated_date' => 'Updated Date',
+            'transaction_id' => 'Transaction',
         ];
     }
+
 }

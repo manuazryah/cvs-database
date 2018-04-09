@@ -22,7 +22,25 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
 
                                 </div>-->
+                <div class="modal fade" id="modal-6">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                        </div>
+                    </div>
+                </div>
                 <div class="panel-body">
+                    <?php
+                    $shortlist = common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
+                    if (empty($shortlist)) {
+                        ?>
+                        <a href="" class="btn btn-warning  btn-icon btn-icon-standalone" id="short-list-modal" data-val="<?= $model->candidate_id ?>" style="float:right;margin-left: 20px;"><i class="fa fa-folder-open-o"></i><span>Shortlist to Folder</span></a>
+                    <?php } else {
+                        ?>
+                        <span class="short-list-span">Already Shortlisted</span>
+                    <?php }
+                    ?>
+                    <?= Html::a('<i class="fa fa-download"></i><span> Quick Download</span>', ['quick-download', 'id' => $model->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone', 'style' => 'float:right;']) ?>
                     <section class="resume">
                         <div class="">
                             <div class="row">
@@ -32,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <tr>
                                                 <td style="width: 90%">
                                                     <table style="width: 100%">
-                                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?php // $model->name                     ?></h4></strong></td></tr>
+                                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?php // $model->name                                                        ?></h4></strong></td></tr>
                                                         <tr>
                                                             <td style="line-height: 30px;"><strong>Title : </strong><?= $model->title ?></td>
                                                             <td style="line-height: 30px;"><strong>Name : </strong><?= $contact_info->user_name ?></td>
@@ -299,6 +317,29 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </tr>
                                         </table>
                                         <div class="clearfix"></div>
+                                        <div class="borderfull-width" style="border: solid 1px #e1e1e1;position: relative;overflow: hidden;margin: 12px 2px 15px 5px;"></div>
+                                        <div class="page-heading">
+                                            <h4>Uploded CV</h4>
+                                            <div class="contact_details col-md-12 p-l">
+                                                <?php
+                                                if ($model->upload_resume != '') {
+                                                    $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
+                                                    if (file_exists($dirPath)) {
+                                                        if ($model->upload_resume != '') {
+                                                            if ($model->upload_resume == 'doc' || $model->upload_resume == 'docx') {
+                                                                ?>
+                                                                                                                                                                <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
+                                                                <iframe src="https://docs.google.com/viewer?embedded=true&url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>
+                                                                <?php } elseif ($model->upload_resume == 'pdf') { ?>
+                                                                <iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px" frameborder="0" ></iframe>
+                                                                <?php
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -309,5 +350,42 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '#short-list-modal', function (e) {
+            e.preventDefault();
+            var candidate_id = $(this).attr('data-val');
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id},
+                url: '<?= Yii::$app->homeUrl ?>employer/get-short-list',
+                success: function (data) {
+                    $(".modal-content").html(data);
+                    $('#modal-6').modal('show', {backdrop: 'static'});
+                }
+            });
+        });
+
+        $(document).on('submit', '#shortlist-form', function (e) {
+            e.preventDefault();
+            var candidate_id = $('#shortlist-candate_id').val();
+            var folder_name = $('#shortlist-folder_name').val();
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id, folder_name: folder_name},
+                url: '<?= Yii::$app->homeUrl ?>employer/save-shortlist',
+                success: function (data) {
+                    $('#modal-6').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+    }
+    );
+</script>
 
 

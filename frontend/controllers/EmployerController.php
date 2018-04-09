@@ -105,6 +105,12 @@ class EmployerController extends Controller {
 
     public function addPackage($data) {
         $package = \common\models\Packages::findOne(1);
+        $employe = Employer::find()->orderBy(['id' => SORT_DESC])->one();
+        if (!empty($employe)) {
+            $last = $employe->id + 1;
+        } else {
+            $last = 1;
+        }
         $model = new EmployerPackages();
         $model->employer_id = $data->id;
         $model->package = $package->id;
@@ -112,13 +118,14 @@ class EmployerController extends Controller {
         $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
         $model->no_of_days = $package->no_of_days;
         $model->no_of_days_left = $package->no_of_days;
+        $model->transaction_id = sprintf("%06d", $last);
 //        $model->no_of_views = $package->no_of_profile_view;
 //        $model->no_of_views_left = $package->no_of_profile_view;
         $model->no_of_downloads = $package->no_of_downloads;
         $model->no_of_downloads_left = $package->no_of_downloads;
         $model->created_date = date('Y-m-d');
         if ($model->save()) {
-            $this->PlanHistory($model, $package);
+//            $this->PlanHistory($model, $package);
         }
         return;
     }
@@ -169,7 +176,12 @@ class EmployerController extends Controller {
         $model_filter = new CvFilter();
         if ($model_filter->load(Yii::$app->request->post())) {
             if ($model_filter->keyword != '') {
-                $dataProvider->query->andWhere(['title' => $model_filter->keyword]);
+                $dataProvider->query->andWhere([
+                    'or',
+                    ['like', 'title', $model_filter->keyword],
+                    ['like', 'executive_summary', $model_filter->keyword],
+                ]);
+//                $dataProvider->query->andWhere(['title' => $model_filter->keyword]);
             }
             if ($model_filter->location != '') {
                 $locations = $this->getLocations($model_filter->location);
@@ -537,6 +549,7 @@ class EmployerController extends Controller {
         $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
         $package = \common\models\Packages::find()->where(['id' => $id])->one();
         $model = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
+        $old_package = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         if (!empty($model)) {
             $model->package = $package->id;
             $model->start_date = date('Y-m-d');
@@ -549,7 +562,7 @@ class EmployerController extends Controller {
             $model->no_of_downloads_left = $package->no_of_downloads;
             $model->created_date = date('Y-m-d');
             if ($model->save()) {
-                $this->PlanHistory($model, $package);
+                $this->PlanHistory($model, $old_package);
                 Yii::$app->session->setFlash('success', 'Plan selected successfully');
                 return $this->redirect(['/employer/user-plans']);
             }
@@ -564,10 +577,14 @@ class EmployerController extends Controller {
      */
     public function PlanHistory($model, $package) {
         $plans = new \common\models\UserPlanHistory();
-        $plans->user_id = $model->employer_id;
-        $plans->plan = $package->id;
-        $plans->start_date = $model->start_date;
-        $plans->end_date = $model->end_date;
+        $plans->user_id = $package->employer_id;
+        $plans->plan = $package->package;
+        $plans->start_date = $package->start_date;
+        $plans->end_date = $package->end_date;
+        $plans->transaction_id = $package->transaction_id;
+        $plans->total_credits = $package->no_of_downloads;
+        $plans->remaining_credits = $package->no_of_downloads_left;
+        $plans->status = 0;
         $plans->save();
         return;
     }

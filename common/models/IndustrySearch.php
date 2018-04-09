@@ -38,7 +38,7 @@ class IndustrySearch extends Industry {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = Industry::find()->orderBy(['id' => SORT_DESC]);
+        $query = Industry::find()->where(['!=', 'id', 0])->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 

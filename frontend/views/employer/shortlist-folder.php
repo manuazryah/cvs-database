@@ -31,12 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="panel-body">
                     <?= \common\widgets\Alert::widget() ?>
-                    <?php
-                    $form1 = ActiveForm::begin([
-                                'method' => 'post',
-                                'id' => 'filter-search',
-                    ]);
-                    ?>
                     <section class="mailbox-env">
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 box">
@@ -77,7 +71,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                     </section>
-                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>
@@ -89,5 +82,42 @@ $this->params['breadcrumbs'][] = $this->title;
             $("#filter-search").submit();
         });
     });
+</script>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '#short-list-modal', function (e) {
+            e.preventDefault();
+            var candidate_id = $(this).attr('data-val');
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id},
+                url: '<?= Yii::$app->homeUrl ?>employer/get-short-list',
+                success: function (data) {
+                    $(".modal-content").html(data);
+                    $('#modal-6').modal('show', {backdrop: 'static'});
+                }
+            });
+        });
+
+        $(document).on('submit', '#shortlist-form', function (e) {
+            e.preventDefault();
+            var candidate_id = $('#shortlist-candate_id').val();
+            var folder_name = $('#shortlist-folder_name').val();
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id, folder_name: folder_name},
+                url: '<?= Yii::$app->homeUrl ?>employer/save-shortlist',
+                success: function (data) {
+                    $('#modal-6').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+    }
+    );
 </script>
 

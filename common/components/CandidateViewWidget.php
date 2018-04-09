@@ -19,9 +19,9 @@ use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
-use common\models\PurchaseOrderMst;
+use common\models\CandidateProfile;
 
-class PurchaseOrderWidget extends Widget {
+class CandidateViewWidget extends Widget {
 
     public $id;
 
@@ -33,8 +33,8 @@ class PurchaseOrderWidget extends Widget {
     }
 
     public function run() {
-        $Order = PurchaseOrderMst::findOne($this->id);
-        return $this->render('purchase_order', ['Order' => $Order]);
+        $model = CandidateProfile::findOne($this->id);
+        return $this->render('candidate_view', ['model' => $model]);
         //return Html::encode($this->message);
     }
 

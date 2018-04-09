@@ -10,15 +10,14 @@ use common\models\UserPlanHistory;
 /**
  * UserPlanHistorySearch represents the model behind the search form of `common\models\UserPlanHistory`.
  */
-class UserPlanHistorySearch extends UserPlanHistory
-{
+class UserPlanHistorySearch extends UserPlanHistory {
+
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'user_id', 'plan'], 'integer'],
+            [['id', 'user_id', 'plan', 'total_credits', 'remaining_credits', 'status'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
         ];
     }
@@ -26,8 +25,7 @@ class UserPlanHistorySearch extends UserPlanHistory
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class UserPlanHistorySearch extends UserPlanHistory
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = UserPlanHistory::find();
 
         // add conditions that should always apply here
@@ -68,4 +65,5 @@ class UserPlanHistorySearch extends UserPlanHistory
 
         return $dataProvider;
     }
+
 }
