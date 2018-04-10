@@ -44,7 +44,7 @@ class Candidate extends ActiveRecord implements IdentityInterface {
             [['email'], 'unique', 'on' => 'update'],
             [['status', 'email_varification_status'], 'integer'],
             [['date_of_creation', 'date_of_updation', 'phone', 'address', 'alternate_phone', 'alternate_address'], 'safe'],
-            [['email', 'user_name', 'password', 'user_id', 'facebook_link', 'linked_in_link'], 'string', 'max' => 100],
+            [['email', 'user_name', 'password', 'user_id', 'facebook_link', 'linked_in_link', 'google_link', 'youtube_link'], 'string', 'max' => 100],
             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match", 'on' => 'create'],
             [['user_name', 'password'], 'required', 'on' => 'login'],
             [['password'], 'validatePassword', 'on' => 'login'],
@@ -86,6 +86,8 @@ class Candidate extends ActiveRecord implements IdentityInterface {
             'email_varification_status' => 'Email Varification Status',
             'linked_in_link' => 'Linked in Link',
             'facebook_link' => 'Facebook Link',
+            'youtube_link' => 'Youtube Link',
+            'google_link' => 'Google Link',
         ];
     }
 

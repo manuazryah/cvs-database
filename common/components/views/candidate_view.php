@@ -49,6 +49,8 @@ if (count($short_list_data) > 0) {
 } else {
     $msg = 'No Other Employers Shortlisted this CV';
 }
+$qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
+$work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
 ?>
 <div class="sorting_content">
     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
@@ -67,7 +69,12 @@ if (count($short_list_data) > 0) {
                     ?>
                 </div>
                 <div class="text-shorting">
-                    <h1><strong><?= $name ?></strong></h1>
+                    <div class="contact_details col-md-4 col-sm-4 p-l">
+                        <h1><strong><?= $name ?></strong></h1>
+                    </div>
+                    <div class="contact_details col-md-6 col-sm-6 p-l">
+                        <span><strong>Reference No:</strong> <?= $profile_info->user_id ?></span>
+                    </div>
                     <ul class="unstyled">
                         <li><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></li>
                     </ul>
@@ -78,13 +85,35 @@ if (count($short_list_data) > 0) {
                 <div class="contact_details col-md-6 col-sm-6 p-l">
                     <span><strong>Currently:</strong> <?= $model->current_country != '' ? common\models\Country::findOne($model->current_country)->country_name : '' ?> <?= $model->current_city != '' ? ', ' . common\models\City::findOne($model->current_city)->city : '' ?></span>
                 </div>
-                <p class="col-md-12 p-l"><?= strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary; ?></p>
+                <div class="search-min">
+                    <div class="contact_details col-md-8 col-sm-4 p-l">
+                        <span><strong>* </strong><?= $qualification->course_name != '' ? common\models\Courses::findOne($qualification->course_name)->course_name : '' ?></span>
+                    </div>
+                    <div class="contact_details col-md-4 col-sm-6 p-l">
+                        <span><strong>* </strong><?= $year . ' Year ' . $month . ' Month' ?></span>
+                    </div>
+                    <div class="contact_details col-md-12 col-sm-12 p-l">
+                        <ul>
+                            <?php
+                            if (!empty($work_experiences)) {
+                                foreach ($work_experiences as $work_experience) {
+                                    ?>
+
+                                    <li> <?= $work_experience->designation . ' at ' . $work_experience->company_name ?></li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+<!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                        ?></p>-->
                 <div class="contact_details col-md-12 col-sm-12 p-l">
                     <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                 </div>
-                <div class="contact_details col-md-12 col-sm-12 p-l">
-                    <span><strong>Total Experience:</strong> <?= $year . ' Year ' . $month . ' Month' ?></span>
-                </div>
+                <!--                <div class="contact_details col-md-12 col-sm-12 p-l">
+                                    <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                        ?></span>
+                                </div>-->
             </div>
         </div>
     </div>
@@ -99,9 +128,10 @@ if (count($short_list_data) > 0) {
                 <?php } else {
                     ?>
                     <p class="button5">Already Shortlisted</p>
+                    <?= Html::a('Unshortlist', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2']) ?>
                 <?php }
                 ?>
-                <?php // Html::a('Quick Download <br><span><i class="fas fa-file-pdf"></i>', ['quick-download', 'id' => $model->id], ['class' => 'button2']) ?>
+                <?php // Html::a('Quick Download <br><span><i class="fas fa-file-pdf"></i>', ['quick-download', 'id' => $model->id], ['class' => 'button2'])  ?>
                 <?= Html::a('View CV <br><span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => $model->id], ['class' => 'button3']) ?>
             </div>
         </div>

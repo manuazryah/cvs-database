@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <tr>
                                                 <td style="width: 90%">
                                                     <table style="width: 100%">
-                                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?php // $model->name                                                        ?></h4></strong></td></tr>
+                                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?php // $model->name                                                          ?></h4></strong></td></tr>
                                                         <tr>
                                                             <td style="line-height: 30px;"><strong>Title : </strong><?= $model->title ?></td>
                                                             <td style="line-height: 30px;"><strong>Name : </strong><?= $contact_info->user_name ?></td>
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         </tr>
                                                         <tr>
                                                             <td style="line-height: 30px;"><strong>Phone : </strong> <?= $contact_info->phone ?></td>
-                                                            <td style="line-height: 30px;"></td>
+                                                            <td style="line-height: 30px;"><strong>Reference Number : </strong> <?= $contact_info->user_id ?></td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -328,7 +328,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         if ($model->upload_resume != '') {
                                                             if ($model->upload_resume == 'doc' || $model->upload_resume == 'docx') {
                                                                 ?>
-                                                                                                                                                                <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
+                                                                                                                                                                                                <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
                                                                 <iframe src="https://docs.google.com/viewer?embedded=true&url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>
                                                                 <?php } elseif ($model->upload_resume == 'pdf') { ?>
                                                                 <iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px" frameborder="0" ></iframe>

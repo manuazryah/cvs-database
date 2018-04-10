@@ -34,7 +34,11 @@ class CandidateViewWidget extends Widget {
 
     public function run() {
         $model = CandidateProfile::findOne($this->id);
-        return $this->render('candidate_view', ['model' => $model]);
+        $profile_info = \common\models\Candidate::find()->where(['id' => $model->candidate_id])->one();
+        return $this->render('candidate_view', [
+                    'model' => $model,
+                    'profile_info' => $profile_info,
+        ]);
         //return Html::encode($this->message);
     }
 

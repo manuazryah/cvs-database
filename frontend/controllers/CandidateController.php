@@ -553,6 +553,7 @@ class CandidateController extends Controller {
      */
     public function actionOnlineCurriculumVitae() {
         $id = Yii::$app->session['candidate']['id'];
+        $user_details = Candidate::find()->where(['id' => $id])->one();
         $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
         $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
         $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
@@ -569,6 +570,7 @@ class CandidateController extends Controller {
                     'model' => $model,
                     'model_education' => $model_education,
                     'model_experience' => $model_experience,
+                    'user_details' => $user_details,
         ]);
     }
 
@@ -684,6 +686,14 @@ class CandidateController extends Controller {
         return $this->renderAjax('add-skill', [
                     'model' => $model,
         ]);
+    }
+
+    public function actionDeleteProfile() {
+        $id = Yii::$app->session['candidate']['id'];
+        $user_details = Candidate::find()->where(['id' => $id])->one();
+        $user_details->status = 0;
+        $user_details->update();
+        $this->redirect(['/site/index']);
     }
 
 }

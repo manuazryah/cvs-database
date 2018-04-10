@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
                 <div class="col-md-8">
                     <div class="panel-body">
                         <div class="col-md-12">
-                            <h4><?= $model->name ?></h4>
+                            <h4><?= $user_details->user_name ?></h4>
                         </div>
                         <div class="col-md-9">
                             <div class="page-heading">
@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
                                     <span><strong>Current City:</strong> <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></span>
                                 </div>
                                 <div class="contact_details col-md-6 p-l">
-                                    <span><strong>Expected Salary :</strong> <?= $model->expected_salary ?></span>
+                                    <span><strong>Expected Salary :</strong> <?= $model->expected_salary != '' ? \common\models\ExpectedSalary::findOne($model->expected_salary)->salary_range : '' ?></span>
                                 </div>
                                 <div class="contact_details col-md-6 p-l">
                                     <span><strong>Job Type:</strong> <?= $model->job_type != '' ? \common\models\JobType::findOne($model->job_type)->job_type : '' ?></span>
@@ -258,7 +258,7 @@ use yii\widgets\ActiveForm;
                                             if ($model->upload_resume != '') {
                                                 if ($model->upload_resume == 'doc' || $model->upload_resume == 'docx') {
                                                     ?>
-                                                                    <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
                                                     <iframe src="https://docs.google.com/viewer?embedded=true&url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>
                                                 <?php } elseif ($model->upload_resume == 'pdf') { ?>
                                                     <iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px" frameborder="0" ></iframe>
@@ -275,9 +275,48 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="col-md-4">
                     <div class="panel-body">
+                        <div class="row cv-contact">
+                            <div class="col-md-12 p-l p-r"><h5 class="cv-contact-head">Contacts</h5></div>
+                            <div class="borderfull-width top-0"></div>
+                            <div class="cv-contact-details">
+                                <table class="table">
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>:</th>
+                                        <td><?= $user_details->email ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mob / Tel</th>
+                                        <th>:</th>
+                                        <td><?= $user_details->phone ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Facebook Link</th>
+                                        <th>:</th>
+                                        <td><?= $user_details->facebook_link ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Google Link</th>
+                                        <th>:</th>
+                                        <td><?= $user_details->google_link ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Linked in Link</th>
+                                        <th>:</th>
+                                        <td><?= $user_details->linked_in_link ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Youtube Link</th>
+                                        <th>:</th>
+                                        <td><?= $user_details->youtube_link ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="borderfull-width"></div>
+                        </div>
                         <div class="row cv-downlod">
-                            <div class="col-md-12 p-l p-r"><h5 class="cv-dwn-head">Download Profile</h5></div>
-                            <div class="col-md-12 p-r p-l">
+                            <div class="col-md-6 p-l"><h5 class="cv-dwn-head">Download CV</h5></div>
+                            <div class="col-md-6 p-r">
                                 <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" >', ['pdf-export'], ['target' => '_blank']) ?>
                                 <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/word-icon.png" >', ['word-export'], ['target' => '_blank']) ?>
                             </div>

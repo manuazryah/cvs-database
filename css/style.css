@@ -1732,3 +1732,18 @@ label span{ color: #7d7d7d; font-weight: 500;}
     font-size: 17px;
     color: #2a7fbd;
 }
+.top-0{
+    top: 0px;
+}
+.cv-contact-details table tr{
+    border: none;
+}
+.prof-del{
+    background: #2190c9;
+    width: max-content;
+    color: white;
+    float: right;
+}
+.help-block-error{
+    color: red !important;
+}

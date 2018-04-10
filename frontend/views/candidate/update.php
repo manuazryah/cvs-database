@@ -48,6 +48,11 @@ if ($model->current_country != '') {
     <section class="manage">
         <div class="container">
             <div class="row">
+                <div class="form-group col-md-12">
+                    <?= Html::a('Delete Profile', ['delete-profile'], ['class' => 'btn btn-block prof-del']) ?>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <?php
                     echo ModalViewWidget::widget();
@@ -213,7 +218,7 @@ if ($model->current_country != '') {
                                                 </td>
                                                 <td>
                                                     <textarea name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" rows="4"><?= $datas->job_responsibility ?></textarea>
-                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                    ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
+                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
                                                 </td>
                                                 <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
                                             </tr>
@@ -391,7 +396,7 @@ if ($model->current_country != '') {
 //                            if (file_exists($dirPath)) {
 //
                         ?>
-                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                       ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                   ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
                         <?php
 //                            }
 //                        }

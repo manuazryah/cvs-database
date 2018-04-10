@@ -13,6 +13,7 @@ use yii\web\Response;
 use common\models\PackagesSearch;
 use common\models\EmployerPackages;
 use common\models\CvSearch;
+use common\models\ShortList;
 use common\models\CandidateProfileSearch;
 use common\models\CvFilter;
 use yii\db\Expression;
@@ -181,6 +182,8 @@ class EmployerController extends Controller {
                     ['like', 'title', $model_filter->keyword],
                     ['like', 'executive_summary', $model_filter->keyword],
                 ]);
+                $keywords = $this->getLocations($model_filter->keyword);
+                $dataProvider->query->andWhere(['id' => $keywords]);
 //                $dataProvider->query->andWhere(['title' => $model_filter->keyword]);
             }
             if ($model_filter->location != '') {
@@ -231,6 +234,11 @@ class EmployerController extends Controller {
                     'model_filter' => $model_filter,
                     'user_plans' => $user_plans,
         ]);
+    }
+
+    public function getFilterKeywords($data) {
+        $cv_data = [];
+        $query = new yii\db\Query();
     }
 
     public function getFilterExperience($data) {
@@ -734,17 +742,27 @@ class EmployerController extends Controller {
         }
     }
 
+    public function actionUnShortlist($id) {
+        $model = ShortList::find()->where(['candidate_id' => $id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
+        if (!empty($model)) {
+            if ($model->delete()) {
+                Yii::$app->session->setFlash('success', "CV Unshortlist Successfully.");
+            }
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
     public function actionShortlistFolder($folder = NULL) {
         if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
             return $this->redirect(array('employer/index'));
         }
         $searchModel = new \common\models\ShortListSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name');
-        $model_filter = new CvFilter();
-        if ($folder != '') {
+        $dataProvider->query->andWhere(['employer_id' => Yii::$app->session['employer_data']['id']]);
+        if (!empty($folder) && $folder != '') {
             $dataProvider->query->andWhere(['folder_name' => $folder]);
         }
+        $model_filter = new CvFilter();
         return $this->render('shortlist-folder', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
