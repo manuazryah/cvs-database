@@ -177,12 +177,7 @@ class EmployerController extends Controller {
         $model_filter = new CvFilter();
         if ($model_filter->load(Yii::$app->request->post())) {
             if ($model_filter->keyword != '') {
-                $dataProvider->query->andWhere([
-                    'or',
-                    ['like', 'title', $model_filter->keyword],
-                    ['like', 'executive_summary', $model_filter->keyword],
-                ]);
-                $keywords = $this->getLocations($model_filter->keyword);
+                $keywords = $this->getFilterKeywords($model_filter->keyword);
                 $dataProvider->query->andWhere(['id' => $keywords]);
 //                $dataProvider->query->andWhere(['title' => $model_filter->keyword]);
             }
@@ -238,7 +233,57 @@ class EmployerController extends Controller {
 
     public function getFilterKeywords($data) {
         $cv_data = [];
+        $arr = [];
         $query = new yii\db\Query();
+        $query->select(['*'])
+                ->from('candidate_profile')
+                ->andWhere([
+                    'or',
+                        ['like', 'title', $data],
+                        ['like', 'executive_summary', $data],
+                        ['like', 'hobbies', $data],
+        ]);
+        $command = $query->createCommand();
+        $result = $command->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        $query1 = new yii\db\Query();
+        $query1->select(['id'])
+                ->from('courses')
+                ->andWhere([
+                    'or',
+                        ['like', 'course_name', $data],
+                        ['like', 'cource_code', $data],
+        ]);
+        $command1 = $query1->createCommand();
+        $result1 = $command1->queryAll();
+        if (!empty($result1)) {
+            foreach ($result1 as $ind_val) {
+                $course_details = \common\models\CandidateEducation::find()->where(['course_name' => $ind_val])->all();
+                if (!empty($course_details)) {
+                    foreach ($course_details as $course_detail) {
+                        $arr[] = $course_detail['candidate_id'];
+                    }
+                }
+            }
+        }
+        $candidate_reference = \common\models\Candidate::find()->where(['user_id' => $data])->one();
+        if (!empty($candidate_reference)) {
+            $arr[] = $candidate_reference['id'];
+        }
+        if (!empty($arr)) {
+            $str = implode(", ", $arr);
+            $result2 = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `candidate_id`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+            if (!empty($result2)) {
+                foreach ($result2 as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
     }
 
     public function getFilterExperience($data) {
