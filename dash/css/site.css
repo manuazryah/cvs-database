@@ -1000,16 +1000,12 @@ input[type=checkbox], input[type=radio] {
 .search-min{
     min-height: 130px;
 }
-/*.fld-remove{
-    float: right;
+.fld-remove{
     color: red;
-    padding-top: 10px;
 }
 .fld-rename{
-    float: right;
     color: #1a96df;
-    padding-top: 10px;
-}*/
+}
 .shortlist-folder-label ul li{
     position: relative;
 }
