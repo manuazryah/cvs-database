@@ -52,10 +52,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <?= Html::a('<i class="fa fa-folder-open"></i>  ' . $folder->folder_name, ['shortlist-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view']) ?>
                                                     <ul class="options">
                                                         <li>
-                                                            <?= Html::a('<i class="fa fa-trash"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-remove']) ?>
+                                                            <?= Html::a('<i class="fa fa-trash"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-remove', 'onclick' => "return confirm('Are you sure to delete this folder?')"]) ?>
                                                         </li>
                                                         <li>
-                                                            <?= Html::a('<i class="fa fa-edit"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-rename']) ?>
+                                                            <a href="" class="btn btn-folder-view fld-rename" id="" data-val="<?= $folder->folder_name ?>"><i class="fa fa-edit"></i></a>
+                                                            <?php // Html::a('<i class="fa fa-edit"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-rename']) ?>
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -86,22 +87,15 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <script>
     $(document).ready(function () {
-        $('input[type="checkbox"]').change(function () {
-            $("#filter-search").submit();
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '#short-list-modal', function (e) {
+        $(document).on('click', '.fld-rename', function (e) {
             e.preventDefault();
-            var candidate_id = $(this).attr('data-val');
+            var folder_name = $(this).attr('data-val');
             $.ajax({
                 type: 'POST',
                 cache: false,
                 async: false,
-                data: {candidate_id: candidate_id},
-                url: '<?= Yii::$app->homeUrl ?>employer/get-short-list',
+                data: {folder_name: folder_name},
+                url: '<?= Yii::$app->homeUrl ?>employer/get-rename-form',
                 success: function (data) {
                     $(".modal-content").html(data);
                     $('#modal-6').modal('show', {backdrop: 'static'});
@@ -109,16 +103,16 @@ $this->params['breadcrumbs'][] = $this->title;
             });
         });
 
-        $(document).on('submit', '#shortlist-form', function (e) {
+        $(document).on('submit', '#rename-form', function (e) {
             e.preventDefault();
-            var candidate_id = $('#shortlist-candate_id').val();
-            var folder_name = $('#shortlist-folder_name').val();
+            var old_folder_name = $('#old-folder_name').val();
+            var new_folder_name = $('#new-folder_name').val();
             $.ajax({
                 type: 'POST',
                 cache: false,
                 async: false,
-                data: {candidate_id: candidate_id, folder_name: folder_name},
-                url: '<?= Yii::$app->homeUrl ?>employer/save-shortlist',
+                data: {old_folder_name: old_folder_name, new_folder_name: new_folder_name},
+                url: '<?= Yii::$app->homeUrl ?>employer/rename-folder',
                 success: function (data) {
                     $('#modal-6').modal('hide');
                     location.reload();

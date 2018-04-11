@@ -670,6 +670,8 @@ class EmployerController extends Controller {
             return $this->redirect(Yii::$app->request->referrer);
             Yii::$app->session->setFlash('error', "You Can't view CVs.Please Select a Package");
         } else {
+            $candidate_profile = \common\models\CandidateProfile::findOne($id);
+            $candidate = \common\models\Candidate::findOne($candidate_profile->candidate_id);
             $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $id])->one();
             if (empty($view_cv)) {
                 if ($packages->end_date >= date('Y-m-d')) {
@@ -678,7 +680,7 @@ class EmployerController extends Controller {
                         $packages->update();
                         $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
 //                           $this->CandidateEmail($id);
-                        return $this->redirect(['view-cvs', 'id' => $id]);
+                        return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
                     } else {
                         Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
                         return $this->redirect(Yii::$app->request->referrer);
@@ -691,7 +693,7 @@ class EmployerController extends Controller {
                 $view_cv->date_of_view = date('Y-m-d');
                 $view_cv->update();
 //                $this->CandidateEmail($id);
-                return $this->redirect(['view-cvs', 'id' => $id]);
+                return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
             }
         }
     }
@@ -869,15 +871,50 @@ class EmployerController extends Controller {
     }
 
     public function actionViewFolderCvs($id) {
-        $model = \common\models\CandidateProfile::findOne($id);
-        $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
-        $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $candidate = \common\models\Candidate::find()->where(['user_id' => $id])->one;
+        $model = \common\models\CandidateProfile::findOne($candidate->id);
+        $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $candidate->id])->all();
+        $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $candidate->id])->all();
 
         return $this->render('cv-view', [
                     'model' => $model,
                     'model_education' => $model_education,
                     'model_experience' => $model_experience,
         ]);
+    }
+
+    public function actionRemoveFolder($folder) {
+        $model = \common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'folder_name' => $folder])->all();
+        if (!empty($model)) {
+            foreach ($model as $value) {
+                $value->delete();
+            }
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionGetRenameForm() {
+        if (Yii::$app->request->isAjax) {
+            $folder_name = $_POST['folder_name'];
+            $data = $this->renderPartial('_form_rename_folder', [
+                'folder_name' => $folder_name,
+            ]);
+            echo $data;
+        }
+    }
+
+    public function actionRenameFolder() {
+        if (Yii::$app->request->isAjax) {
+            $old_folder_name = $_POST['old_folder_name'];
+            $new_folder_name = $_POST['new_folder_name'];
+            $model = \common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'folder_name' => $old_folder_name])->all();
+            if (!empty($model)) {
+                foreach ($model as $value) {
+                    $value->folder_name = $new_folder_name;
+                    $value->update();
+                }
+            }
+        }
     }
 
 }
