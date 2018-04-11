@@ -1000,3 +1000,34 @@ input[type=checkbox], input[type=radio] {
 .search-min{
     min-height: 130px;
 }
+/*.fld-remove{
+    float: right;
+    color: red;
+    padding-top: 10px;
+}
+.fld-rename{
+    float: right;
+    color: #1a96df;
+    padding-top: 10px;
+}*/
+.shortlist-folder-label ul li{
+    position: relative;
+}
+.shortlist-folder-label ul li .options{
+    opacity: 0px;
+    visibility: hidden;
+    transition: ease-in-out 100ms;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.shortlist-folder-label ul li:hover .options{
+    opacity: 1px;
+    visibility: visible;
+    transition: ease-in-out 100ms;
+    right: 0;
+    top: 0;
+}
+.shortlist-folder-label ul li .options li{
+    float: left;
+}

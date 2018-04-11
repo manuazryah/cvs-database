@@ -50,6 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ?>
                                                 <li>
                                                     <?= Html::a('<i class="fa fa-folder-open"></i>  ' . $folder->folder_name, ['shortlist-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view']) ?>
+                                                    <ul class="options">
+                                                        <li>
+                                                            <?= Html::a('<i class="fa fa-trash"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-remove']) ?>
+                                                        </li>
+                                                        <li>
+                                                            <?= Html::a('<i class="fa fa-edit"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-rename']) ?>
+                                                        </li>
+                                                    </ul>
                                                 </li>
                                                 <?php
                                             }

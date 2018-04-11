@@ -172,6 +172,7 @@ class EmployerController extends Controller {
         }
         $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['status' => 1]);
         $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         $model = new CvSearch();
         $model_filter = new CvFilter();
@@ -179,7 +180,6 @@ class EmployerController extends Controller {
             if ($model_filter->keyword != '') {
                 $keywords = $this->getFilterKeywords($model_filter->keyword);
                 $dataProvider->query->andWhere(['id' => $keywords]);
-//                $dataProvider->query->andWhere(['title' => $model_filter->keyword]);
             }
             if ($model_filter->location != '') {
                 $locations = $this->getLocations($model_filter->location);
@@ -221,6 +221,10 @@ class EmployerController extends Controller {
                 $filter_experience = $this->getFilterExperience($model_filter);
                 $dataProvider->query->andWhere(['id' => $filter_experience]);
             }
+            if ($model_filter->folder_name != '') {
+                $filter_folders = $this->getFilterFolder($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_folders]);
+            }
         }
         return $this->render('dashboard', [
                     'searchModel' => $searchModel,
@@ -231,18 +235,27 @@ class EmployerController extends Controller {
         ]);
     }
 
+    public function getFilterFolder($data) {
+        $cv_data = [];
+        foreach ($data->folder_name as $value) {
+            $query = new yii\db\Query();
+            $query->select(['*'])->from('short_list')->andWhere(['folder_name' => $value]);
+            $command = $query->createCommand();
+            $result = $command->queryAll();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['candidate_id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
     public function getFilterKeywords($data) {
         $cv_data = [];
         $arr = [];
         $query = new yii\db\Query();
-        $query->select(['*'])
-                ->from('candidate_profile')
-                ->andWhere([
-                    'or',
-                        ['like', 'title', $data],
-                        ['like', 'executive_summary', $data],
-                        ['like', 'hobbies', $data],
-        ]);
+        $query->select(['*'])->from('candidate_profile')->andWhere(['or', ['like', 'title', $data], ['like', 'executive_summary', $data], ['like', 'hobbies', $data],]);
         $command = $query->createCommand();
         $result = $command->queryAll();
         if (!empty($result)) {
@@ -251,13 +264,7 @@ class EmployerController extends Controller {
             }
         }
         $query1 = new yii\db\Query();
-        $query1->select(['id'])
-                ->from('courses')
-                ->andWhere([
-                    'or',
-                        ['like', 'course_name', $data],
-                        ['like', 'cource_code', $data],
-        ]);
+        $query1->select(['id'])->from('courses')->andWhere(['or', ['like', 'course_name', $data], ['like', 'cource_code', $data],]);
         $command1 = $query1->createCommand();
         $result1 = $command1->queryAll();
         if (!empty($result1)) {
@@ -270,6 +277,17 @@ class EmployerController extends Controller {
                 }
             }
         }
+
+        $query2 = new yii\db\Query();
+        $query2->select(['*'])->from('work_experiance')->andWhere(['or', ['like', 'company_name', $data], ['like', 'designation', $data],]);
+        $command3 = $query2->createCommand();
+        $result3 = $command3->queryAll();
+        if (!empty($result3)) {
+            foreach ($result3 as $ind_val) {
+                $cv_data[] = $ind_val['candidate_id'];
+            }
+        }
+
         $candidate_reference = \common\models\Candidate::find()->where(['user_id' => $data])->one();
         if (!empty($candidate_reference)) {
             $arr[] = $candidate_reference['id'];

@@ -308,6 +308,30 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                     }
                                     ?>
                                 </div>
+                                <div class="job_title">Search Folder</div>
+                                <div class="borderfull-width"></div>
+                                <div class="page-heading check-label">
+                                    <?php
+                                    $folders = common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name')->all();
+                                    $arr_folder = [];
+                                    if (!empty($folders)) {
+                                        foreach ($folders as $folder) {
+                                            if ($model_filter->folder_name != '' && isset($model_filter->folder_name)) {
+                                                if (in_array($folder->folder_name, $model_filter->folder_name)) {
+                                                    $check8 = 'checked';
+                                                } else {
+                                                    $check8 = '';
+                                                }
+                                            } else {
+                                                $check8 = '';
+                                            }
+                                            ?>
+                                            <label><input type="checkbox" <?= $check8 ?> name="CvFilter[folder_name][]" value="<?= $folder->folder_name ?>"> <?= $folder->folder_name ?></label>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])       ?>
                             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
