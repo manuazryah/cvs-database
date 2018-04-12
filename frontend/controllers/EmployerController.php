@@ -905,5 +905,23 @@ class EmployerController extends Controller {
             }
         }
     }
+    
+    /*
+     * Generate report based on service
+     */
+
+    public function actionReport($id) {
+        $package_history = \common\models\UserPlanHistory::find()->where(['id'=>$id])->one();
+        $employer = Employer::find()->where(['id'=>$package_history->user_id])->one();
+        $package = \common\models\Packages::find()->where(['id'=>$package_history->plan])->one();
+        echo $this->renderPartial('report', [
+            'package_history' => $package_history,
+            'package' => $package,
+            'employer' => $employer,
+            'print' => true,
+        ]);
+
+        exit;
+    }
 
 }

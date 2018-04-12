@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PackagesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -106,7 +106,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                                 [
                                     'attribute' => 'status',
-                                    'label' => 'Credits Remaining',
                                     'value' => function ($data) {
                                         if ($data->status == 0) {
                                             return 'Expired / 0 Credits Remaining';
@@ -114,6 +113,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return '';
                                         }
                                     },
+                                ],
+                                            [
+                                    'class' => 'yii\grid\ActionColumn',
+                                    'contentOptions' => [],
+                                    'header' => 'Actions',
+                                    'template' => '{print}',
+                                    'buttons' => [
+                                        'print' => function ($url, $model) {
+                                            return Html::a('<span class="fa fa-print" style="padding-top: 0px;font-size: 16px;"></span> Print Invoice', $url, [
+                                                        'title' => Yii::t('app', 'print'),
+                                                        'class' => 'actions',
+                                                        'target' => '_blank',
+                                            ]);
+                                        },
+                                    ],
+                                    'urlCreator' => function ($action, $model) {
+                                        if ($action === 'print') {
+                                            $url = Url::to(['employer/report', 'id' => $model->id]);
+                                            return $url;
+                                        }
+                                    }
                                 ],
                             ],
                         ]);
