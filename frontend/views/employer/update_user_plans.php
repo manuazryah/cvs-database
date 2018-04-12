@@ -61,16 +61,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th>Remaining Credits</th>
                                 <td><?= $user_package->no_of_downloads_left ?></td>
                             </tr>
-                            <tr>
-                                <th>Date of Creation</th>
-                                <th>:</th>
-                                <td><?= $user_package->created_date ?></td>
-                                <th>Date of Updation</th>
-                                <th>:</th>
-                                <td><?= $user_package->updated_date ?></td>
-                                <th></th>
-                                <td></td>
-                            </tr>
                         </table>
                     </div>
                     <div class="clearfix"></div>

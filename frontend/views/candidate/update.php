@@ -117,6 +117,8 @@ if ($model->current_country != '') {
                         <?php
                         if (!isset($model->dob) && $model->dob != '') {
                             $model->dob = date('d-M-Y');
+                        }else{
+                            $model->dob =date("d-m-Y", strtotime($model->dob));
                         }
                         ?>
                         <?=

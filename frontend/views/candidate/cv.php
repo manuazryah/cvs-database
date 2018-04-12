@@ -48,6 +48,18 @@ use yii\widgets\ActiveForm;
                                 <div class="contact_details col-md-6 p-l">
                                     <span><strong>DOB:</strong> <?= $model->dob ?></span>
                                 </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Email:</strong> <?= $user_details->email ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Phone:</strong> <?= $user_details->phone ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Reference No:</strong> <?= $user_details->user_id ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
+                                    <span><strong></strong></span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3 author">
@@ -258,7 +270,7 @@ use yii\widgets\ActiveForm;
                                             if ($model->upload_resume != '') {
                                                 if ($model->upload_resume == 'doc' || $model->upload_resume == 'docx') {
                                                     ?>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
                                                     <iframe src="https://docs.google.com/viewer?embedded=true&url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>
                                                 <?php } elseif ($model->upload_resume == 'pdf') { ?>
                                                     <iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px" frameborder="0" ></iframe>

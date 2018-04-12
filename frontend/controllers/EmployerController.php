@@ -837,30 +837,18 @@ class EmployerController extends Controller {
 
     public function actionQuickDownload($id) {
         $packages = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
-        if (!empty($packages)) {
-            if ($packages->no_of_downloads_left > 0 && $packages->no_of_downloads_left != '') {
-                $packages->no_of_downloads_left = $packages->no_of_downloads_left - 1;
-                $packages->update();
-                $model = \common\models\CandidateProfile::find()->where(['candidate_id' => $id])->one();
-                $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
-                $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
-                $content = $this->renderPartial('_wordview', [
-                    'model' => $model,
-                    'model_education' => $model_education,
-                    'model_experience' => $model_experience,
-                ]);
-                header("Content-type: application/vnd.ms-word");
-                header("Content-Disposition: attachment;Filename=cv.doc");
-                echo $content;
-                exit;
-            } else {
-                Yii::$app->session->setFlash('error', "You Can't download CVs.Please Upgrade Your Package");
-                return $this->redirect(Yii::$app->request->referrer);
-            }
-        } else {
-            Yii::$app->session->setFlash('error', "You Can't download CVs.Please Upgrade Your Package");
-            return $this->redirect(Yii::$app->request->referrer);
-        }
+        $model = \common\models\CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $content = $this->renderPartial('_wordview', [
+            'model' => $model,
+            'model_education' => $model_education,
+            'model_experience' => $model_experience,
+        ]);
+        header("Content-type: application/vnd.ms-word");
+        header("Content-Disposition: attachment;Filename=cv.doc");
+        echo $content;
+        exit;
     }
 
     public function actionOpenFolder($folder) {
@@ -880,6 +868,7 @@ class EmployerController extends Controller {
                     'model' => $model,
                     'model_education' => $model_education,
                     'model_experience' => $model_experience,
+                    'candidate' => $candidate,
         ]);
     }
 
@@ -890,7 +879,7 @@ class EmployerController extends Controller {
                 $value->delete();
             }
         }
-        return $this->redirect(Yii::$app->request->referrer);
+        return $this->redirect(['shortlist-folder']);
     }
 
     public function actionGetRenameForm() {

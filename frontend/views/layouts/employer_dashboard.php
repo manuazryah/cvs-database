@@ -74,6 +74,9 @@ EmployerAsset::register($this);
                         <li>
                             <?= Html::a('<i class="fa fa-list"></i> <span class="title">Package Details</span>', ['/employer/user-plans'], ['class' => 'title']) ?>
                         </li>
+                        <li>
+                            <?= Html::a('<i class="fa fa-folder-open"></i> <span class="title">Shortlist Folder</span>', ['/employer/shortlist-folder'], ['class' => 'title']) ?>
+                        </li>
                     </ul>
                 </div>
 

@@ -128,7 +128,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                         <a href="" class="button1" id="short-list-modal" data-val="<?= $model->candidate_id ?>">Shortlist to Folder</a>
                     <?php } else {
                         ?>
-                        <p class="button5">Already Shortlisted</p>
+                        <!--<p class="button5">Already Shortlisted</p>-->
                         <?= Html::a('Unshortlist', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2']) ?>
                     <?php }
                     ?>
