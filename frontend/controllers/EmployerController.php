@@ -104,6 +104,10 @@ class EmployerController extends Controller {
         ]);
     }
 
+    /*
+     * Add Employer Initial Package
+     */
+
     public function addPackage($data) {
         $package = \common\models\Packages::findOne(1);
         $employe = Employer::find()->orderBy(['id' => SORT_DESC])->one();
@@ -836,7 +840,7 @@ class EmployerController extends Controller {
     }
 
     public function actionQuickDownload($id) {
-        $packages = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
+        $candidate = \common\models\Candidate::find()->where(['id' => $id])->one();
         $model = \common\models\CandidateProfile::find()->where(['candidate_id' => $id])->one();
         $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
         $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
@@ -844,6 +848,7 @@ class EmployerController extends Controller {
             'model' => $model,
             'model_education' => $model_education,
             'model_experience' => $model_experience,
+            'candidate' => $candidate,
         ]);
         header("Content-type: application/vnd.ms-word");
         header("Content-Disposition: attachment;Filename=cv.doc");
@@ -859,7 +864,7 @@ class EmployerController extends Controller {
     }
 
     public function actionViewFolderCvs($id) {
-        $candidate = \common\models\Candidate::find()->where(['user_id' => $id])->one;
+        $candidate = \common\models\Candidate::find()->where(['user_id' => $id])->one();
         $model = \common\models\CandidateProfile::findOne($candidate->id);
         $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $candidate->id])->all();
         $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $candidate->id])->all();
@@ -905,15 +910,15 @@ class EmployerController extends Controller {
             }
         }
     }
-    
+
     /*
      * Generate report based on service
      */
 
     public function actionReport($id) {
-        $package_history = \common\models\UserPlanHistory::find()->where(['id'=>$id])->one();
-        $employer = Employer::find()->where(['id'=>$package_history->user_id])->one();
-        $package = \common\models\Packages::find()->where(['id'=>$package_history->plan])->one();
+        $package_history = \common\models\UserPlanHistory::find()->where(['id' => $id])->one();
+        $employer = Employer::find()->where(['id' => $package_history->user_id])->one();
+        $package = \common\models\Packages::find()->where(['id' => $package_history->plan])->one();
         echo $this->renderPartial('report', [
             'package_history' => $package_history,
             'package' => $package,

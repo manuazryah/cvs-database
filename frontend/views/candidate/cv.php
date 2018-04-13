@@ -28,13 +28,13 @@ use yii\widgets\ActiveForm;
                                     <span><strong>Title:</strong> <?= $model->title ?></span>
                                 </div>
                                 <div class="contact_details col-md-6 p-l">
+                                    <span><strong>Reference No:</strong> <?= $user_details->user_id ?></span>
+                                </div>
+                                <div class="contact_details col-md-6 p-l">
                                     <span><strong>Nationality:</strong> <?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
                                 </div>
                                 <div class="contact_details col-md-6 p-l">
-                                    <span><strong>Current Country:</strong><?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?></span>
-                                </div>
-                                <div class="contact_details col-md-6 p-l">
-                                    <span><strong>Current City:</strong> <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></span>
+                                    <span><strong>Currently:</strong> <?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?> , <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></span>
                                 </div>
                                 <div class="contact_details col-md-6 p-l">
                                     <span><strong>Expected Salary :</strong> <?= $model->expected_salary != '' ? \common\models\ExpectedSalary::findOne($model->expected_salary)->salary_range : '' ?></span>
@@ -53,12 +53,6 @@ use yii\widgets\ActiveForm;
                                 </div>
                                 <div class="contact_details col-md-6 p-l">
                                     <span><strong>Phone:</strong> <?= $user_details->phone ?></span>
-                                </div>
-                                <div class="contact_details col-md-6 p-l">
-                                    <span><strong>Reference No:</strong> <?= $user_details->user_id ?></span>
-                                </div>
-                                <div class="contact_details col-md-6 p-l">
-                                    <span><strong></strong></span>
                                 </div>
                             </div>
                         </div>
@@ -270,7 +264,7 @@ use yii\widgets\ActiveForm;
                                             if ($model->upload_resume != '') {
                                                 if ($model->upload_resume == 'doc' || $model->upload_resume == 'docx') {
                                                     ?>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
                                                     <iframe src="https://docs.google.com/viewer?embedded=true&url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>
                                                 <?php } elseif ($model->upload_resume == 'pdf') { ?>
                                                     <iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px" frameborder="0" ></iframe>

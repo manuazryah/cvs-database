@@ -658,3 +658,236 @@ a {
 .mrg-top-btn{
     margin-top: 37px;
 }
+
+/****************************** Resume Style Start ************************************************/
+.resume-panel{
+    border: solid 1px #e1e1e1;
+    border-radius: 2px;
+    padding: 22px !important;
+    position: relative;
+}
+.resume-panel h4{
+    font-size: 16px;
+    color: #222222;
+    font-weight: 500;
+}
+.resume-panel .contact_details span strong {
+    color: #676666;
+    font-size: 12px;
+}
+.resume-panel .contact_details span {
+    display: block;
+    padding-bottom: 8px;
+    font-size: 12px;
+    color: #7d7d7d;
+}
+.resume-panel .img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+    float: right;
+}
+.resume-panel .contact_details strong {
+    line-height: 22px;
+}
+.resume-panel .cv-downlod h5 {
+    padding-top: 5px;
+}
+.resume-panel .cv-dwn-head {
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-size: 17px;
+    color: #2a7fbd;
+    font-weight: 600;
+}
+.resume-panel .cv-contact-details table tr {
+    border: none;
+}
+.resume-panel .cv-contact-details table th {
+    border: none;
+}
+.resume-panel .cv-contact-head{
+    color: #151414;
+    font-weight: 600;
+}
+.borderfull-width {
+    border: solid 1px #e1e1e1;
+    position: relative;
+    overflow: hidden;
+    top: 15px;
+    margin-bottom: 35px;
+}
+/****************************** Resume Style End   ************************************************/
+
+.candidate_prof_add {
+    background: white;
+    padding: 0px;
+    float: right;
+    border-color: white;
+    color: #067db1 !important;
+    font-weight: 600;
+    margin-top: 16px;
+    padding-right: 5px;
+}
+.appoint_history{
+    border-top: 1px solid #cecaca;
+}
+.prof-up h4{
+    font-size: 18px;
+    color: #272727;
+    font-weight: 600;
+}
+.prof-up #addexperience {
+    background: #0384bf;
+    color: white;
+    border-radius: 5px;
+}
+.prof-up #addeducation {
+    background: #0384bf;
+    color: white;
+    border-radius: 5px;
+}
+.prof-up .eduremove,.expremove{
+    font-size: 13px;
+    color: #2190c9;
+    font-weight: 500;
+}
+/****************************** Employer View Start************************************************************/
+.mailbox-env .box {
+    border: 1px solid #e1e1e1;
+    padding-top: 15px;
+    margin-bottom: 30px;
+}
+.shortlist-folder-label ul{
+    list-style: none;
+    padding: 0px;
+}
+.shortlist-folder-label a{
+    font-size: 14px;
+    font-weight: 500;
+}
+.shortlist-folder-label .fa-folder-open{
+    color: #FFC107;
+}
+.short-list-span{
+    float: right;
+    margin-left: 20px;
+    color: #8BC34A;
+    font-size: 15px;
+    padding-top: 5px;
+    font-weight: 600;
+}
+.search-min{
+    min-height: 130px;
+}
+.fld-remove{
+    color: red;
+}
+.fld-rename{
+    color: #1a96df;
+}
+.shortlist-folder-label ul li{
+    position: relative;
+}
+.shortlist-folder-label ul li:hover{
+    background: #f1f1f1;
+}
+.shortlist-folder-label ul li .options{
+    opacity: 0px;
+    visibility: hidden;
+    transition: ease-in-out 100ms;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.shortlist-folder-label ul li:hover .options{
+    opacity: 1px;
+    visibility: visible;
+    transition: ease-in-out 100ms;
+    right: 0;
+    top: 0;
+}
+.shortlist-folder-label ul li .options li{
+    float: left;
+}
+.sorting_content {
+    border: solid 1px #e1e1e1;
+    padding-top: 15px;
+    overflow: hidden;
+    /* border-bottom: solid 1px #e1e1e1; */
+    margin-bottom: 15px;
+}
+.bottom_text {
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+.tab-image {
+    float: left;
+    text-align: center;
+    margin-right: 20px;
+}
+.p-l {
+    padding-left: 0px !important;
+}
+.text-shorting h1 {
+    font-size: 16px;
+    color: #333;
+    line-height: 22px;
+    font-weight: 500;
+    margin: 0px;
+}
+.sorting_content strong {
+    color: #000000 !important;
+}
+ul.unstyled {
+    margin: 0px;
+    padding: 0px;
+    line-height: 25px;
+}
+.search-min {
+    min-height: 130px;
+}
+.bottom-box {
+    display: inline-block;
+    border-top: 1px solid #e1e1e1;
+    padding: 7px 15px;
+    background: #f3f5f4;
+}
+.pad0 {
+    padding: 0px;
+}
+.candidate .sorting_content .button1 {
+    display: block;
+    text-align: center;
+    background: black;
+    color: white;
+    padding: 15px 0px 15px 0;
+    cursor: pointer;
+}
+.candidate .sorting_content .button2 {
+    display: block;
+    background: #0d96de;
+    color: white;
+    padding: 15px 0;
+    /* cursor: initial; */
+    margin-top: 10px;
+    position: relative;
+    text-align: center;
+}
+.candidate .sorting_content .button3 {
+    display: block;
+    background: #2caef3;
+    color: white;
+    padding: 15px 0;
+    /* cursor: initial; */
+    margin-top: 10px;
+    position: relative;
+    text-align: center;
+}
+ul.unstyled li {
+    list-style: none;
+}
+ul.unstyled li {
+    display: inline-block;
+    padding: 0 50px 0 0;
+    color: #7d7d7d;
+    font-size: 13px;
+}
+/****************************** Employer View End************************************************************/

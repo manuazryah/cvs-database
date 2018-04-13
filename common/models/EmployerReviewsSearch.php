@@ -8,24 +8,26 @@ use yii\data\ActiveDataProvider;
 use common\models\Employer;
 
 /**
- * EmployerSearch represents the model behind the search form of `common\models\Employer`.
+ * EmployerReviewsSearch represents the model behind the search form about `common\models\Employer`.
  */
-class EmployerSearch extends Employer {
-
+class EmployerReviewsSearch extends Employer
+{
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            [['id', 'country', 'status'], 'integer'],
+            [['id', 'country', 'email_varification', 'status'], 'integer'],
             [['first_name', 'last_name', 'email', 'phone', 'password', 'company_name', 'location', 'address', 'company_email', 'company_phone_number', 'position', 'DOC', 'DOU'], 'safe'],
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -37,8 +39,9 @@ class EmployerSearch extends Employer {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
-        $query = Employer::find()->orderBy(['id' => SORT_DESC]);
+    public function search($params)
+    {
+        $query = Employer::find();
 
         // add conditions that should always apply here
 
@@ -58,24 +61,24 @@ class EmployerSearch extends Employer {
         $query->andFilterWhere([
             'id' => $this->id,
             'country' => $this->country,
+            'email_varification' => $this->email_varification,
             'status' => $this->status,
             'DOC' => $this->DOC,
             'DOU' => $this->DOU,
         ]);
 
         $query->andFilterWhere(['like', 'first_name', $this->first_name])
-                ->andFilterWhere(['like', 'last_name', $this->last_name])
-                ->andFilterWhere(['like', 'email', $this->email])
-                ->andFilterWhere(['like', 'phone', $this->phone])
-                ->andFilterWhere(['like', 'password', $this->password])
-                ->andFilterWhere(['like', 'company_name', $this->company_name])
-                ->andFilterWhere(['like', 'location', $this->location])
-                ->andFilterWhere(['like', 'address', $this->address])
-                ->andFilterWhere(['like', 'company_email', $this->company_email])
-                ->andFilterWhere(['like', 'company_phone_number', $this->company_phone_number])
-                ->andFilterWhere(['like', 'position', $this->position]);
+            ->andFilterWhere(['like', 'last_name', $this->last_name])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'password', $this->password])
+            ->andFilterWhere(['like', 'company_name', $this->company_name])
+            ->andFilterWhere(['like', 'location', $this->location])
+            ->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'company_email', $this->company_email])
+            ->andFilterWhere(['like', 'company_phone_number', $this->company_phone_number])
+            ->andFilterWhere(['like', 'position', $this->position]);
 
         return $dataProvider;
     }
-
 }

@@ -17,43 +17,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'first_name') ?>
-
-    <?= $form->field($model, 'last_name') ?>
-
     <?= $form->field($model, 'email') ?>
 
-    <?= $form->field($model, 'phone') ?>
+    <?= $form->field($model, 'user_name') ?>
 
-    <?php // echo $form->field($model, 'user_name') ?>
+    <?= $form->field($model, 'password') ?>
 
-    <?php // echo $form->field($model, 'password') ?>
+    <?= $form->field($model, 'user_id') ?>
 
-    <?php // echo $form->field($model, 'gender') ?>
-
-    <?php // echo $form->field($model, 'dob') ?>
-
-    <?php // echo $form->field($model, 'nationality') ?>
-
-    <?php // echo $form->field($model, 'current_country') ?>
-
-    <?php // echo $form->field($model, 'current_city') ?>
+    <?php // echo $form->field($model, 'phone') ?>
 
     <?php // echo $form->field($model, 'address') ?>
 
-    <?php // echo $form->field($model, 'position') ?>
+    <?php // echo $form->field($model, 'alternate_phone') ?>
 
-    <?php // echo $form->field($model, 'position_looking_for') ?>
+    <?php // echo $form->field($model, 'alternate_address') ?>
 
-    <?php // echo $form->field($model, 'sub_position') ?>
+    <?php // echo $form->field($model, 'facebook_link') ?>
 
-    <?php // echo $form->field($model, 'qualification') ?>
+    <?php // echo $form->field($model, 'linked_in_link') ?>
 
-    <?php // echo $form->field($model, 'skill_set') ?>
+    <?php // echo $form->field($model, 'google_link') ?>
 
-    <?php // echo $form->field($model, 'experience') ?>
-
-    <?php // echo $form->field($model, 'upload_cv') ?>
+    <?php // echo $form->field($model, 'youtube_link') ?>
 
     <?php // echo $form->field($model, 'status') ?>
 

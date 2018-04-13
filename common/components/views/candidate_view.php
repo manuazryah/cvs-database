@@ -8,6 +8,7 @@ use common\models\LoginHistory;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+$candidate = \common\models\Candidate::find()->where(['id' => $model->candidate_id])->one();
 $log_history = LoginHistory::find()->where(['client_id' => $model->candidate_id])->orderBy(['id' => SORT_DESC])->one();
 if (!empty($log_history)) {
     if ($log_history->log_in_time != '') {
@@ -52,7 +53,7 @@ if (count($short_list_data) > 0) {
 $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
 ?>
-<?php if ($model->status == 1) { ?>
+<?php if ($candidate->status == 1) { ?>
     <div class="sorting_content">
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
             <div class="overflow">
@@ -108,12 +109,12 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             </ul>
                         </div>
                     </div>
-    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                 ?></p>-->
+    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                  ?></p>-->
                     <div class="contact_details col-md-12 col-sm-12 p-l">
                         <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                     </div>
                     <!--                <div class="contact_details col-md-12 col-sm-12 p-l">
-                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                 ?></span>
+                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                  ?></span>
                                     </div>-->
                 </div>
             </div>
@@ -133,7 +134,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                     <?php }
                     ?>
                     <?php // Html::a('Quick Download <br><span><i class="fas fa-file-pdf"></i>', ['quick-download', 'id' => $model->id], ['class' => 'button2'])  ?>
-                    <?= Html::a('View CV <br><span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => $model->id], ['class' => 'button3']) ?>
+                    <?= Html::a('View CV <span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => $model->id], ['class' => 'button3']) ?>
                 </div>
             </div>
         </div>

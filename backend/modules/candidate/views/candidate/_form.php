@@ -8,59 +8,79 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="candidate-form">
+<div class="candidate-form form-inline">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'user_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <?php
+        if ($model->isNewRecord) {
+            ?>
+            <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+                <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+    <div class="row">
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'facebook_link')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'user_name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'linked_in_link')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'google_link')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'gender')->textInput() ?>
+        </div>
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'youtube_link')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'dob')->textInput() ?>
+        </div>
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>   
+            <?= $form->field($model, 'alternate_phone')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nationality')->textInput() ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-md-12 col-sm-12 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'current_country')->textInput() ?>
+        </div>
+        <div class='col-md-12 col-sm-12 col-xs-12 left_padd'>     
+            <?= $form->field($model, 'alternate_address')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'current_city')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-md-4 col-sm-6 col-xs-12 left_padd'>    
+            <?= $form->field($model, 'status')->dropDownList(['1' => 'Enabled', '0' => 'Disabled']) ?>
 
-    <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'position')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'position_looking_for')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'sub_position')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'qualification')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'skill_set')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'experience')->textInput() ?>
-
-    <?= $form->field($model, 'upload_cv')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'date_of_creation')->textInput() ?>
-
-    <?= $form->field($model, 'date_of_updation')->textInput() ?>
-
-    <?= $form->field($model, 'email_varification_status')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => 'btn btn-success']) ?>
     </div>
+
 
     <?php ActiveForm::end(); ?>
 

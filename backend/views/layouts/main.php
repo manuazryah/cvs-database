@@ -81,6 +81,28 @@ AppAsset::register($this);
 
                         <li>
                             <a href="">
+                                <i class="fa fa-users"></i>
+                                <span class="title">Candidate</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Candidate Details', ['/candidate/candidate/index'], ['class' => 'title']) ?>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-user"></i>
+                                <span class="title">Employer</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Employer Details', ['/employer/employer/index'], ['class' => 'title']) ?>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
                                 <i class="fa fa-database"></i>
                                 <span class="title">Masters</span>
                             </a>

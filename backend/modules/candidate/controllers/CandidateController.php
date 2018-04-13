@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\modules\candidate\controllers;
 
 use Yii;
 use common\models\Candidate;
@@ -14,14 +14,10 @@ use common\models\WorkExperiance;
 use yii\web\UploadedFile;
 use kartik\mpdf\Pdf;
 
-;
-
 /**
  * CandidateController implements the CRUD actions for Candidate model.
  */
 class CandidateController extends Controller {
-
-    public $layout = '@app/views/layouts/candidate_dashboard';
 
     /**
      * @inheritdoc
@@ -32,21 +28,9 @@ class CandidateController extends Controller {
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
-                    'logout' => ['POST'],
                 ],
             ],
         ];
-    }
-
-    public function beforeAction($action) {
-        if (!parent::beforeAction($action)) {
-            return false;
-        }
-        if (empty(Yii::$app->session['candidate'])) {
-            $this->redirect(['/site/index']);
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -54,14 +38,12 @@ class CandidateController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $id = Yii::$app->session['candidate']['id'];
-        $model = Candidate::findOne($id);
-        $model->scenario = 'update';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+        $searchModel = new CandidateSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        }
         return $this->render('index', [
-                    'model' => $model,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -71,8 +53,16 @@ class CandidateController extends Controller {
      * @return mixed
      */
     public function actionView($id) {
+        $candidate = $this->findModel($id);
+        $model = \common\models\CandidateProfile::findOne($candidate->id);
+        $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $candidate->id])->all();
+        $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $candidate->id])->all();
+
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+                    'model' => $model,
+                    'model_education' => $model_education,
+                    'model_experience' => $model_experience,
+                    'candidate' => $candidate,
         ]);
     }
 
@@ -83,14 +73,18 @@ class CandidateController extends Controller {
      */
     public function actionCreate() {
         $model = new Candidate();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                        'model' => $model,
-            ]);
-        }
+        $model->scenario = 'create-admin';
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            $model->email_varification_status = 1;
+            if ($model->save()) {
+                $model->user_id = sprintf("%05s", $model->id);
+                $model->update();
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } return $this->render('create', [
+                    'model' => $model,
+        ]);
     }
 
     /**
@@ -99,8 +93,46 @@ class CandidateController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdateProfile() {
-        $id = Yii::$app->session['candidate']['id'];
+    public function actionUpdate($id) {
+        $model = $this->findModel($id);
+        $model->scenario = 'create-admin';
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                        'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Deletes an existing Candidate model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id) {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Candidate model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Candidate the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id) {
+        if (($model = Candidate::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionUpdateProfile($id) {
         $user = Candidate::findOne($id);
         $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
         if (empty($model)) {
@@ -112,6 +144,7 @@ class CandidateController extends Controller {
             $cv_ = $model->upload_resume;
         }
         if ($model->load(Yii::$app->request->post())) {
+            $model->candidate_id = $id;
             $data = Yii::$app->request->post();
             $this->SetDatas($model);
             $files = UploadedFile::getInstance($model, 'photo');
@@ -148,7 +181,7 @@ class CandidateController extends Controller {
         if (empty($model_experience)) {
             $model_experience = new WorkExperiance();
         }
-        return $this->render('update', [
+        return $this->render('update-profile', [
                     'model' => $model,
                     'model_education' => $model_education,
                     'model_experience' => $model_experience,
@@ -383,7 +416,6 @@ class CandidateController extends Controller {
      */
     public function SetDatas($model) {
         if ($model != null) {
-            $model->candidate_id = Yii::$app->session['candidate']['id'];
             if (isset($model->dob) && $model->dob != '') {
                 $model->dob = date("Y-m-d", strtotime($model->dob));
             }
@@ -401,44 +433,6 @@ class CandidateController extends Controller {
             }
         }
         return $model;
-    }
-
-    /**
-     * Deletes an existing Candidate model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Candidate model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Candidate the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id) {
-        if (($model = Candidate::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    /**
-     * Logout Candidate and unset candidate session
-     * @return mixed
-     */
-    public function actionLogout() {
-        Yii::$app->SetValues->updateLoginHistory();
-        unset(Yii::$app->session['log-history']);
-        unset(Yii::$app->session['candidate']);
-        return $this->redirect(['site/index']);
     }
 
     /**
@@ -547,99 +541,23 @@ class CandidateController extends Controller {
         }
     }
 
-    /**
-     * Online CV View and contain options for download.
-     * @return mixed
-     */
-    public function actionOnlineCurriculumVitae() {
-        $id = Yii::$app->session['candidate']['id'];
-        $user_details = Candidate::find()->where(['id' => $id])->one();
-        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
-        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
-        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
-        if ($model->load(Yii::$app->request->post())) {
-            $files = UploadedFile::getInstance($model, 'upload_resume');
-            if (isset($files) && !empty($files) && $model->id != '') {
-                $model->upload_resume = $files->extension;
-                if ($model->update()) {
-                    $files->saveAs(Yii::$app->basePath . '/../uploads/candidate/resume/' . $model->id . '.' . $files->extension);
-                }
-            }
-        }
-        return $this->render('cv', [
-                    'model' => $model,
-                    'model_education' => $model_education,
-                    'model_experience' => $model_experience,
-                    'user_details' => $user_details,
-        ]);
-    }
-
-    public function actionPdfExport() {
-        // get your HTML raw content without any layouts or scripts
-        $id = Yii::$app->session['candidate']['id'];
-        $candidate = Candidate::find()->where(['id' => $id])->one();
-        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
-        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
-        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
-        $content = $this->renderPartial('_pdfview', [
-            'model' => $model,
-            'model_education' => $model_education,
-            'model_experience' => $model_experience,
-            'candidate' => $candidate,
-        ]);
-        // setup kartik\mpdf\Pdf component
-        $pdf = new Pdf([
-            'mode' => Pdf::MODE_CORE,
-            'format' => Pdf::FORMAT_A4,
-            'orientation' => Pdf::ORIENT_PORTRAIT,
-            'destination' => Pdf::DEST_BROWSER,
-            'content' => $content,
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-            'cssInline' => '.kv-heading-1{font-size:18px}',
-            'options' => ['title' => ''],
-            'methods' => [
-                'SetHeader' => ['Curriculum Vitae'],
-                'SetFooter' => ['{PAGENO}'],
-            ]
-        ]);
-        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-        Yii::$app->response->headers->add('Content-Type', 'application/pdf');
-        return $pdf->render();
-    }
-
-    /*
-     * Generate report based on service
-     */
-
-    public function actionWordExport() {
-        header("Content-type: application/vnd.ms-word");
-        header("Content-Disposition: attachment;Filename=cv.doc");
-        $id = Yii::$app->session['candidate']['id'];
-        $candidate = Candidate::find()->where(['id' => $id])->one();
-        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
-        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
-        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
-        $content = $this->renderPartial('_wordview', [
-            'model' => $model,
-            'model_education' => $model_education,
-            'model_experience' => $model_experience,
-            'candidate' => $candidate,
-        ]);
-        echo $content;
-        exit;
-    }
-
     /*
      * Reset candidate Password
      */
 
-    public function actionResetPassword() {
-        $model = new \common\models\ResetCandidatePassword();
+    public function actionResetPassword($id) {
+        $model = new \common\models\ChangeCandidatePassword();
+        $candidate = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            Yii::$app->session->setFlash('success', "Password Changed successfully.");
+            $candidate->password = Yii::$app->security->generatePasswordHash($model->confirm_password);
+            if ($candidate->update()) {
+                Yii::$app->session->setFlash('success', "Password Changed successfully.");
+                $model = new \common\models\ChangeCandidatePassword();
+            }
         }
         return $this->render('reset_password', [
                     'model' => $model,
+                    'candidate' => $candidate,
         ]);
     }
 
@@ -692,15 +610,64 @@ class CandidateController extends Controller {
         ]);
     }
 
-    public function actionDeleteProfile() {
-        $id = Yii::$app->session['candidate']['id'];
+    public function actionDisableProfile($id) {
         $user_details = Candidate::find()->where(['id' => $id])->one();
-//        $user_profile = CandidateProfile::find()->where(['candidate_id' => $id])->one();
         $user_details->status = 0;
         $user_details->update();
-//        $user_profile->status = 0;
-//        $user_profile->update();
-        $this->redirect(['/site/index']);
+        $this->redirect(['/candidate/candidate/index']);
+    }
+
+    public function actionPdfExport($id) {
+        // get your HTML raw content without any layouts or scripts
+        $candidate = $this->findModel($id);
+        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $content = $this->renderPartial('_pdfview', [
+            'model' => $model,
+            'model_education' => $model_education,
+            'model_experience' => $model_experience,
+            'candidate' => $candidate,
+        ]);
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => ''],
+            'methods' => [
+                'SetHeader' => ['Curriculum Vitae'],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        Yii::$app->response->headers->add('Content-Type', 'application/pdf');
+        return $pdf->render();
+    }
+
+    /*
+     * Generate report based on service
+     */
+
+    public function actionWordExport($id) {
+        header("Content-type: application/vnd.ms-word");
+        header("Content-Disposition: attachment;Filename=cv.doc");
+        $candidate = $this->findModel($id);
+        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $content = $this->renderPartial('_wordview', [
+            'model' => $model,
+            'model_education' => $model_education,
+            'model_experience' => $model_experience,
+            'candidate' => $candidate,
+        ]);
+        echo $content;
+        exit;
     }
 
 }

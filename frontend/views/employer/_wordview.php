@@ -53,11 +53,11 @@
                                             <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?= $model->name ?></h4></strong></td></tr>
                                             <tr>
                                                 <td style="line-height: 30px;"><strong>Title : </strong><?= $model->title ?></td>
-                                                <td style="line-height: 30px;"><strong>Nationality : </strong><?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></td>
+                                                <td style="line-height: 30px;"><strong>Reference No : </strong><?= $candidate->user_id ?></td>
                                             </tr>
                                             <tr>
-                                                <td style="line-height: 30px;"><strong>Current Country : </strong><?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?></td>
-                                                <td style="line-height: 30px;"><strong>Current City:</strong> <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></td>
+                                                <td style="line-height: 30px;"><strong>Nationality : </strong><?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></td>
+                                                <td style="line-height: 30px;"><strong>Currently:</strong> <?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?> , <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></td>
                                             </tr>
                                             <tr>
                                                 <td style="line-height: 30px;"><strong>Expected Salary : </strong> <?= $model->expected_salary ?></td>
@@ -67,6 +67,10 @@
                                                 <td style="line-height: 30px;"><strong>Gender : </strong> <?= $model->gender != '' ? \common\models\Gender::findOne($model->gender)->gender : '' ?></td>
                                                 <td style="line-height: 30px;"><strong>DOB : </strong> <?= $model->dob ?></td>
                                             </tr>
+                                            <tr>
+                                                <td style="line-height: 30px;"><strong>Email : </strong> <?= $candidate->email ?></td>
+                                                <td style="line-height: 30px;"><strong>Phone : </strong> <?= $candidate->phone ?></td>
+                                            </tr>
                                         </table>
                                     </td>
                                     <td style="width: 10%">
@@ -74,7 +78,7 @@
                                         if ($model->photo != '') {
                                             $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
                                             if (file_exists($dirPath)) {
-                                                echo '<img class="img-responsive" src="http://localhost/cvs-database/uploads/candidate/profile_picture/1.png"/>';
+                                                echo '<img class="img-responsive" src="http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
                                             } else {
                                                 echo '';
                                             }

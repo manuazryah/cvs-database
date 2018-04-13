@@ -76,9 +76,9 @@
                                     <td style="width: 10%">
                                         <?php
                                         if ($model->photo != '') {
-                                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
                                             if (file_exists($dirPath)) {
-                                                echo '<img class="img-responsive" src="http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                                echo '<img class="img-responsive" src="http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . '../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
                                             } else {
                                                 echo '';
                                             }

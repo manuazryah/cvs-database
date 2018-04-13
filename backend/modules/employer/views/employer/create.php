@@ -4,10 +4,10 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Candidate */
+/* @var $model common\models\Employer */
 
-$this->title = 'Create Candidate';
-$this->params['breadcrumbs'][] = ['label' => 'Candidates', 'url' => ['index']];
+$this->title = 'Create Employer';
+$this->params['breadcrumbs'][] = ['label' => 'Employers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -20,8 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         </div>
                         <div class="panel-body">
-                                <?=  Html::a('<i class="fa-th-list"></i><span> Manage Candidate</span>', ['index'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
-                                <div class="panel-body"><div class="candidate-create">
+                                <?=  Html::a('<i class="fa-th-list"></i><span> Manage Employer</span>', ['index'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                                <div class="panel-body"><div class="employer-create">
                                                 <?= $this->render('_form', [
                                                 'model' => $model,
                                                 ]) ?>

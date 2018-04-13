@@ -28,6 +28,12 @@ return [
         'masters' => [
             'class' => 'backend\modules\masters\Module',
         ],
+        'candidate' => [
+            'class' => 'backend\modules\candidate\Module',
+        ],
+        'employer' => [
+            'class' => 'backend\modules\employer\Module',
+        ],
     ],
     'components' => [
         'request' => [

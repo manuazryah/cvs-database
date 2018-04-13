@@ -10,24 +10,22 @@ use common\models\Candidate;
 /**
  * CandidateSearch represents the model behind the search form about `common\models\Candidate`.
  */
-class CandidateSearch extends Candidate
-{
+class CandidateSearch extends Candidate {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'status', 'email_varification_status'], 'integer'],
-            [['email', 'user_name', 'password', 'user_id', 'date_of_creation', 'date_of_updation'], 'safe'],
+            [['email', 'user_name', 'password', 'user_id', 'date_of_creation', 'date_of_updation', 'phone', 'address'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,9 +37,8 @@ class CandidateSearch extends Candidate
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
-        $query = Candidate::find();
+    public function search($params) {
+        $query = Candidate::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -64,13 +61,15 @@ class CandidateSearch extends Candidate
             'date_of_creation' => $this->date_of_creation,
             'date_of_updation' => $this->date_of_updation,
             'email_varification_status' => $this->email_varification_status,
+            'phone' => $this->phone,
         ]);
 
         $query->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'user_name', $this->user_name])
-            ->andFilterWhere(['like', 'password', $this->password])
-            ->andFilterWhere(['like', 'user_id', $this->user_id]);
+                ->andFilterWhere(['like', 'user_name', $this->user_name])
+                ->andFilterWhere(['like', 'password', $this->password])
+                ->andFilterWhere(['like', 'user_id', $this->user_id]);
 
         return $dataProvider;
     }
+
 }

@@ -40,8 +40,12 @@ class Candidate extends ActiveRecord implements IdentityInterface {
     public function rules() {
         return [
             [['email', 'user_name', 'password', 'password_repeat', 'phone'], 'required', 'on' => 'create'],
+            [['email', 'user_name', 'password', 'address', 'phone'], 'required', 'on' => 'create-admin'],
             [['email', 'user_name', 'phone', 'address'], 'required', 'on' => 'update'],
+            [['email', 'user_name', 'phone', 'address'], 'required', 'on' => 'update-admin'],
             [['email'], 'unique', 'on' => 'update'],
+            [['email'], 'unique', 'on' => 'create-admin'],
+            [['email'], 'unique', 'on' => 'update-admin'],
             [['status', 'email_varification_status'], 'integer'],
             [['date_of_creation', 'date_of_updation', 'phone', 'address', 'alternate_phone', 'alternate_address'], 'safe'],
             [['email', 'user_name', 'password', 'user_id', 'facebook_link', 'linked_in_link', 'google_link', 'youtube_link'], 'string', 'max' => 100],
