@@ -19,22 +19,26 @@ use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
-use common\models\DailyEntry;
+use common\models\CandidateProfile;
 
-class DailyEntryWidget extends Widget {
+class AdminCandidateViewWidget extends Widget {
 
     public $id;
 
     public function init() {
         parent::init();
         if ($this->id === null) {
-            throw new \yii\web\HttpException(404, 'Invalid appintment.Eroor Code:1005');
+            throw new \yii\web\HttpException(404, 'Invalid Purchase Order.Eroor Code:1007');
         }
     }
 
     public function run() {
-        $daily_entry = DailyEntry::findOne($this->id);
-        return $this->render('daily_entry', ['daily_entry' => $daily_entry]);
+        $model = CandidateProfile::findOne($this->id);
+        $profile_info = \common\models\Candidate::find()->where(['id' => $model->candidate_id])->one();
+        return $this->render('admin_candidate_view', [
+                    'model' => $model,
+                    'profile_info' => $profile_info,
+        ]);
         //return Html::encode($this->message);
     }
 

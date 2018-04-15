@@ -4,7 +4,10 @@ namespace backend\modules\candidate\controllers;
 
 use Yii;
 use common\models\Candidate;
-use common\models\CandidateSearch;
+use common\models\CvFilter;
+use common\models\CandidateProfileSearch;
+use common\models\EmployerPackages;
+use common\models\CvSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,12 +41,68 @@ class CandidateController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new CandidateSearch();
+        $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->query->andWhere(['status' => 1]);
+        $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
+        $model = new CvSearch();
+        $model_filter = new CvFilter();
+        if ($model_filter->load(Yii::$app->request->post())) {
+            if ($model_filter->keyword != '') {
+                $keywords = $this->getFilterKeywords($model_filter->keyword);
+                $dataProvider->query->andWhere(['id' => $keywords]);
+            }
+            if ($model_filter->location != '') {
+                $locations = $this->getLocations($model_filter->location);
+                $dataProvider->query->andWhere(['id' => $locations]);
+            }
+            if ($model_filter->industries != '') {
+                $filter_industry = $this->getFilterIndustry($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_industry]);
+            }
+            if ($model_filter->skills != '') {
+                $filter_skills = $this->getFilterSkills($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_skills]);
+            }
+            if ($model_filter->job_types != '') {
+                $filter_job_types = $this->getFilterJobType($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_job_types]);
+            }
+            if ($model_filter->salary_range != '') {
+                $filter_salary_range = $this->getFilterSalaryRange($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_salary_range]);
+            }
+            if ($model_filter->gender != '') {
+                $filter_gender = $this->getFilterGender($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_gender]);
+            }
+            if ($model_filter->language != '') {
+                $filter_language = $this->getFilterLanguage($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_language]);
+            }
+            if ($model_filter->job_status != '') {
+                $filter_job_status = $this->getFilterJobStatus($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_job_status]);
+            }
+            if ($model_filter->nationality != '') {
+                $filter_nationality = $this->getFilterNationality($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_nationality]);
+            }
+            if ($model_filter->experience != '') {
+                $filter_experience = $this->getFilterExperience($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_experience]);
+            }
+            if ($model_filter->folder_name != '') {
+                $filter_folders = $this->getFilterFolder($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_folders]);
+            }
+        }
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'model' => $model,
+                    'model_filter' => $model_filter,
+                    'user_plans' => $user_plans,
         ]);
     }
 

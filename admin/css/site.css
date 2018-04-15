@@ -891,3 +891,66 @@ ul.unstyled li {
     font-size: 13px;
 }
 /****************************** Employer View End************************************************************/
+.job-search .form-group {
+    margin-bottom: 20px;
+}
+.mailbox-env .btn-default {
+    background-color: #2caef3;
+    padding: 8px 30px;
+    color: #fff;
+    border-radius: 0px;
+    font-weight: 300;
+    /* box-shadow: inset 0 -8px 5px -5px rgba(0,0,0,0.4); */
+    font-size: 16px;
+    letter-spacing: 1px;
+    border: none;
+}
+.f-right {
+    float: right;
+}
+.btop {
+    border-top: 1px solid #e1e1e1;
+}
+.ptop5 {
+    padding-top: 5px !important;
+}
+.pbtm5 {
+    padding-bottom: 5px;
+}
+.shortlist-f-link {
+    background: #f3f5f4;
+}
+.shortlist-f-link a {
+    color: #2caef3;
+    float: right;
+}
+.brit {
+    border-right: 1px solid #e1e1e1;
+}
+.top-box-btm p {
+    margin-bottom: 0px;
+    padding: 5px 0;
+    color: #7d7d7d;
+    font-size: 13px;
+    line-height: 26px;
+}
+.blft {
+    border-left: 1px solid #e1e1e1;
+}
+.txt-right {
+    text-align: right;
+}
+.page-heading {
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+.check-label label {
+    display: block !important;
+    clear: both !important;
+    color: #979898;
+}
+input[type=checkbox], input[type=radio] {
+    margin-top: 6px;
+    float: left;
+    margin-right: 10px;
+}
