@@ -954,3 +954,43 @@ input[type=checkbox], input[type=radio] {
     float: left;
     margin-right: 10px;
 }
+.pack-box{
+    background: #FFF;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+    margin-bottom: 35px;
+    margin-right: 0;
+    padding: 20px;
+    position: relative;
+    text-shadow: 0 1px rgba(255, 255, 255, 0.8);
+}
+.pack-box h3{
+    background-color: #eee;
+    border-radius: 2px 2px 0 0;
+    font-size: 1.3em;
+    font-weight: normal;
+    margin: -20px -20px 10px -20px;
+    padding: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+.pack-box a{
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    width: max-content;
+    padding: 6px 20px;
+    background: #0a6f9e;
+    border-color: #126e9d;
+    margin-bottom: 30px;
+}
+.pack-box ul{
+    list-style: none;
+    padding: 0px;
+}
+.pack-box li{
+    border-top: 1px solid #ddd;
+    padding: 14px 0;
+    color: #777;
+}

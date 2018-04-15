@@ -109,12 +109,12 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             </ul>
                         </div>
                     </div>
-    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                    ?></p>-->
+    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                          ?></p>-->
                     <div class="contact_details col-md-12 col-sm-12 p-l">
                         <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                     </div>
                     <!--                <div class="contact_details col-md-12 col-sm-12 p-l">
-                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                    ?></span>
+                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                          ?></span>
                                     </div>-->
                 </div>
             </div>
@@ -122,19 +122,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 p-l">
             <div class="button-box" style="margin-top: 20px;">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                    <?php
-                    $shortlist = common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
-                    if (empty($shortlist)) {
-                        ?>
-                        <a href="" class="button1" id="short-list-modal" data-val="<?= $model->candidate_id ?>">Shortlist to Folder</a>
-                    <?php } else {
-                        ?>
-                        <!--<p class="button5">Already Shortlisted</p>-->
-                        <?= Html::a('Unshortlist', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2']) ?>
-                    <?php }
-                    ?>
-                    <?php // Html::a('Quick Download <br><span><i class="fas fa-file-pdf"></i>', ['quick-download', 'id' => $model->id], ['class' => 'button2'])  ?>
-                    <?= Html::a('View CV <span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => $model->id], ['class' => 'button3']) ?>
+                    <?= Html::a('</i>View CV <span><i class="fas fa-eye"></i></span>', ['/candidate/candidate/view', 'id' => $model->candidate_id], ['class' => 'button3']) ?>
                 </div>
             </div>
         </div>

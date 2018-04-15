@@ -30,12 +30,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -99,6 +99,12 @@ class SiteController extends Controller {
                     'model' => $model,
                     'model_register' => $model_register,
                     'flag' => $flag,
+        ]);
+    }
+
+    public function actionEmployer() {
+        $this->layout = 'employer_home';
+        return $this->render('employer', [
         ]);
     }
 

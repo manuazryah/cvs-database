@@ -729,4 +729,260 @@ class CandidateController extends Controller {
         exit;
     }
 
+    public function getFilterFolder($data) {
+        $cv_data = [];
+        foreach ($data->folder_name as $value) {
+            $query = new yii\db\Query();
+            $query->select(['*'])->from('short_list')->andWhere(['folder_name' => $value]);
+            $command = $query->createCommand();
+            $result = $command->queryAll();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['candidate_id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterKeywords($data) {
+        $cv_data = [];
+        $arr = [];
+        $query = new yii\db\Query();
+        $query->select(['*'])->from('candidate_profile')->andWhere(['or', ['like', 'title', $data], ['like', 'executive_summary', $data], ['like', 'hobbies', $data],]);
+        $command = $query->createCommand();
+        $result = $command->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        $query1 = new yii\db\Query();
+        $query1->select(['id'])->from('courses')->andWhere(['or', ['like', 'course_name', $data], ['like', 'cource_code', $data],]);
+        $command1 = $query1->createCommand();
+        $result1 = $command1->queryAll();
+        if (!empty($result1)) {
+            foreach ($result1 as $ind_val) {
+                $course_details = \common\models\CandidateEducation::find()->where(['course_name' => $ind_val])->all();
+                if (!empty($course_details)) {
+                    foreach ($course_details as $course_detail) {
+                        $arr[] = $course_detail['candidate_id'];
+                    }
+                }
+            }
+        }
+
+        $query2 = new yii\db\Query();
+        $query2->select(['*'])->from('work_experiance')->andWhere(['or', ['like', 'company_name', $data], ['like', 'designation', $data],]);
+        $command3 = $query2->createCommand();
+        $result3 = $command3->queryAll();
+        if (!empty($result3)) {
+            foreach ($result3 as $ind_val) {
+                $cv_data[] = $ind_val['candidate_id'];
+            }
+        }
+
+        $candidate_reference = \common\models\Candidate::find()->where(['user_id' => $data])->one();
+        if (!empty($candidate_reference)) {
+            $arr[] = $candidate_reference['id'];
+        }
+        if (!empty($arr)) {
+            $str = implode(", ", $arr);
+            $result2 = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `candidate_id`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+            if (!empty($result2)) {
+                foreach ($result2 as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterExperience($data) {
+        $cv_data = [];
+        $query = new yii\db\Query();
+        foreach ($data->experience as $value) {
+            if ($value == 1) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 1])
+                        ->andWhere(['<', 'total_experience', 2]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 2) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 2])
+                        ->andWhere(['<', 'total_experience', 5]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 3) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 5])
+                        ->andWhere(['<', 'total_experience', 10]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 4) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 10])
+                        ->andWhere(['<', 'total_experience', 15]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 5) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where(['>=', 'total_experience', 15])
+                        ->andWhere(['<', 'total_experience', 20]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterNationality($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->nationality);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `nationality`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterJobStatus($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->job_status);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `job_status`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterLanguage($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->language);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `languages_known`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterGender($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->gender);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `gender`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterSalaryRange($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->salary_range);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `expected_salary`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterJobType($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->job_types);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `job_type`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterSkills($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->skills);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `skill`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterIndustry($data) {
+        $cv_data = [];
+        $str = implode(", ", $data->industries);
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `industry`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $cv_data[] = $ind_val['id'];
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getLocations($data) {
+        $city_data = [];
+        $cv_data = [];
+        $cities = \common\models\City::find()->where(['id' => $data])->all();
+        if (!empty($cities)) {
+            foreach ($cities as $city) {
+                $city_data[] = $city->id;
+            }
+        }
+        $query2 = \common\models\CandidateProfile::find()->select('id')->where(['current_city' => $city_data])->all();
+        if (!empty($query2)) {
+            foreach ($query2 as $query2_data) {
+                $cv_data[] = $query2_data->id;
+            }
+        }
+        return $cv_data;
+    }
+
 }

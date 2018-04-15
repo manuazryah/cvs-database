@@ -263,9 +263,9 @@ use yii\widgets\ActiveForm;
                                         if (file_exists($dirPath)) {
                                             if ($model->upload_resume != '') {
                                                 if ($model->upload_resume == 'doc' || $model->upload_resume == 'docx') {
+                                                    $url = 'http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
                                                     ?>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!--<iframe src="https://docs.google.com/gview?url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>-->
-                                                    <iframe src="https://docs.google.com/viewer?embedded=true&url=<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" frameborder="no" style="width:100%;height:300px"></iframe>
+                                                    <iframe class="doc" src="https://docs.google.com/gview?url=<?= $url ?>&embedded=true" width="100%" height="300px" frameborder="0"></iframe>
                                                 <?php } elseif ($model->upload_resume == 'pdf') { ?>
                                                     <iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px" frameborder="0" ></iframe>
                                                     <?php

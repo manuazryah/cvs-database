@@ -33,9 +33,9 @@ class EmployerPackages extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['employer_id', 'package'], 'required'],
-            [['employer_id', 'package', 'no_of_days', 'no_of_days_left', 'no_of_views', 'no_of_views_left'], 'integer'],
-            [['start_date', 'end_date', 'created_date', 'updated_date', 'transaction_id'], 'safe'],
+                [['employer_id', 'package'], 'required'],
+                [['employer_id', 'package', 'no_of_days', 'no_of_days_left', 'no_of_views', 'no_of_views_left', 'no_of_downloads_left'], 'integer'],
+                [['start_date', 'end_date', 'created_date', 'updated_date', 'transaction_id'], 'safe'],
         ];
     }
 
@@ -45,7 +45,7 @@ class EmployerPackages extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'id' => 'ID',
-            'employer_id' => 'Employer ID',
+            'employer_id' => 'Employer',
             'package' => 'Package',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',

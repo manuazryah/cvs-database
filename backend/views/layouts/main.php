@@ -88,6 +88,9 @@ AppAsset::register($this);
                                 <li>
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Candidate Details', ['/candidate/candidate/index'], ['class' => 'title']) ?>
                                 </li>
+                                <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Add Candidate', ['/candidate/candidate/create'], ['class' => 'title']) ?>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -98,6 +101,9 @@ AppAsset::register($this);
                             <ul>
                                 <li>
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Employer Details', ['/employer/employer/index'], ['class' => 'title']) ?>
+                                </li>
+                                <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Employer Packages', ['/employer/employer-packages/index'], ['class' => 'title']) ?>
                                 </li>
                             </ul>
                         </li>

@@ -63,17 +63,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                 </div>
                                 <div class="col-lg-12 btop ptop5 pbtm5 shortlist-f-link">
                                     <div class="col-lg-4 pad0 f-right">
-                                        <?= Html::a('See Shortlisted CVs/ Folders<i class="fa fa-shortlist"></i>', ['shortlist-folder'], ['target' => '_blank']) ?>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="box ptop5">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 top-box-btm">
-                                    <div class="col-lg-4 brit"><p>Search Result : <span>Total <?= $dataProvider->getTotalCount() ?> CVs Found</span></p></div>
-                                    <div class="col-lg-8 pad0">
-                                        <div class="col-lg-7"><p class="color-drk txt-center">You have <?= $user_plans->no_of_downloads_left ?>/<?= $user_plans->no_of_downloads ?> Credits for CV Download</p></div>
-                                        <div class="col-lg-5 blft txt-right"><p>Your Credit Expiry on <?= date("d M Y", strtotime($user_plans->end_date)) ?></p></div>
+                                        <?= Html::a('Add Candidate', ['create'], ['target' => '_blank']) ?>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
