@@ -8,6 +8,7 @@ use common\models\SkillsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Expression;
 
 /**
  * SkillsController implements the CRUD actions for Skills model.
@@ -22,7 +23,7 @@ class SkillsController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -107,7 +108,13 @@ class SkillsController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
+        $skill_exists = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:skill, skill)'))->addParams([':skill' => $id])->exists();
+        if (empty($skill_exists)) {
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('success', "Skill Removed Successfully");
+        } else {
+            Yii::$app->session->setFlash('error', "Can't remove bacause this skill is already in use.");
+        }
 
         return $this->redirect(['index']);
     }

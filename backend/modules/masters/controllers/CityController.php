@@ -22,7 +22,7 @@ class CityController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -107,8 +107,13 @@ class CityController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
+        $candidate_prof = \common\models\CandidateProfile::find()->where(['current_city' => $id])->all();
+        if (empty($candidate_prof)) {
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('success', "City Removed Successfully");
+        } else {
+            Yii::$app->session->setFlash('error', "Can't remove bacause this item is already in use.");
+        }
         return $this->redirect(['index']);
     }
 

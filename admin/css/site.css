@@ -94,9 +94,11 @@ table.table tr.filters{
 }
 .table.table-bordered>thead>tr>td, .table.table-bordered>tbody>tr>td, .table.table-bordered>tfood>tr>td, .table.table-bordered>thead>tr>th, .table.table-bordered>tbody>tr>th, .table.table-bordered>tfood>tr>th{
     border-color: #e6e4e4;
+    border: 1px solid #e6e4e4;
 }
 .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td{
     border: 1px solid #a7a7a7;
+    white-space: nowrap;
 }
 .table-responsive[data-pattern=priority-columns]>.table-bordered {
     border: 1px solid #b7b7b7;
@@ -659,66 +661,31 @@ a {
     margin-top: 37px;
 }
 
-/****************************** Resume Style Start ************************************************/
-.resume-panel{
-    border: solid 1px #e1e1e1;
-    border-radius: 2px;
-    padding: 22px !important;
-    position: relative;
+/**************************** Employer Dashboard Start *********************************/
+.mailbox-env .box {
+    border: 1px solid #e1e1e1;
+    padding-top: 15px;
+    margin-bottom: 30px;
 }
-.resume-panel h4{
+.mailbox-env .btn-default {
+    background-color: #2caef3;
+    padding: 8px 30px;
+    color: #fff;
+    border-radius: 0px;
+    font-weight: 300;
+    /* box-shadow: inset 0 -8px 5px -5px rgba(0,0,0,0.4); */
     font-size: 16px;
-    color: #222222;
-    font-weight: 500;
+    letter-spacing: 1px;
+    border: none;
 }
-.resume-panel .contact_details span strong {
-    color: #676666;
-    font-size: 12px;
+.shortlist-f-link {
+    background: #f3f5f4;
 }
-.resume-panel .contact_details span {
-    display: block;
-    padding-bottom: 8px;
-    font-size: 12px;
-    color: #7d7d7d;
-}
-.resume-panel .img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+.f-right {
     float: right;
 }
-.resume-panel .contact_details strong {
-    line-height: 22px;
-}
-.resume-panel .cv-downlod h5 {
-    padding-top: 5px;
-}
-.resume-panel .cv-dwn-head {
-    padding-top: 0px;
-    padding-bottom: 10px;
-    font-size: 17px;
-    color: #2a7fbd;
-    font-weight: 600;
-}
-.resume-panel .cv-contact-details table tr {
-    border: none;
-}
-.resume-panel .cv-contact-details table th {
-    border: none;
-}
-.resume-panel .cv-contact-head{
-    color: #151414;
-    font-weight: 600;
-}
-.borderfull-width {
-    border: solid 1px #e1e1e1;
-    position: relative;
-    overflow: hidden;
-    top: 15px;
-    margin-bottom: 35px;
-}
-/****************************** Resume Style End   ************************************************/
-
-.candidate_prof_add {
-    background: white;
-    padding: 0px;
+.shortlist-f-link a {
+    color: #2caef3;
     float: right;
     border-color: white;
     color: #067db1 !important;
@@ -726,59 +693,43 @@ a {
     margin-top: 16px;
     padding-right: 5px;
 }
-.appoint_history{
-    border-top: 1px solid #cecaca;
+.pbtm5 {
+    padding-bottom: 5px;
 }
-.prof-up h4{
-    font-size: 18px;
-    color: #272727;
-    font-weight: 600;
+.ptop5 {
+    padding-top: 5px !important;
 }
-.prof-up #addexperience {
-    background: #0384bf;
-    color: white;
-    border-radius: 5px;
+.btop {
+    border-top: 1px solid #e1e1e1;
 }
-.prof-up #addeducation {
-    background: #0384bf;
-    color: white;
-    border-radius: 5px;
+.brit {
+    border-right: 1px solid #e1e1e1;
 }
-.prof-up .eduremove,.expremove{
+.top-box-btm p {
+    margin-bottom: 0px;
+    padding: 5px 0;
+    color: #7d7d7d;
     font-size: 13px;
-    color: #2190c9;
-    font-weight: 500;
+    line-height: 26px;
 }
-/****************************** Employer View Start************************************************************/
-.mailbox-env .box {
-    border: 1px solid #e1e1e1;
-    padding-top: 15px;
-    margin-bottom: 30px;
-}
-.shortlist-folder-label ul{
-    list-style: none;
+.pad0 {
     padding: 0px;
 }
-.shortlist-folder-label a{
-    font-size: 14px;
-    font-weight: 500;
+.txt-right {
+    text-align: right;
 }
-.shortlist-folder-label .fa-folder-open{
-    color: #FFC107;
+.blft {
+    border-left: 1px solid #e1e1e1;
 }
-.short-list-span{
-    float: right;
-    margin-left: 20px;
-    color: #8BC34A;
-    font-size: 15px;
-    padding-top: 5px;
-    font-weight: 600;
+.prit0 {
+    padding-right: 0px;
 }
-.search-min{
-    min-height: 130px;
+.p-l {
+    padding-left: 0px !important;
 }
-.fld-remove{
-    color: red;
+.page_listing {
+    overflow: hidden;
+    border-bottom: 0px;
 }
 .fld-rename{
     color: #1a96df;
@@ -881,8 +832,46 @@ ul.unstyled {
     position: relative;
     text-align: center;
 }
-ul.unstyled li {
-    list-style: none;
+.button5 {
+    text-align: center;
+    color: #4CAF50;
+    padding: 4px 0;
+    margin-top: 0px;
+    font-weight: 600;
+}
+.bottom-box {
+    display: inline-block;
+    border-top: 1px solid #e1e1e1;
+    padding: 7px 15px;
+    background: #f3f5f4;
+}
+.filter p{
+    padding-top: 3px;
+    color: #7d7d7d;
+    font-size: 13px;
+}
+.bottom_text p {
+    padding-top: 3px;
+    color: #7d7d7d;
+    font-size: 13px;
+    line-height: 27px;
+}
+.tab-image {
+    float: left;
+    text-align: center;
+    margin-right: 20px;
+}
+.text-shorting h1 {
+    font-size: 16px;
+    color: #333;
+    line-height: 22px;
+    font-weight: 500;
+    margin: 0px;
+}
+ul.unstyled {
+    margin: 0px;
+    padding: 0px;
+    line-height: 25px;
 }
 ul.unstyled li {
     display: inline-block;
@@ -890,58 +879,67 @@ ul.unstyled li {
     color: #7d7d7d;
     font-size: 13px;
 }
-/****************************** Employer View End************************************************************/
+ul.unstyled li {
+    list-style: none;
+}
 .job-search .form-group {
     margin-bottom: 20px;
 }
-.mailbox-env .btn-default {
-    background-color: #2caef3;
-    padding: 8px 30px;
-    color: #fff;
-    border-radius: 0px;
-    font-weight: 300;
-    /* box-shadow: inset 0 -8px 5px -5px rgba(0,0,0,0.4); */
-    font-size: 16px;
-    letter-spacing: 1px;
-    border: none;
+.contact_details strong{
+    line-height: 35px;
 }
-.f-right {
-    float: right;
+.candidate .sorting_content .button1 span {
+    background: #1b71ba;
+    width: 100%;
+    display: block;
+    padding: 10px 0;
+    cursor: pointer;
 }
-.btop {
-    border-top: 1px solid #e1e1e1;
+.candidate .sorting_content .button2 span {
+    position: absolute;
+    top: 5px;
+    right: 30px;
+    /* float: left; */
+    color: #ffffff;
 }
-.ptop5 {
-    padding-top: 5px !important;
+.candidate .sorting_content .button3 span {
+    position: absolute;
+    top: 18px;
+    right: 50px;
+    /* float: left; */
+    color: #ffffff;
 }
-.pbtm5 {
-    padding-bottom: 5px;
-}
-.shortlist-f-link {
-    background: #f3f5f4;
-}
-.shortlist-f-link a {
-    color: #2caef3;
-    float: right;
-}
-.brit {
-    border-right: 1px solid #e1e1e1;
-}
-.top-box-btm p {
+.job_title {
+    color: #333;
+    font-size: 15px;
+    line-height: 10px;
+    font-weight: 500;
     margin-bottom: 0px;
-    padding: 5px 0;
+}
+.borderfull-width {
+    border: solid 1px #e1e1e1;
+    position: relative;
+    overflow: hidden;
+    top: 15px;
+    margin-bottom: 35px;
+}
+.page-heading {
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+.page-heading span {
+    font-size: 14px;
+    color: #7d7d7d;
+}
+.color-drk {
+    color: black !important;
+}
+.page-heading p {
     color: #7d7d7d;
     font-size: 13px;
     line-height: 26px;
 }
-.blft {
-    border-left: 1px solid #e1e1e1;
-}
-.txt-right {
-    text-align: right;
-}
-.page-heading {
-    padding-bottom: 20px;
+.category {
     overflow: hidden;
 }
 .check-label label {
@@ -953,6 +951,66 @@ input[type=checkbox], input[type=radio] {
     margin-top: 6px;
     float: left;
     margin-right: 10px;
+}
+.check-label label{
+    display: block !important;
+    clear: both !important;
+    color: #979898;
+}
+.sorting_content strong{
+    color:#000000 !important;
+}
+/**************************** Employer Dashboard End *********************************/
+#pack-histry .panel-heading{
+    margin: 20px 0px;
+    border-bottom: none;
+    color: #000;
+}
+#modal-6 .modal-dialog .modal-content {
+    padding: 22px 30px;
+    top: 50px;
+}
+#modal-6 .modal-header{
+    border-bottom: 2px solid #bfbebe;
+    min-height: 16.43px;
+}
+#modal-6 .modal-footer {
+    border-top: none !important;
+}
+#modal-6 .form-group {
+    margin-bottom: 0px;
+}
+.cv-folder-list .fa-folder-open{
+    color: #ffcf67;
+    font-size: 25px;
+}
+.cv-folder-list .text-aln{
+    text-align: center;
+}
+.cv-folder-list .text-aln .folder-box{
+    border: 1px solid #e8e8e8;
+    padding: 10px 0px;
+    max-height: 65px;
+    position: relative;
+}
+.cv-folder-list .text-aln .folder-box .folder-box-remove{
+    position: absolute;
+    right: 3px;
+    top: 2px;
+}
+.cv-folder-list .fa-file-word-o {
+    color: #2196F3;
+    font-size: 32px;
+}
+/*.contact-table table.table tr {
+    border: none;
+}*/
+.contact-table table.table th {
+    width: 20%;
+}
+.contact-table .table>thead>tr>td, .table>tbody>tr>td, .table>tfood>tr>td, .table>thead>tr>th, .table>tbody>tr>th, .table>tfood>tr>th {
+    border: none;
+    font-size: 14px;
 }
 .pack-box{
     background: #FFF;
@@ -993,4 +1051,151 @@ input[type=checkbox], input[type=radio] {
     border-top: 1px solid #ddd;
     padding: 14px 0;
     color: #777;
+}
+.shortlist-folder-label ul{
+    list-style: none;
+    padding: 0px;
+}
+.shortlist-folder-label a{
+    font-size: 14px;
+    font-weight: 500;
+}
+.shortlist-folder-label .fa-folder-open{
+    color: #FFC107;
+}
+.short-list-span{
+    float: right;
+    margin-left: 20px;
+    color: #8BC34A;
+    font-size: 15px;
+    padding-top: 5px;
+    font-weight: 600;
+}
+.search-min{
+    min-height: 130px;
+}
+.fld-remove{
+    color: red;
+}
+.fld-rename{
+    color: #1a96df;
+}
+.shortlist-folder-label ul li{
+    position: relative;
+}
+.shortlist-folder-label ul li:hover{
+    background: #f1f1f1;
+}
+.shortlist-folder-label ul li .options{
+    opacity: 0px;
+    visibility: hidden;
+    transition: ease-in-out 100ms;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.shortlist-folder-label ul li:hover .options{
+    opacity: 1px;
+    visibility: visible;
+    transition: ease-in-out 100ms;
+    right: 0;
+    top: 0;
+}
+.shortlist-folder-label ul li .options li{
+    float: left;
+}
+/****************************** Resume Style Start ************************************************/
+.resume-panel{
+    border: solid 1px #e1e1e1;
+    border-radius: 2px;
+    padding: 22px !important;
+    position: relative;
+}
+.resume-panel h4{
+    font-size: 18px;
+    color: #222222;
+    font-weight: 500;
+}
+.resume-panel .contact_details span strong {
+    color: #333;
+    font-size: 12px;
+}
+.resume-panel .contact_details span {
+    display: block;
+    padding-bottom: 8px;
+    font-size: 12px;
+    color: #7d7d7d;
+}
+.resume-panel .img-responsive, .thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+    float: right;
+}
+.resume-panel .contact_details strong {
+    line-height: 22px;
+}
+/****************************** Resume Style End   ************************************************/
+.candidate_prof_add{
+    margin-top: 10px;
+}
+.candidate-form h4{
+    color: #484848;
+    font-weight: 600;
+    font-size: 15px;
+}
+.expremove{
+    color: #337ab7;
+    margin-top: 27px;
+}
+.eduremove{
+    color: #337ab7;
+}
+#addeducation{
+    background-color: #607D8B;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 5px;
+}
+#addexperience{
+    background-color: #607D8B;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 5px;
+}
+/*************************************************************************/
+.cv-contact .cv-contact-head{
+    margin: 0px;
+    font-size: 14px;
+    color: #222222;
+    font-weight: 600;
+}
+.cv-contact-details .table>tbody>tr>th{
+    border-top: 0px;
+    font-size: 12px;
+    vertical-align: middle;
+    color: #7d7d7d;
+    padding: 10px;
+}
+.cv-contact-details .table>tbody>tr>td{
+    border-top: 0px;
+    font-size: 12px;
+    vertical-align: middle;
+    color: #7d7d7d;
+    padding: 10px;
+}
+.cv-contact-details table.table tr {
+    border: none;
+}
+.cv-downlod .cv-dwn-head {
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    color: #2a7fbd;
+    padding-left: 10px;
+    font-weight: 600;
+}
+/*************************************************************************/
+#industryTable{
+    margin-top: 10px;
+}
+#skillTable{
+    margin-top: 10px;
 }

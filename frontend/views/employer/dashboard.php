@@ -86,58 +86,72 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                 <div class="borderfull-width"></div>
                                 <div class="clearfix"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $industries = common\models\Industry::find()->where(['status' => 1])->andWhere(['<>', 'id', 0])->all();
-                                    $arr_industry = [];
-                                    if (!empty($industries)) {
+                                    <input class="form-control" type="text" id="industryInput" onkeyup="industryFunction()" placeholder="Search for industries" title="Type Industry Name" autocomplete="off">
+                                    <table id="industryTable">
+                                        <?php
+                                        $industries = common\models\Industry::find()->where(['status' => 1])->andWhere(['<>', 'id', 0])->all();
+                                        $arr_industry = [];
+                                        if (!empty($industries)) {
 //                                        foreach ($industries as $industry) {
 //                                            $arr_industry[$industry['id']] = $industry['industry_name'];
 //                                        }
-                                        foreach ($industries as $industry) {
-                                            if ($model_filter->industries != '' && isset($model_filter->industries)) {
-                                                if (in_array($industry->id, $model_filter->industries)) {
-                                                    $check1 = 'checked';
+                                            foreach ($industries as $industry) {
+                                                if ($model_filter->industries != '' && isset($model_filter->industries)) {
+                                                    if (in_array($industry->id, $model_filter->industries)) {
+                                                        $check1 = 'checked';
+                                                    } else {
+                                                        $check1 = '';
+                                                    }
                                                 } else {
                                                     $check1 = '';
                                                 }
-                                            } else {
-                                                $check1 = '';
+                                                ?>
+                                                <tr class="">
+                                                    <td>
+                                                        <label><input type="checkbox" <?= $check1 ?> name="CvFilter[industries][]" value="<?= $industry->id ?>"> <?= $industry->industry_name ?></label>
+                                                    </td>
+                                                </tr>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check1 ?> name="CvFilter[industries][]" value="<?= $industry->id ?>"> <?= $industry->industry_name ?></label>
-                                            <?php
                                         }
-                                    }
 //                                    echo $form1->field($model_filter, 'industries[]')->checkboxList($arr_industry, ['class' => 'check-label'])->label(FALSE);
-                                    ?>
+                                        ?>
+                                    </table>
                                 </div>
                                 <div class="job_title">Skills</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $skills = common\models\Skills::find()->where(['status' => 1])->andWhere(['<>', 'industry', 0])->all();
-                                    $arr_skill = [];
-                                    if (!empty($skills)) {
+                                    <input class="form-control" type="text" id="skillInput" onkeyup="skillFunction()" placeholder="Search for skills" title="Type Skill" autocomplete="off">
+                                    <table id="skillTable">
+                                        <?php
+                                        $skills = common\models\Skills::find()->where(['status' => 1])->andWhere(['<>', 'industry', 0])->all();
+                                        $arr_skill = [];
+                                        if (!empty($skills)) {
 //                                        foreach ($skills as $skill) {
 //                                            $arr_skill[$skill['id']] = $skill['skill'];
 //                                        }
-                                        foreach ($skills as $skill) {
-                                            if ($model_filter->skills != '' && isset($model_filter->skills)) {
-                                                if (in_array($skill->id, $model_filter->skills)) {
-                                                    $check2 = 'checked';
+                                            foreach ($skills as $skill) {
+                                                if ($model_filter->skills != '' && isset($model_filter->skills)) {
+                                                    if (in_array($skill->id, $model_filter->skills)) {
+                                                        $check2 = 'checked';
+                                                    } else {
+                                                        $check2 = '';
+                                                    }
                                                 } else {
                                                     $check2 = '';
                                                 }
-                                            } else {
-                                                $check2 = '';
+                                                ?>
+                                                <tr class="">
+                                                    <td>
+                                                        <label><input type="checkbox" <?= $check2 ?> name="CvFilter[skills][]" value="<?= $skill->id ?>"> <?= $skill->skill ?></label>
+                                                    </td>
+                                                </tr>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check2 ?> name="CvFilter[skills][]" value="<?= $skill->id ?>"> <?= $skill->skill ?></label>
-                                            <?php
                                         }
-                                    }
 //                                    echo $form1->field($model_filter, 'skills[]')->checkboxList($arr_skill, ['class' => 'check-label'])->label(FALSE);
-                                    ?>
+                                        ?>
+                                    </table>
                                 </div>
                                 <div class="job_title">Job Type</div>
                                 <div class="borderfull-width"></div>
@@ -422,6 +436,40 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
         });
     }
     );
+    function industryFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("industryInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("industryTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function skillFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("skillInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("skillTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
 <link rel="stylesheet" href="<?= Yii::$app->homeUrl; ?>css/select2.css">
 <link rel="stylesheet" href="<?= Yii::$app->homeUrl; ?>css/select2-bootstrap.css">

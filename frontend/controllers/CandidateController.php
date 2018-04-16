@@ -127,6 +127,8 @@ class CandidateController extends Controller {
                 $model->upload_resume = $files_resume->extension;
             }
             if ($model->validate() && $model->save()) {
+                $user->review_status = 0;
+                $user->update();
                 if (!empty($files)) {
                     $this->upload($model, $files);
                 }

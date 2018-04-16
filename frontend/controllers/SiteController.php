@@ -30,12 +30,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -79,6 +79,7 @@ class SiteController extends Controller {
         if ($model_register->load(Yii::$app->request->post()) && $model_register->validate()) {
             $model_register->password = Yii::$app->security->generatePasswordHash($model_register->password);
             $model_register->password_repeat = $model_register->password;
+            $model_register->review_status = 0;
             if ($model_register->save()) {
                 $model_register->user_id = sprintf("%05s", $model_register->id);
                 $model_register->update();

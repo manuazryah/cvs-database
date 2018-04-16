@@ -96,6 +96,10 @@ class CandidateController extends Controller {
                 $filter_folders = $this->getFilterFolder($model_filter);
                 $dataProvider->query->andWhere(['id' => $filter_folders]);
             }
+            if ($model_filter->review_status != '') {
+                $filter_reviews = $this->getReviewStatus($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_reviews]);
+            }
         }
         return $this->render('index', [
                     'searchModel' => $searchModel,
@@ -136,6 +140,7 @@ class CandidateController extends Controller {
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->password = Yii::$app->security->generatePasswordHash($model->password);
             $model->email_varification_status = 1;
+            $model->review_status = 1;
             if ($model->save()) {
                 $model->user_id = sprintf("%05s", $model->id);
                 $model->update();
@@ -155,13 +160,13 @@ class CandidateController extends Controller {
     public function actionUpdate($id) {
         $model = $this->findModel($id);
         $model->scenario = 'create-admin';
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                        'model' => $model,
-            ]);
-        }
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } return $this->render('update', [
+                    'model' => $model,
+        ]);
     }
 
     /**
@@ -219,6 +224,8 @@ class CandidateController extends Controller {
                 $model->upload_resume = $files_resume->extension;
             }
             if ($model->validate() && $model->save()) {
+                $user->review_status = 1;
+                $user->update();
                 if (!empty($files)) {
                     $this->upload($model, $files);
                 }
@@ -727,6 +734,30 @@ class CandidateController extends Controller {
         ]);
         echo $content;
         exit;
+    }
+
+    public function getReviewStatus($data) {
+        $cv_data = [];
+        $arr = [];
+        $str = implode(", ", $data->review_status);
+        $result = Yii::$app->db->createCommand("select * from candidate WHERE CONCAT(',', `review_status`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $arr[] = $ind_val['id'];
+            }
+        }
+        if (!empty($arr)) {
+            $query = new yii\db\Query();
+            $query->select(['*'])->from('candidate_profile')->where(['candidate_id' => $arr]);
+            $command1 = $query->createCommand();
+            $result1 = $command1->queryAll();
+            if (!empty($result1)) {
+                foreach ($result1 as $ind_val1) {
+                    $cv_data[] = $ind_val1['candidate_id'];
+                }
+            }
+        }
+        return $cv_data;
     }
 
     public function getFilterFolder($data) {

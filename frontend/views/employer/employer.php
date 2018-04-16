@@ -4,6 +4,17 @@
 /* @var $model \common\models\LoginForm */
 
 use yii\helpers\Html;
+use common\models\Industry;
+use common\models\Skills;
+use yii\helpers\ArrayHelper;
+
+$industry_datas = Industry::find()->where(['!=', 'id', 0])->andWhere(['status' => 1])->all();
+$skills_datas = Skills::find()->where(['!=', 'industry', 0])->andWhere(['status' => 1])->all();
+$city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => SORT_ASC])->all(), 'id', function($model) {
+            return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];
+        }
+);
+$latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->orderBy(['id' => SORT_DESC])->limit(5)->all();
 ?>
 <div class="site-banner right-img">
     <div class="banner-overlay"></div>
@@ -11,7 +22,7 @@ use yii\helpers\Html;
         <div class="row">
             <div class="col-md-9">
                 <div class="banner-content">
-                    <h1>Search between more them <br> 50,000 open jobs.</h1>
+                    <h1>Search between more them <br> 50,000 open CV's.</h1>
                     <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.<br> Nam eget dui consequat vitae, eleifend ac etiam rhoncus</p>
                 </div>
                 <div class="job-search">
@@ -36,118 +47,50 @@ use yii\helpers\Html;
         <div class="row">
             <div class="col-md-9">
                 <div class="page-heading">
-                    <h2>Find Jobs by Skill, Industry & Location</h2>
+                    <h2>Find CV's by Skill, Industry & Location</h2>
                     <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu.</p>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#Skills">Jobs By Skills</a></li>
-                    <li><a data-toggle="tab" href="#Industry">Jobs By Industry</a></li>
-                    <li><a data-toggle="tab" href="#Location">Jobs By Location</a></li>
-                    <li class="pull-right"><a href="#" class="view">View all jobs</a></li>
+                    <li class="active"><a data-toggle="tab" href="#Industry">CV's By Industry</a></li>
+                    <li><a data-toggle="tab" href="#Skills">CV's By Skills</a></li>
+                    <li><a data-toggle="tab" href="#Location">CV's By Location</a></li>
+                    <li class="pull-right"><a href="#" class="view">View all CV's</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div id="Skills" class="tab-pane fade in active">
+                    <div id="Industry" class="tab-pane fade in active">
                         <div class="col-md-4 padding-left">
                             <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Mechanical Engineering Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> BPO Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Networking  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Java Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Online Marketing Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Animation  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Design Engineer Jobs</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Analytics Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> UI/UX Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> NLP Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Marketing Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Banking Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> MBA Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Teaching Jobs</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Accounting Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Retail Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Travel Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Merchandiser Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Architecture  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Banking Insurance Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Music Jobs</a></li>
+                                <?php foreach ($industry_datas as $industry_data) { ?>
+                                    <li>
+                                        <a href="#"><i class="fa fa-angle-right"></i> <?= $industry_data->industry_name ?></a>
+                                    </li>
+                                <?php }
+                                ?>
                             </ul>
                         </div>
                     </div>
-                    <div id="Industry" class="tab-pane fade">
+                    <div id="Skills" class="tab-pane fade">
                         <div class="col-md-4 padding-left">
                             <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Mechanical Engineering Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> BPO Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Networking  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Java Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Online Marketing Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Animation  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Design Engineer Jobs</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Analytics Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> UI/UX Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> NLP Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Marketing Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Banking Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> MBA Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Teaching Jobs</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Accounting Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Retail Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Travel Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Merchandiser Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Architecture  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Banking Insurance Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Music Jobs</a></li>
+                                <?php foreach ($skills_datas as $skills_data) { ?>
+                                    <li>
+                                        <a href="#"><i class="fa fa-angle-right"></i> <?= $skills_data->skill ?></a>
+                                    </li>
+                                <?php }
+                                ?>
                             </ul>
                         </div>
                     </div>
                     <div id="Location" class="tab-pane fade">
                         <div class="col-md-4 padding-left">
                             <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Mechanical Engineering Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> BPO Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Networking  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Java Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Online Marketing Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Animation  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Design Engineer Jobs</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Analytics Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> UI/UX Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> NLP Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Marketing Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Banking Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> MBA Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Teaching Jobs</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Accounting Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Retail Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Travel Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Merchandiser Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Architecture  Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Banking Insurance Jobs</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i> Music Jobs</a></li>
+                                <?php foreach ($city_datas as $city_data) {
+                                    ?>
+                                    <li>
+                                        <a href="#"><i class="fa fa-angle-right"></i> <?= $city_data ?></a>
+                                    </li>
+                                <?php }
+                                ?>
                             </ul>
                         </div>
                     </div>
@@ -160,89 +103,6 @@ use yii\helpers\Html;
             </div>
         </div>
     </div>
-    <!--            <section class="featured">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="page-heading">
-                                    <h2>Featured Jobs</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-bg">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td><div class="tab-image"><img src="images/home/img1.jpg" alt="" class="img-responsive" /></div><h1>Web Project Manager - Team of PHP MySQL Developers <p>Agricultural Sceences</p></h1></td>
-                                                <td class="work-time">Full Time</td>
-                                                <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                                <td><a href="#" class="table-btn-default">View Job</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="tab-image"><img src="images/home/img2.jpg" alt="" class="img-responsive" /></div><h1>Urgent Opening for PHP Developer <p>Agricultural Sceences</p></h1></td>
-                                                <td class="work-time part">Part Time</td>
-                                                <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                                <td><a href="#" class="table-btn-default">View Job</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="tab-image"><img src="images/home/img3.jpg" alt="" class="img-responsive" /></div><h1>Urgent Require- Web Developer <p>Agricultural Sceences</p></h1></td>
-                                                <td class="work-time part">Part Time</td>
-                                                <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                                <td><a href="#" class="table-btn-default">View Job</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="tab-image"><img src="images/home/img4.jpg" alt="" class="img-responsive" /></div><h1>Nodejs,Angularjs Developer <p>Agricultural Sceences</p></h1></td>
-                                                <td class="work-time">Full Time</td>
-                                                <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                                <td><a href="#" class="table-btn-default">View Job</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="tab-image"><img src="images/home/img5.jpg" alt="" class="img-responsive" /></div><h1>Software Developer -IT Co <p>Agricultural Sceences</p></h1></td>
-                                                <td class="work-time Free">Free lancer</td>
-                                                <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                                <td><a href="#" class="table-btn-default">View Job</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="tab-image"><img src="images/home/img6.jpg" alt="" class="img-responsive" /></div><h1>Website Developer and Head of Developers <p>Agricultural Sceences</p></h1></td>
-                                                <td class="work-time">Full Time</td>
-                                                <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                                <td><a href="#" class="table-btn-default">View Job</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="tab-image"><img src="images/home/img7.jpg" alt="" class="img-responsive" /></div><h1>Software Developer-Winforms-wpf <p>Agricultural Sceences</p></h1></td>
-                                                <td class="work-time">Full Time</td>
-                                                <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                                <td><a href="#" class="table-btn-default">View Job</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><div class="tab-image"><img src="images/home/img8.jpg" alt="" class="img-responsive" /></div><h1>Software Developer -Leading IT Company <p>Agricultural Sceences</p></h1></td>
-                                                <td class="work-time part">Part Time</td>
-                                                <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                                <td><a href="#" class="table-btn-default">View Job</a></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 text-right">
-                                <ul class="pagination">
-                                    <li class="active"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">...</a></li>
-                                    <li><a href="#">20</a></li>
-                                    <li class="active"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>-->
     <section class="featured">
         <div class="container">
             <div class="row">

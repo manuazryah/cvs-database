@@ -17,6 +17,7 @@ use common\models\ShortList;
 use common\models\CandidateProfileSearch;
 use common\models\CvFilter;
 use yii\db\Expression;
+use kartik\mpdf\Pdf;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -45,6 +46,16 @@ class EmployerController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
+        $this->layout = 'employer_home';
+        return $this->render('employer', [
+        ]);
+    }
+
+    /**
+     * Lists all Employer models.
+     * @return mixed
+     */
+    public function actionLogin() {
         if (!empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] != '') {
             return $this->redirect(array('employer/home'));
         }
@@ -552,7 +563,7 @@ class EmployerController extends Controller {
         Yii::$app->SetValues->updateLoginHistory();
         unset(Yii::$app->session['log-history']);
         unset(Yii::$app->session['employer_data']);
-        return $this->redirect(['/site/index']);
+        return $this->redirect(['/employer/index']);
     }
 
     /**
@@ -677,14 +688,24 @@ class EmployerController extends Controller {
             $candidate_profile = \common\models\CandidateProfile::findOne($id);
             $candidate = \common\models\Candidate::findOne($candidate_profile->candidate_id);
             $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $id])->one();
+            $model = \common\models\CandidateProfile::findOne($id);
+            $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
+            $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
+            $contact_info = \common\models\Candidate::find()->where(['id' => $id])->one();
             if (empty($view_cv)) {
                 if ($packages->end_date >= date('Y-m-d')) {
                     if ($packages->no_of_downloads_left >= 1) {
                         $packages->no_of_downloads_left = $packages->no_of_downloads_left - 1;
                         $packages->update();
                         $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
-//                           $this->CandidateEmail($id);
-                        return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
+                        $this->CandidateEmail($id);
+                        Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
+                        return $this->render('cv-view', [
+                                    'model' => $model,
+                                    'model_education' => $model_education,
+                                    'model_experience' => $model_experience,
+                                    'contact_info' => $contact_info,
+                        ]);
                     } else {
                         Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
                         return $this->redirect(Yii::$app->request->referrer);
@@ -696,10 +717,30 @@ class EmployerController extends Controller {
             } else {
                 $view_cv->date_of_view = date('Y-m-d');
                 $view_cv->update();
-//                $this->CandidateEmail($id);
-                return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
+                $this->CandidateEmail($id);
+//                return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
+                Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
+                return $this->render('cv-view', [
+                            'model' => $model,
+                            'model_education' => $model_education,
+                            'model_experience' => $model_experience,
+                            'contact_info' => $contact_info,
+                ]);
             }
         }
+    }
+
+    public function actionViewCvs($id) {
+        $model = \common\models\CandidateProfile::findOne($id);
+        $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $contact_info = \common\models\Candidate::find()->where(['id' => $id])->one();
+        return $this->render('cv-view', [
+                    'model' => $model,
+                    'model_education' => $model_education,
+                    'model_experience' => $model_experience,
+                    'contact_info' => $contact_info,
+        ]);
     }
 
     public function CandidateEmail($candidate_id) {
@@ -761,19 +802,6 @@ class EmployerController extends Controller {
         $model->date_of_view = date('Y-m-d');
         $model->save();
         return;
-    }
-
-    public function actionViewCvs($id) {
-        $model = \common\models\CandidateProfile::findOne($id);
-        $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
-        $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
-        $contact_info = \common\models\Candidate::find()->where(['id' => $id])->one();
-        return $this->render('cv-view', [
-                    'model' => $model,
-                    'model_education' => $model_education,
-                    'model_experience' => $model_experience,
-                    'contact_info' => $contact_info,
-        ]);
     }
 
     public function actionUpgradePackage() {
@@ -926,6 +954,59 @@ class EmployerController extends Controller {
             'print' => true,
         ]);
 
+        exit;
+    }
+
+    public function actionPdfExport($id) {
+        // get your HTML raw content without any layouts or scripts
+        $candidate = \common\models\Candidate::find()->where(['id' => $id])->one();
+        $model = \common\models\CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $content = $this->renderPartial('_pdfview', [
+            'model' => $model,
+            'model_education' => $model_education,
+            'model_experience' => $model_experience,
+            'candidate' => $candidate,
+        ]);
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $content,
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'options' => ['title' => ''],
+            'methods' => [
+                'SetHeader' => ['Curriculum Vitae'],
+                'SetFooter' => ['{PAGENO}'],
+            ]
+        ]);
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        Yii::$app->response->headers->add('Content-Type', 'application/pdf');
+        return $pdf->render();
+    }
+
+    /*
+     * Generate report based on service
+     */
+
+    public function actionWordExport($id) {
+        header("Content-type: application/vnd.ms-word");
+        header("Content-Disposition: attachment;Filename=cv.doc");
+        $candidate = \common\models\Candidate::find()->where(['id' => $id])->one();
+        $model = \common\models\CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
+        $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
+        $content = $this->renderPartial('_wordview', [
+            'model' => $model,
+            'model_education' => $model_education,
+            'model_experience' => $model_experience,
+            'candidate' => $candidate,
+        ]);
+        echo $content;
         exit;
     }
 

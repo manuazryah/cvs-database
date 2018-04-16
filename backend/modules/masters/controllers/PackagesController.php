@@ -22,7 +22,7 @@ class PackagesController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -107,8 +107,13 @@ class PackagesController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
+        $packages = \common\models\EmployerPackages::find()->where(['package' => $id])->all();
+        if (empty($packages)) {
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('success', "Package Removed Successfully");
+        } else {
+            Yii::$app->session->setFlash('error', "Can't remove bacause this package is already in use.");
+        }
         return $this->redirect(['index']);
     }
 

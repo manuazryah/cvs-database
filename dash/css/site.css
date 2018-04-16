@@ -1059,3 +1059,40 @@ input[type=checkbox], input[type=radio] {
     line-height: 22px;
 }
 /****************************** Resume Style End   ************************************************/
+.cv-contact .cv-contact-head{
+    margin: 0px;
+    font-size: 14px;
+    color: #222222;
+    font-weight: 600;
+}
+.cv-contact-details .table>tbody>tr>th{
+    border-top: 0px;
+    font-size: 12px;
+    vertical-align: middle;
+    color: #7d7d7d;
+    padding: 10px;
+}
+.cv-contact-details .table>tbody>tr>td{
+    border-top: 0px;
+    font-size: 12px;
+    vertical-align: middle;
+    color: #7d7d7d;
+    padding: 10px;
+}
+.cv-contact-details table.table tr {
+    border: none;
+}
+.cv-downlod .cv-dwn-head {
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    color: #2a7fbd;
+    padding-left: 10px;
+    font-weight: 600;
+}
+#industryTable{
+    margin-top: 10px;
+}
+#skillTable{
+    margin-top: 10px;
+}

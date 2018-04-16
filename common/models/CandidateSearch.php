@@ -17,7 +17,7 @@ class CandidateSearch extends Candidate {
      */
     public function rules() {
         return [
-            [['id', 'status', 'email_varification_status'], 'integer'],
+            [['id', 'status', 'email_varification_status', 'review_status'], 'integer'],
             [['email', 'user_name', 'password', 'user_id', 'date_of_creation', 'date_of_updation', 'phone', 'address'], 'safe'],
         ];
     }
@@ -58,6 +58,7 @@ class CandidateSearch extends Candidate {
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
+            'review_status' => $this->review_status,
             'date_of_creation' => $this->date_of_creation,
             'date_of_updation' => $this->date_of_updation,
             'email_varification_status' => $this->email_varification_status,

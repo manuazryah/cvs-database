@@ -54,7 +54,7 @@ $qualification = common\models\CandidateEducation::find()->where(['candidate_id'
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
 ?>
 <?php if ($candidate->status == 1) { ?>
-    <div class="sorting_content">
+    <div class="sorting_content" id="admin-cv-listing">
         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
             <div class="overflow">
                 <div class="bottom_text">
@@ -77,9 +77,11 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                         <div class="contact_details col-md-6 col-sm-6 p-l">
                             <span><strong>Reference No:</strong> <?= $profile_info->user_id ?></span>
                         </div>
-                        <ul class="unstyled">
-                            <li><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></li>
-                        </ul>
+                        <div class="contact_details col-lg-10 p-l">
+                            <ul class="unstyled">
+                                <li><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="contact_details col-md-4 col-sm-4 p-l">
                         <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
@@ -109,12 +111,12 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             </ul>
                         </div>
                     </div>
-    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                          ?></p>-->
+    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                                    ?></p>-->
                     <div class="contact_details col-md-12 col-sm-12 p-l">
                         <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                     </div>
                     <!--                <div class="contact_details col-md-12 col-sm-12 p-l">
-                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                          ?></span>
+                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                                    ?></span>
                                     </div>-->
                 </div>
             </div>

@@ -117,8 +117,8 @@ if ($model->current_country != '') {
                         <?php
                         if (!isset($model->dob) && $model->dob != '') {
                             $model->dob = date('d-M-Y');
-                        }else{
-                            $model->dob =date("d-m-Y", strtotime($model->dob));
+                        } else {
+                            $model->dob = date("d-m-Y", strtotime($model->dob));
                         }
                         ?>
                         <?=
@@ -220,7 +220,7 @@ if ($model->current_country != '') {
                                                 </td>
                                                 <td>
                                                     <textarea name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" rows="4"><?= $datas->job_responsibility ?></textarea>
-                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
+                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                      ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
                                                 </td>
                                                 <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
                                             </tr>
@@ -390,6 +390,16 @@ if ($model->current_country != '') {
                         }
                         ?>
                         <?= $form->field($model, 'upload_resume')->fileInput(['maxlength' => true])->label($label) ?>
+                        <?php
+                        if ($model->upload_resume != '') {
+                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
+                            if (file_exists($dirPath)) {
+                                echo '<a class="" href="' . Yii::$app->homeUrl . 'uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume . '" target="_blank"><span>Download CV</span></a>';
+                            } else {
+                                echo '';
+                            }
+                        }
+                        ?>
                     </div>
                     <div class="form-group col-md-6 p-r">
                         <?php
@@ -398,7 +408,7 @@ if ($model->current_country != '') {
 //                            if (file_exists($dirPath)) {
 //
                         ?>
-                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                   ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                         ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
                         <?php
 //                            }
 //                        }

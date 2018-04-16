@@ -27,5 +27,5 @@ use dosamigos\ckeditor\CKEditor;
     <td>
         <textarea name="expcreate[job_responsibility][]" rows="4"></textarea>
     </td>
-    <td><a id="ibtnDele"><i class="fa fa-remove"></i></a></td>
+    <td><a id="ibtnDele" class="expremove"><i class="fa fa-remove"></i></a></td>
 </tr>

@@ -8,6 +8,7 @@ use common\models\IndustrySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Expression;
 
 /**
  * IndustryController implements the CRUD actions for Industry model.
@@ -22,7 +23,7 @@ class IndustryController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -107,8 +108,13 @@ class IndustryController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
+        $industry_exists = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:industry, industry)'))->addParams([':industry' => $id])->exists();
+        if (empty($industry_exists)) {
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('success', "Industry Removed Successfully");
+        } else {
+            Yii::$app->session->setFlash('error', "Can't remove bacause this industry is already in use.");
+        }
         return $this->redirect(['index']);
     }
 

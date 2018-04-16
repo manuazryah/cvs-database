@@ -8,6 +8,7 @@ use common\models\CountrySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\City;
 
 /**
  * CountryController implements the CRUD actions for Country model.
@@ -107,8 +108,17 @@ class CountryController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
+        $city = City::find()->where(['country' => $id])->all();
+        $candidate_prof = \common\models\CandidateProfile::find()->where(['nationality' => $id])->orWhere(['current_country' => $id])->all();
+        $employer = \common\models\Employer::find()->where(['country' => $id])->all();
+        $education = \common\models\CandidateEducation::find()->where(['country' => $id])->all();
+        $experience = \common\models\WorkExperiance::find()->where(['country' => $id])->all();
+        if (empty($city) && empty($candidate_prof) && empty($employer) && empty($education) && empty($experience)) {
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('success', "Country Removed Successfully");
+        } else {
+            Yii::$app->session->setFlash('error', "Can't remove bacause this item is already in use.");
+        }
         return $this->redirect(['index']);
     }
 

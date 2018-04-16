@@ -22,7 +22,7 @@ class CoursesController extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+//                    'delete' => ['POST'],
                 ],
             ],
         ];
@@ -107,8 +107,13 @@ class CoursesController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
+        $education = \common\models\CandidateEducation::find()->where(['course_name' => $id])->all();
+        if (empty($education)) {
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('success', "Course Removed Successfully");
+        } else {
+            Yii::$app->session->setFlash('error', "Can't remove bacause this item is already in use.");
+        }
         return $this->redirect(['index']);
     }
 

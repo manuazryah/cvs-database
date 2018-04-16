@@ -26,5 +26,5 @@
     <td>
         <input type="date" name="create[to_date][]" class="form-control">
     </td>
-    <td><a id="ibtnDel"><i class="fa fa-remove"></i></a></td>
+    <td><a id="ibtnDel" class="eduremove"><i class="fa fa-remove"></i></a></td>
 </tr>
