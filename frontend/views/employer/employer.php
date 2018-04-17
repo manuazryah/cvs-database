@@ -6,7 +6,10 @@
 use yii\helpers\Html;
 use common\models\Industry;
 use common\models\Skills;
+use common\models\ExpectedSalary;
 use yii\helpers\ArrayHelper;
+use yii\widgets\ActiveForm;
+use yii\web\JsExpression;
 
 $industry_datas = Industry::find()->where(['!=', 'id', 0])->andWhere(['status' => 1])->all();
 $skills_datas = Skills::find()->where(['!=', 'industry', 0])->andWhere(['status' => 1])->all();
@@ -26,17 +29,26 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                     <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.<br> Nam eget dui consequat vitae, eleifend ac etiam rhoncus</p>
                 </div>
                 <div class="job-search">
+                    <?php $form = ActiveForm::begin(['action' => 'cv-search', 'id' => 'search_form', 'method' => 'post',]); ?>
                     <div class="form-group col-md-6 padding-left b-r radius">
-                        <input type="text" class="form-control" placeholder="Job title / keywords">
-                        <div class="search_icon"><span class="ti-briefcase"></span></div>
+                        <input type="text" class="form-control" placeholder="Job title / keywords" name="CvFilter[keyword]">
+                        <div class="search_icon"><i class="fa fa-briefcase"></i></div>
                     </div>
-                    <div class="form-group col-md-6 padding-left radius2">
-                        <input type="text" class="form-control" placeholder="City / zip code">
-                        <div class="search_icon"><span class="ti-location-pin"></span></div>
-                    </div>
+                    <?=
+                    $form->field($model_filter, 'location')->widget(\yii\jui\AutoComplete::classname(), ['options' => ['class' => 'ui-autocomplete-input form-control'],
+                        'clientOptions' => [
+                            'source' => $this->context->getLocation(),
+                        ],
+                    ])->label(FALSE)
+                    ?>
+                    <!--                    <div class="form-group col-md-6 padding-left radius2">
+                                            <input id="location" type="text" class="form-control" placeholder="Country / City" name="CvFilter[location]">
+                                            <div class="search_icon"><i class="fa fa-map-marker"></i></span></div>
+                                        </div>-->
                     <div class="btn-search">
-                        <a href="#" class="btn btn-default">Search</a>
+                        <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                     </div>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>
@@ -117,36 +129,50 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                     <div class="table-bg">
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <td><div class="tab-image"><img src="<?= Yii::$app->homeUrl ?>images/home/img1.jpg" alt="" class="img-responsive"></div><h1>Web Project Manager - Team of PHP MySQL Developers <p>Agricultural Sceences</p></h1></td>
-                                    <td class="work-time">Full Time</td>
-                                    <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                    <td><a href="#" class="table-btn-default">View Job</a></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="tab-image"><img src="<?= Yii::$app->homeUrl ?>images/home/img2.jpg" alt="" class="img-responsive"></div><h1>Urgent Opening for PHP Developer <p>Agricultural Sceences</p></h1></td>
-                                    <td class="work-time part">Part Time</td>
-                                    <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                    <td><a href="#" class="table-btn-default">View Job</a></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="tab-image"><img src="<?= Yii::$app->homeUrl ?>images/home/img3.jpg" alt="" class="img-responsive"></div><h1>Urgent Require- Web Developer <p>Agricultural Sceences</p></h1></td>
-                                    <td class="work-time part">Part Time</td>
-                                    <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                    <td><a href="#" class="table-btn-default">View Job</a></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="tab-image"><img src="<?= Yii::$app->homeUrl ?>images/home/img4.jpg" alt="" class="img-responsive"></div><h1>Nodejs,Angularjs Developer <p>Agricultural Sceences</p></h1></td>
-                                    <td class="work-time">Full Time</td>
-                                    <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                    <td><a href="#" class="table-btn-default">View Job</a></td>
-                                </tr>
-                                <tr>
-                                    <td><div class="tab-image"><img src="<?= Yii::$app->homeUrl ?>images/home/img5.jpg" alt="" class="img-responsive"></div><h1>Software Developer -IT Co <p>Agricultural Sceences</p></h1></td>
-                                    <td class="work-time Free">Free lancer</td>
-                                    <td><span class="ti-location-pin"></span> Toulouse, France</td>
-                                    <td><a href="#" class="table-btn-default">View Job</a></td>
-                                </tr>
+                                <?php
+                                if (!empty($latest_cvs)) {
+                                    foreach ($latest_cvs as $latest_cv) {
+                                        ?>
+                                        <tr>
+                                            <td style="width:40%;">
+                                                <div class="tab-image">
+                                                    <?php
+                                                    if ($latest_cv->photo != '') {
+                                                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $latest_cv->id . '.' . $latest_cv->photo;
+                                                        if (file_exists($dirPath)) {
+                                                            echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $latest_cv->id . '.' . $latest_cv->photo . '" class="img-responsive"/>';
+                                                        } else {
+                                                            echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg" class="img-responsive"/>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <h1><?= $latest_cv->title ?> <p><?= $latest_cv->name_view == 1 ? $latest_cv->name : '***********' ?></p></h1>
+                                            </td>
+                                            <td class="work-time" style="width:10%;"><?= $latest_cv->expected_salary == '' ? '' : ExpectedSalary::findOne($latest_cv->expected_salary)->salary_range ?></td>
+                                            <td style="width:40%;">
+                                                <?php
+                                                if ($latest_cv->skill != '') {
+                                                    $str_datas = explode(",", $latest_cv->skill);
+                                                    $i = 0;
+                                                    $strr = '';
+                                                    foreach ($str_datas as $str_data) {
+                                                        $i++;
+                                                        $strr .= Skills::findOne($str_data)->skill;
+                                                        $strr .= ', ';
+                                                    }
+                                                    echo $strr;
+                                                } else {
+                                                    echo '';
+                                                }
+                                                ?>
+                                            </td>
+                                            <td style="width:10%;"><a href="#" class="table-btn-default">View CV</a></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -362,3 +388,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
         </div>
     </section>
 </main>
+<script>
+    $(function () {
+        $(".field-cvfilter-location").addClass("col-md-6 padding-left radius2");
+    });
+    $('#cvfilter-location').attr('placeholder', 'Country / Location');
+</script>

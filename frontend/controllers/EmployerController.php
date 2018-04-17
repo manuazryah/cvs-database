@@ -16,8 +16,10 @@ use common\models\CvSearch;
 use common\models\ShortList;
 use common\models\CandidateProfileSearch;
 use common\models\CvFilter;
+use common\models\Country;
 use yii\db\Expression;
 use kartik\mpdf\Pdf;
+use yii\helpers\ArrayHelper;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -47,7 +49,72 @@ class EmployerController extends Controller {
      */
     public function actionIndex() {
         $this->layout = 'employer_home';
+        $model_filter = new CvFilter();
         return $this->render('employer', [
+                    'model_filter' => $model_filter,
+        ]);
+    }
+
+    public function actionCvSearch() {
+        $this->layout = 'employer_search';
+        $searchModel = new CandidateProfileSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['status' => 1]);
+        $model_filter = new CvFilter();
+        if ($model_filter->load(Yii::$app->request->post())) {
+            if ($model_filter->keyword != '') {
+                $keywords = $this->getFilterKeywords($model_filter->keyword);
+                $dataProvider->query->andWhere(['id' => $keywords]);
+            }
+            if ($model_filter->location != '') {
+                $location_datas = $this->getLocationDatas($model_filter->location);
+                $dataProvider->query->andWhere(['id' => $location_datas]);
+            }
+            if ($model_filter->industries != '') {
+                $filter_industry = $this->getFilterIndustry($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_industry]);
+            }
+            if ($model_filter->skills != '') {
+                $filter_skills = $this->getFilterSkills($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_skills]);
+            }
+            if ($model_filter->job_types != '') {
+                $filter_job_types = $this->getFilterJobType($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_job_types]);
+            }
+            if ($model_filter->salary_range != '') {
+                $filter_salary_range = $this->getFilterSalaryRange($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_salary_range]);
+            }
+            if ($model_filter->gender != '') {
+                $filter_gender = $this->getFilterGender($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_gender]);
+            }
+            if ($model_filter->language != '') {
+                $filter_language = $this->getFilterLanguage($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_language]);
+            }
+            if ($model_filter->job_status != '') {
+                $filter_job_status = $this->getFilterJobStatus($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_job_status]);
+            }
+            if ($model_filter->nationality != '') {
+                $filter_nationality = $this->getFilterNationality($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_nationality]);
+            }
+            if ($model_filter->experience != '') {
+                $filter_experience = $this->getFilterExperience($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_experience]);
+            }
+            if ($model_filter->folder_name != '') {
+                $filter_folders = $this->getFilterFolder($model_filter);
+                $dataProvider->query->andWhere(['id' => $filter_folders]);
+            }
+        }
+        return $this->render('search-result', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'model_filter' => $model_filter,
         ]);
     }
 
@@ -319,6 +386,49 @@ class EmployerController extends Controller {
         return $cv_data;
     }
 
+    public function getLocationDatas($data) {
+        $data = explode("-", $data);
+        $loc = '';
+        foreach ($data as $val) {
+            $loc .= $val . '|';
+        }
+        $loc = rtrim($loc, '|');
+        $cv_data = [];
+        $arr = [];
+        $arr1 = [];
+        $result = Yii::$app->db->createCommand("select id from city WHERE city REGEXP '" . $loc . "'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $arr[] = $ind_val['id'];
+            }
+        }
+        if (!empty($arr)) {
+            $str = implode(", ", $arr);
+            $result2 = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `current_city`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
+            if (!empty($result2)) {
+                foreach ($result2 as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        $result1 = Yii::$app->db->createCommand("select id from country WHERE country_name REGEXP '" . $loc . "'")->queryAll();
+        if (!empty($result1)) {
+            foreach ($result1 as $ind_val) {
+                $arr1[] = $ind_val['id'];
+            }
+        }
+        if (!empty($arr1)) {
+            $str = implode(", ", $arr1);
+            $result3 = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `current_country`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
+            if (!empty($result3)) {
+                foreach ($result3 as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
     public function getFilterExperience($data) {
         $cv_data = [];
         $query = new yii\db\Query();
@@ -326,7 +436,7 @@ class EmployerController extends Controller {
             if ($value == 1) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 1])
+                        ->where([' >= ', 'total_experience', 1])
                         ->andWhere(['<', 'total_experience', 2]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -339,7 +449,7 @@ class EmployerController extends Controller {
             if ($value == 2) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 2])
+                        ->where([' >= ', 'total_experience', 2])
                         ->andWhere(['<', 'total_experience', 5]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -352,7 +462,7 @@ class EmployerController extends Controller {
             if ($value == 3) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 5])
+                        ->where([' >= ', 'total_experience', 5])
                         ->andWhere(['<', 'total_experience', 10]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -365,7 +475,7 @@ class EmployerController extends Controller {
             if ($value == 4) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 10])
+                        ->where([' >= ', 'total_experience', 10])
                         ->andWhere(['<', 'total_experience', 15]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -378,7 +488,7 @@ class EmployerController extends Controller {
             if ($value == 5) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 15])
+                        ->where([' >= ', 'total_experience', 15])
                         ->andWhere(['<', 'total_experience', 20]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -395,7 +505,7 @@ class EmployerController extends Controller {
     public function getFilterNationality($data) {
         $cv_data = [];
         $str = implode(", ", $data->nationality);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `nationality`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `nationality`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
         if (!empty($result)) {
             foreach ($result as $ind_val) {
                 $cv_data[] = $ind_val['id'];
@@ -407,7 +517,7 @@ class EmployerController extends Controller {
     public function getFilterJobStatus($data) {
         $cv_data = [];
         $str = implode(", ", $data->job_status);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `job_status`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `job_status`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
         if (!empty($result)) {
             foreach ($result as $ind_val) {
                 $cv_data[] = $ind_val['id'];
@@ -419,7 +529,7 @@ class EmployerController extends Controller {
     public function getFilterLanguage($data) {
         $cv_data = [];
         $str = implode(", ", $data->language);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `languages_known`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `languages_known`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
         if (!empty($result)) {
             foreach ($result as $ind_val) {
                 $cv_data[] = $ind_val['id'];
@@ -431,7 +541,7 @@ class EmployerController extends Controller {
     public function getFilterGender($data) {
         $cv_data = [];
         $str = implode(", ", $data->gender);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `gender`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `gender`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
         if (!empty($result)) {
             foreach ($result as $ind_val) {
                 $cv_data[] = $ind_val['id'];
@@ -443,7 +553,7 @@ class EmployerController extends Controller {
     public function getFilterSalaryRange($data) {
         $cv_data = [];
         $str = implode(", ", $data->salary_range);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `expected_salary`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `expected_salary`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
         if (!empty($result)) {
             foreach ($result as $ind_val) {
                 $cv_data[] = $ind_val['id'];
@@ -455,7 +565,7 @@ class EmployerController extends Controller {
     public function getFilterJobType($data) {
         $cv_data = [];
         $str = implode(", ", $data->job_types);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `job_type`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `job_type`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
         if (!empty($result)) {
             foreach ($result as $ind_val) {
                 $cv_data[] = $ind_val['id'];
@@ -467,7 +577,7 @@ class EmployerController extends Controller {
     public function getFilterSkills($data) {
         $cv_data = [];
         $str = implode(", ", $data->skills);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `skill`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `skill`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
         if (!empty($result)) {
             foreach ($result as $ind_val) {
                 $cv_data[] = $ind_val['id'];
@@ -479,7 +589,7 @@ class EmployerController extends Controller {
     public function getFilterIndustry($data) {
         $cv_data = [];
         $str = implode(", ", $data->industries);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `industry`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
+        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(', ', `industry`, ', ') REGEXP ', ([" . $str . "]), '")->queryAll();
         if (!empty($result)) {
             foreach ($result as $ind_val) {
                 $cv_data[] = $ind_val['id'];
@@ -680,6 +790,9 @@ class EmployerController extends Controller {
      * @return mixed
      */
     public function actionViewCv($id) {
+        if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
+            return $this->redirect(array('employer/login'));
+        }
         $packages = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         if (empty($packages)) {
             return $this->redirect(Yii::$app->request->referrer);
@@ -787,7 +900,8 @@ class EmployerController extends Controller {
 
 // To send HTML mail, the Content-type header must be set
             $headers = 'MIME-Version: 1.0' . "\r\n";
-            $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
+            $headers .= "Content-type: text / html;
+        charset = iso-8859-1" . "\r\n" .
                     "From: 'info@eazycheque.com";
             mail($to, $subject, $message, $headers);
         }
@@ -807,7 +921,7 @@ class EmployerController extends Controller {
     public function actionUpgradePackage() {
         $searchModel = new PackagesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['!=', 'id', 1]);
+        $dataProvider->query->andWhere([' != ', 'id', 1]);
         return $this->render('user_plans', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
@@ -977,11 +1091,15 @@ class EmployerController extends Controller {
             'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-            'cssInline' => '.kv-heading-1{font-size:18px}',
+            'cssInline' => '.kv-heading-1 {
+            font-size:18px
+        }',
             'options' => ['title' => ''],
             'methods' => [
                 'SetHeader' => ['Curriculum Vitae'],
-                'SetFooter' => ['{PAGENO}'],
+                'SetFooter' => [' {
+            PAGENO
+        }'],
             ]
         ]);
         Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
@@ -1008,6 +1126,24 @@ class EmployerController extends Controller {
         ]);
         echo $content;
         exit;
+    }
+
+    /**
+     * Finds the Business Partner name.
+     * @return businee partner names as array
+     */
+    public function getLocation() {
+//        $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => SORT_ASC])->all(), 'id', function($model) {
+//                    return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];
+//                }
+//        );
+        $city_datas = \common\models\City::find()->orderBy(['city' => SORT_ASC])->all();
+        $source;
+        foreach ($city_datas as $value) {
+            $country_data = \common\models\Country::find()->where(['id' => $value->country])->one();
+            $source[] = $country_data->country_name . ' - ' . $value->city;
+        }
+        return $source;
     }
 
 }

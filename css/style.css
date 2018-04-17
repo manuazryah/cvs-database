@@ -1748,3 +1748,60 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .help-block-error{
     color: red !important;
 }
+.work-time{
+    min-width: 120px;
+    max-width: 120px;
+    text-align: center;
+    padding: 5px 0px !important;
+}
+
+/*********************************** CV Search Result Start *********************************/
+.cv-search-result .panel-body{
+    margin: 20px;
+    border: none;
+}
+.cv-search-result .panel{
+    border: none;
+}
+.cv-search-result .mailbox-env .box {
+    border: 1px solid #e1e1e1;
+    padding-top: 15px;
+    margin-bottom: 30px;
+}
+.cv-search-result .job-search .form-group {
+    margin-bottom: 20px;
+}
+.cv-search-result form .form-group .form-control {
+    color: #464646;
+    font-size: 14px;
+    height: 40px;
+}
+.cv-search-result .job-search {
+    padding-top: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+.cv-search-result .job_title {
+    color: #333;
+    font-size: 15px;
+    line-height: 10px;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+.cv-search-result .page-heading {
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+.cv-search-result .check-label label {
+    display: block !important;
+    clear: both !important;
+    color: #979898;
+    font-size: 13px;
+}
+.cv-search-result .candidate .sorting_content:hover {
+    border: solid 1px #e1e1e1;
+}
+.cv-search-result tr {
+    border-bottom: none;
+}
+/*********************************** CV Search Result  End*********************************/
