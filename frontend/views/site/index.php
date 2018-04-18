@@ -6,8 +6,6 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
-
-echo $stat;
 ?>
 <div class="site-banner">
     <div class="banner-overlay"></div>
@@ -33,7 +31,8 @@ echo $stat;
                                 <?php $form1 = ActiveForm::begin(['id' => 'candidate-login-form']); ?>
                                 <?= $form1->field($model, 'user_name')->textInput()->label('Enter E-mail') ?>
                                 <?= $form1->field($model, 'password')->passwordInput() ?>
-                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>">Your email id is not varified. Please check your mail.</p>
+                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="candidate-resnd" class="resnd-btn">Resend Email Varification</a></p>
+                                <div class="clearfis"></div>
                                 <div>
                                     <?= Html::submitButton('Log In', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-login-button']) ?>
                                 </div>
@@ -276,5 +275,38 @@ echo $stat;
                 $("#dailyentrydetails-total").val(rate * unit);
             }
         }
+
+        $(document).on("click", "#candidate-resnd", function (e) {
+            var email = $('#candidate-user_name').val();
+            if (validateEmail(email)) {
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: false,
+                    data: {email: email},
+                    url: '<?= Yii::$app->homeUrl ?>site/resend-email-varification',
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#candidate-resnd').css('display', 'none');
+                            $('.field-candidate-password .help-block-error').text('An email has been sent to your mail id (check your spam folder too)');
+                        } else {
+                            $('.field-candidate-password .help-block-error').text('Invalid User.');
+                            e.preventDefault();
+                        }
+                    }
+                });
+            } else {
+                $('.field-candidate-password .help-block-error').text('Enter a valid Email ID.');
+                e.preventDefault();
+            }
+        });
     });
+    function validateEmail(sEmail) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(sEmail)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 </script>

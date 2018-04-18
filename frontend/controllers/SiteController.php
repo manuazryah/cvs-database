@@ -28,14 +28,14 @@ class SiteController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'resend-email-varification'],
                 'rules' => [
-                    [
-                        'actions' => ['signup'],
+                        [
+                        'actions' => ['signup', 'resend-email-varification'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -99,8 +99,6 @@ class SiteController extends Controller {
                 Yii::$app->SetValues->setLoginHistory(Yii::$app->session['candidate']['id'], 2);
                 return $this->redirect(['candidate/update-profile']);
             } else {
-                var_dump($model);
-                exit;
                 if ($model->email_varification_status == 0) {
                     $stat = 1;
                 }
@@ -310,6 +308,20 @@ class SiteController extends Controller {
             $flag = 1;
         }
         $this->redirect('index');
+    }
+
+    public function actionResendEmailVarification() {
+        if (Yii::$app->request->isAjax) {
+            $email = $_POST['email'];
+            $user = Candidate::find()->where(['email' => $email])->one();
+            if (!empty($user)) {
+                $this->sendMail($user);
+                $data = 1;
+            } else {
+                $data = 0;
+            }
+            echo $data;
+        }
     }
 
 }
