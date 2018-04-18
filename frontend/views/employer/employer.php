@@ -167,7 +167,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                                                 }
                                                 ?>
                                             </td>
-                                            <td style="width:10%;"><a href="#" class="table-btn-default">View CV</a></td>
+                                            <td style="width:10%;">
+                                                <?= Html::a('View CV', ['view-cv', 'id' => $latest_cv->id], ['class' => 'table-btn-default']) ?>
+                                            </td>
                                         </tr>
                                         <?php
                                     }

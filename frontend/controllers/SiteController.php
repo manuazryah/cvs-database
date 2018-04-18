@@ -76,16 +76,22 @@ class SiteController extends Controller {
         $model = new Candidate();
         $model->scenario = 'login';
         $flag = 1;
-        if ($model_register->load(Yii::$app->request->post()) && $model_register->validate()) {
-            $model_register->password = Yii::$app->security->generatePasswordHash($model_register->password);
-            $model_register->password_repeat = $model_register->password;
-            $model_register->review_status = 0;
-            if ($model_register->save()) {
-                $model_register->user_id = sprintf("%05s", $model_register->id);
-                $model_register->update();
-                $this->sendMail($model_register);
-                Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
-                $model_register = new Candidate();
+        $stat = 0;
+        if ($model_register->load(Yii::$app->request->post())) {
+            if ($model_register->validate()) {
+                $model_register->password = Yii::$app->security->generatePasswordHash($model_register->password);
+                $model_register->password_repeat = $model_register->password;
+                $model_register->review_status = 0;
+                if ($model_register->save()) {
+                    $model_register->user_id = sprintf("%05s", $model_register->id);
+                    $model_register->update();
+                    $this->sendMail($model_register);
+                    Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
+                    $model_register = new Candidate();
+                    $flag = 1;
+                }
+            } else {
+                $flag = 0;
             }
         }
         if ($model->load(Yii::$app->request->post())) {
@@ -93,13 +99,19 @@ class SiteController extends Controller {
                 Yii::$app->SetValues->setLoginHistory(Yii::$app->session['candidate']['id'], 2);
                 return $this->redirect(['candidate/update-profile']);
             } else {
-                $flag = 0;
+                var_dump($model);
+                exit;
+                if ($model->email_varification_status == 0) {
+                    $stat = 1;
+                }
+                $flag = 1;
             }
         }
         return $this->render('index', [
                     'model' => $model,
                     'model_register' => $model_register,
                     'flag' => $flag,
+                    'stat' => $stat,
         ]);
     }
 
@@ -265,7 +277,7 @@ class SiteController extends Controller {
      <td style="padding: 30px 0px 30px 0px;"><a style=" background: #3498db; color: #ffffff;
   font-size: 16px;
   padding: 10px 20px 10px 20px;
-  text-decoration: none; background-image: -webkit-linear-gradient(top, #3498db, #2980b9); background-image: -moz-linear-gradient(top, #3498db, #2980b9);background-image: -ms-linear-gradient(top, #3498db, #2980b9);background-image: -o-linear-gradient(top, #3498db, #2980b9);background-image: linear-gradient(to bottom, #3498db, #2980b9);-webkit-border-radius: 28;-moz-border-radius: 28;" href="http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'site/email-verification?token=' . $model->id . '" >Click here</a></td>
+  text-decoration: none; background-image: -webkit-linear-gradient(top, #3498db, #2980b9); background-image: -moz-linear-gradient(top, #3498db, #2980b9);background-image: -ms-linear-gradient(top, #3498db, #2980b9);background-image: -o-linear-gradient(top, #3498db, #2980b9);background-image: linear-gradient(to bottom, #3498db, #2980b9);-webkit-border-radius: 28;-moz-border-radius: 28;" href="http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'site/email-verification?token=' . Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id) . '" >Click here</a></td>
     </tr>
 
   </table>
@@ -283,15 +295,19 @@ class SiteController extends Controller {
     }
 
     public function actionEmailVerification($token) {
-
+        $token = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $token);
         $user_data = Candidate::find()->where(['id' => $token])->one();
+        if ($user_data->email_varification_status == 1) {
+
+        }
         if (!empty($user_data)) {
             $user_data->email_varification_status = 1;
             $user_data->update();
-            $flag = 0;
-            Yii::$app->session->setFlash('success', 'your email id verified');
+            $flag = 1;
+            Yii::$app->session->setFlash('success', 'Your Email ID has been verified, please login again.');
         } else {
-            $flag = 0;
+            Yii::$app->session->setFlash('success', 'This Email Varification link is Expired');
+            $flag = 1;
         }
         $this->redirect('index');
     }

@@ -266,6 +266,7 @@ use yii\widgets\ActiveForm;
                                                     $url = 'http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
                                                     ?>
                                                     <iframe src='https://docs.google.com/viewer?url=<?= $url ?>&embedded=true' frameborder='0' width="100%" height="300px"></iframe>
+                                                    <iframe class="doc" src="https://docs.google.com/gview?url=<?= $url ?>&embedded=true" width="100%" height="300px" frameborder="0"></iframe>
                                                 <?php } elseif ($model->upload_resume == 'pdf') { ?>
                                                     <iframe src="<?= Yii::$app->homeUrl ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" width="100%" height="300px" frameborder="0" ></iframe>
                                                     <?php

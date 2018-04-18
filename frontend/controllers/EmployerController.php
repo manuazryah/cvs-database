@@ -393,6 +393,7 @@ class EmployerController extends Controller {
             $loc .= $val . '|';
         }
         $loc = rtrim($loc, '|');
+        $loc = str_replace(' ', '', $loc);
         $cv_data = [];
         $arr = [];
         $arr1 = [];
@@ -754,8 +755,8 @@ class EmployerController extends Controller {
             $model->no_of_days_left = $package->no_of_days;
 //            $model->no_of_views = $package->no_of_profile_view;
 //            $model->no_of_views_left = $package->no_of_profile_view;
-            $model->no_of_downloads = $package->no_of_downloads;
-            $model->no_of_downloads_left = $package->no_of_downloads;
+            $model->no_of_downloads = $package->no_of_downloads + $old_package->no_of_downloads_left;
+            $model->no_of_downloads_left = $package->no_of_downloads + $old_package->no_of_downloads_left;
             $model->created_date = date('Y-m-d');
             if ($model->save()) {
                 $this->PlanHistory($model, $old_package);

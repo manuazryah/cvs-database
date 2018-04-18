@@ -6,6 +6,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
+
+echo $stat;
 ?>
 <div class="site-banner">
     <div class="banner-overlay"></div>
@@ -31,6 +33,7 @@ use yii\widgets\Pjax;
                                 <?php $form1 = ActiveForm::begin(['id' => 'candidate-login-form']); ?>
                                 <?= $form1->field($model, 'user_name')->textInput()->label('Enter E-mail') ?>
                                 <?= $form1->field($model, 'password')->passwordInput() ?>
+                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>">Your email id is not varified. Please check your mail.</p>
                                 <div>
                                     <?= Html::submitButton('Log In', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-login-button']) ?>
                                 </div>

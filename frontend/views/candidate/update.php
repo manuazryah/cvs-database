@@ -173,6 +173,7 @@ if ($model->current_country != '') {
                         <?= $form->field($model, 'skill')->dropDownList($skills, ['prompt' => 'Choose Skills', 'multiple' => 'multiple']) ?>
                         <?= Html::button('<span> Not in the list ? Request New</span>', ['value' => Url::to('../candidate/add-skill'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                     </div>
+                    <div class="clearfix"></div>
                     <h4>Work Experience</h4>
                     <hr class="appoint_history" />
                     <div id="p_experience">
@@ -220,7 +221,7 @@ if ($model->current_country != '') {
                                                 </td>
                                                 <td>
                                                     <textarea name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" rows="4"><?= $datas->job_responsibility ?></textarea>
-                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                      ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
+                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                       ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
                                                 </td>
                                                 <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
                                             </tr>
@@ -408,7 +409,7 @@ if ($model->current_country != '') {
 //                            if (file_exists($dirPath)) {
 //
                         ?>
-                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                         ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                          ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
                         <?php
 //                            }
 //                        }
