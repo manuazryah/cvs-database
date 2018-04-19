@@ -31,7 +31,7 @@ use yii\widgets\Pjax;
                                 <?php $form1 = ActiveForm::begin(['id' => 'candidate-login-form']); ?>
                                 <?= $form1->field($model, 'user_name')->textInput()->label('Enter E-mail') ?>
                                 <?= $form1->field($model, 'password')->passwordInput() ?>
-                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="candidate-resnd" class="resnd-btn">Resend Email Varification</a></p>
+                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="candidate-resnd" class="resnd-btn">Resend Email Verification</a></p>
                                 <div class="clearfis"></div>
                                 <div>
                                     <?= Html::submitButton('Log In', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-login-button']) ?>

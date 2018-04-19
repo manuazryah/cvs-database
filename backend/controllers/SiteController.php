@@ -84,11 +84,15 @@ class SiteController extends Controller {
     }
 
     public function actionHome() {
-
         if (Yii::$app->user->isGuest) {
             return $this->redirect(array('site/index'));
         }
-        return $this->render('index');
+        $reviewed_candidate = \common\models\Candidate::find()->where(['review_status' => 1])->limit(5)->all();
+        $unreviewed_candidate = \common\models\Candidate::find()->where(['review_status' => 0])->limit(5)->all();
+        return $this->render('index', [
+                    'reviewed_candidate' => $reviewed_candidate,
+                    'unreviewed_candidate' => $unreviewed_candidate,
+        ]);
     }
 
     /**

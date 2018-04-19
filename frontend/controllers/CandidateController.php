@@ -440,6 +440,7 @@ class CandidateController extends Controller {
         Yii::$app->SetValues->updateLoginHistory();
         unset(Yii::$app->session['log-history']);
         unset(Yii::$app->session['candidate']);
+        Yii::$app->user->logout();
         return $this->redirect(['site/index']);
     }
 

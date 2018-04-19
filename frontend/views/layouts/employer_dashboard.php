@@ -131,7 +131,7 @@ EmployerAsset::register($this);
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="<?= yii::$app->homeUrl; ?>dash/images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
                                 <span>
-                                    <?= Yii::$app->user->identity->first_name ?>
+                                    <?= Yii::$app->session['employer_data']['first_name'] ?>
                                     <i class="fa-angle-down"></i>
                                 </span>
                             </a>
@@ -140,7 +140,7 @@ EmployerAsset::register($this);
                                 <li class="user-header">
                                     <img src="<?= yii::$app->homeUrl; ?>dash/images/user-4.png" alt="user-image" class="img-circle" />
                                     <p>
-                                        <?= Yii::$app->user->identity->first_name ?>
+                                        <?= Yii::$app->session['employer_data']['first_name'] ?>
                                         <!--<small>Member since Nov. 2012</small>-->
                                     </p>
                                 </li>

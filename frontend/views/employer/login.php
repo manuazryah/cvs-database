@@ -25,7 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email')->textInput(['autofocus' => '', 'placeholder' => 'Email']) ?>
 
                 <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password']) ?>
-
+                <div class="row error-block" style="<?= $stat == 1 ? 'display: block;margin-bottom: 10px;' : 'display: none;' ?>">
+                    <div class="col-md-12">
+                        <a class="to_register" id="employer-resnd" style="cursor:pointer">Resend Email Verification?</a>
+                    </div>
+                </div>
                 <?php // $form->field($model, 'rememberMe')->checkbox() ?>
                 <div>
                     <?= Html::submitButton('Login', ['class' => 'btn btn-default submit', 'name' => 'login-button']) ?>
@@ -56,3 +60,39 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div style="clear:both"></div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(document).on("click", "#employer-resnd", function (e) {
+            var email = $('#employer-email').val();
+            if (validateEmail(email)) {
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: false,
+                    data: {email: email},
+                    url: '<?= Yii::$app->homeUrl ?>employer/resend-email-verification',
+                    success: function (data) {
+                        if (data == 1) {
+                            $('#employer-resnd').css('display', 'none');
+                            $('.field-employer-password .help-block-error').text('An email has been sent to your mail id (check your spam folder too)');
+                        } else {
+                            $('.field-employer-password .help-block-error').text('Invalid Employer.');
+                            e.preventDefault();
+                        }
+                    }
+                });
+            } else {
+                $('.field-employer-password .help-block-error').text('Enter a valid Email ID.');
+                e.preventDefault();
+            }
+        });
+    });
+    function validateEmail(sEmail) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(sEmail)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>

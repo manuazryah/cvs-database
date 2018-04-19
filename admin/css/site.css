@@ -1199,3 +1199,6 @@ input[type=checkbox], input[type=radio] {
 #skillTable{
     margin-top: 10px;
 }
+.panl-heigh{
+    min-height: 308px;
+}

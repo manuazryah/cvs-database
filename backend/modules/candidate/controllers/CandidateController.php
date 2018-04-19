@@ -41,6 +41,20 @@ class CandidateController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
+        $searchModel = new \common\models\CandidateSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /*
+     *
+     */
+
+    public function actionCvSearch() {
         $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['status' => 1]);
@@ -101,7 +115,7 @@ class CandidateController extends Controller {
                 $dataProvider->query->andWhere(['id' => $filter_reviews]);
             }
         }
-        return $this->render('index', [
+        return $this->render('cv-search', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'model' => $model,

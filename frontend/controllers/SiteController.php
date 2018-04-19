@@ -30,12 +30,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup', 'resend-email-varification'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup', 'resend-email-varification'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -299,12 +299,16 @@ class SiteController extends Controller {
 
         }
         if (!empty($user_data)) {
-            $user_data->email_varification_status = 1;
-            $user_data->update();
-            $flag = 1;
-            Yii::$app->session->setFlash('success', 'Your Email ID has been verified, please login again.');
+            if ($user_data->email_varification_status == 0) {
+                $user_data->email_varification_status = 1;
+                $user_data->update();
+                $flag = 1;
+                Yii::$app->session->setFlash('success', 'Your Email ID has been verified, please login again.');
+            } else {
+                Yii::$app->session->setFlash('success', 'Your Email ID is already verified, please login to access your profile.');
+            }
         } else {
-            Yii::$app->session->setFlash('success', 'This Email Varification link is Expired');
+            Yii::$app->session->setFlash('error', 'This Email Varification link is Expired');
             $flag = 1;
         }
         $this->redirect('index');

@@ -43,6 +43,11 @@ class EmployerController extends Controller {
         ];
     }
 
+    public function beforeAction($action) {
+        $this->enableCsrfValidation = false;
+        return parent::beforeAction($action);
+    }
+
     /**
      * Lists all Employer models.
      * @return mixed
@@ -126,17 +131,23 @@ class EmployerController extends Controller {
         if (!empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] != '') {
             return $this->redirect(array('employer/home'));
         }
+        $stat = 0;
         $this->layout = 'employer_login_dashboard';
         $model = new Employer();
         $model->scenario = 'login';
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::$app->SetValues->setLoginHistory(Yii::$app->session['employer_data']['id'], 3);
-            return $this->redirect(array('employer/home'));
-        } else {
-            return $this->render('login', [
-                        'model' => $model,
-            ]);
-        }
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->login()) {
+                Yii::$app->SetValues->setLoginHistory(Yii::$app->session['employer_data']['id'], 3);
+                return $this->redirect(array('employer/home'));
+            } else {
+                if ($model->email_varification == 0) {
+                    $stat = 1;
+                }
+            }
+        } return $this->render('login', [
+                    'model' => $model,
+                    'stat' => $stat,
+        ]);
     }
 
     /**
@@ -674,6 +685,7 @@ class EmployerController extends Controller {
         Yii::$app->SetValues->updateLoginHistory();
         unset(Yii::$app->session['log-history']);
         unset(Yii::$app->session['employer_data']);
+        Yii::$app->user->logout();
         return $this->redirect(['/employer/index']);
     }
 
@@ -706,14 +718,19 @@ class EmployerController extends Controller {
 
         $user_data = Employer::find()->where(['id' => $token])->one();
         if (!empty($user_data)) {
-            $user_data->email_varification = 1;
-            $user_data->update();
-            $flag = 0;
-            Yii::$app->session->setFlash('success', 'your email id verified');
+            if ($user_data->email_varification == 0) {
+                $user_data->email_varification = 1;
+                $user_data->update();
+                $flag = 0;
+                Yii::$app->session->setFlash('success', 'Your Email ID has been verified, please login again.');
+            } else {
+                Yii::$app->session->setFlash('success', 'Your Email ID is already verified, please login to access your profile.');
+            }
         } else {
+            Yii::$app->session->setFlash('error', 'This Email Varification link is Expired');
             $flag = 0;
         }
-        $this->redirect(['/employer/index']);
+        $this->redirect(['/employer/login']);
     }
 
     /**
@@ -1145,6 +1162,20 @@ class EmployerController extends Controller {
             $source[] = $country_data->country_name . ' - ' . $value->city;
         }
         return $source;
+    }
+
+    public function actionResendEmailVerification() {
+        if (Yii::$app->request->isAjax) {
+            $email = $_POST['email'];
+            $user = Employer::find()->where(['email' => $email])->one();
+            if (!empty($user)) {
+                $this->sendMail($user);
+                $data = 1;
+            } else {
+                $data = 0;
+            }
+            echo $data;
+        }
     }
 
 }
