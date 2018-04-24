@@ -18,25 +18,23 @@ use Yii;
  *
  * @property Candidate $candidate
  */
-class CandidateEducation extends \yii\db\ActiveRecord
-{
+class CandidateEducation extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'candidate_education';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['candidate_id', 'course_name', 'country'], 'integer'],
+            [['candidate_id', 'qualification', 'country'], 'integer'],
             [['from_year', 'to_year', 'date_of_updation'], 'safe'],
-            [['collage_university'], 'string', 'max' => 100],
+            [['collage_university', 'course_name'], 'string', 'max' => 100],
             [['candidate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Candidate::className(), 'targetAttribute' => ['candidate_id' => 'id']],
         ];
     }
@@ -44,12 +42,12 @@ class CandidateEducation extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'candidate_id' => 'Candidate ID',
             'course_name' => 'Course Name',
+            'qualification' => 'Qualification',
             'collage_university' => 'Collage University',
             'country' => 'Country',
             'from_year' => 'From Year',
@@ -61,8 +59,8 @@ class CandidateEducation extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCandidate()
-    {
+    public function getCandidate() {
         return $this->hasOne(Candidate::className(), ['id' => 'candidate_id']);
     }
+
 }

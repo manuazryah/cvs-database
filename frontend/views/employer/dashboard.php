@@ -49,7 +49,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                     <div class="job-search">
                                         <?= $form1->field($model_filter, 'keyword')->textInput(['placeholder' => 'Job title / keywords'])->label(FALSE) ?>
-                                        <?= $form1->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-'])->label(FALSE) ?>
+                                        <?= $form1->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-', 'multiple' => TRUE])->label(FALSE) ?>
                                         <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 top-box-btm">
                                     <div class="col-lg-4 brit"><p>Search Result : <span>Total <?= $dataProvider->getTotalCount() ?> CVs Found</span></p></div>
                                     <div class="col-lg-8 pad0">
-                                        <div class="col-lg-7"><p class="color-drk txt-center">You have <?= $user_plans->no_of_downloads_left ?>/<?= $user_plans->no_of_downloads ?> Credits for CV Download</p></div>
+                                        <div class="col-lg-7"><p class="color-drk txt-center">You have <?= $user_plans->no_of_downloads_left ?> Credits Remaining for CV Download</p></div>
                                         <div class="col-lg-5 blft txt-right"><p>Your Credit Expiry on <?= date("d M Y", strtotime($user_plans->end_date)) ?></p></div>
                                     </div>
                                 </div>

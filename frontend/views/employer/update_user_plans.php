@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PackagesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -101,20 +102,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'attribute' => 'remaining_credits',
                                     'label' => 'Credits Remaining',
                                     'value' => function ($data) {
-                                        return $data->remaining_credits . '/' . $data->total_credits . ' Downloads';
+                                        return $data->remaining_credits;
                                     },
                                 ],
                                 [
                                     'attribute' => 'status',
                                     'value' => function ($data) {
                                         if ($data->status == 0) {
-                                            return 'Expired / 0 Credits Remaining';
+                                            return 'Expired';
                                         } else {
                                             return '';
                                         }
                                     },
                                 ],
-                                            [
+                                [
                                     'class' => 'yii\grid\ActionColumn',
                                     'contentOptions' => [],
                                     'header' => 'Actions',

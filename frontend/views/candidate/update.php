@@ -49,7 +49,12 @@ if ($model->current_country != '') {
         <div class="container">
             <div class="row">
                 <div class="form-group col-md-12">
-                    <?= Html::a('Delete Profile', ['delete-profile'], ['class' => 'btn btn-block prof-del']) ?>
+                    <?=
+                    Html::a('Delete Profile', ['delete-profile'], ['class' => 'btn btn-block prof-del', 'data' => [
+                            'confirm' => 'Are you sure you want to delete your profile?',
+                        ],
+                    ])
+                    ?>
                 </div>
             </div>
             <div class="row">
@@ -150,7 +155,7 @@ if ($model->current_country != '') {
                             'preset' => 'basic'
                         ])
                         ?>
-                        <?php // $form->field($model, 'executive_summary')->textarea(['rows' => 3])  ?>
+                        <?php // $form->field($model, 'executive_summary')->textarea(['rows' => 3])    ?>
                     </div>
                     <div class="form-group col-md-12 p-l p-r marg-bot-0">
                         <?php
@@ -221,7 +226,7 @@ if ($model->current_country != '') {
                                                 </td>
                                                 <td>
                                                     <textarea name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" rows="4"><?= $datas->job_responsibility ?></textarea>
-                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                       ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
+                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                                    ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
                                                 </td>
                                                 <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
                                             </tr>
@@ -272,7 +277,8 @@ if ($model->current_country != '') {
                         <table class="table table-bordered order-list" id="myTable">
                             <thead>
                                 <tr>
-                                    <th>Course</th>
+                                    <th>Qualification</th>
+                                    <th>Course Name</th>
                                     <th>College / University</th>
                                     <th>Country</th>
                                     <th>From Year</th>
@@ -288,13 +294,16 @@ if ($model->current_country != '') {
                                             ?>
                                             <tr id="edurow-<?= $data->id; ?>">
                                                 <td>
-                                                    <select class="form-control" name="updatee[<?= $data->id; ?>][course][]">
-                                                        <option value="">Select Course</option>
+                                                    <select class="form-control" name="updatee[<?= $data->id; ?>][qualification][]">
+                                                        <option value="">Select</option>
                                                         <?php foreach ($course_datas as $course_data) { ?>
-                                                            <option value="<?= $course_data->id ?>" <?= $data->course_name == $course_data->id ? 'selected' : '' ?>><?= $course_data->course_name ?></option>
+                                                            <option value="<?= $course_data->id ?>" <?= $data->qualification == $course_data->id ? 'selected' : '' ?>><?= $course_data->course_name ?></option>
                                                         <?php }
                                                         ?>
                                                     </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][course][]" value="<?= $data->course_name ?>">
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][college][]" value="<?= $data->collage_university ?>">
@@ -323,13 +332,16 @@ if ($model->current_country != '') {
                                 ?>
                                 <tr>
                                     <td>
-                                        <select class="form-control" name="create[course][]">
+                                        <select class="form-control" name="create[qualification][]">
                                             <option value="">Select Course</option>
                                             <?php foreach ($course_datas as $course_data) { ?>
                                                 <option value="<?= $course_data->id ?>"><?= $course_data->course_name ?></option>
                                             <?php }
                                             ?>
                                         </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="create[course][]">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" name="create[college][]">
@@ -409,7 +421,7 @@ if ($model->current_country != '') {
 //                            if (file_exists($dirPath)) {
 //
                         ?>
-                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                          ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                     ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
                         <?php
 //                            }
 //                        }

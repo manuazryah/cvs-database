@@ -212,9 +212,8 @@ class EmployerController extends Controller {
         $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
         $model->no_of_days = $package->no_of_days;
         $model->no_of_days_left = $package->no_of_days;
-        $model->transaction_id = sprintf("%06d", $last);
-//        $model->no_of_views = $package->no_of_profile_view;
-//        $model->no_of_views_left = $package->no_of_profile_view;
+        $tran_no = $this->GenerateTransactionNo();
+        $model->transaction_id = $tran_no;
         $model->no_of_downloads = $package->no_of_downloads;
         $model->no_of_downloads_left = $package->no_of_downloads;
         $model->created_date = date('Y-m-d');
@@ -269,6 +268,10 @@ class EmployerController extends Controller {
         $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         $model = new CvSearch();
         $model_filter = new CvFilter();
+        $active_candidate = $this->getActiveCandidate();
+        if ($active_candidate != '' && !empty($active_candidate)) {
+            $dataProvider->query->andWhere(['id' => $active_candidate]);
+        }
         if ($model_filter->load(Yii::$app->request->post())) {
             if ($model_filter->keyword != '') {
                 $keywords = $this->getFilterKeywords($model_filter->keyword);
@@ -326,6 +329,15 @@ class EmployerController extends Controller {
                     'model_filter' => $model_filter,
                     'user_plans' => $user_plans,
         ]);
+    }
+
+    public function getActiveCandidate() {
+        $can_arr = \common\models\Candidate::find()->where(['status' => 1])->all();
+        $cv_data = [];
+        foreach ($can_arr as $ind_val) {
+            $cv_data[] = $ind_val->id;
+        }
+        return $cv_data;
     }
 
     public function getFilterFolder($data) {
@@ -766,12 +778,12 @@ class EmployerController extends Controller {
         $old_package = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         if (!empty($model)) {
             $model->package = $package->id;
+            $tran_no = $this->GenerateTransactionNo();
+            $model->transaction_id = $tran_no;
             $model->start_date = date('Y-m-d');
             $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
             $model->no_of_days = $package->no_of_days;
             $model->no_of_days_left = $package->no_of_days;
-//            $model->no_of_views = $package->no_of_profile_view;
-//            $model->no_of_views_left = $package->no_of_profile_view;
             $model->no_of_downloads = $package->no_of_downloads + $old_package->no_of_downloads_left;
             $model->no_of_downloads_left = $package->no_of_downloads + $old_package->no_of_downloads_left;
             $model->created_date = date('Y-m-d');
@@ -782,6 +794,16 @@ class EmployerController extends Controller {
             }
         } else {
             return $this->redirect(['/employer/user-plans']);
+        }
+    }
+
+    public function GenerateTransactionNo() {
+        $a = mt_rand(100000, 999999);
+        $transaction_exist = EmployerPackages::find()->where(['transaction_id' => $a])->one();
+        if (empty($transaction_exist)) {
+            return $a;
+        } else {
+            $this->GenerateTransactionNo();
         }
     }
 
@@ -797,7 +819,7 @@ class EmployerController extends Controller {
         $plans->end_date = $package->end_date;
         $plans->transaction_id = $package->transaction_id;
         $plans->total_credits = $package->no_of_downloads;
-        $plans->remaining_credits = $package->no_of_downloads_left;
+        $plans->remaining_credits = 0;
         $plans->status = 0;
         $plans->save();
         return;

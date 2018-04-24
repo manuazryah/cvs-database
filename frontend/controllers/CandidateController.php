@@ -204,6 +204,11 @@ class CandidateController extends Controller {
             $create = $data['create'];
             $arr = [];
             $i = 0;
+            foreach ($create['qualification'] as $val) {
+                $arr[$i]['qualification'] = $val;
+                $i++;
+            }
+            $i = 0;
             foreach ($create['course'] as $val) {
                 $arr[$i]['course'] = $val;
                 $i++;
@@ -240,6 +245,7 @@ class CandidateController extends Controller {
         foreach ($arr as $val) {
             $aditional = new CandidateEducation();
             $aditional->candidate_id = $model->candidate_id;
+            $aditional->qualification = $val['qualification'];
             $aditional->course_name = $val['course'];
             $aditional->collage_university = $val['college'];
             $aditional->country = $val['country'];
@@ -262,6 +268,7 @@ class CandidateController extends Controller {
             $arr = [];
             $i = 0;
             foreach ($update as $key => $val) {
+                $arr[$key]['qualification'] = $val['qualification'][0];
                 $arr[$key]['course'] = $val['course'][0];
                 $arr[$key]['college'] = $val['college'][0];
                 $arr[$key]['country'] = $val['country'][0];
@@ -272,6 +279,7 @@ class CandidateController extends Controller {
             foreach ($arr as $key => $value) {
                 $aditional = CandidateEducation::findOne($key);
                 if (!empty($aditional)) {
+                    $aditional->qualification = $value['qualification'];
                     $aditional->course_name = $value['course'];
                     $aditional->collage_university = $value['college'];
                     $aditional->country = $value['country'];

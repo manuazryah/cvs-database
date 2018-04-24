@@ -1,12 +1,15 @@
 <tr>
     <td>
-        <select class="form-control" name="create[course][]">
+        <select class="form-control" name="create[qualification][]">
             <option value="">Select Course</option>
             <?php foreach ($course_datas as $course_data) { ?>
                 <option value="<?= $course_data->id ?>"><?= $course_data->course_name ?></option>
             <?php }
             ?>
         </select>
+    </td>
+    <td>
+        <input type="text" class="form-control" name="create[course][]">
     </td>
     <td>
         <input type="text" class="form-control" name="create[college][]">

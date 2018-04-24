@@ -66,7 +66,6 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                     <li class="active"><a data-toggle="tab" href="#Industry">CV's By Industry</a></li>
                     <li><a data-toggle="tab" href="#Skills">CV's By Skills</a></li>
                     <li><a data-toggle="tab" href="#Location">CV's By Location</a></li>
-                    <li class="pull-right"><a href="#" class="view">View all CV's</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="Industry" class="tab-pane fade in active">
