@@ -102,6 +102,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             });
         });
+        $(document).on('click', '.fld-move', function (e) {
+            e.preventDefault();
+            var candidate_id = $(this).attr('data-val');
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id},
+                url: '<?= Yii::$app->homeUrl ?>employer/get-move-folder',
+                success: function (data) {
+                    $(".modal-content").html(data);
+                    $('#modal-6').modal('show', {backdrop: 'static'});
+                }
+            });
+        });
 
         $(document).on('submit', '#rename-form', function (e) {
             e.preventDefault();
@@ -113,6 +128,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 async: false,
                 data: {old_folder_name: old_folder_name, new_folder_name: new_folder_name},
                 url: '<?= Yii::$app->homeUrl ?>employer/rename-folder',
+                success: function (data) {
+                    $('#modal-6').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+        $(document).on('submit', '#move-folder-form', function (e) {
+            e.preventDefault();
+            var candidate_id = $('#candidate_id').val();
+            var new_folder_name = $('#new-folder_name').val();
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id, new_folder_name: new_folder_name},
+                url: '<?= Yii::$app->homeUrl ?>employer/move-folder',
                 success: function (data) {
                     $('#modal-6').modal('hide');
                     location.reload();

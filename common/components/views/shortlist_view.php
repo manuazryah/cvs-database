@@ -109,12 +109,12 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             </ul>
                         </div>
                     </div>
-    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                     ?></p>-->
+    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                          ?></p>-->
                     <div class="contact_details col-md-12 col-sm-12 p-l">
                         <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                     </div>
                     <!--                <div class="contact_details col-md-12 col-sm-12 p-l">
-                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                     ?></span>
+                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                          ?></span>
                                     </div>-->
                 </div>
             </div>
@@ -135,7 +135,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                     ?>
                     <?php // Html::a('Quick Download <br><span><i class="fas fa-file-pdf"></i>', ['quick-download', 'id' => $model->id], ['class' => 'button2'])  ?>
                     <?= Html::a('View CV <span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => $model->id], ['class' => 'button3']) ?>
-                    <a href="" class="button1" id="short-list-modal" data-val="<?= $model->candidate_id ?>">Move to Folder</a>
+                    <a href="" class="button1 fld-move" id="" data-val="<?= $model->candidate_id ?>" style="margin-top: 10px;">Move to Folder</a>
                 </div>
             </div>
         </div>

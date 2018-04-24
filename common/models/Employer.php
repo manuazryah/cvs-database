@@ -44,18 +44,19 @@ use yii\db\ActiveRecord;
      */
     public function rules() {
         return [
-            [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'create'],
-            [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'update'],
-            [['country', 'status'], 'integer'],
-            [['address'], 'string'],
-            [['DOC', 'DOU', 'email_varification'], 'safe'],
-            [['first_name', 'last_name', 'email', 'password', 'company_name', 'location', 'company_email', 'position'], 'string', 'max' => 100],
-            [['phone', 'company_phone_number'], 'string', 'max' => 20],
-            [['email'], 'unique', 'on' => 'create'],
-            [['email'], 'unique', 'on' => 'update'],
-            [['email', 'company_email'], 'email'],
-            [['email', 'password'], 'required', 'on' => 'login'],
-            [['password'], 'validatePassword', 'on' => 'login'],
+                [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'create'],
+                [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'update'],
+                [['user_name'], 'required', 'message' => 'Email is Required', 'on' => 'forgot'],
+                [['country', 'status'], 'integer'],
+                [['address'], 'string'],
+                [['DOC', 'DOU', 'email_varification'], 'safe'],
+                [['first_name', 'last_name', 'email', 'password', 'company_name', 'location', 'company_email', 'position'], 'string', 'max' => 100],
+                [['phone', 'company_phone_number'], 'string', 'max' => 20],
+                [['email'], 'unique', 'on' => 'create'],
+                [['email'], 'unique', 'on' => 'update'],
+                [['email', 'company_email'], 'email'],
+                [['email', 'password'], 'required', 'on' => 'login'],
+                [['password'], 'validatePassword', 'on' => 'login'],
         ];
     }
 
