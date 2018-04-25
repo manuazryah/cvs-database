@@ -146,8 +146,8 @@ class SiteController extends Controller {
                 $token_model->user_id = $check_exists->id;
                 $token_model->token = $token_value;
                 $token_model->save();
-
                 $this->sendMail($val, $check_exists);
+                $model = new AdminUsers();
                 Yii::$app->getSession()->setFlash('success', 'A mail has been sent');
             } else {
                 Yii::$app->getSession()->setFlash('error', 'Invalid username');
@@ -178,8 +178,6 @@ class SiteController extends Controller {
         $to = $model->email;
         $subject = 'Change password';
         $message = $this->renderPartial('forgot_mail', ['model' => $model, 'val' => $val]);
-        echo $message;
-        exit;
 // To send HTML mail, the Content-type header must be set
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .

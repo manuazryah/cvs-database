@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <h1>Forgot Your Password ?</h1>
                 <p>Let us help you</p>
-                <p>Type your username / email ID in the field below to receive your validation code by email:</p>
+                <p>Type your registered email ID in the field below to receive your validation code by email:</p>
                 <?= \common\widgets\Alert::widget(); ?>
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-                <?= $form->field($model, 'user_name')->textInput(['class' => 'form-control'])->label('Email/Username') ?>
+                <?= $form->field($model, 'email')->textInput(['class' => 'form-control'])->label('Enter Your Email') ?>
 
                 <?php // $form->field($model, 'rememberMe')->checkbox() ?>
                 <div>

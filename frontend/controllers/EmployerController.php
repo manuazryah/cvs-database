@@ -20,6 +20,7 @@ use common\models\Country;
 use yii\db\Expression;
 use kartik\mpdf\Pdf;
 use yii\helpers\ArrayHelper;
+use common\models\ForgotPasswordTokens;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -1072,7 +1073,7 @@ class EmployerController extends Controller {
     public function actionGetRenameForm() {
         if (Yii::$app->request->isAjax) {
             $folder_name = $_POST['folder_name'];
-            $data = $this->renderPartial('_form_move_folder', [
+            $data = $this->renderPartial('_form_rename_folder', [
                 'folder_name' => $folder_name,
             ]);
             echo $data;
@@ -1239,11 +1240,11 @@ class EmployerController extends Controller {
                 $token_model->user_id = $check_exists->id;
                 $token_model->token = $token_value;
                 $token_model->save();
-
-                $this->sendMail($val, $check_exists);
+                $this->sendForgotMail($val, $check_exists);
+                $model = new Employer();
                 Yii::$app->getSession()->setFlash('success', 'A mail has been sent');
             } else {
-                Yii::$app->getSession()->setFlash('error', 'Invalid username');
+                Yii::$app->getSession()->setFlash('error', 'Invalid Email ID');
             }
             return $this->render('forgot-password', [
                         'model' => $model,
@@ -1266,13 +1267,11 @@ class EmployerController extends Controller {
         return $token;
     }
 
-    public function sendMail($val, $model) {
+    public function sendForgotMail($val, $model) {
 
         $to = $model->email;
         $subject = 'Change password';
         $message = $this->renderPartial('forgot_mail', ['model' => $model, 'val' => $val]);
-        echo $message;
-        exit;
 // To send HTML mail, the Content-type header must be set
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
@@ -1281,13 +1280,12 @@ class EmployerController extends Controller {
     }
 
     public function actionNewPassword($token) {
-        $this->layout = 'login';
+        $this->layout = 'employer_login_dashboard';
         $data = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $token);
-
         $values = explode('_', $data);
         $token_exist = ForgotPasswordTokens::find()->where("user_id = " . $values[0] . " AND token = " . $values[1])->one();
         if (!empty($token_exist)) {
-            $model = AdminUsers::find()->where("id = " . $token_exist->user_id)->one();
+            $model = Employer::find()->where("id = " . $token_exist->user_id)->one();
             if (Yii::$app->request->post()) {
                 if (Yii::$app->request->post('new-password') == Yii::$app->request->post('confirm-password')) {
                     Yii::$app->getSession()->setFlash('success', 'password changed successfully');
