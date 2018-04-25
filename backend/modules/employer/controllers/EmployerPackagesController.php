@@ -146,6 +146,8 @@ class EmployerPackagesController extends Controller {
         $old_package = EmployerPackages::find()->where(['employer_id' => $emp_id])->one();
         if (!empty($model)) {
             $model->package = $package->id;
+            $tran_no = $this->GenerateTransactionNo();
+            $model->transaction_id = $tran_no;
             $model->start_date = date('Y-m-d');
             $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
             $model->no_of_days = $package->no_of_days;
@@ -163,6 +165,16 @@ class EmployerPackagesController extends Controller {
         }
     }
 
+    public function GenerateTransactionNo() {
+        $a = mt_rand(100000, 999999);
+        $transaction_exist = EmployerPackages::find()->where(['transaction_id' => $a])->one();
+        if (empty($transaction_exist)) {
+            return $a;
+        } else {
+            $this->GenerateTransactionNo();
+        }
+    }
+
     /**
      * Add selected plans into user plans table.
      * @return mixed
@@ -175,7 +187,7 @@ class EmployerPackagesController extends Controller {
         $plans->end_date = $package->end_date;
         $plans->transaction_id = $package->transaction_id;
         $plans->total_credits = $package->no_of_downloads;
-        $plans->remaining_credits = $package->no_of_downloads_left;
+        $plans->remaining_credits = 0;
         $plans->status = 0;
         $plans->save();
         return;

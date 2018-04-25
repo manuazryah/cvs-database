@@ -76,8 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         GridView::widget([
                             'dataProvider' => $dataProvider,
                             'columns' => [
-                                    ['class' => 'yii\grid\SerialColumn'],
-                                    [
+                                ['class' => 'yii\grid\SerialColumn'],
+                                [
                                     'attribute' => 'plan',
                                     'label' => 'Package Name',
                                     'format' => 'raw',
@@ -87,36 +87,36 @@ $this->params['breadcrumbs'][] = $this->title;
                                     },
                                 ],
                                 'transaction_id',
-                                    [
+                                [
                                     'attribute' => 'start_date',
                                     'value' => function ($data) {
                                         return date("d-M-Y", strtotime($data->start_date));
                                     },
                                 ],
-                                    [
+                                [
                                     'attribute' => 'end_date',
                                     'value' => function ($data) {
                                         return date("d-M-Y", strtotime($data->end_date));
                                     },
                                 ],
-                                    [
+                                [
                                     'attribute' => 'remaining_credits',
                                     'label' => 'Credits Remaining',
                                     'value' => function ($data) {
-                                        return $data->remaining_credits . '/' . $data->total_credits . ' Downloads';
+                                        return $data->remaining_credits;
                                     },
                                 ],
-                                    [
+                                [
                                     'attribute' => 'status',
                                     'value' => function ($data) {
                                         if ($data->status == 0) {
-                                            return 'Expired / 0 Credits Remaining';
+                                            return 'Expired';
                                         } else {
                                             return '';
                                         }
                                     },
                                 ],
-                                    [
+                                [
                                     'class' => 'yii\grid\ActionColumn',
                                     'contentOptions' => [],
                                     'header' => 'Actions',

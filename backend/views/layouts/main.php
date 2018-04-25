@@ -89,6 +89,9 @@ AppAsset::register($this);
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Candidate Details', ['/candidate/candidate/index'], ['class' => 'title']) ?>
                                 </li>
                                 <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Unreviewed', ['/candidate/candidate/unreviewed-candidate'], ['class' => 'title']) ?>
+                                </li>
+                                <li>
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Add Candidate', ['/candidate/candidate/create'], ['class' => 'title']) ?>
                                 </li>
                                 <li>

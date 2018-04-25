@@ -8,6 +8,7 @@ use common\models\EmployerReviewsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\EmployerPackages;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -99,12 +100,23 @@ class EmployerController extends Controller {
         $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
         $model->no_of_days = $package->no_of_days;
         $model->no_of_days_left = $package->no_of_days;
-        $model->transaction_id = sprintf("%06d", $last);
+        $tran_no = $this->GenerateTransactionNo();
+        $model->transaction_id = $tran_no;
         $model->no_of_downloads = $package->no_of_downloads;
         $model->no_of_downloads_left = $package->no_of_downloads;
         $model->created_date = date('Y-m-d');
         $model->save();
         return;
+    }
+
+    public function GenerateTransactionNo() {
+        $a = mt_rand(100000, 999999);
+        $transaction_exist = EmployerPackages::find()->where(['transaction_id' => $a])->one();
+        if (empty($transaction_exist)) {
+            return $a;
+        } else {
+            $this->GenerateTransactionNo();
+        }
     }
 
     /**

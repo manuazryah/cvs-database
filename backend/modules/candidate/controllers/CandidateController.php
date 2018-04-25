@@ -51,6 +51,36 @@ class CandidateController extends Controller {
     }
 
     /*
+     * Unrevied candidate gridview
+     */
+
+    public function actionUnreviewedCandidate() {
+        $searchModel = new \common\models\CandidateSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['review_status' => 0]);
+
+        return $this->render('un-reviewed', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /*
+     * Revied candidate gridview
+     */
+
+    public function actionReviewedCandidate() {
+        $searchModel = new \common\models\CandidateSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['review_status' => 1]);
+
+        return $this->render('reviewed', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /*
      *
      */
 

@@ -87,52 +87,87 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                 <div class="clearfix"></div>
                                 <div class="page-heading check-label">
                                     <input class="form-control" type="text" id="industryInput" onkeyup="industryFunction()" placeholder="Search for industries" title="Type Industry Name" autocomplete="off">
-                                    <table id="industryTable">
-                                        <?php
-                                        $industries = common\models\Industry::find()->where(['status' => 1])->andWhere(['<>', 'id', 0])->all();
-                                        $arr_industry = [];
-                                        if (!empty($industries)) {
+                                    <div class="search-scroll">
+                                        <table id="industryTable">
+                                            <?php
+                                            $industries = common\models\Industry::find()->where(['status' => 1])->andWhere(['<>', 'id', 0])->all();
+                                            $arr_industry = [];
+                                            if (!empty($industries)) {
 //                                        foreach ($industries as $industry) {
 //                                            $arr_industry[$industry['id']] = $industry['industry_name'];
 //                                        }
-                                            foreach ($industries as $industry) {
-                                                if ($model_filter->industries != '' && isset($model_filter->industries)) {
-                                                    if (in_array($industry->id, $model_filter->industries)) {
-                                                        $check1 = 'checked';
+                                                foreach ($industries as $industry) {
+                                                    if ($model_filter->industries != '' && isset($model_filter->industries)) {
+                                                        if (in_array($industry->id, $model_filter->industries)) {
+                                                            $check1 = 'checked';
+                                                        } else {
+                                                            $check1 = '';
+                                                        }
                                                     } else {
                                                         $check1 = '';
                                                     }
-                                                } else {
-                                                    $check1 = '';
+                                                    ?>
+                                                    <tr class="">
+                                                        <td>
+                                                            <label><input type="checkbox" <?= $check1 ?> name="CvFilter[industries][]" value="<?= $industry->id ?>"> <?= $industry->industry_name ?></label>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
                                                 }
-                                                ?>
-                                                <tr class="">
-                                                    <td>
-                                                        <label><input type="checkbox" <?= $check1 ?> name="CvFilter[industries][]" value="<?= $industry->id ?>"> <?= $industry->industry_name ?></label>
-                                                    </td>
-                                                </tr>
-                                                <?php
                                             }
-                                        }
 //                                    echo $form1->field($model_filter, 'industries[]')->checkboxList($arr_industry, ['class' => 'check-label'])->label(FALSE);
-                                        ?>
-                                    </table>
+                                            ?>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="job_title">Skills</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
                                     <input class="form-control" type="text" id="skillInput" onkeyup="skillFunction()" placeholder="Search for skills" title="Type Skill" autocomplete="off">
-                                    <table id="skillTable">
-                                        <?php
-                                        $skills = common\models\Skills::find()->where(['status' => 1])->andWhere(['<>', 'industry', 0])->all();
-                                        $arr_skill = [];
-                                        if (!empty($skills)) {
+                                    <div class="search-scroll">
+                                        <table id="skillTable">
+                                            <?php
+                                            $skills = common\models\Skills::find()->where(['status' => 1])->andWhere(['<>', 'industry', 0])->all();
+                                            $arr_skill = [];
+                                            if (!empty($skills)) {
 //                                        foreach ($skills as $skill) {
 //                                            $arr_skill[$skill['id']] = $skill['skill'];
 //                                        }
-                                            foreach ($skills as $skill) {
-                                                if ($model_filter->skills != '' && isset($model_filter->skills)) {
-                                                    if (in_array($skill->id, $model_filter->skills)) {
+                                                foreach ($skills as $skill) {
+                                                    if ($model_filter->skills != '' && isset($model_filter->skills)) {
+                                                        if (in_array($skill->id, $model_filter->skills)) {
+                                                            $check2 = 'checked';
+                                                        } else {
+                                                            $check2 = '';
+                                                        }
+                                                    } else {
+                                                        $check2 = '';
+                                                    }
+                                                    ?>
+                                                    <tr class="">
+                                                        <td>
+                                                            <label><input type="checkbox" <?= $check2 ?> name="CvFilter[skills][]" value="<?= $skill->id ?>"> <?= $skill->skill ?></label>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                            }
+//                                    echo $form1->field($model_filter, 'skills[]')->checkboxList($arr_skill, ['class' => 'check-label'])->label(FALSE);
+                                            ?>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="job_title">Job Type</div>
+                                <div class="borderfull-width"></div>
+                                <div class="page-heading check-label">
+                                    <div class="search-noscroll">
+                                        <?php
+                                        $job_categories = common\models\JobType::find()->where(['status' => 1])->all();
+                                        $arr_job = [];
+                                        if (!empty($job_categories)) {
+                                            foreach ($job_categories as $job_category) {
+                                                if ($model_filter->job_types != '' && isset($model_filter->job_types)) {
+                                                    if (in_array($job_category->id, $model_filter->job_types)) {
                                                         $check2 = 'checked';
                                                     } else {
                                                         $check2 = '';
@@ -141,210 +176,195 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                                     $check2 = '';
                                                 }
                                                 ?>
-                                                <tr class="">
-                                                    <td>
-                                                        <label><input type="checkbox" <?= $check2 ?> name="CvFilter[skills][]" value="<?= $skill->id ?>"> <?= $skill->skill ?></label>
-                                                    </td>
-                                                </tr>
+                                                <label><input type="checkbox" <?= $check2 ?> name="CvFilter[job_types][]" value="<?= $job_category->id ?>"> <?= $job_category->job_type ?></label>
                                                 <?php
                                             }
                                         }
-//                                    echo $form1->field($model_filter, 'skills[]')->checkboxList($arr_skill, ['class' => 'check-label'])->label(FALSE);
-                                        ?>
-                                    </table>
-                                </div>
-                                <div class="job_title">Job Type</div>
-                                <div class="borderfull-width"></div>
-                                <div class="page-heading check-label">
-                                    <?php
-                                    $job_categories = common\models\JobType::find()->where(['status' => 1])->all();
-                                    $arr_job = [];
-                                    if (!empty($job_categories)) {
-                                        foreach ($job_categories as $job_category) {
-                                            if ($model_filter->job_types != '' && isset($model_filter->job_types)) {
-                                                if (in_array($job_category->id, $model_filter->job_types)) {
-                                                    $check2 = 'checked';
-                                                } else {
-                                                    $check2 = '';
-                                                }
-                                            } else {
-                                                $check2 = '';
-                                            }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check2 ?> name="CvFilter[job_types][]" value="<?= $job_category->id ?>"> <?= $job_category->job_type ?></label>
-                                            <?php
-                                        }
-                                    }
 //                                    echo $form1->field($model_filter, 'job_types[]')->checkboxList($arr_job, ['class' => 'check-label'])->label(FALSE);
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="job_title">Monthly Salary</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $salary_ranges = common\models\ExpectedSalary::find()->where(['status' => 1])->all();
-                                    $arr_sal = [];
-                                    if (!empty($salary_ranges)) {
-                                        foreach ($salary_ranges as $salary_range) {
-                                            if ($model_filter->salary_range != '' && isset($model_filter->salary_range)) {
-                                                if (in_array($salary_range->id, $model_filter->salary_range)) {
-                                                    $check3 = 'checked';
+                                    <div class="search-scroll pad-tp">
+                                        <?php
+                                        $salary_ranges = common\models\ExpectedSalary::find()->where(['status' => 1])->all();
+                                        $arr_sal = [];
+                                        if (!empty($salary_ranges)) {
+                                            foreach ($salary_ranges as $salary_range) {
+                                                if ($model_filter->salary_range != '' && isset($model_filter->salary_range)) {
+                                                    if (in_array($salary_range->id, $model_filter->salary_range)) {
+                                                        $check3 = 'checked';
+                                                    } else {
+                                                        $check3 = '';
+                                                    }
                                                 } else {
                                                     $check3 = '';
                                                 }
-                                            } else {
-                                                $check3 = '';
+                                                ?>
+                                                <label><input type="checkbox" <?= $check3 ?> name="CvFilter[salary_range][]" value="<?= $salary_range->id ?>"> <?= $salary_range->salary_range ?></label>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check3 ?> name="CvFilter[salary_range][]" value="<?= $salary_range->id ?>"> <?= $salary_range->salary_range ?></label>
-                                            <?php
                                         }
-                                    }
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="job_title">Nationality</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $nationalities = common\models\Country::find()->where(['status' => 1])->all();
-                                    $arr_nation = [];
-                                    if (!empty($nationalities)) {
-                                        foreach ($nationalities as $nationality) {
-                                            if ($model_filter->nationality != '' && isset($model_filter->nationality)) {
-                                                if (in_array($nationality->id, $model_filter->nationality)) {
-                                                    $check4 = 'checked';
+                                    <div class="search-scroll pad-tp">
+                                        <?php
+                                        $nationalities = common\models\Country::find()->where(['status' => 1])->all();
+                                        $arr_nation = [];
+                                        if (!empty($nationalities)) {
+                                            foreach ($nationalities as $nationality) {
+                                                if ($model_filter->nationality != '' && isset($model_filter->nationality)) {
+                                                    if (in_array($nationality->id, $model_filter->nationality)) {
+                                                        $check4 = 'checked';
+                                                    } else {
+                                                        $check4 = '';
+                                                    }
                                                 } else {
                                                     $check4 = '';
                                                 }
-                                            } else {
-                                                $check4 = '';
+                                                ?>
+                                                <label><input type="checkbox" <?= $check4 ?> name="CvFilter[nationality][]" value="<?= $nationality->id ?>"> <?= $nationality->country_name ?></label>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check4 ?> name="CvFilter[nationality][]" value="<?= $nationality->id ?>"> <?= $nationality->country_name ?></label>
-                                            <?php
                                         }
-                                    }
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="job_title">Experience</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $experiences = \common\models\ExperienceSearch::find()->where(['status' => 1])->all();
-                                    $arr_experiences = [];
-                                    if (!empty($experiences)) {
-                                        foreach ($experiences as $experience) {
-                                            if ($model_filter->experience != '' && isset($model_filter->experience)) {
-                                                if (in_array($experience->id, $model_filter->experience)) {
-                                                    $check8 = 'checked';
+                                    <div class="search-scroll pad-tp">
+                                        <?php
+                                        $experiences = \common\models\ExperienceSearch::find()->where(['status' => 1])->all();
+                                        $arr_experiences = [];
+                                        if (!empty($experiences)) {
+                                            foreach ($experiences as $experience) {
+                                                if ($model_filter->experience != '' && isset($model_filter->experience)) {
+                                                    if (in_array($experience->id, $model_filter->experience)) {
+                                                        $check8 = 'checked';
+                                                    } else {
+                                                        $check8 = '';
+                                                    }
                                                 } else {
                                                     $check8 = '';
                                                 }
-                                            } else {
-                                                $check8 = '';
+                                                ?>
+                                                <label><input type="checkbox" <?= $check8 ?> name="CvFilter[experience][]" value="<?= $experience->id ?>"> <?= $experience->experience_search ?></label>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check8 ?> name="CvFilter[experience][]" value="<?= $experience->id ?>"> <?= $experience->experience_search ?></label>
-                                            <?php
                                         }
-                                    }
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="job_title">Gender</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $genders = common\models\Gender::find()->where(['status' => 1])->all();
-                                    $arr_sal = [];
-                                    if (!empty($genders)) {
-                                        foreach ($genders as $gender) {
-                                            if ($model_filter->gender != '' && isset($model_filter->gender)) {
-                                                if (in_array($gender->id, $model_filter->gender)) {
-                                                    $check7 = 'checked';
+                                    <div class="search-noscroll">
+                                        <?php
+                                        $genders = common\models\Gender::find()->where(['status' => 1])->all();
+                                        $arr_sal = [];
+                                        if (!empty($genders)) {
+                                            foreach ($genders as $gender) {
+                                                if ($model_filter->gender != '' && isset($model_filter->gender)) {
+                                                    if (in_array($gender->id, $model_filter->gender)) {
+                                                        $check7 = 'checked';
+                                                    } else {
+                                                        $check7 = '';
+                                                    }
                                                 } else {
                                                     $check7 = '';
                                                 }
-                                            } else {
-                                                $check7 = '';
+                                                ?>
+                                                <label><input type="checkbox" <?= $check7 ?> name="CvFilter[gender][]" value="<?= $gender->id ?>"> <?= $gender->gender ?></label>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check7 ?> name="CvFilter[gender][]" value="<?= $gender->id ?>"> <?= $gender->gender ?></label>
-                                            <?php
                                         }
-                                    }
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="job_title">Languages</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $languages = common\models\Languages::find()->where(['status' => 1])->all();
-                                    $arr_sal = [];
-                                    if (!empty($languages)) {
-                                        foreach ($languages as $language) {
-                                            if ($model_filter->language != '' && isset($model_filter->language)) {
-                                                if (in_array($language->id, $model_filter->language)) {
-                                                    $check5 = 'checked';
+                                    <div class="search-scroll pad-tp">
+                                        <?php
+                                        $languages = common\models\Languages::find()->where(['status' => 1])->all();
+                                        $arr_sal = [];
+                                        if (!empty($languages)) {
+                                            foreach ($languages as $language) {
+                                                if ($model_filter->language != '' && isset($model_filter->language)) {
+                                                    if (in_array($language->id, $model_filter->language)) {
+                                                        $check5 = 'checked';
+                                                    } else {
+                                                        $check5 = '';
+                                                    }
                                                 } else {
                                                     $check5 = '';
                                                 }
-                                            } else {
-                                                $check5 = '';
+                                                ?>
+                                                <label><input type="checkbox" <?= $check5 ?> name="CvFilter[language][]" value="<?= $language->id ?>"> <?= $language->language ?></label>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check5 ?> name="CvFilter[language][]" value="<?= $language->id ?>"> <?= $language->language ?></label>
-                                            <?php
                                         }
-                                    }
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="job_title">Job Status</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $job_status_datas = common\models\JobStatus::find()->where(['status' => 1])->all();
-                                    $arr_sal = [];
-                                    if (!empty($job_status_datas)) {
-                                        foreach ($job_status_datas as $job_status_data) {
-                                            if ($model_filter->job_status != '' && isset($model_filter->job_status)) {
-                                                if (in_array($job_status_data->id, $model_filter->job_status)) {
-                                                    $check6 = 'checked';
+                                    <div class="search-noscroll">
+                                        <?php
+                                        $job_status_datas = common\models\JobStatus::find()->where(['status' => 1])->all();
+                                        $arr_sal = [];
+                                        if (!empty($job_status_datas)) {
+                                            foreach ($job_status_datas as $job_status_data) {
+                                                if ($model_filter->job_status != '' && isset($model_filter->job_status)) {
+                                                    if (in_array($job_status_data->id, $model_filter->job_status)) {
+                                                        $check6 = 'checked';
+                                                    } else {
+                                                        $check6 = '';
+                                                    }
                                                 } else {
                                                     $check6 = '';
                                                 }
-                                            } else {
-                                                $check6 = '';
+                                                ?>
+                                                <label><input type="checkbox" <?= $check6 ?> name="CvFilter[job_status][]" value="<?= $job_status_data->id ?>"> <?= $job_status_data->job_status ?></label>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check6 ?> name="CvFilter[job_status][]" value="<?= $job_status_data->id ?>"> <?= $job_status_data->job_status ?></label>
-                                            <?php
                                         }
-                                    }
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="job_title">Search Folder</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
-                                    <?php
-                                    $folders = common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name')->all();
-                                    $arr_folder = [];
-                                    if (!empty($folders)) {
-                                        foreach ($folders as $folder) {
-                                            if ($model_filter->folder_name != '' && isset($model_filter->folder_name)) {
-                                                if (in_array($folder->folder_name, $model_filter->folder_name)) {
-                                                    $check8 = 'checked';
+                                    <div class="search-scroll pad-tp">
+                                        <?php
+                                        $folders = common\models\ShortList::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->groupBy('folder_name')->all();
+                                        $arr_folder = [];
+                                        if (!empty($folders)) {
+                                            foreach ($folders as $folder) {
+                                                if ($model_filter->folder_name != '' && isset($model_filter->folder_name)) {
+                                                    if (in_array($folder->folder_name, $model_filter->folder_name)) {
+                                                        $check8 = 'checked';
+                                                    } else {
+                                                        $check8 = '';
+                                                    }
                                                 } else {
                                                     $check8 = '';
                                                 }
-                                            } else {
-                                                $check8 = '';
+                                                ?>
+                                                <label><input type="checkbox" <?= $check8 ?> name="CvFilter[folder_name][]" value="<?= $folder->folder_name ?>"> <?= $folder->folder_name ?></label>
+                                                <?php
                                             }
-                                            ?>
-                                            <label><input type="checkbox" <?= $check8 ?> name="CvFilter[folder_name][]" value="<?= $folder->folder_name ?>"> <?= $folder->folder_name ?></label>
-                                            <?php
                                         }
-                                    }
-                                    ?>
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                             <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])       ?>

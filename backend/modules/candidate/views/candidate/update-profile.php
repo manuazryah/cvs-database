@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = 'Update';
             </div>
             <div class="panel-body">
                 <?= Html::a('<i class="fa-th-list"></i><span> Manage Candidate</span>', ['index'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
-                <?= Html::a('<i class="fa fa-pencil"></i><span> Contact Details</span>', ['update', 'id' => $model->candidate_id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
-                <?= Html::a('<i class="fa fa-eye"></i><span> View Profile</span>', ['view', 'id' => $model->candidate_id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
-                <?= Html::a('<i class="fa fa-ban"></i><span> Disable Profile</span>', ['disable-profile', 'id' => $model->candidate_id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
-                <?= Html::a('<i class="fa fa-lock"></i><span> Reset Password</span>', ['reset-password', 'id' => $model->candidate_id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                <?= Html::a('<i class="fa fa-pencil"></i><span> Contact Details</span>', ['update', 'id' => $user->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                <?= Html::a('<i class="fa fa-eye"></i><span> View Profile</span>', ['view', 'id' => $user->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                <?= Html::a('<i class="fa fa-ban"></i><span> Disable Profile</span>', ['disable-profile', 'id' => $user->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                <?= Html::a('<i class="fa fa-lock"></i><span> Reset Password</span>', ['reset-password', 'id' => $user->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
                 <?php
                 if ($model->photo != '') {
                     $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;

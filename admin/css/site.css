@@ -925,7 +925,35 @@ ul.unstyled li {
 }
 .page-heading {
     padding-bottom: 20px;
+}
+.search-scroll{
+    max-height: 112px;
     overflow: hidden;
+    padding: 0px 10px 15px 10px;
+    border: 1px solid #e1e1e1;
+}
+.pad-tp{
+    padding-top: 10px;
+}
+.search-noscroll{
+    padding: 10px 10px 10px 10px;
+    border: 1px solid #e1e1e1;
+}
+.search-scroll:hover{
+    overflow-y:scroll;
+}
+.search-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.search-scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+.search-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 .page-heading span {
     font-size: 14px;
@@ -1202,3 +1230,20 @@ input[type=checkbox], input[type=radio] {
 .panl-heigh{
     min-height: 308px;
 }
+.home-candidate-view{
+    min-height: 237px;
+    max-height: 237px;
+    overflow: hidden;
+}
+.home-candidate-view .table td{
+    font-size: 12px;
+}
+.home-candidate-view .table th{
+    font-size: 12px;
+}
+.home-candidate-sub{
+    min-height: 190px;
+    max-height: 190px;
+    overflow: hidden;
+}
+
