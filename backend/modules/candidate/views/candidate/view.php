@@ -346,8 +346,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="row cv-downlod">
                                         <div class="col-md-6 p-l"><h5 class="cv-dwn-head">Download CV</h5></div>
                                         <div class="col-md-6 p-r">
-                                            <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . '../images/pdf-icon.png" >', ['pdf-export', 'id' => $model->id], ['target' => '_blank']) ?>
-                                            <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . '../images/word-icon.png" >', ['word-export', 'id' => $model->id], ['target' => '_blank']) ?>
+                                            <?php
+                                            if (!empty($model->id)) {
+                                                ?>
+                                                <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . '../images/pdf-icon.png" >', ['pdf-export', 'id' => $model->id], ['target' => '_blank']) ?>
+                                                <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . '../images/word-icon.png" >', ['word-export', 'id' => $model->id], ['target' => '_blank']) ?>
+                                                <?php
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>

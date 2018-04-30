@@ -11,7 +11,7 @@ use yii\helpers\Html;
     <body>
         <div class="mail-body">
             <div class="content" style="margin: 0px 15%;border: 1px solid #d4d1d1;">
-                <?= Html::img('http://' . Yii::$app->getRequest()->serverName . '/cvs/admin/images/site-logo.png', $options = ['style' => 'width:200px;margin:0 auto;display: inherit;']) ?>
+                <?= Html::img('http://'.Yii::$app->getRequest()->serverName . '/cvs/admin/images/site-logo.png', $options = ['style' => 'width:200px;margin:0 auto;display: inherit;']) ?>
                 <div class="content-detail" style="padding: 0px 10%;">
                     <h2>Reset Your Password</h2>
                     <p>Hi <?= $model->name ?>,</p>

@@ -16,6 +16,7 @@ use common\models\CandidateEducation;
 use common\models\WorkExperiance;
 use yii\web\UploadedFile;
 use kartik\mpdf\Pdf;
+use yii\db\Expression;
 
 /**
  * CandidateController implements the CRUD actions for Candidate model.
@@ -91,6 +92,10 @@ class CandidateController extends Controller {
         $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         $model = new CvSearch();
         $model_filter = new CvFilter();
+        $active_candidate = $this->getActiveCandidate();
+        if ($active_candidate != '' && !empty($active_candidate)) {
+            $dataProvider->query->andWhere(['candidate_id' => $active_candidate]);
+        }
         if ($model_filter->load(Yii::$app->request->post())) {
             if ($model_filter->keyword != '') {
                 $keywords = $this->getFilterKeywords($model_filter->keyword);
@@ -153,6 +158,15 @@ class CandidateController extends Controller {
                     'user_plans' => $user_plans,
         ]);
     }
+    
+    public function getActiveCandidate() {
+        $can_arr = \common\models\Candidate::find()->where(['status' => 1])->all();
+        $cv_data = [];
+        foreach ($can_arr as $ind_val) {
+            $cv_data[] = $ind_val->id;
+        }
+        return $cv_data;
+    }
 
     /**
      * Displays a single Candidate model.
@@ -161,7 +175,7 @@ class CandidateController extends Controller {
      */
     public function actionView($id) {
         $candidate = $this->findModel($id);
-        $model = \common\models\CandidateProfile::findOne($candidate->id);
+        $model = \common\models\CandidateProfile::find()->where(['candidate_id'=>$candidate->id])->one();
         $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $candidate->id])->all();
         $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $candidate->id])->all();
 
@@ -846,27 +860,73 @@ class CandidateController extends Controller {
                 }
             }
         }
-
         $query2 = new yii\db\Query();
         $query2->select(['*'])->from('work_experiance')->andWhere(['or', ['like', 'company_name', $data], ['like', 'designation', $data],]);
         $command3 = $query2->createCommand();
         $result3 = $command3->queryAll();
         if (!empty($result3)) {
             foreach ($result3 as $ind_val) {
-                $cv_data[] = $ind_val['candidate_id'];
+                $arr[] = $ind_val['candidate_id'];
             }
         }
-
         $candidate_reference = \common\models\Candidate::find()->where(['user_id' => $data])->one();
         if (!empty($candidate_reference)) {
             $arr[] = $candidate_reference['id'];
         }
+
         if (!empty($arr)) {
-            $str = implode(", ", $arr);
-            $result2 = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `candidate_id`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-            if (!empty($result2)) {
-                foreach ($result2 as $ind_val) {
-                    $cv_data[] = $ind_val['id'];
+            foreach ($arr as $value) {
+                $result2 = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:candidate_id, candidate_id)'))->addParams([':candidate_id' => $value])->all();
+                if (!empty($result2)) {
+                    foreach ($result2 as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getLocationDatas($data) {
+        $data = explode("-", $data);
+        $loc = '';
+        foreach ($data as $val) {
+            $loc .= $val . '|';
+        }
+        $loc = rtrim($loc, '|');
+        $loc = str_replace(' ', '', $loc);
+        $cv_data = [];
+        $arr = [];
+        $arr1 = [];
+        $result = Yii::$app->db->createCommand("select id from city WHERE city REGEXP '" . $loc . "'")->queryAll();
+        if (!empty($result)) {
+            foreach ($result as $ind_val) {
+                $arr[] = $ind_val['id'];
+            }
+        }
+        if (!empty($arr)) {
+            foreach ($arr as $value) {
+                $result2 = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:current_city, current_city)'))->addParams([':current_city' => $value])->all();
+                if (!empty($result2)) {
+                    foreach ($result2 as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+        }
+        $result1 = Yii::$app->db->createCommand("select id from country WHERE country_name REGEXP '" . $loc . "'")->queryAll();
+        if (!empty($result1)) {
+            foreach ($result1 as $ind_val) {
+                $arr1[] = $ind_val['id'];
+            }
+        }
+        if (!empty($arr1)) {
+            foreach ($arr1 as $value) {
+                $result3 = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:current_country, current_country)'))->addParams([':current_country' => $value])->all();
+                if (!empty($result3)) {
+                    foreach ($result3 as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
                 }
             }
         }
@@ -880,7 +940,7 @@ class CandidateController extends Controller {
             if ($value == 1) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 1])
+                        ->where([' >= ', 'total_experience', 1])
                         ->andWhere(['<', 'total_experience', 2]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -893,7 +953,7 @@ class CandidateController extends Controller {
             if ($value == 2) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 2])
+                        ->where([' >= ', 'total_experience', 2])
                         ->andWhere(['<', 'total_experience', 5]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -906,7 +966,7 @@ class CandidateController extends Controller {
             if ($value == 3) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 5])
+                        ->where([' >= ', 'total_experience', 5])
                         ->andWhere(['<', 'total_experience', 10]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -919,7 +979,7 @@ class CandidateController extends Controller {
             if ($value == 4) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 10])
+                        ->where([' >= ', 'total_experience', 10])
                         ->andWhere(['<', 'total_experience', 15]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -932,7 +992,7 @@ class CandidateController extends Controller {
             if ($value == 5) {
                 $query->select(['*'])
                         ->from('candidate_profile')
-                        ->where(['>=', 'total_experience', 15])
+                        ->where([' >= ', 'total_experience', 15])
                         ->andWhere(['<', 'total_experience', 20]);
                 $command = $query->createCommand();
                 $result = $command->queryAll();
@@ -948,11 +1008,12 @@ class CandidateController extends Controller {
 
     public function getFilterNationality($data) {
         $cv_data = [];
-        $str = implode(", ", $data->nationality);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `nationality`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-        if (!empty($result)) {
-            foreach ($result as $ind_val) {
-                $cv_data[] = $ind_val['id'];
+        foreach ($data->nationality as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:nationality, nationality)'))->addParams([':nationality' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
             }
         }
         return $cv_data;
@@ -960,11 +1021,12 @@ class CandidateController extends Controller {
 
     public function getFilterJobStatus($data) {
         $cv_data = [];
-        $str = implode(", ", $data->job_status);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `job_status`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-        if (!empty($result)) {
-            foreach ($result as $ind_val) {
-                $cv_data[] = $ind_val['id'];
+        foreach ($data->job_status as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:job_status, job_status)'))->addParams([':job_status' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
             }
         }
         return $cv_data;
@@ -972,11 +1034,12 @@ class CandidateController extends Controller {
 
     public function getFilterLanguage($data) {
         $cv_data = [];
-        $str = implode(", ", $data->language);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `languages_known`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-        if (!empty($result)) {
-            foreach ($result as $ind_val) {
-                $cv_data[] = $ind_val['id'];
+        foreach ($data->language as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:languages_known, languages_known)'))->addParams([':languages_known' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
             }
         }
         return $cv_data;
@@ -984,11 +1047,12 @@ class CandidateController extends Controller {
 
     public function getFilterGender($data) {
         $cv_data = [];
-        $str = implode(", ", $data->gender);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `gender`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-        if (!empty($result)) {
-            foreach ($result as $ind_val) {
-                $cv_data[] = $ind_val['id'];
+        foreach ($data->gender as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:gender, gender)'))->addParams([':gender' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
             }
         }
         return $cv_data;
@@ -996,11 +1060,12 @@ class CandidateController extends Controller {
 
     public function getFilterSalaryRange($data) {
         $cv_data = [];
-        $str = implode(", ", $data->salary_range);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `expected_salary`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-        if (!empty($result)) {
-            foreach ($result as $ind_val) {
-                $cv_data[] = $ind_val['id'];
+        foreach ($data->salary_range as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:expected_salary, expected_salary)'))->addParams([':expected_salary' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
             }
         }
         return $cv_data;
@@ -1008,11 +1073,12 @@ class CandidateController extends Controller {
 
     public function getFilterJobType($data) {
         $cv_data = [];
-        $str = implode(", ", $data->job_types);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `job_type`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-        if (!empty($result)) {
-            foreach ($result as $ind_val) {
-                $cv_data[] = $ind_val['id'];
+        foreach ($data->job_types as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:job_type, job_type)'))->addParams([':job_type' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
             }
         }
         return $cv_data;
@@ -1020,11 +1086,12 @@ class CandidateController extends Controller {
 
     public function getFilterSkills($data) {
         $cv_data = [];
-        $str = implode(", ", $data->skills);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `skill`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-        if (!empty($result)) {
-            foreach ($result as $ind_val) {
-                $cv_data[] = $ind_val['id'];
+        foreach ($data->skills as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:skill, skill)'))->addParams([':skill' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
             }
         }
         return $cv_data;
@@ -1032,11 +1099,12 @@ class CandidateController extends Controller {
 
     public function getFilterIndustry($data) {
         $cv_data = [];
-        $str = implode(", ", $data->industries);
-        $result = Yii::$app->db->createCommand("select * from candidate_profile WHERE CONCAT(',', `industry`, ',') REGEXP ',([" . $str . "]),'")->queryAll();
-        if (!empty($result)) {
-            foreach ($result as $ind_val) {
-                $cv_data[] = $ind_val['id'];
+        foreach ($data->industries as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:industry, industry)'))->addParams([':industry' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
             }
         }
         return $cv_data;
