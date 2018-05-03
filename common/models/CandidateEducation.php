@@ -32,7 +32,7 @@ class CandidateEducation extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['candidate_id', 'qualification', 'country'], 'integer'],
+            [['candidate_id', 'qualification', 'country','highest_qualification'], 'integer'],
             [['from_year', 'to_year', 'date_of_updation'], 'safe'],
             [['collage_university', 'course_name'], 'string', 'max' => 100],
             [['candidate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Candidate::className(), 'targetAttribute' => ['candidate_id' => 'id']],

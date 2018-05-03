@@ -30,4 +30,5 @@
         <input type="date" name="create[to_date][]" class="form-control">
     </td>
     <td><a id="ibtnDel"><i class="fa fa-remove"></i></a></td>
+     <td><input type="radio" name="create[highest_qualification][]"></td>
 </tr>

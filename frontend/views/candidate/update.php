@@ -279,6 +279,7 @@ if ($model->current_country != '') {
                                     <th>From Year</th>
                                     <th>To Year</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -319,6 +320,7 @@ if ($model->current_country != '') {
                                                     <input type="date" name="updatee[<?= $data->id; ?>][to_date][]" class="form-control" value="<?= $data->to_year ?>">
                                                 </td>
                                                 <td><a id="eduremove-<?= $data->id; ?>" class="eduremove"><i class="fa fa-remove"></i></a></td>
+                                                <td><input type="radio" name="updatee[<?= $data->id; ?>][highest_qualification][]"></td>
                                             </tr>
                                             <?php
                                         }
@@ -357,6 +359,7 @@ if ($model->current_country != '') {
                                         <input type="date" name="create[to_date][]" class="form-control">
                                     </td>
                                     <td></td>
+                                    <td><input type="radio" name="create[highest_qualification][]"></td>
                                 </tr>
                             </tbody>
                         </table>
