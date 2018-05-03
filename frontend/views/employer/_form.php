@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use dosamigos\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Employer */
@@ -27,13 +28,10 @@ use yii\helpers\ArrayHelper;
     </div>
     <div class="row">
         <div class='col-md-12 col-sm-12 col-xs-12'>
-            <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?>
+            <?= $form->field($model, 'address')->textarea(['class' => 'form-control']) ?>
         </div>
     </div>
     <div class="row">
-        <div class='col-md-3 col-sm-6 col-xs-12'>
-            <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
-        </div>
         <div class='col-md-3 col-sm-6 col-xs-12'>
             <?php $countries = ArrayHelper::map(\common\models\Country::findAll(['status' => 1]), 'id', 'country_name'); ?>
             <?= $form->field($model, 'country')->dropDownList($countries, ['prompt' => '-Choose a Country-']) ?>
@@ -42,7 +40,20 @@ use yii\helpers\ArrayHelper;
             <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
         </div>
         <div class='col-md-3 col-sm-6 col-xs-12'>
+            <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class='col-md-3 col-sm-6 col-xs-12'>
             <?= $form->field($model, 'company_email')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-md-12 col-sm-12 col-xs-12'>
+            <?=
+            $form->field($model, 'description')->widget(CKEditor::className(), [
+                'options' => ['rows' => 3],
+                'preset' => 'basic'
+            ])
+            ?>
         </div>
     </div>
     <div class="row">

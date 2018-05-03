@@ -1125,3 +1125,12 @@ input[type=checkbox], input[type=radio] {
 #skillTable{
     margin-top: 10px;
 }
+.emp-company-view h4{
+   background: #403f3f;
+    padding: 8px 10px;
+    color: white;
+    font-size: 15px;
+}
+.pad-lft{
+    padding-left: 20px;
+}

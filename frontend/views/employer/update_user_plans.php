@@ -131,7 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ],
                                     'urlCreator' => function ($action, $model) {
                                         if ($action === 'print') {
-                                            $url = Url::to(['employer/report', 'id' => $model->id]);
+                                            $url = Url::to(['employer/report', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id)]);
                                             return $url;
                                         }
                                     }

@@ -11,9 +11,6 @@ $this->title = 'CVS Database Admin Panel';
 
         <!-- Default panel -->
         <div class="panel panel-default">
-            <div class="panel-heading">
-                Candidate Details
-            </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
@@ -21,7 +18,7 @@ $this->title = 'CVS Database Admin Panel';
                         <!-- Bordered panel -->
                         <div class="panel panel-default panel-border panl-heigh">
                             <div class="panel-heading">
-                                Reviewed
+                                Unreviewed Employers
                             </div>
 
                             <div class="panel-body">
@@ -39,16 +36,16 @@ $this->title = 'CVS Database Admin Panel';
 
                                             <tbody>
                                                 <?php
-                                                if (!empty($reviewed_candidate)) {
+                                                if (!empty($unreviewed_employers)) {
                                                     $i = 0;
-                                                    foreach ($reviewed_candidate as $reviewed) {
+                                                    foreach ($unreviewed_employers as $unreviewed_employer) {
                                                         $i++;
                                                         ?>
                                                         <tr>
                                                             <td><?= $i ?></td>
-                                                            <td><?= $reviewed->user_name ?></td>
-                                                            <td><?= $reviewed->email ?></td>
-                                                            <td><?= $reviewed->phone ?></td>
+                                                            <td><?= $unreviewed_employer->first_name ?></td>
+                                                            <td><?= $unreviewed_employer->email ?></td>
+                                                            <td><?= $unreviewed_employer->phone ?></td>
                                                         </tr>
                                                         <?php
                                                     }
@@ -58,8 +55,8 @@ $this->title = 'CVS Database Admin Panel';
                                         </table>
                                     </div>
                                     <div class="clearfix"></div>
-                                    <?php if (!empty($reviewed_candidate)) { ?>
-                                        <?= Html::a('<i class="fa fa-arrow-right"></i><span> View All</span>', ['/candidate/candidate/reviewed-candidate'], ['class' => 'btn btn-blue btn-icon btn-icon-standalone btn-icon-standalone-right', 'style' => 'float:right;']) ?>
+                                    <?php if (!empty($unreviewed_employers) && Yii::$app->session['post']['employers'] == 1) { ?>
+                                        <?= Html::a('<i class="fa fa-arrow-right"></i><span> View All</span>', ['/employer/employer/unreviewed-employer'], ['class' => 'btn btn-blue btn-icon btn-icon-standalone btn-icon-standalone-right', 'style' => 'float:right;']) ?>
                                     <?php }
                                     ?>
                                 </div>
@@ -72,7 +69,7 @@ $this->title = 'CVS Database Admin Panel';
                         <!-- Bordered panel -->
                         <div class="panel panel-default panel-border panl-heigh">
                             <div class="panel-heading">
-                                Unreviewed
+                                Unreviewed Job Seekers
                             </div>
 
                             <div class="panel-body">
@@ -107,7 +104,7 @@ $this->title = 'CVS Database Admin Panel';
                                         </tbody>
                                     </table>
                                     <div class="clearfix"></div>
-                                    <?php if (!empty($unreviewed_candidate)) { ?>
+                                    <?php if (!empty($unreviewed_candidate) && Yii::$app->session['post']['jobseekers'] == 1) { ?>
                                         <?= Html::a('<i class="fa fa-arrow-right"></i><span> View All</span>', ['/candidate/candidate/unreviewed-candidate'], ['class' => 'btn btn-blue btn-icon btn-icon-standalone btn-icon-standalone-right', 'style' => 'float:right;']) ?>
                                     <?php }
                                     ?>

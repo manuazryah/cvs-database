@@ -39,13 +39,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                     <div class="job-search">
                                         <?= $form1->field($model_filter, 'keyword')->textInput(['placeholder' => 'Job title / keywords'])->label(FALSE) ?>
                                         <?php // $form1->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-'])->label(FALSE) ?>
-                                        <?=
-                                        $form1->field($model_filter, 'location')->widget(\yii\jui\AutoComplete::classname(), ['options' => ['class' => 'ui-autocomplete-input form-control', 'prompt' => 'Country / City'],
-                                            'clientOptions' => [
-                                                'source' => $this->context->getLocation(),
-                                            ],
-                                        ])->label(FALSE)
-                                        ?>
+                                        <?= $form1->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-', 'multiple' => TRUE])->label(FALSE) ?>
                                         <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                                     </div>
                                 </div>
@@ -303,7 +297,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                     }
                                     ?>
                                 </div>
-                                <div class="job_title">Search Folder</div>
+                                <div class="job_title">Shortlist Folder</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
                                     <?php
@@ -338,7 +332,17 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                             $your_search_filter .= '"' . $model_filter->keyword . '", ';
                                         }
                                         if (isset($model_filter->location) && $model_filter->location != '') {
-                                            $your_search_filter .= '"' . $model_filter->location . '", ';
+                                            foreach ($model_filter->location as $value) {
+                                                $city = common\models\City::find()->where(['id'=>$value])->one();
+                                                if(!empty($city)){
+                                                    $country = \common\models\Country::find()->where(['id'=>$city->country])->one();
+                                                    if(!empty($country)){
+                                                        $your_search_filter .= '"' . $city->city.' - ' .$country->country_name. '", ';
+                                                    }else{
+                                                        $your_search_filter .= '"' . $city->city . '", ';
+                                                    }
+                                                }
+                                            }
                                         }
                                         if (isset($model_filter->industries) && $model_filter->industries != '') {
                                             foreach ($model_filter->industries as $indus_value) {
@@ -457,13 +461,14 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
 <script type="text/javascript">
     jQuery(document).ready(function ($)
     {
-//        $("#cvfilter-location").select2({
-//            placeholder: 'Choose Country / City',
-//            allowClear: true
-//        }).on('select2-open', function ()
-//        {
-//            $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
-//        });
+        $("#cvfilter-location").select2({
+            placeholder: 'Choose Country / City',
+            allowClear: true,
+        }).on('select2-open', function ()
+        {
+            $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
+        });
+
     });
 </script>
 

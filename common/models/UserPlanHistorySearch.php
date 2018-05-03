@@ -38,7 +38,7 @@ class UserPlanHistorySearch extends UserPlanHistory {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = UserPlanHistory::find();
+        $query = UserPlanHistory::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 

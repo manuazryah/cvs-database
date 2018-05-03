@@ -14,6 +14,22 @@ use common\models\EmployerPackages;
  * EmployerController implements the CRUD actions for Employer model.
  */
 class EmployerController extends Controller {
+    
+    public function beforeAction($action) {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        if (Yii::$app->user->isGuest) {
+            $this->redirect(['/site/index']);
+            return false;
+        }
+        if (Yii::$app->session['post']['employers'] != 1) {
+            Yii::$app->getSession()->setFlash('exception', 'You have no permission to access this page');
+            $this->redirect(['/site/exception']);
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @inheritdoc
@@ -51,6 +67,21 @@ class EmployerController extends Controller {
     public function actionView($id) {
         return $this->render('view', [
                     'model' => $this->findModel($id),
+        ]);
+    }
+    
+    /*
+     * Unrevied Employer gridview
+     */
+
+    public function actionUnreviewedEmployer() {
+        $searchModel = new \common\models\EmployerSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['review_status' => 0]);
+
+        return $this->render('un-reviewed', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 

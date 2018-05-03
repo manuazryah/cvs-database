@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             </div>
             <div class="panel-body">
-                <?= Html::a('<i class="fa-th-list"></i><span> Manage Candidate</span>', ['index'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                <?= Html::a('<i class="fa-th-list"></i><span> Manage Jobseekers</span>', ['index'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
                 <?= Html::a('<i class="fa fa-pencil"></i><span> Contact Details</span>', ['update', 'id' => $candidate->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
                 <?= Html::a('<i class="fa fa-edit"></i><span> Update Profile</span>', ['update-profile', 'id' => $candidate->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
                 <?= Html::a('<i class="fa fa-ban"></i><span> Disable Profile</span>', ['disable-profile', 'id' => $candidate->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>

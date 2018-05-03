@@ -52,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     ?>
                     <?php // Html::a('<i class="fa fa-download"></i><span> Quick Download</span>', ['quick-download', 'id' => $model->id], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone', 'style' => 'float:right;']) ?>
+                    <div class="clearfix"></div>
                     <main id="maincontent">
                         <section class="resume">
                             <div class="container-cv-view">
@@ -86,12 +87,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     </div>
                                                     <div class="contact_details col-md-6 p-l">
                                                         <span><strong>DOB:</strong> <?= $model->dob ?></span>
-                                                    </div>
-                                                    <div class="contact_details col-md-6 p-l">
-                                                        <span><strong>Email:</strong> <?= $contact_info->email ?></span>
-                                                    </div>
-                                                    <div class="contact_details col-md-6 p-l">
-                                                        <span><strong>Phone:</strong> <?= $contact_info->phone ?></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -360,10 +355,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <div class="borderfull-width"></div>
                                             </div>
                                             <div class="row cv-downlod">
-                                                <div class="col-md-6 p-l"><h5 class="cv-dwn-head">Download CV</h5></div>
-                                                <div class="col-md-6 p-r">
-                                                    <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" >', ['pdf-export', 'id' => $model->id], ['target' => '_blank']) ?>
-                                                    <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/word-icon.png" >', ['word-export', 'id' => $model->id], ['target' => '_blank']) ?>
+                                                <div class="col-md-8 p-l"><h5 class="cv-dwn-head">Download my online CV</h5></div>
+                                                <div class="col-md-4 p-r pad-tp-10">
+                                                    <?= Html::a('<img width="30" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" >', ['pdf-export', 'id' => $model->id], ['target' => '_blank']) ?>
+                                                    <?= Html::a('<img width="30" src="' . Yii::$app->homeUrl . 'images/word-icon.png" >', ['word-export', 'id' => $model->id], ['target' => '_blank']) ?>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>

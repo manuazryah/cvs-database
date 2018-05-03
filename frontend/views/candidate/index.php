@@ -10,15 +10,6 @@ use yii\widgets\ActiveForm;
 $this->title = 'Candidates';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="page_banner banner employer-banner">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <div class="banner-heading">User Details</div>
-            </div>
-        </div>
-    </div>
-</div>
 <main id="maincontent" class="my-account">
     <section class="manage">
         <div class="container">

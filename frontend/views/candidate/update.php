@@ -35,18 +35,13 @@ if ($model->current_country != '') {
         color: #067db1;
     }
 </style>
-<div class="page_banner banner employer-banner">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <div class="banner-heading">Profile Edit</div>
-            </div>
-        </div>
-    </div>
-</div>
 <main id="maincontent" class="my-account">
     <section class="manage">
         <div class="container">
+            <div class="profile-header">
+                <h3 class="main-heading"><?= $user->user_name ?></h3>
+                <h6 class="sub-heading"><?= $model->title != '' ? $model->title : '' ?></h6>
+            </div>
             <div class="row">
                 <div class="form-group col-md-12">
                     <?=
@@ -226,7 +221,7 @@ if ($model->current_country != '') {
                                                 </td>
                                                 <td>
                                                     <textarea name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" rows="4"><?= $datas->job_responsibility ?></textarea>
-                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                                    ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
+                                                   <!--<input type="text" class="form-control" name="expupdatee[<?php // $datas->id;                                                                                                     ?>][job_responsibility][]" value="<?= $datas->job_responsibility ?>">-->
                                                 </td>
                                                 <td><a id="expremove-<?= $datas->id; ?>" class="expremove"><i class="fa fa-remove"></i></a></td>
                                             </tr>
@@ -421,7 +416,7 @@ if ($model->current_country != '') {
 //                            if (file_exists($dirPath)) {
 //
                         ?>
-                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                     ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                        <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                      ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
                         <?php
 //                            }
 //                        }

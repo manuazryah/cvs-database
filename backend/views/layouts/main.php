@@ -38,11 +38,11 @@ AppAsset::register($this);
                         <!-- logo -->
                         <div class="logo">
                             <a href="" class="logo-expanded">
-                                <img width="" height="" src="<?= Yii::$app->homeUrl ?>images/site-logo.png"/>
+                                <img class="img-responsive" width="" height="" src="<?= Yii::$app->homeUrl ?>images/site-logo.png"/>
                             </a>
 
                             <a href="" class="logo-collapsed">
-                                <img width="59" height="43" src="<?= Yii::$app->homeUrl ?>images/site-logo.png"/>
+                                <img  class="img-responsive" width="59" height="43" src="<?= Yii::$app->homeUrl ?>images/site-logo.png"/>
                             </a>
                         </div>
                         <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
@@ -64,84 +64,110 @@ AppAsset::register($this);
 
                     <ul id="main-menu" class="main-menu">
                         <li>
-                            <a href="">
-                                <i class="fa fa-tachometer"></i>
-                                <span class="title">Administration</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Access Powers', ['/admin/admin-posts/index'], ['class' => 'title']) ?>
-                                </li>
+                            <?= Html::a('<i class="fa-home"></i> <span class="title">Home</span>', ['/site/home'], ['class' => 'title']) ?>
+                        </li>
+                        <?php
+                        if (Yii::$app->session['post']['admin'] == 1) {
+                            ?>
+                            <li>
+                                <a href="">
+                                    <i class="fa fa-tachometer"></i>
+                                    <span class="title">Administration</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Access Powers', ['/admin/admin-posts/index'], ['class' => 'title']) ?>
+                                    </li>
 
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Admin Users', ['/admin/admin-users/index'], ['class' => 'title']) ?>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="">
-                                <i class="fa fa-users"></i>
-                                <span class="title">Candidate</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Candidate Details', ['/candidate/candidate/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Add Candidate', ['/candidate/candidate/create'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Search CV', ['/candidate/candidate/cv-search'], ['class' => 'title']) ?>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fa fa-user"></i>
-                                <span class="title">Employer</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Employer Details', ['/employer/employer/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Employer Packages', ['/employer/employer-packages/index'], ['class' => 'title']) ?>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fa fa-database"></i>
-                                <span class="title">Masters</span>
-                            </a>
-                            <ul>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Country', ['/masters/country/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> City', ['/masters/city/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Courses', ['/masters/courses/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Industry', ['/masters/industry/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Skills', ['/masters/skills/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Job Status', ['/masters/job-status/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Packages', ['/masters/packages/index'], ['class' => 'title']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Expected Salary', ['/masters/expected-salary/index'], ['class' => 'title']) ?>
-                                </li>
-                            </ul>
-                        </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Admin Users', ['/admin/admin-users/index'], ['class' => 'title']) ?>
+                                    </li>
+                                </ul>
+                            </li>
+                            <?php
+                        }
+                        ?>
+                        <?php
+                        if (Yii::$app->session['post']['jobseekers'] == 1) {
+                            ?>
+                            <li>
+                                <a href="">
+                                    <i class="fa fa-users"></i>
+                                    <span class="title">Jobseekers</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Jobseeker Details', ['/candidate/candidate/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Add Jobseeker', ['/candidate/candidate/create'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Search CV', ['/candidate/candidate/cv-search'], ['class' => 'title']) ?>
+                                    </li>
+                                </ul>
+                            </li>
+                            <?php
+                        }
+                        ?>
+                        <?php
+                        if (Yii::$app->session['post']['employers'] == 1) {
+                            ?>
+                            <li>
+                                <a href="">
+                                    <i class="fa fa-user"></i>
+                                    <span class="title">Employer</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Employer Details', ['/employer/employer/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Employer Packages', ['/employer/employer-packages/index'], ['class' => 'title']) ?>
+                                    </li>
+                                </ul>
+                            </li>
+                            <?php
+                        }
+                        ?>
+                        <?php
+                        if (Yii::$app->session['post']['masters'] == 1) {
+                            ?>
+                            <li>
+                                <a href="">
+                                    <i class="fa fa-database"></i>
+                                    <span class="title">Masters</span>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Country', ['/masters/country/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> City', ['/masters/city/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Courses', ['/masters/courses/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Industry', ['/masters/industry/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Skills', ['/masters/skills/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Job Status', ['/masters/job-status/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Packages', ['/masters/packages/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Expected Salary', ['/masters/expected-salary/index'], ['class' => 'title']) ?>
+                                    </li>
+                                </ul>
+                            </li>
+                            <?php
+                        }
+                        ?>
                     </ul>
 
 

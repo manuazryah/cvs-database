@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\CandidateSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Candidates';
+$this->title = 'Reviewed Jobseekers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="candidate-index">
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-body table-responsive">
                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-                    <?= Html::a('<i class="fa-th-list"></i><span> Create Candidate</span>', ['create'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                    <?= Html::a('<i class="fa-th-list"></i><span> Create Jobseeker</span>', ['create'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
                     <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,

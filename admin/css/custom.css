@@ -15,7 +15,7 @@ body {
 .log-layout #wrapper {
         right: 0px;
         margin: 0px auto;
-        padding-top: 5%;
+        /*padding-top: 5%;*/
         max-width: 500px;
         position: relative;
         margin-top: 70px;

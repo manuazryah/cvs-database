@@ -9,7 +9,7 @@ use yii\widgets\ListView;
 /* @var $searchModel common\models\CandidateSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Candidates';
+$this->title = 'Jobseekers';
 $this->params['breadcrumbs'][] = $this->title;
 $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => SORT_ASC])->all(), 'id', function($model) {
             return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];

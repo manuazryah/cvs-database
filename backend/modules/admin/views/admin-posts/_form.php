@@ -12,19 +12,27 @@ use yii\widgets\ActiveForm;
         <?= \common\widgets\Alert::widget() ?>
         <?php $form = ActiveForm::begin(); ?>
         <div class="row">
-                <div class='col-md-3 col-sm-6 col-xs-12'>
+                <div class='col-md-4 col-sm-6 col-xs-12'>
                         <?= $form->field($model, 'post_name')->textInput(['maxlength' => true]) ?>
 
                 </div>
-                <div class='col-md-3 col-sm-6 col-xs-12'>
+                <div class='col-md-4 col-sm-6 col-xs-12'>
                         <?= $form->field($model, 'admin')->dropDownList(['1' => 'Yes', '0' => 'No']) ?>
 
                 </div>
-                <div class='col-md-3 col-sm-6 col-xs-12'>
+                <div class='col-md-4 col-sm-6 col-xs-12'>
                         <?= $form->field($model, 'masters')->dropDownList(['1' => 'Yes', '0' => 'No']) ?>
 
                 </div>
-                <div class='col-md-3 col-sm-6 col-xs-12'>
+                <div class='col-md-4 col-sm-6 col-xs-12'>
+                        <?= $form->field($model, 'employers')->dropDownList(['1' => 'Yes', '0' => 'No']) ?>
+
+                </div>
+                <div class='col-md-4 col-sm-6 col-xs-12'>
+                        <?= $form->field($model, 'jobseekers')->dropDownList(['1' => 'Yes', '0' => 'No']) ?>
+
+                </div>
+                <div class='col-md-4 col-sm-6 col-xs-12'>
                         <?= $form->field($model, 'status')->dropDownList(['1' => 'Enabled', '0' => 'Disabled']) ?>
 
                 </div>

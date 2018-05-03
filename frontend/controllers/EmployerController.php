@@ -77,8 +77,10 @@ class EmployerController extends Controller {
                 $dataProvider->query->andWhere(['id' => $keywords]);
             }
             if ($model_filter->location != '') {
-                $location_datas = $this->getLocationDatas($model_filter->location);
-                $dataProvider->query->andWhere(['id' => $location_datas]);
+//                $location_datas = $this->getLocationDatas($model_filter->location);
+//                $dataProvider->query->andWhere(['id' => $location_datas]);
+                $locations = $this->getLocations($model_filter->location);
+                $dataProvider->query->andWhere(['id' => $locations]);
             }
             if ($model_filter->industries != '') {
                 $filter_industry = $this->getFilterIndustry($model_filter);
@@ -161,7 +163,8 @@ class EmployerController extends Controller {
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id) {
+    public function actionView() {
+        $id = Yii::$app->session['employer_data']['id'];
         return $this->render('view', [
                     'model' => $this->findModel($id),
         ]);
@@ -184,6 +187,7 @@ class EmployerController extends Controller {
             if ($model->isNewRecord) {
                 $model->password = Yii::$app->security->generatePasswordHash($model->password);
             }
+            $model->review_status = 0;
             if ($model->validate() && $model->save()) {
                 $this->addPackage($model);
                 $this->sendMail($model);
@@ -667,7 +671,9 @@ class EmployerController extends Controller {
         $id = Yii::$app->user->identity->id;
         $model = $this->findModel($id);
         $model->scenario = 'update';
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->review_status = 0;
+            $model->save();
             return $this->redirect(['update']);
         }
 
@@ -846,56 +852,62 @@ class EmployerController extends Controller {
      * @return mixed
      */
     public function actionViewCv($id) {
+        $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
         if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
             return $this->redirect(array('employer/login'));
         }
-        $packages = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
-        if (empty($packages)) {
-            return $this->redirect(Yii::$app->request->referrer);
-            Yii::$app->session->setFlash('error', "You Can't view CVs.Please Select a Package");
-        } else {
-            $candidate_profile = \common\models\CandidateProfile::findOne($id);
-            $candidate = \common\models\Candidate::findOne($candidate_profile->candidate_id);
-            $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $id])->one();
-            $model = \common\models\CandidateProfile::findOne($id);
-            $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
-            $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
-            $contact_info = \common\models\Candidate::find()->where(['id' => $id])->one();
-            if (empty($view_cv)) {
-                if ($packages->end_date >= date('Y-m-d')) {
-                    if ($packages->no_of_downloads_left >= 1) {
-                        $packages->no_of_downloads_left = $packages->no_of_downloads_left - 1;
-                        $packages->update();
-                        $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
-                        $this->CandidateEmail($id);
-                        Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
-                        return $this->render('cv-view', [
-                                    'model' => $model,
-                                    'model_education' => $model_education,
-                                    'model_experience' => $model_experience,
-                                    'contact_info' => $contact_info,
-                        ]);
+        $candidate_profile = \common\models\CandidateProfile::findOne($id);
+        if ($candidate_profile->status == 1) {
+            $packages = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
+            if (empty($packages)) {
+                return $this->redirect(Yii::$app->request->referrer);
+                Yii::$app->session->setFlash('error', "You Can't view CVs.Please Select a Package");
+            } else {
+                $candidate = \common\models\Candidate::findOne($candidate_profile->candidate_id);
+                $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $id])->one();
+                $model = \common\models\CandidateProfile::findOne($id);
+                $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
+                $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
+                $contact_info = \common\models\Candidate::find()->where(['id' => $id])->one();
+                if (empty($view_cv)) {
+                    if ($packages->end_date >= date('Y-m-d')) {
+                        if ($packages->no_of_downloads_left >= 1) {
+                            $packages->no_of_downloads_left = $packages->no_of_downloads_left - 1;
+                            $packages->update();
+                            $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
+                            $this->CandidateEmail($id);
+                            Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
+                            return $this->render('cv-view', [
+                                        'model' => $model,
+                                        'model_education' => $model_education,
+                                        'model_experience' => $model_experience,
+                                        'contact_info' => $contact_info,
+                            ]);
+                        } else {
+                            Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
+                            return $this->redirect(Yii::$app->request->referrer);
+                        }
                     } else {
                         Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
                         return $this->redirect(Yii::$app->request->referrer);
                     }
                 } else {
-                    Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
-                    return $this->redirect(Yii::$app->request->referrer);
-                }
-            } else {
-                $view_cv->date_of_view = date('Y-m-d');
-                $view_cv->update();
-                $this->CandidateEmail($id);
+                    $view_cv->date_of_view = date('Y-m-d');
+                    $view_cv->update();
+                    $this->CandidateEmail($id);
 //                return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
-                Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
-                return $this->render('cv-view', [
-                            'model' => $model,
-                            'model_education' => $model_education,
-                            'model_experience' => $model_experience,
-                            'contact_info' => $contact_info,
-                ]);
+                    Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
+                    return $this->render('cv-view', [
+                                'model' => $model,
+                                'model_education' => $model_education,
+                                'model_experience' => $model_experience,
+                                'contact_info' => $contact_info,
+                    ]);
+                }
             }
+        } else {
+            return $this->render('cv-view-error', [
+            ]);
         }
     }
 
@@ -1136,6 +1148,7 @@ class EmployerController extends Controller {
      */
 
     public function actionReport($id) {
+        $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
         $package_history = \common\models\UserPlanHistory::find()->where(['id' => $id])->one();
         $employer = Employer::find()->where(['id' => $package_history->user_id])->one();
         $package = \common\models\Packages::find()->where(['id' => $package_history->plan])->one();

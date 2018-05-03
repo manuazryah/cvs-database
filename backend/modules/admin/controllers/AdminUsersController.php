@@ -14,13 +14,21 @@ use yii\filters\VerbFilter;
  */
 class AdminUsersController extends Controller {
 
-        public function init() {
-                if (Yii::$app->user->isGuest)
-                        $this->redirect(['/site/index']);
-
-                if (Yii::$app->session['post']['admin'] != 1)
-                        $this->redirect(['/site/home']);
+        public function beforeAction($action) {
+        if (!parent::beforeAction($action)) {
+            return false;
         }
+        if (Yii::$app->user->isGuest) {
+            $this->redirect(['/site/index']);
+            return false;
+        }
+        if (Yii::$app->session['post']['admin'] != 1) {
+            Yii::$app->getSession()->setFlash('exception', 'You have no permission to access this page');
+            $this->redirect(['/site/exception']);
+            return false;
+        }
+        return true;
+    }
 
         /**
          * @inheritdoc

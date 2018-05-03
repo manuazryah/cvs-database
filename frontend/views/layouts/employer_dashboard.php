@@ -38,11 +38,11 @@ EmployerAsset::register($this);
                         <!-- logo -->
                         <div class="logo">
                             <a href="" class="logo-expanded">
-                                <img width="" height="" src="<?= Yii::$app->homeUrl ?>dash/images/site-logo.png"/>
+                                <img class="img-responsive" width="" height="" src="<?= Yii::$app->homeUrl ?>dash/images/site-logo.png"/>
                             </a>
 
                             <a href="" class="logo-collapsed">
-                                <img width="59" height="43" src="<?= Yii::$app->homeUrl ?>dash/images/site-logo.png"/>
+                                <img class="img-responsive" width="59" height="43" src="<?= Yii::$app->homeUrl ?>dash/images/site-logo.png"/>
                             </a>
                         </div>
                         <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
@@ -66,7 +66,7 @@ EmployerAsset::register($this);
                             <?= Html::a('<i class="fa fa-search"></i> <span class="title">Search CV</span>', ['/employer/home'], ['class' => 'title']) ?>
                         </li>
                         <li>
-                            <?= Html::a('<i class="fa fa-edit"></i> <span class="title">Edit Profile</span>', ['/employer/update'], ['class' => 'title']) ?>
+                            <?= Html::a('<i class="fa fa-eye"></i> <span class="title">Your Profile </span>', ['/employer/view'], ['class' => 'title']) ?>
                         </li>
                         <li>
                             <?= Html::a('<i class="fa fa-lock"></i> <span class="title">Change Password</span>', ['/employer/change-password'], ['class' => 'title']) ?>

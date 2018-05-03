@@ -87,10 +87,10 @@ class SiteController extends Controller {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(array('site/index'));
         }
-        $reviewed_candidate = \common\models\Candidate::find()->where(['review_status' => 1])->limit(5)->all();
+        $unreviewed_employers = \common\models\Employer::find()->where(['review_status' => 0])->limit(5)->all();
         $unreviewed_candidate = \common\models\Candidate::find()->where(['review_status' => 0])->limit(5)->all();
         return $this->render('index', [
-                    'reviewed_candidate' => $reviewed_candidate,
+                    'unreviewed_employers' => $unreviewed_employers,
                     'unreviewed_candidate' => $unreviewed_candidate,
         ]);
     }
@@ -211,6 +211,9 @@ class SiteController extends Controller {
         } else {
             Yii::$app->getSession()->setFlash('error', "You can't reset password using this link.Please Try again");
         }
+    }
+    public function actionException() {
+        return $this->render('exception');
     }
 
 }

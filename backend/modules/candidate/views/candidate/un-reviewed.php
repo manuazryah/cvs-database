@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\CandidateSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Jobseekers';
+$this->title = 'Unreviewed Jobseekers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="candidate-index">

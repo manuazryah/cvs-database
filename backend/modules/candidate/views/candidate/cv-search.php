@@ -9,7 +9,7 @@ use yii\widgets\ListView;
 /* @var $searchModel common\models\CandidateSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Candidates';
+$this->title = 'Jobseekers';
 $this->params['breadcrumbs'][] = $this->title;
 $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => SORT_ASC])->all(), 'id', function($model) {
             return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];
@@ -329,7 +329,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                         ?>
                                     </div>
                                 </div>
-                                <div class="job_title">Search Folder</div>
+                                <div class="job_title">Shortlist Folder</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
                                     <div class="search-scroll pad-tp">
@@ -366,8 +366,17 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                             $your_search_filter .= '"' . $model_filter->keyword . '", ';
                                         }
                                         if (isset($model_filter->location) && $model_filter->location != '') {
-                                            $city = \common\models\City::findOne($model_filter->location);
-                                            $your_search_filter .= '"' . common\models\Country::findOne($city->country)->country_name . ' - ' . $city->city . '", ';
+                                            foreach ($model_filter->location as $value) {
+                                                $city = common\models\City::find()->where(['id'=>$value])->one();
+                                                if(!empty($city)){
+                                                    $country = \common\models\Country::find()->where(['id'=>$city->country])->one();
+                                                    if(!empty($country)){
+                                                        $your_search_filter .= '"' . $city->city.' - ' .$country->country_name. '", ';
+                                                    }else{
+                                                        $your_search_filter .= '"' . $city->city . '", ';
+                                                    }
+                                                }
+                                            }
                                         }
                                         if (isset($model_filter->industries) && $model_filter->industries != '') {
                                             foreach ($model_filter->industries as $indus_value) {

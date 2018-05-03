@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\CandidateSearch */
+/* @var $searchModel common\models\EmployerReviewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Jobseekers';
+$this->title = 'Unreviewed Employers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="candidate-index">
+<div class="employer-index">
 
     <div class="row">
         <div class="col-md-12">
@@ -21,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                 </div>
-                <div class="panel-body table-responsive">
+                <div class="panel-body">
                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-                    <?= Html::a('<i class="fa-th-list"></i><span> Create Jobseeker</span>', ['create'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                    <?= Html::a('<i class="fa-th-list"></i><span> Create Employer</span>', ['create'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
                     <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,
@@ -32,18 +32,28 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
 //                                                            'id',
-                            'user_name',
+                            'first_name',
+                            'last_name',
                             'email:email',
-//                            'password',
-                            'user_id',
-                            'phone',
-                            'address:ntext',
-                            // 'alternate_phone',
-                            // 'alternate_address:ntext',
-                            // 'facebook_link',
-                            // 'linked_in_link',
-                            // 'google_link',
-                            // 'youtube_link',
+                            [
+                                'attribute' => 'phone',
+                                'value' => function ($model) {
+                                    return $model->phone == '' ? '' : $model->phone;
+                                },
+                            ],
+                            [
+                                'attribute' => 'company_name',
+                                'value' => function ($model) {
+                                    return $model->company_name == '' ? '' : $model->company_name;
+                                },
+                            ],
+                            // 'country',
+                            // 'location',
+                            // 'address:ntext',
+                            // 'company_email:email',
+                            // 'company_phone_number',
+                            // 'position',
+                            // 'email_varification:email',
                             [
                                 'attribute' => 'status',
                                 'format' => 'raw',
@@ -52,17 +62,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->status == 1 ? 'Enabled' : 'Disabled';
                                 },
                             ],
-                            [
-                                'attribute' => 'review_status',
-                                'format' => 'raw',
-                                'filter' => [1 => 'Reviewed', 0 => 'Unreviewed'],
-                                'value' => function ($model) {
-                                    return $model->review_status == 1 ? 'Reviewed' : 'Unreviewed';
-                                },
-                            ],
-                            // 'date_of_creation',
-                            // 'date_of_updation',
-                            // 'email_varification_status:email',
                             ['class' => 'yii\grid\ActionColumn',
                                 'template' => '{view}{update}',
                             ],

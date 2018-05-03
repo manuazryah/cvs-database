@@ -49,6 +49,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                 },
                             ],
                             [
+                                'attribute' => 'employers',
+                                'format' => 'raw',
+                                'filter' => [1 => 'Yes', 0 => 'No'],
+                                'value' => function ($model) {
+                                    return $model->employers == 1 ? 'Yes' : 'No';
+                                },
+                            ],
+                            [
+                                'attribute' => 'jobseekers',
+                                'format' => 'raw',
+                                'filter' => [1 => 'Yes', 0 => 'No'],
+                                'value' => function ($model) {
+                                    return $model->jobseekers == 1 ? 'Yes' : 'No';
+                                },
+                            ],
+                            [
                                 'attribute' => 'status',
                                 'format' => 'raw',
                                 'filter' => [1 => 'Enabled', 0 => 'disabled'],

@@ -340,7 +340,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                         ?>
                                     </div>
                                 </div>
-                                <div class="job_title">Search Folder</div>
+                                <div class="job_title">Shortlist Folder</div>
                                 <div class="borderfull-width"></div>
                                 <div class="page-heading check-label">
                                     <div class="search-scroll pad-tp">
@@ -376,9 +376,18 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                         if (isset($model_filter->keyword) && $model_filter->keyword != '') {
                                             $your_search_filter .= '"' . $model_filter->keyword . '", ';
                                         }
-                                        if (isset($model_filter->location) && $model_filter->location != '') {
-                                            $city = \common\models\City::findOne($model_filter->location);
-                                            $your_search_filter .= '"' . common\models\Country::findOne($city->country)->country_name . ' - ' . $city->city . '", ';
+                                       if (isset($model_filter->location) && $model_filter->location != '') {
+                                            foreach ($model_filter->location as $value) {
+                                                $city = common\models\City::find()->where(['id'=>$value])->one();
+                                                if(!empty($city)){
+                                                    $country = \common\models\Country::find()->where(['id'=>$city->country])->one();
+                                                    if(!empty($country)){
+                                                        $your_search_filter .= '"' . $city->city.' - ' .$country->country_name. '", ';
+                                                    }else{
+                                                        $your_search_filter .= '"' . $city->city . '", ';
+                                                    }
+                                                }
+                                            }
                                         }
                                         if (isset($model_filter->industries) && $model_filter->industries != '') {
                                             foreach ($model_filter->industries as $indus_value) {

@@ -48,12 +48,6 @@ use yii\widgets\ActiveForm;
                                 <div class="contact_details col-md-6 p-l">
                                     <span><strong>DOB:</strong> <?= $model->dob ?></span>
                                 </div>
-                                <div class="contact_details col-md-6 p-l">
-                                    <span><strong>Email:</strong> <?= $user_details->email ?></span>
-                                </div>
-                                <div class="contact_details col-md-6 p-l">
-                                    <span><strong>Phone:</strong> <?= $user_details->phone ?></span>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-3 author">
@@ -321,14 +315,14 @@ use yii\widgets\ActiveForm;
                             <div class="borderfull-width"></div>
                         </div>
                         <div class="row cv-downlod">
-                            <div class="col-md-6 p-l"><h5 class="cv-dwn-head">Download CV</h5></div>
-                            <div class="col-md-6 p-r">
-                                <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" >', ['pdf-export'], ['target' => '_blank']) ?>
-                                <?= Html::a('<img width="50" src="' . Yii::$app->homeUrl . 'images/word-icon.png" >', ['word-export'], ['target' => '_blank']) ?>
+                            <div class="col-md-8 p-l"><h5 class="cv-dwn-head">Download my online CV</h5></div>
+                            <div class="col-md-4 p-r pad-tp-10">
+                                <?= Html::a('<img width="30" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" >', ['pdf-export'], ['target' => '_blank']) ?>
+                                <?= Html::a('<img width="30" src="' . Yii::$app->homeUrl . 'images/word-icon.png" >', ['word-export'], ['target' => '_blank']) ?>
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <?= Html::a('Profile Update', ['update-profile'], ['target' => '_blank', 'class' => 'btn btn-cv btn-block']) ?>
+                        <?= Html::a('Edit my online CV', ['update-profile'], ['target' => '_blank', 'class' => 'btn btn-cv btn-block']) ?>
                     </div>
                 </div>
             </div>

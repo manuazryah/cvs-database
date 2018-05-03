@@ -19,6 +19,11 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
 );
 $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->orderBy(['id' => SORT_DESC])->limit(5)->all();
 ?>
+<style>
+    .select2-container-multi .select2-choices .select2-search-field input {
+        height: 62px;
+    }
+</style>
 <div class="site-banner right-img">
     <div class="banner-overlay"></div>
     <div class="container">
@@ -34,12 +39,13 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                         <input type="text" class="form-control" placeholder="Job title / keywords" name="CvFilter[keyword]">
                         <div class="search_icon"><i class="fa fa-briefcase"></i></div>
                     </div>
-                    <?=
-                    $form->field($model_filter, 'location')->widget(\yii\jui\AutoComplete::classname(), ['options' => ['class' => 'ui-autocomplete-input form-control'],
-                        'clientOptions' => [
-                            'source' => $this->context->getLocation(),
-                        ],
-                    ])->label(FALSE)
+                    <?= $form->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-', 'multiple' => TRUE])->label(FALSE) ?>
+                    <?php
+//                    $form->field($model_filter, 'location')->widget(\yii\jui\AutoComplete::classname(), ['options' => ['class' => 'ui-autocomplete-input form-control'],
+//                        'clientOptions' => [
+//                            'source' => $this->context->getLocation(),
+//                        ],
+//                    ])->label(FALSE)
                     ?>
                     <!--                    <div class="form-group col-md-6 padding-left radius2">
                                             <input id="location" type="text" class="form-control" placeholder="Country / City" name="CvFilter[location]">
@@ -167,7 +173,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                                                 ?>
                                             </td>
                                             <td style="width:10%;">
-                                                <?= Html::a('View CV', ['view-cv', 'id' => $latest_cv->id], ['class' => 'table-btn-default']) ?>
+                                                <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $latest_cv->id)], ['class' => 'table-btn-default']) ?>
                                             </td>
                                         </tr>
                                         <?php
@@ -394,4 +400,20 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
         $(".field-cvfilter-location").addClass("col-md-6 padding-left radius2");
     });
     $('#cvfilter-location').attr('placeholder', 'Country / Location');
+</script>
+<link rel="stylesheet" href="<?= Yii::$app->homeUrl; ?>css/select2.css">
+<link rel="stylesheet" href="<?= Yii::$app->homeUrl; ?>css/select2-bootstrap.css">
+<script src="<?= Yii::$app->homeUrl; ?>js/select2.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($)
+    {
+        $("#cvfilter-location").select2({
+            placeholder: 'Choose Country / City',
+            allowClear: true,
+        }).on('select2-open', function ()
+        {
+            $(this).data('select2').results.addClass('overflow-hidden').perfectScrollbar();
+        });
+
+    });
 </script>

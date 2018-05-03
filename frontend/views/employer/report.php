@@ -89,7 +89,7 @@
                 <th style="width:100%">
                     <div class="header">
                         <div style="text-align:center;">
-                            <img width="" height="" src="<?= Yii::$app->homeUrl ?>dash/images/site-logo.png"/>
+                            <img width="225" height="" src="<?= Yii::$app->homeUrl ?>dash/images/site-logo.png"/>
                         </div>
                         <br/>
                     </div>
