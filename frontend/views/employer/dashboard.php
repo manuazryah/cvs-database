@@ -12,7 +12,17 @@ use yii\helpers\ArrayHelper;
 
 $this->title = 'Featured CVs';
 $this->params['breadcrumbs'][] = $this->title;
-$city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => SORT_ASC])->all(), 'id', function($model) {
+$str = '';
+$country_sort = common\models\Country::find()->orderBy(['country_name' => SORT_ASC])->all();
+if (!empty($country_sort)) {
+    foreach ($country_sort as $sort) {
+        $str .= $sort->id . ',';
+    }
+}
+if($str != ''){
+    $str = rtrim($str,',');
+}
+$city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db\Expression('FIELD (country, ' . $str . ')')])->all(), 'id', function($model) {
             return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];
         }
 );
@@ -367,7 +377,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                     </div>
                                 </div>
                             </div>
-                            <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])       ?>
+                            <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])        ?>
                             <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
                                 <div class="col-md-12 col-sm-12 p-l">
                                     <div class="page-heading">
@@ -376,14 +386,14 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
                                         if (isset($model_filter->keyword) && $model_filter->keyword != '') {
                                             $your_search_filter .= '"' . $model_filter->keyword . '", ';
                                         }
-                                       if (isset($model_filter->location) && $model_filter->location != '') {
+                                        if (isset($model_filter->location) && $model_filter->location != '') {
                                             foreach ($model_filter->location as $value) {
-                                                $city = common\models\City::find()->where(['id'=>$value])->one();
-                                                if(!empty($city)){
-                                                    $country = \common\models\Country::find()->where(['id'=>$city->country])->one();
-                                                    if(!empty($country)){
-                                                        $your_search_filter .= '"' . $city->city.' - ' .$country->country_name. '", ';
-                                                    }else{
+                                                $city = common\models\City::find()->where(['id' => $value])->one();
+                                                if (!empty($city)) {
+                                                    $country = \common\models\Country::find()->where(['id' => $city->country])->one();
+                                                    if (!empty($country)) {
+                                                        $your_search_filter .= '"' . $city->city . ' - ' . $country->country_name . '", ';
+                                                    } else {
                                                         $your_search_filter .= '"' . $city->city . '", ';
                                                     }
                                                 }
