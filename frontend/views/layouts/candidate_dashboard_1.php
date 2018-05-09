@@ -30,7 +30,7 @@ AppAsset::register($this);
                             <a href="index.php"><img src="<?= Yii::$app->homeUrl ?>images/home/site-logo.png" alt="" class="img-responsive" /></a>
                         </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                         <nav class="navbar navbar-default navbar-static-top">
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -42,25 +42,25 @@ AppAsset::register($this);
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav scrollto">
-                                    <li><?= Html::a('Home', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Employers', ['/employer/index']) ?></li>
-                                    <li><?= Html::a('Job Sekeers', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Blog', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Contact Us', ['/site/index']) ?></li>
-                                    <li class="dropdown user-prfile-img"><a class="dropdown-toggle" data-toggle="dropdown" href=""><img width="20" height="20" src="<?= Yii::$app->homeUrl ?>images/icons/user-icon-3.svg" alt="" class="img-responsive" /> Hi <b><?= Yii::$app->session['candidate']['id'] != '' ? Yii::$app->session['candidate']['user_name'] : '' ?></b> <i class=" fa fa-angle-down"></i></a>
+                                    <li><a href="">Home</a></li>
+                                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">My Account <i class=" fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu">
-                                            <li><?= Html::a('My Account', ['/candidate/update-profile']) ?></li>
-                                            <?php
-                                            echo '<li>'
-                                            . Html::beginForm(['/candidate/logout'], 'post', ['style' => '', 'class' => 'sign-out']) . '<a>'
-                                            . Html::submitButton(
-                                                    'Sign out', ['class' => '', 'style' => '']
-                                            ) . '</a>'
-                                            . Html::endForm()
-                                            . '</li>';
-                                            ?>
+                                            <li><?= Html::a('User Details', ['/candidate/index']) ?></li>
+                                            <li><?= Html::a('Profile Edit', ['/candidate/update-profile']) ?></li>
+                                            <li><?= Html::a('Online CV', ['/candidate/online-curriculum-vitae']) ?></li>
+                                            <li><?= Html::a('Reset Password', ['/candidate/reset-password']) ?></li>
                                         </ul>
                                     </li>
+                                    <?php
+                                    echo '<li>'
+                                    . Html::beginForm(['/candidate/logout'], 'post', ['style' => '']) . '<a>'
+                                    . Html::submitButton(
+                                            'Sign out', ['class' => '', 'style' => 'background: white;border: none;color: #333;padding-top: 10px;']
+                                    ) . '</a>'
+                                    . Html::endForm()
+                                    . '</li>';
+                                    ?>
+                                    <li><a href="">Hi <b><?= Yii::$app->session['candidate']['id'] != '' ? Yii::$app->session['candidate']['user_name'] : '' ?></b></a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -73,24 +73,3 @@ AppAsset::register($this);
     </body>
 </html>
 <?php $this->endPage() ?>
-
-<script>
-    $(document).ready(function () {
-        $(window).bind('scroll', function () {
-            var navHeight = $(window).height() - 75;
-            if ($(window).scrollTop() > navHeight) {
-                $('.header-stricky').addClass('fixed');
-            } else {
-                $('.header-stricky').removeClass('fixed');
-            }
-        });
-        $(window).bind('scroll', function () {
-            var navHeight = $(window).height() - 75;
-            if ($(window).scrollTop() > navHeight) {
-                $('aside').addClass('fixed');
-            } else {
-                $('aside').removeClass('fixed');
-            }
-        });
-    });
-</script>

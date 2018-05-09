@@ -155,3 +155,15 @@ AppAsset::register($this);
     </body>
 </html>
 <?php $this->endPage() ?>
+<script>
+    $(document).ready(function () {
+        $(window).bind('scroll', function () {
+            var navHeight = $(window).height() - 75;
+            if ($(window).scrollTop() > navHeight) {
+                $('.header-stricky').addClass('fixed');
+            } else {
+                $('.header-stricky').removeClass('fixed');
+            }
+        });
+    });
+</script>

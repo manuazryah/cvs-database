@@ -14,47 +14,59 @@ $this->params['breadcrumbs'][] = $this->title;
     <section class="manage">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <?php
-                    $form = ActiveForm::begin([
-                                'options' => [
-                                    'class' => 'panel-body user-details-form'
-                                ]
-                    ]);
-                    ?>
-                    <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'user_name')->textInput() ?>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-12">
+                    <aside  id="target" class="aside">
+                        <h4 class="title">My Account</h4>
+                        <ul>
+                            <li class="active"><?= Html::a('User Details', ['/candidate/index']) ?></li>
+                            <li><?= Html::a('Profile Edit', ['/candidate/update-profile']) ?></li>
+                            <li><?= Html::a('Online CV', ['/candidate/online-curriculum-vitae']) ?></li>
+                            <li><?= Html::a('Reset Password', ['/candidate/reset-password']) ?></li>
+                        </ul>
+                    </aside>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-lg-12">
+                    <div class="rightside-box">
+                        <?= \common\widgets\Alert::widget(); ?>
+                        <?php
+                        $form = ActiveForm::begin();
+                        ?>
+                        <div class="form-group col-md-6 p-l">
+                            <?= $form->field($model, 'user_name')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-6 p-r">
+                            <?= $form->field($model, 'email')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-6 p-l">
+                            <?= $form->field($model, 'phone')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-6 p-r">
+                            <?= $form->field($model, 'alternate_phone')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-6 p-l">
+                            <?= $form->field($model, 'facebook_link')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-6 p-r">
+                            <?= $form->field($model, 'linked_in_link')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-6 p-l">
+                            <?= $form->field($model, 'google_link')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-6 p-r">
+                            <?= $form->field($model, 'youtube_link')->textInput() ?>
+                        </div>
+                        <div class="form-group col-md-12 p-l p-r">
+                            <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?>
+                        </div>
+                        <div class="form-group col-md-12 p-l p-r">
+                            <?= $form->field($model, 'alternate_address')->textarea(['rows' => 3]) ?>
+                        </div>
+                        <div class="clearfix"></div>
+                        <?= Html::submitButton('Submit', ['class' => 'btn btn-larger btn-block submit ']) ?>
+                        <?php ActiveForm::end(); ?>
+                          <div class="clearfix"></div>
                     </div>
-                    <div class="form-group col-md-6 p-r">
-                        <?= $form->field($model, 'email')->textInput() ?>
-                    </div>
-                    <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'phone')->textInput() ?>
-                    </div>
-                    <div class="form-group col-md-6 p-r">
-                        <?= $form->field($model, 'alternate_phone')->textInput() ?>
-                    </div>
-                    <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'facebook_link')->textInput() ?>
-                    </div>
-                    <div class="form-group col-md-6 p-r">
-                        <?= $form->field($model, 'linked_in_link')->textInput() ?>
-                    </div>
-                    <div class="form-group col-md-6 p-l">
-                        <?= $form->field($model, 'google_link')->textInput() ?>
-                    </div>
-                    <div class="form-group col-md-6 p-r">
-                        <?= $form->field($model, 'youtube_link')->textInput() ?>
-                    </div>
-                    <div class="form-group col-md-12 p-l p-r">
-                        <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?>
-                    </div>
-                    <div class="form-group col-md-12 p-l p-r">
-                        <?= $form->field($model, 'alternate_address')->textarea(['rows' => 3]) ?>
-                    </div>
-                    <div class="clearfix"></div>
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-submit']) ?>
-                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>

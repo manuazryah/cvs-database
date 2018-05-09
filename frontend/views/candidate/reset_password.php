@@ -3,44 +3,52 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
-<div class="page_banner banner employer-banner">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <div class="banner-heading">Reset Password</div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <main id="maincontent" class="my-account">
     <section class="manage">
         <div class="container">
             <div class="row">
-                <div class="col-md-3"></div>
-
-                <div class="col-md-6">
-                    <?= \common\widgets\Alert::widget(); ?>
-                    <?php
-                    $form = ActiveForm::begin();
-                    ?>
-                    <div class="row p_b30">
-                        <div class="col-md-12 col-sm-12">
-                            <?= $form->field($model, 'password')->passwordInput()->label('Old Password *') ?>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <?= $form->field($model, 'new_password')->passwordInput()->label('New Password *') ?>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <?= $form->field($model, 'confirm_password')->passwordInput()->label('Confirm Password *') ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <?= Html::submitButton('Submit', ['class' => 'btn btn-large btn-submit']) ?>
-                        <?php // Html::a('Reset', ['reset-password'], ['class' => 'btn btn-large btn-default']) ?>
-                    </div>
-                    <?php ActiveForm::end(); ?>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-lg-12">
+                    <aside  id="target" class="aside">
+                        <h4 class="title">My Account</h4>
+                        <ul>
+                            <li><?= Html::a('User Details', ['/candidate/index']) ?></li>
+                            <li><?= Html::a('Profile Edit', ['/candidate/update-profile']) ?></li>
+                            <li><?= Html::a('Online CV', ['/candidate/online-curriculum-vitae']) ?></li>
+                            <li class="active"><?= Html::a('Reset Password', ['/candidate/reset-password']) ?></li>
+                        </ul>
+                    </aside>
                 </div>
-                <div class="col-md-3"></div>
+
+                <div class="col-lg-9 col-md-9 col-sm-9 col-lg-12">
+                    <div class="rightside-box">
+                        <?= \common\widgets\Alert::widget(); ?>
+                        <?php
+                        $form = ActiveForm::begin([
+                                    'options' => [
+                                        'class' => 'panel-body register-form'
+                                    ]
+                                        ]
+                        );
+                        ?>
+                        <div class="p_b30">
+                            <div class="form-group col-md-4 p-l">
+                                <?= $form->field($model, 'password')->passwordInput()->label('Old Password *') ?>
+                            </div>
+                            <div class="form-group col-md-4 p-l">
+                                <?= $form->field($model, 'new_password')->passwordInput()->label('New Password *') ?>
+                            </div>
+                            <div class="form-group col-md-4 p-l">
+                                <?= $form->field($model, 'confirm_password')->passwordInput()->label('Confirm Password *') ?>
+                            </div>
+                            <div class="form-group col-md-12 p-l">
+                                <?= Html::submitButton('Submit', ['class' => 'btn btn-larger btn-block submit']) ?>
+                                <?php // Html::a('Reset', ['reset-password'], ['class' => 'btn btn-large btn-default']) ?>
+                            </div>
+                            <?php ActiveForm::end(); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
