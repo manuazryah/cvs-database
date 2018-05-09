@@ -2055,6 +2055,14 @@ label span{ color: #7d7d7d; font-weight: 500;}
     float: right;
     margin-bottom: 25px;
 }
+.my-account #addeducation {
+    background: #444444;
+    color: white;
+    width: auto;
+    text-transform: capitalize;
+    float: right;
+    margin-bottom: 25px;
+}
 .my-account .submit{
     width: fit-content;
 }
@@ -2320,11 +2328,11 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .mt95{
     margin-top: 95px !important;
 }
-.my-account .append-box:first-child{
+/*.my-account .append-box:first-child{
     padding-top: 0px;
     border-top: 0px solid black;
     padding-bottom: 0px;
-}
+}*/
 .my-account .append-box{
     border: 1px solid #e1e1e1;
     padding: 30px;
@@ -2332,9 +2340,9 @@ label span{ color: #7d7d7d; font-weight: 500;}
     padding-bottom: 15px;
     position: relative;
 }
-.my-account .append-box:last-child{
+/*.my-account .append-box:last-child{
     margin-bottom: 0px;
-}
+}*/
 .my-account .append-box .remove{
     position: absolute;
     top: 0px;

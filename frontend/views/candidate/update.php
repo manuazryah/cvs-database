@@ -220,104 +220,96 @@ if ($model->current_country != '') {
 
                                         <!-- Experience -->
                                         <h5>Experience</h5>
-                                        <div class="append-box">
-                                            <a href=""><button class="remove"><i class="fa fa-close"></i></button></a>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="company" class="form-control" placeholder="Company">
+                                        <div id="p_experience">
+                                            <?php
+                                            if (!empty($model_experience)) {
+                                                foreach ($model_experience as $datas) {
+                                                    if (!empty($datas)) {
+                                                        ?>
+                                                        <div class="append-box">
+                                                            <a id="expremove-<?= $datas->id; ?>" class="expremove remove"><i class="fa fa-close"></i></a>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="formrow">
+                                                                        <input type="text" name="expupdatee[<?= $datas->id; ?>][company_name][]" class="form-control" placeholder="Company" value="<?= $datas->company_name ?>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="formrow">
+                                                                        <input type="text" name="expupdatee[<?= $datas->id; ?>][designation][]" class="form-control" placeholder="Designation" value="<?= $datas->designation ?>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="formrow">
+                                                                        <input type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control" placeholder="Join From" value="<?= $datas->from_date ?>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="formrow">
+                                                                        <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" placeholder="End on" value="<?= $datas->to_date ?>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="formrow">
+                                                                        <select class="form-control" name="expupdatee[<?= $datas->id; ?>][country][]">
+                                                                            <option value="">Select Country</option>
+                                                                            <?php foreach ($country_datas as $country_data) { ?>
+                                                                                <option value="<?= $country_data->id ?>" <?= $datas->country == $country_data->id ? 'selected' : '' ?>><?= $country_data->country_name ?></option>
+                                                                            <?php }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="formrow">
+                                                                        <textarea class="form-control" name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" placeholder="About Company"><?= $datas->job_responsibility ?></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                            <div class="append-box">
+                                                <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <input type="text" name="expcreate[company_name][]" class="form-control" placeholder="Company">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="drsignation" class="form-control" placeholder="Designation">
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <input type="text" name="expcreate[designation][]" class="form-control" placeholder="Designation">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="formrow">
-                                                        <select class="form-control" name="join-frm">
-                                                            <option>Join From</option>
-                                                            <option>2011</option>
-                                                            <option>2012</option>
-                                                            <option>2013</option>
-                                                            <option>2014</option>
-                                                            <option>2015</option>
-                                                            <option>2016</option>
-                                                        </select>
+                                                    <div class="col-md-3">
+                                                        <div class="formrow">
+                                                            <input type="date" name="expcreate[from_date][]" class="form-control" placeholder="Join From">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="formrow">
-                                                        <select class="form-control" name="endon">
-                                                            <option>End on</option>
-                                                            <option>2011</option>
-                                                            <option>2012</option>
-                                                            <option>2013</option>
-                                                            <option>2014</option>
-                                                            <option>2015</option>
-                                                            <option>Present</option>
-                                                        </select>
+                                                    <div class="col-md-3">
+                                                        <div class="formrow">
+                                                            <input type="date" name="expcreate[to_date][]" class="form-control" placeholder="End on">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="country" class="form-control" placeholder="Country">
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <select class="form-control" name="expcreate[country][]">
+                                                                <option value="">Select Country</option>
+                                                                <?php foreach ($country_datas as $country_data) { ?>
+                                                                    <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
+                                                                <?php }
+                                                                ?>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="formrow">
-                                                        <textarea class="form-control" name="about-company" placeholder="About Company"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="append-box">
-                                            <a href=""><button class="remove"><i class="fa fa-close"></i></button></a>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="company" class="form-control" placeholder="Company">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="drsignation" class="form-control" placeholder="Designation">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="formrow">
-                                                        <select class="form-control" name="join-frm">
-                                                            <option>Join From</option>
-                                                            <option>2011</option>
-                                                            <option>2012</option>
-                                                            <option>2013</option>
-                                                            <option>2014</option>
-                                                            <option>2015</option>
-                                                            <option>2016</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="formrow">
-                                                        <select class="form-control" name="endon">
-                                                            <option>End on</option>
-                                                            <option>2011</option>
-                                                            <option>2012</option>
-                                                            <option>2013</option>
-                                                            <option>2014</option>
-                                                            <option>2015</option>
-                                                            <option>Present</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="country" class="form-control" placeholder="Country">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="formrow">
-                                                        <textarea class="form-control" name="about-company" placeholder="About Company"></textarea>
+                                                    <div class="col-md-12">
+                                                        <div class="formrow">
+                                                            <textarea class="form-control" name="expcreate[job_responsibility][]" placeholder="Job Responsibility"></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -328,116 +320,118 @@ if ($model->current_country != '') {
                                         <div class="clearfix"></div>
                                         <hr>
                                         <br/>
-
+                                        <div class="speration"></div>
                                         <!-- Education -->
                                         <h5>Education</h5>
-                                        <div class="append-box">
-                                            <a href=""><button class="remove"><i class="fa fa-close"></i></button></a>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="course" class="form-control" placeholder="Course Name">
+                                        <div id="p_scents">
+                                            <!--<input type="hidden" id="delete_port_vals"  name="delete_port_vals" value="">-->
+                                            <?php
+                                            if (!empty($model_education) && !$model->isNewRecord) {
+                                                foreach ($model_education as $data) {
+                                                    if (!empty($data)) {
+                                                        ?>
+                                                        <div class="append-box">
+                                                            <a id="eduremove-<?= $data->id; ?>" class="eduremove remove"><i class="fa fa-close"></i></a>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="formrow">
+                                                                        <select class="form-control" name="updatee[<?= $data->id; ?>][qualification][]">
+                                                                            <option value="">Select Qualification</option>
+                                                                            <?php foreach ($course_datas as $course_data) { ?>
+                                                                                <option value="<?= $course_data->id ?>" <?= $data->qualification == $course_data->id ? 'selected' : '' ?>><?= $course_data->course_name ?></option>
+                                                                            <?php }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="formrow">
+                                                                        <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][course][]" value="<?= $data->course_name ?>" placeholder="Course Name">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="formrow">
+                                                                        <input type="text" class="form-control" name="updatee[<?= $data->id; ?>][college][]" value="<?= $data->collage_university ?>" placeholder="College / University">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="formrow">
+                                                                        <input type="date" name="updatee[<?= $data->id; ?>][from_date][]" class="form-control" value="<?= $data->from_year ?>" placeholder="Join From">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="formrow">
+                                                                        <input type="date" name="updatee[<?= $data->id; ?>][to_date][]" class="form-control" value="<?= $data->to_year ?>" placeholder="End On">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="formrow">
+                                                                        <select class="form-control" name="updatee[<?= $data->id; ?>][country][]">
+                                                                            <option value="">Select Country</option>
+                                                                            <?php foreach ($country_datas as $country_data) { ?>
+                                                                                <option value="<?= $country_data->id ?>" <?= $data->country == $country_data->id ? 'selected' : '' ?>><?= $country_data->country_name ?></option>
+                                                                            <?php }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                            <div class="append-box">
+                                                <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <select class="form-control" name="create[qualification][]">
+                                                                <option value="">Select Qualification</option>
+                                                                <?php foreach ($course_datas as $course_data) { ?>
+                                                                    <option value="<?= $course_data->id ?>"><?= $course_data->course_name ?></option>
+                                                                <?php }
+                                                                ?>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="university" class="form-control" placeholder="College / University">
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <input type="text" class="form-control" name="create[course][]" placeholder="Course Name">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="formrow">
-                                                        <select class="form-control" name="join-frm">
-                                                            <option>Join From</option>
-                                                            <option>2011</option>
-                                                            <option>2012</option>
-                                                            <option>2013</option>
-                                                            <option>2014</option>
-                                                            <option>2015</option>
-                                                            <option>2016</option>
-                                                        </select>
+                                                    <div class="col-md-12">
+                                                        <div class="formrow">
+                                                            <input type="text" class="form-control" name="create[college][]" placeholder="College / University">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="formrow">
-                                                        <select class="form-control" name="endon">
-                                                            <option>End on</option>
-                                                            <option>2011</option>
-                                                            <option>2012</option>
-                                                            <option>2013</option>
-                                                            <option>2014</option>
-                                                            <option>2015</option>
-                                                            <option>Present</option>
-                                                        </select>
+                                                    <div class="col-md-3">
+                                                        <div class="formrow">
+                                                            <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="country" class="form-control" placeholder="Country">
+                                                    <div class="col-md-3">
+                                                        <div class="formrow">
+                                                            <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="formrow">
-                                                        <textarea class="form-control" name="about-company" placeholder="About Company"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="speration"></div>
-
-                                        <div class="append-box">
-                                            <a href=""><button class="remove"><i class="fa fa-close"></i></button></a>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="course" class="form-control" placeholder="Course Name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="university" class="form-control" placeholder="College / University">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="formrow">
-                                                        <select class="form-control" name="join-frm">
-                                                            <option>Join From</option>
-                                                            <option>2011</option>
-                                                            <option>2012</option>
-                                                            <option>2013</option>
-                                                            <option>2014</option>
-                                                            <option>2015</option>
-                                                            <option>2016</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="formrow">
-                                                        <select class="form-control" name="endon">
-                                                            <option>End on</option>
-                                                            <option>2011</option>
-                                                            <option>2012</option>
-                                                            <option>2013</option>
-                                                            <option>2014</option>
-                                                            <option>2015</option>
-                                                            <option>Present</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="formrow">
-                                                        <input type="text" name="country" class="form-control" placeholder="Country">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="formrow">
-                                                        <textarea class="form-control" name="about-company" placeholder="About Company"></textarea>
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <select class="form-control" name="create[country][]">
+                                                                <option value="">Select Country</option>
+                                                                <?php foreach ($country_datas as $country_data) { ?>
+                                                                    <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
+                                                                <?php }
+                                                                ?>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
-                                            <a id="addexperience" class="btn btn-icon btn-blue addScnt btn-larger btn-block" ><i class="fa fa-plus"></i> Add More</a>
+                                            <a id="addeducation" class="btn btn-icon btn-blue addScnt btn-larger btn-block" ><i class="fa fa-plus"></i> Add More</a>
                                         </div>
                                         <div class="clearfix"></div>
                                         <hr>
@@ -502,7 +496,7 @@ if ($model->current_country != '') {
 //                            if (file_exists($dirPath)) {
 //
                                             ?>
-                                            <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                                                                                     ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                                            <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                                                                                                   ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
                                             <?php
 //                            }
 //                        }
@@ -587,15 +581,7 @@ if ($model->current_country != '') {
 </script>
 <script>
     $(document).ready(function () {
-        var counter = 0;
-
         $("#addeducation").on("click", function () {
-
-            var counter = $('#myTable tr').length - 2;
-
-            $("#ibtnDel").on("click", function () {
-                counter = -1
-            });
             $.ajax({
                 type: 'POST',
                 cache: false,
@@ -603,17 +589,15 @@ if ($model->current_country != '') {
                 data: {},
                 url: '<?= Yii::$app->homeUrl ?>candidate/get-acadamics',
                 success: function (data) {
-                    $("table.order-list").append(data);
+                    $('#p_scents').append(data);
                 }
             });
             counter++;
         });
 
-        $("table.order-list").on("click", "#ibtnDel", function (event) {
-            $(this).closest("tr").remove();
-        });
 
-        $(document).on('click', '.eduremove', function () {
+        $(document).on('click', '.eduremove', function (event) {
+            event.preventDefault();
             var current_row_id = $(this).attr('id').match(/\d+/); // 123456
             $.ajax({
                 type: 'POST',
@@ -623,7 +607,7 @@ if ($model->current_country != '') {
                 url: '<?= Yii::$app->homeUrl ?>candidate/remove-acadamics',
                 success: function (data) {
                     if (data == 1) {
-                        $('#edurow-' + current_row_id).remove();
+                        $('#eduremove-' + current_row_id).parents('.append-box').remove();
                     }
                 }
             });
@@ -634,14 +618,7 @@ if ($model->current_country != '') {
 </script>
 <script>
     $(document).ready(function () {
-        var counter = 0;
-
         $("#addexperience").on("click", function () {
-            var counter = $('#experienceTable tr').length - 2;
-
-            $("#ibtnDele").on("click", function () {
-                counter = -1
-            });
             $.ajax({
                 type: 'POST',
                 cache: false,
@@ -649,18 +626,18 @@ if ($model->current_country != '') {
                 data: {},
                 url: '<?= Yii::$app->homeUrl ?>candidate/get-experience',
                 success: function (data) {
-                    $("table.experience-list").append(data);
-                    $('.txtEditor').ckeditor();
+                    $('#p_experience').append(data);
                 }
             });
-            counter++;
+        });
+        $(document).on('click', '.ibtnDele', function () {
+            $(this).parents('.append-box').remove();
+            return false;
         });
 
-        $("table.experience-list").on("click", "#ibtnDele", function (event) {
-            $(this).closest("tr").remove();
-        });
 
-        $(document).on('click', '.expremove', function () {
+        $(document).on('click', '.expremove', function (event) {
+            event.preventDefault();
             var current_row_id = $(this).attr('id').match(/\d+/); // 123456
             $.ajax({
                 type: 'POST',
@@ -670,7 +647,7 @@ if ($model->current_country != '') {
                 url: '<?= Yii::$app->homeUrl ?>candidate/remove-experience',
                 success: function (data) {
                     if (data == 1) {
-                        $('#exprow-' + current_row_id).remove();
+                        $('#expremove-' + current_row_id).parents('.append-box').remove();
                     }
                 }
             });
