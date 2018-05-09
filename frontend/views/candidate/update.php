@@ -575,7 +575,7 @@ if ($model->current_country != '') {
 </script>
 <script>
     $(document).ready(function () {
-        $("#addeducation").on("click", function () {
+        $(document).on('click', '#addeducation', function (event) {
             $.ajax({
                 type: 'POST',
                 cache: false,
@@ -612,7 +612,7 @@ if ($model->current_country != '') {
 </script>
 <script>
     $(document).ready(function () {
-        $("#addexperience").on("click", function () {
+        $(document).on('click', '#addexperience', function (event) {
             $.ajax({
                 type: 'POST',
                 cache: false,
