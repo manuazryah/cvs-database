@@ -302,7 +302,7 @@ if ($model->current_country != '') {
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="formrow">
-                                                            <textarea name="expcreate[job_responsibility][]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"><?= $datas->job_responsibility ?></textarea>
+                                                            <textarea name="expcreate[job_responsibility][]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -434,7 +434,7 @@ if ($model->current_country != '') {
                                             <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
                                         </div>
                                         <div class="form-group col-md-12 p-l p-r">
-                                            <?= $form->field($model, 'extra_curricular_activities')->textarea(['rows' => 3]) ?>
+                                            <textarea name="CandidateProfile[extra_curricular_activities]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"><?= $model->extra_curricular_activities ?></textarea>
                                         </div>
                                         <div class="form-group col-md-6 p-l">
                                             <?php $languages = ArrayHelper::map(\common\models\Languages::findAll(['status' => 1]), 'id', 'language'); ?>
@@ -625,6 +625,10 @@ if ($model->current_country != '') {
             });
         });
         $(document).on('click', '.ibtnDele', function () {
+            $(this).parents('.append-box').remove();
+            return false;
+        });
+        $(document).on('click', '.ibtnDel', function () {
             $(this).parents('.append-box').remove();
             return false;
         });
