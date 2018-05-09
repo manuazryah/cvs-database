@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
                     <div class="row">
                         <div class="col-md-8 col-sm-8"> 
                             <!-- Candidate Info -->
-                            <div class="candidateinfo">
+                            <div class="candidateinfo im-user-detail">
                                 <div class="userPic"> <?php
                                     if ($model->photo != '') {
                                         $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
@@ -23,16 +23,19 @@ use yii\widgets\ActiveForm;
                                             echo '';
                                         }
                                     }
-                                    ?></div>
+                                    ?>
+                                </div>
                                 <div class="title"><?= $user_details->user_name ?></div>
                                 <div class="desi"><?= $model->title ?></div>
-                                <div class="loctext"><i class="fa fa-history" aria-hidden="true"></i> Employed but looking for job</div>
+                                <div class="loctext"><i class="fa fa-flag" aria-hidden="true"></i> <?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></div>
+                                <div class="loctext"><i class="fa fa-map-marker" aria-hidden="true"></i> <?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?> , <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></div>
+                                <div class="loctext has_job looking"><i class="fa fa-suitcase" aria-hidden="true"></i> Employed but looking for job</div>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4"> 
                             <!-- Candidate Contact -->
-                            <div class="candidateinfo">
+                            <div class="candidateinfo cont-right jobdetail">
                                 <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i> <?= $user_details->phone ?></div>
                                 <div class="loctext"><i class="fa fa-envelope" aria-hidden="true"></i> <?= $user_details->email ?></div>
                                 <div class="loctext"><i class="fa fa-globe" aria-hidden="true"></i> www.mywebsite.com</div>

@@ -1965,6 +1965,13 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .my-account .manage .formpanel .formrow {
     margin-bottom: 15px;
 }
+.my-account input[type=date]{
+    height: 47px !important;
+}
+.my-account input[type=date]::-webkit-inner-spin-button,
+.my-account input[type=date]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
 .my-account .manage .formpanel .form-control {
     height: auto;
     border-radius: 0;
@@ -2121,10 +2128,13 @@ label span{ color: #7d7d7d; font-weight: 500;}
     padding: 25px;
     border-bottom: 1px solid #e4e4e4;
 }
+.job-header .candidateinfo.im-user-detail .loctext{
+    line-height: 20px;
+}
 .job-header .jobinfo .candidateinfo .userPic {
     float: left;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     background: #cbcbcb;
     margin-right: 20px;
     border: 5px solid #3192c5;
@@ -2138,7 +2148,13 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .job-header .jobinfo .candidateinfo .desi {
     font-size: 18px;
     color: #666;
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+.job-header .jobinfo .candidateinfo.cont-right{
+    border-left: 1px solid #e4e4e4;
+    padding: unset;
+    padding-left: 20px;
 }
 .job-header .jobinfo .candidateinfo .loctext {
     line-height: 24px;
@@ -2360,7 +2376,14 @@ label span{ color: #7d7d7d; font-weight: 500;}
     width: 100%;
     height: auto;
     min-height: 125px;
+    border-radius: 0;
+    padding: 10px 13px;
+    border-color: #ddd;
+    text-transform: capitalize;
 }
 .pb0{
     padding-bottom: 0px !important;
+}
+.has_job.looking i{
+    color: #00000057
 }
