@@ -14,7 +14,7 @@ class AppAsset extends AssetBundle {
     public $css = [
         'css/bootstrap.min.css',
         'css/flexslider.css',
-//        'css/font-awesome.min.css',
+        'css/font-awesome.min.css',
         'https://use.fontawesome.com/releases/v5.0.8/css/all.css',
         'css/themify-icons.css',
         'css/style.css',

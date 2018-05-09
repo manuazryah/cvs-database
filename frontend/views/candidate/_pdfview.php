@@ -8,7 +8,7 @@
                             <tr>
                                 <td style="width: 90%">
                                     <table style="width: 100%">
-                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?= $model->name ?></h4></strong></td></tr>
+                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px; text-transform: capitalize;"><?= $model->name ?></h4></strong></td></tr>
                                         <tr>
                                             <td style="line-height: 30px;"><strong>Title : </strong><?= $model->title ?></td>
                                             <td style="line-height: 30px;"><strong>Reference No : </strong><?= $candidate->user_id ?></td>

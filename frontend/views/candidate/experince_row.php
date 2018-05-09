@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-12">
             <div class="formrow">
-                <textarea class="form-control" name="about-company" placeholder="Job Responsibility"></textarea>
+                <textarea name="expcreate[job_responsibility][]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"><?= $datas->job_responsibility ?></textarea>
             </div>
         </div>
     </div>

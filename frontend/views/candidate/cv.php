@@ -66,6 +66,7 @@ use yii\widgets\ActiveForm;
                                 <li>Proin egestas dui et pulvinar pellentesque.</li>
                                 <li>In ultricies nulla eget lacus tempor lobortis.</li>
                             </ul>
+                            <span><?= $model->executive_summary ?></span>
                         </div>
                     </div>
 

@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
                         <?php
                         $form = ActiveForm::begin([
                                     'options' => [
-                                        'class' => 'panel-body register-form'
+                                        'class' => 'panel-body register-form pb0'
                                     ]
                                         ]
                         );

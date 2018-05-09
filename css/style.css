@@ -2020,11 +2020,13 @@ label span{ color: #7d7d7d; font-weight: 500;}
     color: #fff;
     margin-bottom: 0px;
     position: absolute;
-    bottom: 6px;
+    bottom: 0px;
     margin: 0 auto;
     text-align: center;
     left: 0px;
     right: 0px;
+    padding: 5px 0px;
+    background: black;
 }
 .my-account .profile-image .field-candidateprofile-photo #candidateprofile-photo{
     position: absolute;
@@ -2351,4 +2353,13 @@ label span{ color: #7d7d7d; font-weight: 500;}
     background: #fe3b2f;
     border: none;
     color: white;
+    padding: 1px 6px;
+}
+.my-account .ember-text-area{
+    width: 100%;
+    height: auto;
+    min-height: 125px;
+}
+.pb0{
+    padding-bottom: 0px !important;
 }

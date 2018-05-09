@@ -182,13 +182,7 @@ if ($model->current_country != '') {
                                                 <?= $form->field($model, 'job_status')->dropDownList($jobstatus, ['prompt' => '-Choose a Job Status-']) ?>
                                             </div>
                                             <div class="form-group col-md-12 p-l p-r">
-                                                <?=
-                                                $form->field($model, 'executive_summary')->widget(CKEditor::className(), [
-                                                    'options' => ['rows' => 3],
-                                                    'preset' => 'basic'
-                                                ])
-                                                ?>
-                                                <?php // $form->field($model, 'executive_summary')->textarea(['rows' => 3])    ?>
+                                                <textarea name="CandidateProfile[executive_summary]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;"><?= $model->executive_summary ?></textarea>
                                             </div>
                                         </div>
                                         <hr>
@@ -262,7 +256,7 @@ if ($model->current_country != '') {
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <div class="formrow">
-                                                                        <textarea class="form-control" name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" placeholder="About Company"><?= $datas->job_responsibility ?></textarea>
+                                                                        <textarea name="expupdatee[<?= $datas->id; ?>][job_responsibility][]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"><?= $datas->job_responsibility ?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -308,7 +302,7 @@ if ($model->current_country != '') {
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="formrow">
-                                                            <textarea class="form-control" name="expcreate[job_responsibility][]" placeholder="Job Responsibility"></textarea>
+                                                            <textarea name="expcreate[job_responsibility][]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"><?= $datas->job_responsibility ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -496,7 +490,7 @@ if ($model->current_country != '') {
 //                            if (file_exists($dirPath)) {
 //
                                             ?>
-                                            <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                                                                                                   ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                                            <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                                                                                                      ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
                                             <?php
 //                            }
 //                        }
