@@ -236,11 +236,20 @@ if ($model->current_country != '') {
                                                                 <div class="col-md-3">
                                                                     <div class="formrow">
                                                                         <input type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control" placeholder="Join From" value="<?= $datas->from_date ?>">
+                                                                        <label for="chkispresent">
+                                                                            <input type="checkbox" id="chkispresent" />
+                                                                            I currently work here
+                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="formrow">
-                                                                        <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" placeholder="End on" value="<?= $datas->to_date ?>">
+                                                                        <div id="ispresent" style="display: none">
+                                                                            Present
+                                                                        </div>
+                                                                        <div id="notpresent">
+                                                                            <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" placeholder="End on" value="<?= $datas->to_date ?>">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
@@ -325,6 +334,13 @@ if ($model->current_country != '') {
                                                     if (!empty($data)) {
                                                         ?>
                                                         <div class="append-box">
+                                                            <ul class="choose-qualification">
+                                                                <li>
+                                                                    <input type="radio" id="f-option" name="selector">
+                                                                    <label for="f-option">Highest Qualification</label>
+                                                                    <div class="check"></div>
+                                                                </li>
+                                                            </ul>
                                                             <a id="eduremove-<?= $data->id; ?>" class="eduremove remove"><i class="fa fa-close"></i></a>
                                                             <div class="row">
                                                                 <div class="col-md-6">
@@ -490,7 +506,7 @@ if ($model->current_country != '') {
 //                            if (file_exists($dirPath)) {
 //
                                             ?>
-                                            <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                                                                                                      ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                                            <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                                                                                                                       ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
                                             <?php
 //                            }
 //                        }
@@ -649,6 +665,15 @@ if ($model->current_country != '') {
                     }
                 }
             });
+        });
+        $(document).on('click', '#chkispresent', function (event) {
+            if ($(this).is(":checked")) {
+                $("#ispresent").show();
+                $("#notpresent").hide();
+            } else {
+                $("#ispresent").hide();
+                $("#notpresent").show();
+            }
         });
         $(document).on('click', '.modalButton', function () {
 

@@ -29,13 +29,14 @@ use yii\widgets\ActiveForm;
                                 <div class="desi"><?= $model->title ?></div>
                                 <div class="loctext"><i class="fa fa-flag" aria-hidden="true"></i> <?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></div>
                                 <div class="loctext"><i class="fa fa-map-marker" aria-hidden="true"></i> <?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?> , <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></div>
-                                <div class="loctext has_job looking"><i class="fa fa-suitcase" aria-hidden="true"></i> Employed but looking for job</div>
+                                <div class="loctext employed-looking"><i class="fa fa-cube" aria-hidden="true"></i> Employed but looking for job</div>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4"> 
                             <!-- Candidate Contact -->
                             <div class="candidateinfo cont-right jobdetail">
+                                <h3 class="mt0">Contact Info</h3>
                                 <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i> <?= $user_details->phone ?></div>
                                 <div class="loctext"><i class="fa fa-envelope" aria-hidden="true"></i> <?= $user_details->email ?></div>
                                 <div class="loctext"><i class="fa fa-globe" aria-hidden="true"></i> www.mywebsite.com</div>
@@ -47,7 +48,7 @@ use yii\widgets\ActiveForm;
 
                 <!-- Buttons -->
                 <div class="jobButtons"> 
-                    <a href="#." class="btn apply"><i class="fa fa-paper-plane" aria-hidden="true"></i> Edit my online CV</a>
+                    <?= Html::a('<i class="fa fa-paper-plane" aria-hidden="true"></i> Edit my online CV', ['update-profile'], ['target' => '_blank', 'class' => 'btn apply']) ?>
                     <?= Html::a('<img width="20" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" > Download my online CV', ['pdf-export'], ['target' => '_blank', 'class' => 'btn']) ?>
                     <?= Html::a('<img width="20" src="' . Yii::$app->homeUrl . 'images/word-icon.png" > Download my online CV', ['word-export'], ['target' => '_blank', 'class' => 'btn']) ?>
                 </div>
@@ -59,105 +60,162 @@ use yii\widgets\ActiveForm;
                     <!-- About Employee start -->
                     <div class="job-header">
                         <div class="contentbox">
-                            <h3>About me</h3>
-                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque massa vel lorem fermentum fringilla. Pellentesque id est et neque blandit ornare malesuada a mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sagittis, quam a fringilla congue, turpis turpis molestie ligula, ut laoreet elit arcu sed nulla. Sed at quam commodo, egestas turpis eget, fringilla dui. Etiam sit amet nulla metus. Etiam iaculis lobortis ultricies. <strong>Maecenas maximus magna a metus consectetur, vel fermentum nisl ultrices</strong>. Quisque eget ante id dui posuere ullamcorper ut molestie eros. Aliquam ultrices lacinia risus, at lacinia ante vehicula id. Nulla in lectus dignissim, egestas purus sit amet, mattis libero. Maecenas ullamcorper rutrum porta. </p>
-                            <ul class="check-list">
-                                <li>In non augue eget purus placerat aliquet sit amet lobortis lacus.</li>
-                                <li>Curabitur interdum nisl quis placerat ornare.</li>
-                                <li>Curabitur ornare enim ac aliquam efficitur.</li>
-                                <li>Etiam volutpat leo et orci luctus, blandit accumsan arcu placerat.</li>
-                                <li>Proin egestas dui et pulvinar pellentesque.</li>
-                                <li>In ultricies nulla eget lacus tempor lobortis.</li>
-                            </ul>
-                            <span><?= $model->executive_summary ?></span>
-                        </div>
-                    </div>
-
-                    <!-- Education start -->
-                    <div class="job-header">
-                        <div class="contentbox">
-                            <h3>Education</h3>
-                            <ul class="educationList">
-                                <li>
-                                    <div class="date">31<br>
-                                        May<br>
-                                        2012</div>
-                                    <h4>Masters Degree</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque massa vel lorem fermentum fringilla. Pellentesque id est et neque blandit ornare malesuada a mauris.</p>
-                                    <div class="clearfix"></div>
-                                </li>
-                                <li>
-                                    <div class="date">31<br>
-                                        May<br>
-                                        2012</div>
-                                    <h4>Masters Degree</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque massa vel lorem fermentum fringilla. Pellentesque id est et neque blandit ornare malesuada a mauris.</p>
-                                    <div class="clearfix"></div>
-                                </li>
-                                <li>
-                                    <div class="date">31<br>
-                                        May<br>
-                                        2012</div>
-                                    <h4>Masters Degree</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque massa vel lorem fermentum fringilla. Pellentesque id est et neque blandit ornare malesuada a mauris.</p>
-                                    <div class="clearfix"></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Experience start -->
-                    <div class="job-header">
-                        <div class="contentbox">
-                            <h3>Experience</h3>
-                            <ul class="experienceList">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-2"><img class="img-responsive" src="<?= Yii::$app->homeUrl ?>images/experience/emplogo1.jpg" alt="your alt text"></div>
-                                        <div class="col-md-10">
-                                            <h4>Company Name</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">www.companywebsite.com</div>
-                                                <div class="col-md-6">From 2014 - Present</div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque massa vel lorem fermentum fringilla. Pellentesque id est et neque blandit ornare</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-2"><img class="img-responsive" src="<?= Yii::$app->homeUrl ?>images/experience/emplogo1.jpg" alt="your alt text"></div>
-                                        <div class="col-md-10">
-                                            <h4>Company Name</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">www.companywebsite.com</div>
-                                                <div class="col-md-6">From 2014 - Present</div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque massa vel lorem fermentum fringilla. Pellentesque id est et neque blandit ornare</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-2"><img class="img-responsive" src="<?= Yii::$app->homeUrl ?>images/experience/emplogo1.jpg" alt="your alt text"></div>
-                                        <div class="col-md-10">
-                                            <h4>Company Name</h4>
-                                            <div class="row">
-                                                <div class="col-md-6">www.companywebsite.com</div>
-                                                <div class="col-md-6">From 2014 - Present</div>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque massa vel lorem fermentum fringilla. Pellentesque id est et neque blandit ornare</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="job-header">
-                        <div class="contentbox">
                             <div class="page-heading">
-                                <h4>Uploded CV</h4>
+                                <h3>Executive summary</h3>
+                                <div class="contact_details col-md-12 p-l">
+                                    <p><?= $model->executive_summary ?></p>
+                                </div>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading">
+                                <h3>Industry</h3>
+                                <div class="contact_details col-md-12 p-l">
+                                    <p>
+                                        <?php
+                                        if ($model->industry != '') {
+                                            $industry = explode(',', $model->industry);
+                                            $result = '';
+                                            $i = 0;
+                                            if (!empty($industry)) {
+                                                foreach ($industry as $val) {
+
+                                                    if ($i != 0) {
+                                                        $result .= ', ';
+                                                    }
+                                                    $industries = common\models\Industry::findOne($val);
+                                                    $result .= $industries->industry_name;
+                                                    $i++;
+                                                }
+                                            }
+                                            echo $result;
+                                        }
+                                        ?>
+                                    </p>
+                                </div>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading cv-work-experience">
+                                <h3>Work Experience</h3>
+                                <?php
+                                if (!empty($model_experience)) {
+                                    foreach ($model_experience as $experience) {
+                                        ?>
+                                        <div class="contact_details">
+                                            <div class="fleft">
+                                                <span><strong><?= $experience->designation ?> at <?= $experience->company_name ?>  <?= $experience->country != '' ? ' in ' . common\models\Country::findOne($experience->country)->country_name : '' ?></strong></span>
+                                            </div>
+                                            <div class="fright">
+                                                <span> <?= date("M Y", strtotime($experience->from_date)) ?> - <?= date("M Y", strtotime($experience->to_date)) ?></span>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <br>
+                                            <span>Job Responsibilities: <?= $experience->job_responsibility ?></span>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading cv-work-experience">
+                                <h3>Education - Academic</h3>
+                                <?php
+                                if (!empty($model_education)) {
+                                    ?>
+                                    <table class="table inner-tbl1">
+                                        <tr>
+                                            <th>Course Name</th>
+                                            <th>Colege/ University</th>
+                                            <th>Country</th>
+                                            <th>From Year</th>
+                                            <th>To Year</th>
+                                        </tr>
+                                        <?php foreach ($model_education as $education) { ?>
+                                            <tr>
+                                                <td><?= $education->course_name != '' ? \common\models\Courses::findOne($education->course_name)->cource_code : '' ?></td>
+                                                <td><?= $education->collage_university ?></td>
+                                                <td><?= $education->country != '' ? \common\models\Country::findOne($education->country)->country_name : '' ?></td>
+                                                <td><?= date("M Y", strtotime($education->from_year)) ?></td>
+                                                <td><?= date("M Y", strtotime($education->to_year)) ?></td>
+                                            </tr>
+                                        <?php }
+                                        ?>
+                                    </table>
+                                    <?php
+                                }
+                                ?>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading">
+                                <h3>Interests/ Hobbies</h3>
+                                <div class="contact_details col-md-12 p-l">
+                                    <span><?= $model->hobbies ?></span>
+                                </div>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading">
+                                <h3>Extra Curricular Activities</h3>
+                                <div class="contact_details col-md-12 p-l">
+                                    <span><?= $model->extra_curricular_activities ?></span>
+                                </div>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading">
+                                <h3>Languages Known</h3>
+                                <div class="contact_details col-md-12 p-l">
+                                    <span>
+                                        <?php
+                                        if ($model->languages_known != '') {
+                                            $language = explode(',', $model->languages_known);
+                                            $result2 = '';
+                                            $i = 0;
+                                            if (!empty($language)) {
+                                                foreach ($language as $language_data) {
+
+                                                    if ($i != 0) {
+                                                        $result2 .= ', ';
+                                                    }
+                                                    $languages = common\models\Languages::findOne($language_data);
+                                                    $result2 .= $languages->language;
+                                                    $i++;
+                                                }
+                                            }
+                                            echo $result2;
+                                        }
+                                        ?>
+                                    </span>
+                                </div>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading">
+                                <h3>Driving License</h3>
+                                <div class="contact_details col-md-12 p-l">
+                                    <span>
+                                        <?php
+                                        if ($model->driving_licences != '') {
+                                            $driving_licence = explode(',', $model->driving_licences);
+                                            $result3 = '';
+                                            $i = 0;
+                                            if (!empty($driving_licence)) {
+                                                foreach ($driving_licence as $driving_licence_data) {
+
+                                                    if ($i != 0) {
+                                                        $result3 .= ', ';
+                                                    }
+                                                    $driving_licences = common\models\Country::findOne($driving_licence_data);
+                                                    $result3 .= $driving_licences->country_name;
+                                                    $i++;
+                                                }
+                                            }
+                                            echo $result3;
+                                        }
+                                        ?>
+                                    </span>
+                                </div>
+                                <div class="borderfull-width"></div>
+                            </div>
+                            <div class="page-heading">
+                                <h3>Uploded CV</h3>
                                 <div class="contact_details col-md-12 p-l">
                                     <?php
                                     if ($model->upload_resume != '') {
@@ -189,24 +247,24 @@ use yii\widgets\ActiveForm;
                             <h3>Candidate Detail</h3>
                             <ul class="jbdetail">
                                 <li class="row">
-                                    <div class="col-md-6 col-xs-6">Experience</div>
-                                    <div class="col-md-6 col-xs-6"><span>5 Years</span></div>
+                                    <div class="col-md-6 col-xs-6">Reference No:</div>
+                                    <div class="col-md-6 col-xs-6"><span> <?= $user_details->user_id ?></span></div>
                                 </li>
                                 <li class="row">
-                                    <div class="col-md-6 col-xs-6">Age</div>
-                                    <div class="col-md-6 col-xs-6"><span>28 Years</span></div>
+                                    <div class="col-md-6 col-xs-6">Job Type:</div>
+                                    <div class="col-md-6 col-xs-6"><span> <?= $model->job_type != '' ? \common\models\JobType::findOne($model->job_type)->job_type : '' ?></span></div>
                                 </li>
                                 <li class="row">
-                                    <div class="col-md-6 col-xs-6">Current Salary($)</div>
-                                    <div class="col-md-6 col-xs-6"><span class="permanent">10K - 12K</span></div>
+                                    <div class="col-md-6 col-xs-6">Expected Salary($):</div>
+                                    <div class="col-md-6 col-xs-6"> <span class="freelance"> <?= $model->expected_salary != '' ? \common\models\ExpectedSalary::findOne($model->expected_salary)->salary_range : '' ?></span></div>
                                 </li>
                                 <li class="row">
-                                    <div class="col-md-6 col-xs-6">Expected Salary($)</div>
-                                    <div class="col-md-6 col-xs-6"><span class="freelance">14K - 18K</span></div>
+                                    <div class="col-md-6 col-xs-6">Gender:</div>
+                                    <div class="col-md-6 col-xs-6"><span><?= $model->gender != '' ? \common\models\Gender::findOne($model->gender)->gender : '' ?>  </span></div>
                                 </li>
                                 <li class="row">
-                                    <div class="col-md-6 col-xs-6">Education Levels</div>
-                                    <div class="col-md-6 col-xs-6"><span>Masters</span></div>
+                                    <div class="col-md-6 col-xs-6">DOB:</div>
+                                    <div class="col-md-6 col-xs-6"><span> <?= $model->dob ?> </span></div>
                                 </li>
                             </ul>
                         </div>
@@ -217,36 +275,27 @@ use yii\widgets\ActiveForm;
                         <div class="jobdetail">
                             <h3>Skills</h3>
                             <div class="skillswrap"> 
-                                <!-- Skill -->
-                                <h5>Photoshop</h5>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 90%"> <span>90%</span> </div>
-                                </div>
-                                <!-- Skill -->
-                                <h5>HTML5</h5>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 85%"> <span>85%</span> </div>
-                                </div>
-                                <!-- Skill -->
-                                <h5>Jquery</h5>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 90%"> <span>90%</span> </div>
-                                </div>
-                                <!-- Skill -->
-                                <h5>Wordpress</h5>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 60%"> <span>60%</span> </div>
-                                </div>
-                                <!-- Skill -->
-                                <h5>PHP</h5>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:35%"> <span>35%</span> </div>
-                                </div>
-                                <!-- Skill -->
-                                <h5>Javascript</h5>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 95%"> <span>95%</span> </div>
-                                </div>
+                                <span>
+                                    <?php
+                                    if ($model->skill != '') {
+                                        $skill = explode(',', $model->skill);
+                                        $result1 = '';
+                                        $i = 0;
+                                        if (!empty($skill)) {
+                                            foreach ($skill as $value) {
+
+                                                if ($i != 0) {
+                                                    $result1 .= ', ';
+                                                }
+                                                $skills = common\models\Skills::findOne($value);
+                                                $result1 .= $skills->skill;
+                                                $i++;
+                                            }
+                                        }
+                                        echo $result1;
+                                    }
+                                    ?>
+                                </span>
                             </div>
                         </div>
                     </div>

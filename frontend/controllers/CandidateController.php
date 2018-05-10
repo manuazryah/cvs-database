@@ -598,6 +598,7 @@ class CandidateController extends Controller {
             'model_experience' => $model_experience,
             'candidate' => $candidate,
         ]);
+        echo $content;exit;
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE,
