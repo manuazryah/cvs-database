@@ -110,10 +110,12 @@ input[type=checkbox], input[type=radio]{     margin-top: 6px;
 .border-none{ border: none !important;}
 /*************Page Css***********/
 .header-stricky{
+    z-index: 1;
     margin: 0px 0 0px;
     position: relative;
     float: left;
     width: 100%;
+    background: #fff;
 }
 .site-logo{
     margin: 8px 0px;
@@ -789,6 +791,7 @@ ul.bottom_link li a {
     font-size: 18px;
     color: #fff;
     font-weight: 500;
+    border-radius: 0px;
 }
 #userform .nav-tabs.nav-justified > .active > a, #userform .nav-tabs.nav-justified > .active > a:hover, #userform .nav-tabs.nav-justified > .active > a:focus {
     color: #fff;
@@ -835,6 +838,15 @@ ul.bottom_link li a {
     text-transform: uppercase;
     font-weight: 700;
     color: #bbb;
+}
+#userform #forgot-pass-form input{
+    margin-bottom: 5px;
+}
+#userform #forgot-pass-form label {
+    font-size: 12px;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 0px;
 }
 #userform #signup .form-group label {
     font-size: 12px;
@@ -2512,4 +2524,28 @@ label span{ color: #7d7d7d; font-weight: 500;}
 }
 .choose-qualification input[type=radio]:checked ~ label{
     color: #3191c5;
+}
+#forgot-password-sec #form{
+    clear: both;
+    padding: 80px 0;
+    width: 30%;
+    margin: 0 auto;
+}
+#forgot-password-sec{
+    background: url(../images/home/BG2.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+#forgot-password-sec .form-group label {
+    font-size: 12px;
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 0px;
+}
+.dark-overlay{
+    width: 100%;
+    background: #00000045;
+    position: absolute;
+    height: 100%;
 }

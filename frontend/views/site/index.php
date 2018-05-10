@@ -35,7 +35,8 @@ use yii\widgets\Pjax;
                                     <span class="txt1">
                                         Forgot
                                     </span>
-                                    <a class="txt2" href="#">
+                                    <!--<li class="<?= $flag == 0 ? 'active' : '' ?>"><a href="#forgot-password" role="tab" data-toggle="tab" aria-expanded="true">forgot</a></li>-->
+                                    <a href="#forgot-password" role="tab" data-toggle="tab" aria-expanded="true" class="txt2" href="#">
                                         Password?
                                     </a>
                                 </div>
@@ -61,12 +62,19 @@ use yii\widgets\Pjax;
                                 <?php ActiveForm::end(); ?>
                                 <?php Pjax::end() ?>
                             </div>
+                            <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="forgot-password">
+                                <form id="forgot-pass-form" action="/cvs-database/site/index" method="post">
+                                    <label class="control-label" for="forgot-password-email">Email</label>
+                                    <input type="text" id="ForgotPassword-email" class="form-control" name="ForgotPassword[email]" aria-required="true" aria-invalid="true">
+                                    <button type="submit" class="btn btn-larger btn-block" name="forgot-password-button">Submit</button>                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <main id="maincontent" class="ptop0">
     <section class="about">

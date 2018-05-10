@@ -28,10 +28,10 @@ class SiteController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'resend-email-varification'],
+                'only' => ['logout', 'signup', 'resend-email-varification','forgot'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'resend-email-varification'],
+                        'actions' => ['signup', 'resend-email-varification','forgot'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -326,6 +326,11 @@ class SiteController extends Controller {
             }
             echo $data;
         }
+    }
+    public function actionForgot() {
+
+        return $this->render('forgotpassword', [
+        ]);
     }
 
 }
