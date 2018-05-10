@@ -24,12 +24,12 @@
         </div>
         <div class="col-md-3">
             <div class="formrow">
-                <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From">
+                <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
             </div>
         </div>
         <div class="col-md-3">
             <div class="formrow">
-                <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From">
+                <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
             </div>
         </div>
         <div class="col-md-6">

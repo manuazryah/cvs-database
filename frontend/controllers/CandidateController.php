@@ -532,9 +532,11 @@ class CandidateController extends Controller {
      */
     public function actionGetExperience() {
         if (Yii::$app->request->isAjax) {
+            $i = $_POST['next'];
             $country_datas = \common\models\Country::find()->where(['status' => 1])->all();
             $new_row = $this->renderPartial('experince_row', [
                 'country_datas' => $country_datas,
+                'i' => $i,
             ]);
             return $new_row;
         }

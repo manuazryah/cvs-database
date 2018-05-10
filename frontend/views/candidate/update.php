@@ -298,7 +298,7 @@ if ($model->current_country != '') {
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="formrow">
-                                                            <input type="date" name="expcreate[from_date][]" class="form-control" placeholder="Join From">
+                                                            <input type="date" name="expcreate[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
                                                             <label for="chkispresent">
                                                                 <input type="checkbox" id="chkispresent-<?= $i ?>" class="chkispresent" name="expcreate[present_status][]"/>
                                                                 I currently work here
@@ -310,7 +310,7 @@ if ($model->current_country != '') {
                                                             Present
                                                         </div>
                                                         <div id="notpresent-<?= $i ?>" class="notpresent">
-                                                            <input type="date" name="expcreate[to_date][]" class="form-control" placeholder="End on">
+                                                            <input type="date" name="expcreate[to_date][]" class="form-control" placeholder="End on" value="<?= date('Y-m-d')?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -433,12 +433,12 @@ if ($model->current_country != '') {
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="formrow">
-                                                            <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From">
+                                                            <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="formrow">
-                                                            <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From">
+                                                            <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -633,13 +633,16 @@ if ($model->current_country != '') {
 <script>
     $(document).ready(function () {
         $(document).on('click', '#addexperience', function (event) {
+            var row_id = $('#experience_row_count').val();
+            var next = parseInt(row_id) + 1;
             $.ajax({
                 type: 'POST',
                 cache: false,
                 async: false,
-                data: {},
+                data: {next:next},
                 url: '<?= Yii::$app->homeUrl ?>candidate/get-experience',
                 success: function (data) {
+                    $('#experience_row_count').val(next);
                     $('#p_experience').append(data);
                 }
             });
