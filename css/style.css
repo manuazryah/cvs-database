@@ -2435,7 +2435,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Standard syntax */
 }
-#ispresent{
+.ispresent{
     border-radius: 0;
     padding: 10px 13px;
     border: 1px solid #ddd;

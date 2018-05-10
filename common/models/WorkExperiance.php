@@ -32,7 +32,7 @@ class WorkExperiance extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['candidate_id', 'country'], 'integer'],
+            [['candidate_id', 'country','present_status'], 'integer'],
             [['from_date', 'to_date', 'date_of_updation'], 'safe'],
             [['job_responsibility'], 'string'],
             [['company_name', 'designation'], 'string', 'max' => 100],

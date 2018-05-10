@@ -217,10 +217,8 @@ if ($model->current_country != '') {
                                         <div id="p_experience">
                                             <?php
                                             if (!empty($model_experience)) {
-                                                $i = 0;
                                                 foreach ($model_experience as $datas) {
                                                     if (!empty($datas)) {
-                                                        $i++;
                                                         ?>
                                                         <div class="append-box">
                                                             <a id="expremove-<?= $datas->id; ?>" class="expremove remove"><i class="fa fa-close"></i></a>
@@ -239,17 +237,17 @@ if ($model->current_country != '') {
                                                                     <div class="formrow">
                                                                         <input type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control" placeholder="Join From" value="<?= $datas->from_date ?>">
                                                                         <label for="chkispresent">
-                                                                            <input type="checkbox" class="chkispresent" id="chkispresent-<?= $i ?>" name="expupdatee[<?= $datas->id; ?>][present_status][]"/>
+                                                                            <input type="checkbox" id="chkispresent" />
                                                                             I currently work here
                                                                         </label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="formrow">
-                                                                        <div id="ispresent-<?= $i ?>" class="ispresent" style="display: none">
+                                                                        <div id="ispresent" style="display: none">
                                                                             Present
                                                                         </div>
-                                                                        <div id="notpresent-<?= $i ?>" class="notpresent">
+                                                                        <div id="notpresent">
                                                                             <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" placeholder="End on" value="<?= $datas->to_date ?>">
                                                                         </div>
                                                                     </div>
@@ -276,13 +274,7 @@ if ($model->current_country != '') {
                                                     }
                                                 }
                                             }
-                                            if ($i == 0) {
-                                                $i = 1;
-                                            } else {
-                                                $i = $i + 1;
-                                            }
                                             ?>
-                                            <input type="hidden" id="experience_row_count" value="<?= $i ?>"/>
                                             <div class="append-box">
                                                 <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
                                                 <div class="row">
@@ -299,17 +291,10 @@ if ($model->current_country != '') {
                                                     <div class="col-md-3">
                                                         <div class="formrow">
                                                             <input type="date" name="expcreate[from_date][]" class="form-control" placeholder="Join From">
-                                                            <label for="chkispresent">
-                                                                <input type="checkbox" id="chkispresent-<?= $i ?>" class="chkispresent" name="expcreate[present_status][]"/>
-                                                                I currently work here
-                                                            </label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <div id="ispresent-<?= $i ?>" class="ispresent" style="display: none">
-                                                            Present
-                                                        </div>
-                                                        <div id="notpresent-<?= $i ?>" class="notpresent">
+                                                        <div class="formrow">
                                                             <input type="date" name="expcreate[to_date][]" class="form-control" placeholder="End on">
                                                         </div>
                                                     </div>
@@ -515,6 +500,17 @@ if ($model->current_country != '') {
                                             </div>
                                         </div>
                                         <div class="form-group col-md-6 p-r">
+                                            <?php
+//                        if ($model->upload_resume != '') {
+//                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
+//                            if (file_exists($dirPath)) {
+//
+                                            ?>
+                                            <!--<a class="" href="//<?php // Yii::$app->homeUrl                                                                                                                                                       ?>uploads/candidate/resume/<?= $model->id ?>.<?= $model->upload_resume ?>" target="_blank"><span>View Uploded CV</span></a>-->
+                                            <?php
+//                            }
+//                        }
+                                            ?>
                                         </div>
                                         <div class="clearfix"></div>
                                         <?= Html::submitButton('Submit', ['class' => 'btn btn-larger btn-block submit']) ?>
@@ -670,14 +666,13 @@ if ($model->current_country != '') {
                 }
             });
         });
-        $(document).on('click', '.chkispresent', function (event) {
-            var current_row_id = $(this).attr('id').match(/\d+/);
+        $(document).on('click', '#chkispresent', function (event) {
             if ($(this).is(":checked")) {
-                $("#ispresent-" + current_row_id).show();
-                $("#notpresent-" + current_row_id).hide();
+                $("#ispresent").show();
+                $("#notpresent").hide();
             } else {
-                $("#ispresent-" + current_row_id).hide();
-                $("#notpresent-" + current_row_id).show();
+                $("#ispresent").hide();
+                $("#notpresent").show();
             }
         });
         $(document).on('click', '.modalButton', function () {
