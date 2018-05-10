@@ -40,27 +40,39 @@ $this->params['breadcrumbs'][] = $this->title;
                     </button>
                     <?= Html::a('<i class="fa fa-toggle-up"></i><span> Upgrade Your Package</span>', ['upgrade-package'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone', 'style' => 'float:right;']) ?>
                     <div class="clearfix"></div>
-                    <div class="">
-                        <table class="table table-responsive plan-dtl-tbl">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <p class="pack-head">Remaining (Current Credit + Previous Credit)<span class="pack-head-span"> <?= $user_package->no_of_downloads_left ?></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="pack-head">Credits expiry on <span class="pack-head-span"> <?= date("d-M-Y", strtotime($user_package->end_date)); ?></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="current_pack">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"> Current Package</h3>
+                        </div>
+                        <table class="table table-responsive">
                             <tr>
                                 <th>Package Name</th>
-                                <th>:</th>
-                                <td><?= \common\models\Packages::findOne($user_package->package)->package_name ?></td>
                                 <th>Transaction</th>
-                                <th>:</th>
-                                <td><?= $user_package->transaction_id ?></td>
+                                <th>Package Credit</th>
                                 <th>Start Date</th>
-                                <td><?= $user_package->start_date ?></td>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                             <tr>
-                                <th>End Date</th>
-                                <th>:</th>
-                                <td><?= $user_package->end_date ?></td>
-                                <th>Total Credits</th>
-                                <th>:</th>
-                                <td><?= $user_package->no_of_downloads ?></td>
-                                <th>Remaining Credits</th>
-                                <td><?= $user_package->no_of_downloads_left ?></td>
+                                <td><?= $user_package->package != ''?\common\models\Packages::findOne($user_package->package)->package_name :'' ?></td>
+                                <td><?= $user_package->transaction_id ?></td>
+                                <td><?= $user_package->package_credit ?></td>
+                                <td><?= date("d-M-Y", strtotime($user_package->start_date)); ?></td>
+                                <td><?= date("d-M-Y", strtotime($user_package->end_date)); ?></td>
+                                <td>Active</td>
+                                <td><?= Html::a('Print Invoice', ['employer/reports', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $user_package->id)], ['class' => 'invoice-print','target'=>'_blank']) ?></td>
                             </tr>
                         </table>
                     </div>
@@ -86,6 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     },
                                 ],
                                 'transaction_id',
+                                'package_credit',
                                 [
                                     'attribute' => 'start_date',
                                     'value' => function ($data) {
@@ -96,13 +109,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'attribute' => 'end_date',
                                     'value' => function ($data) {
                                         return date("d-M-Y", strtotime($data->end_date));
-                                    },
-                                ],
-                                [
-                                    'attribute' => 'remaining_credits',
-                                    'label' => 'Credits Remaining',
-                                    'value' => function ($data) {
-                                        return $data->remaining_credits;
                                     },
                                 ],
                                 [
@@ -122,9 +128,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'template' => '{print}',
                                     'buttons' => [
                                         'print' => function ($url, $model) {
-                                            return Html::a('<span class="fa fa-print" style="padding-top: 0px;font-size: 16px;"></span> Print Invoice', $url, [
+                                            return Html::a('Print Invoice', $url, [
                                                         'title' => Yii::t('app', 'print'),
-                                                        'class' => 'actions',
+                                                        'class' => 'invoice-print',
                                                         'target' => '_blank',
                                             ]);
                                         },

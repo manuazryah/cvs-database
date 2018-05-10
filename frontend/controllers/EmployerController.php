@@ -820,13 +820,9 @@ class EmployerController extends Controller {
     }
 
     public function GenerateTransactionNo() {
-        $a = mt_rand(100000, 999999);
-        $transaction_exist = EmployerPackages::find()->where(['transaction_id' => $a])->one();
-        if (empty($transaction_exist)) {
-            return $a;
-        } else {
-            $this->GenerateTransactionNo();
-        }
+        $last_pack = EmployerPackages::find()->orderBy(['transaction_id'=>SORT_DESC])->one();
+        $transaction_no = $last_pack->transaction_id +1;
+        return $transaction_no;
     }
 
     /**
@@ -1147,6 +1143,20 @@ class EmployerController extends Controller {
      * Generate report based on service
      */
 
+    public function actionReports($id) {
+        $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
+        $package_history = \common\models\EmployerPackages::find()->where(['id' => $id])->one();
+        $employer = Employer::find()->where(['id' => $package_history->employer_id])->one();
+        $package = \common\models\Packages::find()->where(['id' => $package_history->package])->one();
+        echo $this->renderPartial('report', [
+            'package_history' => $package_history,
+            'package' => $package,
+            'employer' => $employer,
+            'print' => true,
+        ]);
+
+        exit;
+    }
     public function actionReport($id) {
         $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
         $package_history = \common\models\UserPlanHistory::find()->where(['id' => $id])->one();
