@@ -19,7 +19,6 @@ if ($model->current_country != '') {
     $city_datas = ArrayHelper::map(\common\models\City::find()->where(['country' => $model->current_country])->all(), 'id', 'city');
 }
 ?>
-
 <style>
     .marg-bot-0 .form-group{
         margin-bottom: 0px;
@@ -81,7 +80,7 @@ if ($model->current_country != '') {
                                 ]);
                                 ?>
                                 <div class="userccount">
-                                    <div class="formpanel"> 
+                                    <div class="formpanel">
                                         <div class="delete-account">
                                             <?=
                                             Html::a('', ['delete-profile'], ['class' => ' prof-del delete-profile', 'title' => [
@@ -182,7 +181,7 @@ if ($model->current_country != '') {
                                                 <?= $form->field($model, 'job_status')->dropDownList($jobstatus, ['prompt' => '-Choose a Job Status-']) ?>
                                             </div>
                                             <div class="form-group col-md-12 p-l p-r">
-                                                <textarea name="CandidateProfile[executive_summary]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;"><?= $model->executive_summary ?></textarea>
+                                                <textarea class="textarea" name="CandidateProfile[executive_summary]" style="width: 810px; height: 200px" id="position-description"><?= $model->executive_summary ?></textarea>
                                             </div>
                                         </div>
                                         <hr>
@@ -298,7 +297,7 @@ if ($model->current_country != '') {
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="formrow">
-                                                            <input type="date" name="expcreate[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
+                                                            <input type="date" name="expcreate[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d') ?>">
                                                             <label for="chkispresent">
                                                                 <input type="checkbox" id="chkispresent-<?= $i ?>" class="chkispresent" name="expcreate[present_status][]"/>
                                                                 I currently work here
@@ -310,7 +309,7 @@ if ($model->current_country != '') {
                                                             Present
                                                         </div>
                                                         <div id="notpresent-<?= $i ?>" class="notpresent">
-                                                            <input type="date" name="expcreate[to_date][]" class="form-control" placeholder="End on" value="<?= date('Y-m-d')?>">
+                                                            <input type="date" name="expcreate[to_date][]" class="form-control" placeholder="End on" value="<?= date('Y-m-d') ?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -433,12 +432,12 @@ if ($model->current_country != '') {
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="formrow">
-                                                            <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
+                                                            <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d') ?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="formrow">
-                                                            <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
+                                                            <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d') ?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -519,7 +518,6 @@ if ($model->current_country != '') {
                                         <div class="clearfix"></div>
                                         <?= Html::submitButton('Submit', ['class' => 'btn btn-larger btn-block submit']) ?>
                                         <?php ActiveForm::end(); ?>
-
                                     </div>
                                 </div>
 
@@ -639,7 +637,7 @@ if ($model->current_country != '') {
                 type: 'POST',
                 cache: false,
                 async: false,
-                data: {next:next},
+                data: {next: next},
                 url: '<?= Yii::$app->homeUrl ?>candidate/get-experience',
                 success: function (data) {
                     $('#experience_row_count').val(next);
@@ -691,4 +689,10 @@ if ($model->current_country != '') {
         });
 
     });
+</script>
+<script src="<?= Yii::$app->homeUrl ?>js/wysihtml5-0.3.0.js"></script>
+<script src="<?= Yii::$app->homeUrl ?>js/bootstrap-wysihtml5.js"></script>
+
+<script>
+    $('.textarea').wysihtml5();
 </script>

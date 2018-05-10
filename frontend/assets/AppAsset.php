@@ -19,6 +19,7 @@ class AppAsset extends AssetBundle {
         'css/themify-icons.css',
         'css/style.css',
         'css/responsive.css',
+        'css/bootstrap-wysihtml5.css',
         'https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i',
     ];
     public $js = [

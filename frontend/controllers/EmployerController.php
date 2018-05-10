@@ -223,6 +223,7 @@ class EmployerController extends Controller {
         $model->no_of_days_left = $package->no_of_days;
         $tran_no = $this->GenerateTransactionNo();
         $model->transaction_id = $tran_no;
+        $model->package_credit = $package->no_of_downloads;
         $model->no_of_downloads = $package->no_of_downloads;
         $model->no_of_downloads_left = $package->no_of_downloads;
         $model->created_date = date('Y-m-d');
@@ -806,6 +807,7 @@ class EmployerController extends Controller {
             $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
             $model->no_of_days = $package->no_of_days;
             $model->no_of_days_left = $package->no_of_days;
+            $model->package_credit = $package->no_of_downloads;
             $model->no_of_downloads = $package->no_of_downloads + $old_package->no_of_downloads_left;
             $model->no_of_downloads_left = $package->no_of_downloads + $old_package->no_of_downloads_left;
             $model->created_date = date('Y-m-d');
@@ -820,8 +822,8 @@ class EmployerController extends Controller {
     }
 
     public function GenerateTransactionNo() {
-        $last_pack = EmployerPackages::find()->orderBy(['transaction_id'=>SORT_DESC])->one();
-        $transaction_no = $last_pack->transaction_id +1;
+        $last_pack = EmployerPackages::find()->orderBy(['transaction_id' => SORT_DESC])->one();
+        $transaction_no = $last_pack->transaction_id + 1;
         return $transaction_no;
     }
 
@@ -836,6 +838,7 @@ class EmployerController extends Controller {
         $plans->start_date = $package->start_date;
         $plans->end_date = $package->end_date;
         $plans->transaction_id = $package->transaction_id;
+        $plans->package_credit = $package->no_of_downloads;
         $plans->total_credits = $package->no_of_downloads;
         $plans->remaining_credits = 0;
         $plans->status = 0;
@@ -1157,6 +1160,7 @@ class EmployerController extends Controller {
 
         exit;
     }
+
     public function actionReport($id) {
         $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
         $package_history = \common\models\UserPlanHistory::find()->where(['id' => $id])->one();
