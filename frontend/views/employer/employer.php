@@ -33,7 +33,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                     <h1>Search between more them <br> 50,000 open CV's.</h1>
                     <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.<br> Nam eget dui consequat vitae, eleifend ac etiam rhoncus</p>
                 </div>
-                <div class="job-search">
+                <div class="job-search cv-search">
                     <?php $form = ActiveForm::begin(['action' => 'cv-search', 'id' => 'search_form', 'method' => 'post',]); ?>
                     <div class="form-group col-md-6 padding-left b-r radius">
                         <input type="text" class="form-control" placeholder="Job title / keywords" name="CvFilter[keyword]">

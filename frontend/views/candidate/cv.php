@@ -48,7 +48,7 @@ use yii\widgets\ActiveForm;
 
                 <!-- Buttons -->
                 <div class="jobButtons"> 
-                    <?= Html::a('<i class="fa fa-paper-plane" aria-hidden="true"></i> Edit my online CV', ['update-profile'], ['target' => '_blank', 'class' => 'btn apply']) ?>
+                    <?= Html::a('<i class="fa fa-paper-plane" aria-hidden="true"></i> Edit my online CV', ['update-profile'], ['class' => 'btn apply']) ?>
                     <?= Html::a('<img width="20" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" > Download my online CV', ['pdf-export'], ['target' => '_blank', 'class' => 'btn']) ?>
                     <?= Html::a('<img width="20" src="' . Yii::$app->homeUrl . 'images/word-icon.png" > Download my online CV', ['word-export'], ['target' => '_blank', 'class' => 'btn']) ?>
                 </div>

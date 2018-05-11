@@ -350,9 +350,10 @@ if ($model->current_country != '') {
                                                         <div class="append-box">
                                                             <ul class="choose-qualification">
                                                                 <li>
-                                                                    <input type="radio" id="f-option" name="selector">
-                                                                    <label for="f-option">Highest Qualification</label>
-                                                                    <div class="check"></div>
+                                                                    <label>
+                                                                        <input type="radio" class="option-input radio" name="example" checked />
+                                                                        Highest Qualification
+                                                                    </label>
                                                                 </li>
                                                             </ul>
                                                             <a id="eduremove-<?= $data->id; ?>" class="eduremove remove"><i class="fa fa-close"></i></a>
