@@ -58,7 +58,7 @@ class CandidateController extends Controller {
         $model = Candidate::findOne($id);
         $model->scenario = 'update';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-
+            
         }
         return $this->render('index', [
                     'model' => $model,
@@ -330,6 +330,13 @@ class CandidateController extends Controller {
                 $arr[$i]['country'] = $val;
                 $i++;
             }
+            $i = 0;
+            if (isset($create['present_status']) && $create['present_status'] != '') {
+                foreach ($create['present_status'] as $val) {
+                    $arr[$i]['present_status'] = $val;
+                    $i++;
+                }
+            }
             $this->SaveExperience($arr, $model);
         }
     }
@@ -348,6 +355,13 @@ class CandidateController extends Controller {
             $aditional->from_date = $val['from_date'];
             $aditional->to_date = $val['to_date'];
             $aditional->country = $val['country'];
+            if (isset($val['present_status']) && $val['present_status'] != '') {
+                if ($val['present_status'] == 'on') {
+                    $aditional->present_status = 1;
+                } else {
+                    $aditional->present_status = 0;
+                }
+            }
             if (!empty($aditional->company_name)) {
                 $aditional->save();
             }
@@ -371,6 +385,9 @@ class CandidateController extends Controller {
                 $arr[$key]['from_date'] = $val['from_date'][0];
                 $arr[$key]['to_date'] = $val['to_date'][0];
                 $arr[$key]['country'] = $val['country'][0];
+                if (isset($val['present_status'][0]) && $val['present_status'][0] != '') {
+                    $arr[$key]['present_status'] = $val['present_status'][0];
+                }
                 $i++;
             }
             foreach ($arr as $key => $value) {
@@ -381,6 +398,13 @@ class CandidateController extends Controller {
                 $aditional->from_date = $value['from_date'];
                 $aditional->to_date = $value['to_date'];
                 $aditional->country = $value['country'];
+                if (isset($value['present_status']) && $value['present_status'] != '') {
+                    if ($value['present_status'] == 'on') {
+                        $aditional->present_status = 1;
+                    } else {
+                        $aditional->present_status = 0;
+                    }
+                }
                 $aditional->save();
             }
         }
@@ -498,11 +522,13 @@ class CandidateController extends Controller {
      */
     public function actionGetAcadamics() {
         if (Yii::$app->request->isAjax) {
+            $j = $_POST['next'];
             $course_datas = \common\models\Courses::find()->where(['status' => 1])->all();
             $country_datas = \common\models\Country::find()->where(['status' => 1])->all();
             $new_row = $this->renderPartial('academics_row', [
                 'course_datas' => $course_datas,
                 'country_datas' => $country_datas,
+                'j' => $j,
             ]);
             return $new_row;
         }
@@ -555,6 +581,25 @@ class CandidateController extends Controller {
                 if ($model->delete()) {
                     $flag = 1;
                 }
+            }
+            return $flag;
+        }
+    }
+
+    public function actionSetHighest() {
+        if (Yii::$app->request->isAjax) {
+            $id = $_POST['id'];
+            $model = CandidateEducation::find()->where(['id' => $id])->one();
+            $flag = 0;
+            if (!empty($model)) {
+                $data_exist = CandidateEducation::find()->where(['highest_qualification' => 1, 'candidate_id' => $model->candidate_id])->one();
+                if (!empty($data_exist)) {
+                    $data_exist->highest_qualification = 0;
+                    $data_exist->update();
+                }
+                $model->highest_qualification = 1;
+                $model->update();
+                $flag = 1;
             }
             return $flag;
         }

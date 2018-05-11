@@ -1,4 +1,11 @@
 <div class="append-box">
+    <ul class="choose-qualification">
+        <li>
+            <input type="radio" id="f-option-<?= $j ?>" name="create[highest_qualification][]" class="highest-gualification">
+            <label for="f-option-<?= $j ?>">Highest Qualification</label>
+            <div class="check"></div>
+        </li>
+    </ul>
     <a class="ibtnDel remove"><i class="fa fa-close"></i></a>
     <div class="row">
         <div class="col-md-6">
@@ -24,12 +31,12 @@
         </div>
         <div class="col-md-3">
             <div class="formrow">
-                <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
+                <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d') ?>">
             </div>
         </div>
         <div class="col-md-3">
             <div class="formrow">
-                <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d')?>">
+                <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d') ?>">
             </div>
         </div>
         <div class="col-md-6">

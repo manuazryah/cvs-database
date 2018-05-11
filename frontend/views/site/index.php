@@ -63,11 +63,13 @@ use yii\widgets\Pjax;
                                 <?php Pjax::end() ?>
                             </div>
                             <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="forgot-password">
-                                <form id="forgot-pass-form" action="/cvs-database/site/index" method="post">
+                                <form id="forgot-pass-form">
                                     <label class="control-label" for="forgot-password-email">Email</label>
-                                    <input type="text" id="ForgotPassword-email" class="form-control" name="ForgotPassword[email]" aria-required="true" aria-invalid="true">
-                                    <button type="submit" class="btn btn-larger btn-block" name="forgot-password-button">Submit</button>                                </div>
-                            </form>
+                                    <input type="text" id="ForgotPassword-email" class="form-control" name="forgot-password" aria-required="true" aria-invalid="true">
+                                    <div class="clear-fix"></div>
+                                    <button type="submit" class="btn btn-larger btn-block" name="forgot-password-button">Submit</button>                                
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -317,6 +319,29 @@ use yii\widgets\Pjax;
                 e.preventDefault();
             }
         });
+
+        $(document).on('submit', '#forgot-pass-form', function (e) {
+            e.preventDefault();
+            var email = $('#ForgotPassword-email').val();
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {email: email},
+                url: '<?= Yii::$app->homeUrl ?>site/forgot',
+                success: function (data) {
+                    if (data == 1) {
+                        $('#ForgotPassword-email').val('');
+                        $("#ForgotPassword-email").next(".invoice-validation").remove();
+                        $("#ForgotPassword-email").after("<div class='invoice-validation' style='color:red;margin-bottom: 20px;'>Password reset link has to send to your email.</div>");
+                    } else {
+                        $("#ForgotPassword-email").next(".invoice-validation").remove();
+                        $("#ForgotPassword-email").after("<div class='invoice-validation' style='color:red;margin-bottom: 20px;'>Invalid Email ID</div>");
+                    }
+                }
+            });
+        });
+
     });
     function validateEmail(sEmail) {
         var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;

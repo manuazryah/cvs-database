@@ -105,7 +105,7 @@ use yii\widgets\ActiveForm;
                                                 <span><strong><?= $experience->designation ?> at <?= $experience->company_name ?>  <?= $experience->country != '' ? ' in ' . common\models\Country::findOne($experience->country)->country_name : '' ?></strong></span>
                                             </div>
                                             <div class="fright">
-                                                <span> <?= date("M Y", strtotime($experience->from_date)) ?> - <?= date("M Y", strtotime($experience->to_date)) ?></span>
+                                                <span> <?= date("M Y", strtotime($experience->from_date)) ?> - <?= $experience->present_status == 1 ? 'present' : date("M Y", strtotime($experience->to_date)) ?></span>
                                             </div>
                                             <div class="clearfix"></div>
                                             <br>
@@ -132,7 +132,7 @@ use yii\widgets\ActiveForm;
                                         </tr>
                                         <?php foreach ($model_education as $education) { ?>
                                             <tr>
-                                                <td><?= $education->course_name != '' ? \common\models\Courses::findOne($education->course_name)->cource_code : '' ?></td>
+                                                <td><?= $education->course_name ?></td>
                                                 <td><?= $education->collage_university ?></td>
                                                 <td><?= $education->country != '' ? \common\models\Country::findOne($education->country)->country_name : '' ?></td>
                                                 <td><?= date("M Y", strtotime($education->from_year)) ?></td>

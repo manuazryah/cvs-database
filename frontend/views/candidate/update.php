@@ -181,7 +181,8 @@ if ($model->current_country != '') {
                                                 <?= $form->field($model, 'job_status')->dropDownList($jobstatus, ['prompt' => '-Choose a Job Status-']) ?>
                                             </div>
                                             <div class="form-group col-md-12 p-l p-r">
-                                                <textarea class="textarea" name="CandidateProfile[executive_summary]" style="width: 810px; height: 200px" id="position-description"><?= $model->executive_summary ?></textarea>
+                                                <label class="control-label" for="candidateprofile-executive_summary">Executive Summary</label>
+                                                <textarea class="textarea" name="CandidateProfile[executive_summary]" style="width: 810px; height: 200px" id=""><?= $model->executive_summary ?></textarea>
                                             </div>
                                         </div>
                                         <hr>
@@ -215,8 +216,8 @@ if ($model->current_country != '') {
                                         <h5>Experience</h5>
                                         <div id="p_experience">
                                             <?php
+                                            $i = 0;
                                             if (!empty($model_experience)) {
-                                                $i = 0;
                                                 foreach ($model_experience as $datas) {
                                                     if (!empty($datas)) {
                                                         $i++;
@@ -238,7 +239,7 @@ if ($model->current_country != '') {
                                                                     <div class="formrow">
                                                                         <input type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control" placeholder="Join From" value="<?= $datas->from_date ?>">
                                                                         <label for="chkispresent">
-                                                                            <input type="checkbox" class="chkispresent" id="chkispresent-<?= $i ?>" name="expupdatee[<?= $datas->id; ?>][present_status][]"/>
+                                                                            <input type="checkbox" data-val="<?= $datas->present_status ?>" class="chkispresent" id="chkispresent-<?= $i ?>" name="expupdatee[<?= $datas->id; ?>][present_status][]" <?= $datas->present_status == 1 ? ' checked' : '' ?>/>
                                                                             I currently work here
                                                                         </label>
                                                                     </div>
@@ -266,7 +267,7 @@ if ($model->current_country != '') {
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <div class="formrow">
-                                                                        <textarea name="expupdatee[<?= $datas->id; ?>][job_responsibility][]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"><?= $datas->job_responsibility ?></textarea>
+                                                                        <textarea class="textarea form-control" name="expupdatee[<?= $datas->id; ?>][job_responsibility][]" placeholder="Job Responsibility"><?= $datas->job_responsibility ?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -325,7 +326,7 @@ if ($model->current_country != '') {
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="formrow">
-                                                            <textarea name="expcreate[job_responsibility][]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"></textarea>
+                                                            <textarea class="textarea form-control" name="expcreate[job_responsibility][]" placeholder="Job Responsibility"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -343,15 +344,17 @@ if ($model->current_country != '') {
                                         <div id="p_scents">
                                             <!--<input type="hidden" id="delete_port_vals"  name="delete_port_vals" value="">-->
                                             <?php
+                                            $j = 0;
                                             if (!empty($model_education) && !$model->isNewRecord) {
                                                 foreach ($model_education as $data) {
                                                     if (!empty($data)) {
+                                                        $j++;
                                                         ?>
                                                         <div class="append-box">
                                                             <ul class="choose-qualification">
                                                                 <li>
-                                                                    <label>
-                                                                        <input type="radio" class="option-input radio" name="example" checked />
+                                                                    <label data-val="<?= $data->id; ?>">
+                                                                        <input data-val="<?= $data->id; ?>" type="radio" class="option-input radio set_highest" name="highest_qualification" <?= $data->highest_qualification == 1 ? 'checked' : '' ?>/>
                                                                         Highest Qualification
                                                                     </label>
                                                                 </li>
@@ -406,9 +409,15 @@ if ($model->current_country != '') {
                                                     }
                                                 }
                                             }
+                                            if ($j == 0) {
+                                                $j = 1;
+                                            } else {
+                                                $j = $j + 1;
+                                            }
                                             ?>
+                                            <input type="hidden" id="education_row_count" value="<?= $j ?>"/>
                                             <div class="append-box">
-                                                <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
+                                    <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="formrow">
@@ -465,7 +474,8 @@ if ($model->current_country != '') {
                                             <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
                                         </div>
                                         <div class="form-group col-md-12 p-l p-r">
-                                            <textarea name="CandidateProfile[extra_curricular_activities]"  id="position-description" class="ember-text-area pe-form-field__textarea ember-view" data-gramm="true" data-txt_gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" data-gramm_id="34c8503a-4791-55af-a79a-9f7626398fb9" spellcheck="false" data-gramm_editor="true" style="z-index: auto; position: relative; line-height: 20px; font-size: 14px; transition: none; background: transparent !important;" placeholder="Job Responsibility"><?= $model->extra_curricular_activities ?></textarea>
+                                            <label class="control-label" for="candidateprofile-executive_summary">Extra Curricular Activities</label>
+                                            <textarea class="textarea form-control" name="CandidateProfile[extra_curricular_activities]"><?= $model->extra_curricular_activities ?></textarea>
                                         </div>
                                         <div class="form-group col-md-6 p-l">
                                             <?php $languages = ArrayHelper::map(\common\models\Languages::findAll(['status' => 1]), 'id', 'language'); ?>
@@ -595,11 +605,13 @@ if ($model->current_country != '') {
 <script>
     $(document).ready(function () {
         $(document).on('click', '#addeducation', function (event) {
+            var row_id = $('#education_row_count').val();
+            var next = parseInt(row_id) + 1;
             $.ajax({
                 type: 'POST',
                 cache: false,
                 async: false,
-                data: {},
+                data: {next: next},
                 url: '<?= Yii::$app->homeUrl ?>candidate/get-acadamics',
                 success: function (data) {
                     $('#p_scents').append(data);
@@ -643,6 +655,7 @@ if ($model->current_country != '') {
                 success: function (data) {
                     $('#experience_row_count').val(next);
                     $('#p_experience').append(data);
+                    $('.textarea').wysihtml5();
                 }
             });
         });
@@ -672,6 +685,21 @@ if ($model->current_country != '') {
                 }
             });
         });
+        $(document).on('change', 'input[type=radio][name=highest_qualification]', function (event) {
+            event.preventDefault();
+            var Id = $(this).attr('data-val');
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: "id=" + Id,
+                url: '<?= Yii::$app->homeUrl ?>candidate/set-highest',
+                success: function (data) {
+                }
+            });
+        });
+
+
         $(document).on('click', '.chkispresent', function (event) {
             var current_row_id = $(this).attr('id').match(/\d+/);
             if ($(this).is(":checked")) {
@@ -688,8 +716,21 @@ if ($model->current_country != '') {
                     .find('#modalContent')
                     .load($(this).attr("value"));
         });
-
+        experienceCheck();
     });
+    function experienceCheck() {
+        var row_count = $('#experience_row_count').val();
+        for (i = 1; i < row_count; i++) {
+            var exval = $('#chkispresent-' + i).attr("data-val");
+            if (exval == 1) {
+                $("#ispresent-" + i).show();
+                $("#notpresent-" + i).hide();
+            } else {
+                $("#ispresent-" + i).hide();
+                $("#notpresent-" + i).show();
+            }
+        }
+    }
 </script>
 <script src="<?= Yii::$app->homeUrl ?>js/wysihtml5-0.3.0.js"></script>
 <script src="<?= Yii::$app->homeUrl ?>js/bootstrap-wysihtml5.js"></script>

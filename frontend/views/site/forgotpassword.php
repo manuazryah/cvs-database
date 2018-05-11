@@ -1,3 +1,11 @@
+<?php
+/* @var $this yii\web\View */
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model \common\models\LoginForm */
+
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+?>
 <section id="forgot-password-sec">
     <div class="dark-overlay"></div>
     <div class="container">
@@ -10,17 +18,29 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade active in" id="forgot">
-                                <div class="form-group required">
-                                    <label class="control-label" for="password">Password</label>
-                                    <input type="password" id="password" class="form-control" name="[password]" aria-required="true">
-                                    <p class="help-block help-block-error"></p>
-                                </div>                                
-                                <div class="form-group required">
-                                    <label class="control-label" for="conform-password">Conform Password</label>
-                                    <input type="password" id="conform-password" class="form-control" name="Conform[password_repeat]" aria-required="true">
-                                    <button type="submit" class="btn btn-larger btn-block" name="submit">Submit</button>                               
+                                <?= \common\widgets\Alert::widget(); ?>
+                                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                                <div class="form-group">
+                                    <div class="form-group field-employee-password">
+                                        <label class="control-label" for="new-password">New Password</label>
+                                        <input type="password" id="new-password" class="form-control" name="new-password" autofocus="false" required>
+                                        <p class="help-block help-block-error"></p>
+                                    </div>
+
                                 </div>
-                                </form>                                
+                                <div class="form-group">
+                                    <div class="form-group field-employee-password">
+                                        <label class="control-label" for="confirm-password">Confirm Password</label>
+                                        <input type="password" id="confirm-password" class="form-control" name="confirm-password" autofocus="false" required>
+                                        <p class="help-block help-block-error"></p>
+                                    </div>
+
+                                </div>
+                                <div style="position: relative;">
+                                    <?= Html::submitButton('Submit', ['class' => 'btn btn-default submit', 'name' => 'login-button']) ?>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php ActiveForm::end(); ?>                             
                             </div>
                         </div>
                     </div>
