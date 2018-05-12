@@ -31,6 +31,8 @@ use yii\widgets\Pjax;
                                 <?php $form1 = ActiveForm::begin(['id' => 'candidate-login-form']); ?>
                                 <?= $form1->field($model, 'user_name')->textInput()->label('Enter E-mail') ?>
                                 <?= $form1->field($model, 'password')->passwordInput() ?>
+                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="candidate-resnd" class="resnd-btn">Resend Email Verification</a></p>
+                                <div class="clearfis"></div>
                                 <div class="text-left p-t-12">
                                     <span class="txt1">
                                         Forgot
@@ -40,9 +42,6 @@ use yii\widgets\Pjax;
                                         Password?
                                     </a>
                                 </div>
-                                <br>
-                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="candidate-resnd" class="resnd-btn">Resend Email Verification</a></p>
-                                <div class="clearfis"></div>
                                 <div>
                                     <?= Html::submitButton('Log In', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-login-button']) ?>
                                 </div>
@@ -67,7 +66,7 @@ use yii\widgets\Pjax;
                                     <label class="control-label" for="forgot-password-email">Email</label>
                                     <input type="text" id="ForgotPassword-email" class="form-control" name="forgot-password" aria-required="true" aria-invalid="true">
                                     <div class="clear-fix"></div>
-                                    <button type="submit" class="btn btn-larger btn-block" name="forgot-password-button">Submit</button>                                
+                                    <button type="submit" class="btn btn-larger btn-block" name="forgot-password-button">Submit</button>
                                 </form>
                             </div>
                         </div>

@@ -30,12 +30,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup', 'resend-email-varification', 'forgot', 'new-password'],
                 'rules' => [
-                    [
+                        [
                         'actions' => ['signup', 'resend-email-varification', 'forgot', 'new-password'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                    [
+                        [
                         'actions' => ['logout', 'resend-email-varification', 'forgot', 'new-password'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -99,8 +99,9 @@ class SiteController extends Controller {
                 Yii::$app->SetValues->setLoginHistory(Yii::$app->session['candidate']['id'], 2);
                 return $this->redirect(['candidate/index']);
             } else {
-                if ($model->email_varification_status == 0) {
+                if (isset(Yii::$app->session['log-err']) && Yii::$app->session['log-err'] == 1) {
                     $stat = 1;
+                    unset(Yii::$app->session['log-err']);
                 }
                 $flag = 1;
             }
@@ -296,7 +297,7 @@ class SiteController extends Controller {
         $token = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $token);
         $user_data = Candidate::find()->where(['id' => $token])->one();
         if ($user_data->email_varification_status == 1) {
-            
+
         }
         if (!empty($user_data)) {
             if ($user_data->email_varification_status == 0) {

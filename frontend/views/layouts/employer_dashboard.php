@@ -162,9 +162,7 @@ EmployerAsset::register($this);
 
                         <!-- Add your copyright text here -->
                         <div class="footer-text">
-                            &copy; 2014
-                            <strong>Xenon</strong>
-                            theme by <a href="http://laborator.co" target="_blank">Laborator</a> - <a href="http://themeforest.net/item/xenon-bootstrap-admin-theme/9059661?ref=Laborator" target="_blank">Purchase for only <strong>23$</strong></a>
+                            <strong>© 2018 CVS Databade. All rights reserved.</strong>
                         </div>
 
 
@@ -184,9 +182,9 @@ EmployerAsset::register($this);
         </div>
 
         <!-- Page Loading Overlay -->
-<!--        <div class="page-loading-overlay">
-            <div class="loader-2"></div>
-        </div>-->
+        <!--        <div class="page-loading-overlay">
+                    <div class="loader-2"></div>
+                </div>-->
         <?php $this->endBody() ?>
     </body>
 </html>

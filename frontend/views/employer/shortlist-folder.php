@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         </li>
                                                         <li>
                                                             <a href="" class="btn btn-folder-view fld-rename" id="" data-val="<?= $folder->folder_name ?>"><i class="fa fa-edit"></i></a>
-                                                            <?php // Html::a('<i class="fa fa-edit"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-rename']) ?>
+                                                            <?php // Html::a('<i class="fa fa-edit"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-rename'])  ?>
                                                         </li>
                                                     </ul>
                                                 </li>
