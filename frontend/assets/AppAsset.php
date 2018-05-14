@@ -14,12 +14,12 @@ class AppAsset extends AssetBundle {
     public $css = [
         'css/bootstrap.min.css',
         'css/flexslider.css',
-        'css/font-awesome.min.css',
-        'https://use.fontawesome.com/releases/v5.0.8/css/all.css',
+        'css/bootstrap-wysihtml5.css',
+        'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
+//        'https://use.fontawesome.com/releases/v5.0.8/css/all.css',
         'css/themify-icons.css',
         'css/style.css',
         'css/responsive.css',
-        'css/bootstrap-wysihtml5.css',
         'https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i',
     ];
     public $js = [

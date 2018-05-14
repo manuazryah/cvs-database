@@ -122,6 +122,7 @@ class EmployerController extends Controller {
                 $filter_folders = $this->getFilterFolder($model_filter);
                 $dataProvider->query->andWhere(['id' => $filter_folders]);
             }
+            $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
         }
         return $this->render('search-result', [
                     'searchModel' => $searchModel,
@@ -332,6 +333,7 @@ class EmployerController extends Controller {
                 $filter_folders = $this->getFilterFolder($model_filter);
                 $dataProvider->query->andWhere(['id' => $filter_folders]);
             }
+            $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
         }
         return $this->render('dashboard', [
                     'searchModel' => $searchModel,
@@ -893,7 +895,7 @@ class EmployerController extends Controller {
                 } else {
                     $view_cv->date_of_view = date('Y-m-d');
                     $view_cv->update();
-                    $this->CandidateEmail($id);
+//                    $this->CandidateEmail($id);
 //                return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
                     Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
                     return $this->render('cv-view', [

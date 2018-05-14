@@ -120,7 +120,7 @@ AppAsset::register($this);
                             <li><a href="#" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#" title="Twitter"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#" title="Google"><span class="ti-google"></span></a></li>
+                            <li><a href="#" title="Google"><i class="fa fa-google-plus"></i></span></a></li>
                             <li><a href="#" title="RSS"><i class="fa fa-rss"></i></a></li>
                         </ul>
                         <div class="border"></div>
