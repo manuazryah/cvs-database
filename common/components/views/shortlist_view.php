@@ -53,103 +53,137 @@ if (count($short_list_data) > 0) {
 $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
 ?>
-<div class="sorting_content">
-    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-        <div class="overflow">
-            <div class="bottom_text">
-                <div class="tab-image">
-                    <?php
-                    if ($model->photo != '') {
-                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
-                        if (file_exists($dirPath)) {
-                            echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
-                        } else {
-                            echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
-                        }
-                    }
-                    ?>
-                </div>
-                <div class="text-shorting">
-                    <div class="contact_details col-md-4 col-sm-4 p-l">
-                        <h1><strong><?= $name ?></strong></h1>
-                    </div>
-                    <div class="contact_details col-md-6 col-sm-6 p-l">
-                        <span><strong>Reference No:</strong> <?= $profile_info->user_id ?></span>
-                    </div>
-                    <ul class="unstyled">
-                        <li><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></li>
-                    </ul>
-                </div>
-                <div class="contact_details col-md-4 col-sm-4 p-l">
-                    <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
-                </div>
-                <div class="contact_details col-md-6 col-sm-6 p-l">
-                    <span><strong>Currently:</strong> <?= $model->current_country != '' ? common\models\Country::findOne($model->current_country)->country_name : '' ?> <?= $model->current_city != '' ? ', ' . common\models\City::findOne($model->current_city)->city : '' ?></span>
-                </div>
-                <div class="search-min">
-                    <div class="contact_details col-md-8 col-sm-4 p-l">
-                        <span><strong>* </strong><?= $qualification->course_name ?></span>
-                    </div>
-                    <div class="contact_details col-md-4 col-sm-6 p-l">
-                        <span><strong>* </strong><?= $year . ' Year ' . $month . ' Month' ?></span>
-                    </div>
-                    <div class="contact_details col-md-12 col-sm-12 p-l">
-                        <ul>
+<?php if ($candidate->status == 1) { ?>
+    <div class="sorting_content">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 prit0" id="leftdiv">
+            <div class="overflow">
+                <div class="bottom_text">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pad0">
+                        <div class="tab-image">
                             <?php
-                            if (!empty($work_experiences)) {
-                                foreach ($work_experiences as $work_experience) {
-                                    ?>
-
-                                    <li> <?= $work_experience->designation . ' at ' . $work_experience->company_name ?></li>
-                                    <?php
+                            if ($model->photo != '') {
+                                $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                                if (file_exists($dirPath)) {
+                                    echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                } else {
+                                    echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
                                 }
                             }
                             ?>
-                        </ul>
+                        </div>
+                    </div>
+                    <div class="contact_details col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <div class="text-shorting">
+                            <div class="contact_details p-l">
+                                <h1><strong><?= $name ?></strong></h1>
+                            </div>
+                            <div class="contact_details p-l">
+                                <ul class="unstyled">
+                                    <li><span><strong>Qualification:</strong><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></span></li>
+                                </ul>
+                            </div>
+                            <div class="contact_details p-l">
+                                <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
+                            </div>
+                            <div class="contact_details p-l">
+                                <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="search-min">
+                        <div class="contact_details col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                            <span><strong>Exp:</strong><?= $year . ' Year ' . $month . ' Month' ?>
+                                <ul class="firm">
+                                    <?php
+                                    if (!empty($work_experiences)) {
+                                        foreach ($work_experiences as $work_experience) {
+                                            ?>
+
+                                            <li> <?= $work_experience->designation . ' at ' . $work_experience->company_name ?></li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                            </span>
+                        </div>
                     </div>
                 </div>
-<!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                           ?></p>-->
-                <div class="contact_details col-md-12 col-sm-12 p-l">
-                    <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
-                </div>
-                <!--                <div class="contact_details col-md-12 col-sm-12 p-l">
-                                    <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                           ?></span>
-                                </div>-->
             </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 p-l">
-        <?php
-        if($candidate->status == 1){
-        ?>
-        <div class="button-box" style="margin-top: 20px;">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                <?php
-                $shortlist = common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
-                if (empty($shortlist)) {
-                    ?>
-                    <a href="" class="button1" id="short-list-modal" data-val="<?= $model->candidate_id ?>">Shortlist to Folder</a>
-                <?php } else {
-                    ?>
-                    <!--<p class="button5">Already Shortlisted</p>-->
-                    <?= Html::a('Remove from shortlist', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2']) ?>
-                <?php }
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-l prit0" id="rightdiv">
+            <?php
+            if ($candidate->status == 1) {
                 ?>
-                <?php // Html::a('Quick Download <br><span><i class="fas fa-file-pdf"></i>', ['quick-download', 'id' => $model->id], ['class' => 'button2'])  ?>
-                <?= Html::a('View CV <span><i class="fas fa-eye"></i></span>', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id)], ['class' => 'button3']) ?>
-                <a href="" class="button1 fld-move" id="" data-val="<?= $model->candidate_id ?>" style="margin-top: 10px;">Change Folder</a>
+                <div class="button-box prit0">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                        <div class="contact_details col-md-12 col-sm-12 p-l">
+                            <span><strong>Ref No:</strong> <?= $profile_info->user_id ?></span>
+                        </div>
+                        <div class="contact_details col-md-12 col-sm-12 p-l">
+                            <span><strong>Expected Salary($):</strong>  <?= $model->expected_salary != '' ? \common\models\ExpectedSalary::findOne($model->expected_salary)->salary_range : '' ?></span>
+                        </div>
+                        <div class="contact_details col-md-12 col-sm-12 p-l">
+                            <span><strong>Currently:</strong> <?= $model->current_country != '' ? common\models\Country::findOne($model->current_country)->country_name : '' ?> <?= $model->current_city != '' ? ', ' . common\models\City::findOne($model->current_city)->city : '' ?></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-l prit0">
+                    <div class="button-box ptop0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                            <div class="button-sec">
+                                <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id)], ['class' => 'button3']) ?>
+
+                                <?php
+                                $shortlist = common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
+                                if (empty($shortlist)) {
+                                    ?>
+                                    <a href="" title="Add to Shortlist" class="button1 shortlist-folder" id="short-list-modal" data-val="<?= $model->candidate_id ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                <?php } else {
+                                    ?>
+                                    <!--<p class="button5">Already Shortlisted</p>-->
+                                    <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2 remove-shortlist','title' => 'Remove from Shortlist']) ?>
+                                <?php }
+                                ?>
+                                <a href="" class="button1 fld-move mtop8" id="" data-val="<?= $model->candidate_id ?>">Change Folder</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+
+        <div class="bottom-box col-lg-12">
+            <div class="last-login col-md-6 col-sm-6 p-l">
+                <span><i>Last Logged in : <?= $last_login ?></i></span>
+            </div>
+            <div class="last-login col-md-6 col-sm-6 p-l text-right">
+                <span><em><?= $msg ?></em></span>
             </div>
         </div>
-        <?php
-        }
-        ?>
     </div>
-    <div class="bottom-box col-lg-12">
-        <div class="last-login col-md-6 col-sm-6 p-l">
-            <span><i>Last Logged in : <?= $last_login ?></i></span>
+<?php } else { ?>
+    <div class="sorting_content">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div class="overflow">
+                <div class="bottom_text">
+                    <div class="contact_details col-md-12 col-sm-12 p-l">
+                        <h2><strong>Employee Details Not Available</strong></h2>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="last-login col-md-6 col-sm-6 p-l">
-            <span><em><?= $msg ?></em></span>
+        <div class="bottom-box col-lg-12">
+            <div class="last-login col-md-6 col-sm-6 p-l">
+                <span><i>Last Logged in : <?= $last_login ?></i></span>
+            </div>
+            <div class="last-login col-md-6 col-sm-6 p-l">
+                <span><em><?= $msg ?></em></span>
+            </div>
         </div>
     </div>
-</div>
+<?php }
+?>

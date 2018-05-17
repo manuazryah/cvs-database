@@ -11,17 +11,15 @@ use yii\widgets\ListView;
 $this->title = 'Shortlisted CVs/ Folders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="admin-users-index">
+<div class="admin-users-index hide-summary shortlisted-page">
 
     <div class="row">
         <div class="col-md-12">
-
+            <div class="panel-heading">
+                <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+                <span><strong>For Support Contact Us: </strong><ul><li><a href="tel:+971 50 4752515"><i class="fa fa-phone"></i> +971 50 4752515</a></li><li><a href="mailto:info@cvs.ae"><i class="fa fa-envelope-o"></i> info@cvs.ae</a></li></ul></span>
+            </div>
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
-
-                </div>
-                <!-- Modal 6 (Long Modal)-->
                 <div class="modal fade" id="modal-6">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -35,10 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 box">
                                 <div class="job_title">Folders</div>
-                                <div class="borderfull-width"></div>
                                 <div class="clearfix"></div>
-                                <div class="page-heading check-label shortlist-folder-label">
-                                    <ul>
+                                <div class="page-heading check-label shortlist-folder-label pad0 mt0 mb0">
+                                    <ul class="mb0">
                                         <li>
                                             <?= Html::a('<i class="fa fa-folder-open"></i>  All', ['shortlist-folder'], ['class' => 'btn btn-folder-view']) ?>
                                         </li>
@@ -56,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         </li>
                                                         <li>
                                                             <a href="" class="btn btn-folder-view fld-rename" id="" data-val="<?= $folder->folder_name ?>"><i class="fa fa-edit"></i></a>
-                                                            <?php // Html::a('<i class="fa fa-edit"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-rename'])  ?>
+                                                            <?php // Html::a('<i class="fa fa-edit"></i>', ['remove-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view fld-rename']) ?>
                                                         </li>
                                                     </ul>
                                                 </li>

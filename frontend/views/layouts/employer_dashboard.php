@@ -182,9 +182,9 @@ EmployerAsset::register($this);
         </div>
 
         <!-- Page Loading Overlay -->
-        <!--        <div class="page-loading-overlay">
-                    <div class="loader-2"></div>
-                </div>-->
+<!--        <div class="page-loading-overlay">
+            <div class="loader-2"></div>
+        </div>-->
         <?php $this->endBody() ?>
     </body>
 </html>
