@@ -57,18 +57,19 @@ use dosamigos\ckeditor\CKEditor;
         </div>
     </div>
     <div class="row">
-        <div class='col-md-3 col-sm-6 col-xs-12'>
+        <div class='col-md-4 col-sm-4 col-xs-12'>
             <?= $form->field($model, 'company_phone_number')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class='col-md-3 col-sm-6 col-xs-12'>
+        <div class='col-md-4 col-sm-4 col-xs-12'>
             <?= $form->field($model, 'position')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class='col-md-3 col-sm-6 col-xs-12'>
+        <div class='col-md-4 col-sm-4 col-xs-12'>
             <?= $form->field($model, 'status')->dropDownList(['1' => 'Enabled', '0' => 'Disabled']) ?>
         </div>
     </div>
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <!--<button type="submit" class="btn btn-larger btn-block submit">Submit</button>-->
+        <?= Html::submitButton('Save', ['class' => 'btn btn-larger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

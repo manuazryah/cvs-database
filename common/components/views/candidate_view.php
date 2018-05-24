@@ -79,14 +79,14 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             </div>
                             <div class="contact_details p-l">
                                 <ul class="unstyled">
-                                    <li><span><strong>Qualification:</strong><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></span></li>
+                                    <li><span><i class="fa fa-qualification" aria-hidden="true"></i><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></span></li>
                                 </ul>
                             </div>
                             <div class="contact_details p-l">
-                                <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
+                                <span><i class="fa fa-jobstatus" aria-hidden="true"></i><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                             </div>
                             <div class="contact_details p-l">
-                                <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
+                                <span><i class="fa fa-nationality" aria-hidden="true"></i><?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
                             </div>
                         </div>
                     </div>

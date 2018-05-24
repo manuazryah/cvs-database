@@ -10,6 +10,7 @@ use common\models\ExpectedSalary;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
+use yii\widgets\Pjax;
 
 $industry_datas = Industry::find()->where(['!=', 'id', 0])->andWhere(['status' => 1])->all();
 $skills_datas = Skills::find()->where(['!=', 'industry', 0])->andWhere(['status' => 1])->all();
@@ -25,10 +26,10 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
     }
 </style>
 <div class="site-banner right-img">
-    <div class="banner-overlay"></div>
+    <div class="banner-overlay" style="background: #1a72ba7d;"></div>
     <div class="container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="banner-content">
                     <h1>Search between more them <br> 50,000 open CV's.</h1>
                     <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.<br> Nam eget dui consequat vitae, eleifend ac etiam rhoncus</p>
@@ -57,6 +58,64 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
+            
+            <div class="col-md-4" style="position: relative; float: right;">
+                <div id="form" class="form-fixed">
+                    <div id="userform">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li class="<?= $flag == 1 ? 'active' : '' ?>"><a href="#login" role="tab" data-toggle="tab" aria-expanded="false">Log in</a></li>
+                            <li class="<?= $flag == 0 ? 'active' : '' ?>"><a href="#signup" role="tab" data-toggle="tab" aria-expanded="true">Sign up</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <?= \common\widgets\Alert::widget() ?>
+                            <div class="tab-pane fade <?= $flag == 1 ? 'active in' : '' ?>" id="login">
+                                <?php Pjax::begin() ?>
+                                <?php $form1 = ActiveForm::begin(['id' => 'candidate-login-form']); ?>
+                                <?= $form1->field($model, 'email')->textInput()->label('Enter E-mail') ?>
+                                <?= $form1->field($model, 'password')->passwordInput() ?>
+                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="candidate-resnd" class="resnd-btn">Resend Email Verification</a></p>
+                                <div class="clearfis"></div>
+                                <div class="text-left p-t-12">
+                                    <span class="txt1">
+                                        Forgot
+                                    </span>
+                                    <!--<li class="<?= $flag == 0 ? 'active' : '' ?>"><a href="#forgot-password" role="tab" data-toggle="tab" aria-expanded="true">forgot</a></li>-->
+                                    <a href="#forgot-password" role="tab" data-toggle="tab" aria-expanded="true" class="txt2" href="#">
+                                        Password?
+                                    </a>
+                                </div>
+                                <div>
+                                    <?= Html::submitButton('Log In', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-login-button']) ?>
+                                </div>
+                                <?php ActiveForm::end(); ?>
+                                <?php Pjax::end() ?>
+                            </div>
+                            <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="signup">
+                                <?php Pjax::begin() ?>
+                                <?php $form2 = ActiveForm::begin(['id' => 'candidate-signup-form']); ?>
+                                <?= $form2->field($model_register, 'first_name')->textInput() ?>
+                                <?= $form2->field($model_register, 'last_name')->textInput() ?>
+                                <?= $form2->field($model_register, 'email')->textInput() ?>
+                                <?= $form2->field($model_register, 'password')->passwordInput() ?>
+                                <div>
+                                    <?= Html::submitButton('Sign up', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-signup-button']) ?>
+                                </div>
+                                <?php ActiveForm::end(); ?>
+                                <?php Pjax::end() ?>
+                            </div>
+                            <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="forgot-password">
+                                <form id="forgot-pass-form">
+                                    <label class="control-label" for="forgot-password-email">Email</label>
+                                    <input type="text" id="ForgotPassword-email" class="form-control" name="forgot-password" aria-required="true" aria-invalid="true">
+                                    <div class="clear-fix"></div>
+                                    <button type="submit" class="btn btn-larger btn-block" name="forgot-password-button">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

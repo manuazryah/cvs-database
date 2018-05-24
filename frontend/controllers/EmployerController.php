@@ -54,10 +54,20 @@ class EmployerController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
+        $flag = 1;
+        $stat = 0;
         $this->layout = 'employer_home';
         $model_filter = new CvFilter();
+        $model = new Employer();
+        $model->scenario = 'login';
+        $model_register = new Employer();
+        $model_register->scenario = 'create';
         return $this->render('employer', [
                     'model_filter' => $model_filter,
+                    'model' => $model,
+                    'model_register' => $model_register,
+                    'flag' => $flag,
+                    'stat' => $stat,
         ]);
     }
 

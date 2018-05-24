@@ -1368,7 +1368,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     background: #1a72ba5e;
 }
 .right-img{
-    background: url(../images/home/site-banner-rit.jpg) center no-repeat !important;
+    background: url(../dash/images/slider-2.jpg) round no-repeat !important;
 }
 .txt-center{
     text-align: center;
@@ -1916,7 +1916,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     background: #f6f6f6;
 }
 .my-account aside{
-    background: #25293c;
+    background: #0575ba;
     padding: 35px 0 10px 0px;
     margin-top: 25px;
     padding-bottom: 0px;
@@ -1945,7 +1945,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
 }
 .my-account aside ul li:hover a, .my-account aside ul li.active a{
     color: white;
-    background: #3192c5;
+    background: #0c6096;
     cursor: pointer;
 }
 .my-account aside ul li:before{

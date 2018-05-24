@@ -3,9 +3,9 @@
  * Apply your custom CSS here
  *
 */
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700,800,900');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900');
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a {
@@ -82,9 +82,7 @@ table.table tr.filters{
     background-color: #fff;
 }
 .table-striped>tbody>tr:nth-child(odd) {
-    background-color: #fff;
-    color: #5d5b5b;
-    font-size: 13px;
+    background-color: #f6f6f6;
 }
 .table-striped>tbody>tr:nth-child(even) {
     background-color: #fff;
@@ -163,7 +161,8 @@ form .form-group .form-control{
 }
 .form-group label{
     color: #484848;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
+    font-weight: 500;
 }
 .form-control {
     border: 1px solid #cacac;
@@ -404,10 +403,26 @@ table.table tr {
     font-weight: 600;
 }
 .alert-success {
-    background-color: #8bc34a;
-    border-color: #8bc34a;
-    color: #fff;
+    background-color: #56b8ec42;
+    border-color: #2caef4;
+    color: #0474ba;
     font-weight: 400;
+}
+.btn-larger {
+    padding: 6px 20px !important;
+    border-radius: 0px;
+    font-size: 14px;
+    color: #fff;
+    -webkit-transition: all .6s;
+    -moz-transition: all .6s;
+    transition: all .6s;
+    letter-spacing: 1px;
+    background-color: #2caef3;
+    margin-top: 10px;
+    width: 117px;
+    float: left;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 .user-info-navbar .user-info-menu>li.open {
     border-left-color: #d0d0d0;
@@ -420,10 +435,11 @@ table.table tr {
 .user-info-navbar .user-info-menu>li .dropdown-menu.user-profile-menu li a, .navbar.horizontal-menu .navbar-inner>.nav>li .dropdown-menu.user-profile-menu li a {
     display: block;
     font-size: 14px;
-    color: #464646;
-    padding: 0;
+    color: #ffffff;
+    border: 1px solid #ffffff;
     padding-bottom: 8px;
-    border-bottom: none;
+    /*border-bottom: none;*/
+    background: transparent;
 }
 a {
     color: #57595d;
@@ -977,9 +993,9 @@ input[type=checkbox], input[type=radio] {
 }
 /**************************** Employer Dashboard End *********************************/
 #pack-histry .panel-heading{
-    margin: 20px 0px;
+    /*    margin: 20px 0px;*/
     border-bottom: none;
-    color: #000;
+    /*color: #000;*/
 }
 #modal-6 .modal-dialog .modal-content {
     padding: 22px 30px;
@@ -1030,6 +1046,17 @@ input[type=checkbox], input[type=radio] {
     color: #7d7d7d;
     padding: 10px;
 }
+.pack-box .pack-header .pricing li span{
+    font-size: 20px;
+}
+.pack-box .pack-header .pricing li{
+    display: block;
+    font-size: 60px;
+    margin-bottom: 40px;
+    font-weight: 700;
+    font-family: 'Raleway',sans-serif;
+    color: #86af49;
+}
 .pack-box{
     background: #FFF;
     border: 1px solid #ddd;
@@ -1042,14 +1069,16 @@ input[type=checkbox], input[type=radio] {
     text-shadow: 0 1px rgba(255, 255, 255, 0.8);
 }
 .pack-box h3{
+    display: block;
+    font-size: 30px;
+    padding-top: 30px;
+    font-family: 'Dancing Script',cursive;
+    font-weight: 100;
     background-color: #eee;
     border-radius: 2px 2px 0 0;
-    font-size: 1.3em;
-    font-weight: normal;
     margin: -20px -20px 10px -20px;
     padding: 20px;
     text-align: center;
-    font-weight: 600;
 }
 .pack-box a{
     text-align: center;
@@ -1209,18 +1238,19 @@ input[type=checkbox], input[type=radio] {
 .pack-head-span{
     float:right;
 }
-.current_pack{
-    border: 1px solid #eae8e8;
-    padding: 5px 20px;
-}
 #pack-histry{
-    border: 1px solid #eae8e8;
-    padding: 20px 20px;
+    /*    border: 1px solid #eae8e8;
+        padding: 20px 20px;*/
     margin-top: 30px;
 }
-.current_pack .panel-heading{
-    color:#333;
-    border-bottom: none;
+#pack-histry table tr th{
+    background: transparent;
+}
+#pack-histry table{
+    background: #f6f6f6;
+}
+.current_pack table{
+    background: #f6f6f6;
 }
 
 /******************************* Navigation Bar **************************************************/
@@ -1374,7 +1404,7 @@ input[type=checkbox], input[type=radio] {
     float: left;
 }
 .admin-users-index .panel-heading{
-    background: #252525;
+    background: #0474ba;
     color: white;
     display: inline-block;
     width: 100%;
@@ -1388,7 +1418,7 @@ input[type=checkbox], input[type=radio] {
     width: 100%;
     height: 49px;
     margin-bottom: 0px;
-    background: #2caef3;
+    background: #0a3254;
     color: white;
     -webkit-transition: all .6s;
     -moz-transition: all .6s;
@@ -1436,7 +1466,7 @@ input[type=checkbox], input[type=radio] {
     background: #262626;
 }
 .admin-users-index .account-info{
-    background: #252525de;
+    background: #2caef4;
     padding: 20px 30px;
 }
 .admin-users-index .account-info .top-box-btm{
@@ -1450,7 +1480,7 @@ input[type=checkbox], input[type=radio] {
     color: #fff;
 }
 .admin-users-index .mailbox-env .box .main-title{
-    background: #252525;
+    background: #0474ba;
     margin: 0px;
     padding: 15px 10px;
     color: white;
@@ -2138,4 +2168,261 @@ input[type=checkbox], input[type=radio] {
 }
 .fright span{
     margin-top: 34px;
+}
+.navbar.horizontal-menu .navbar-inner>.nav>li .dropdown-menu.user-profile-menu{
+    margin-top: 8px;
+    -webkit-box-shadow: 0 2px 8px rgba(0, 1, 1, 0.37);
+    -moz-box-shadow: 0 2px 8px rgba(0,1,1,.05);
+    box-shadow: 0 2px 8px rgba(0, 1, 1, 0.37);
+    border: none;
+}
+.packages-index .package-button-sec{
+    margin-top: 15px;
+    padding: 0px 30px;
+}
+.packages-index .panel{
+    padding: 35px 30px;
+}
+.packages-index .button1 i{
+    font-size: 17px;
+    margin-right: 5px;
+    margin-top: -5px;
+}
+.packages-index .button1{
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 100%;
+    background-color: hsla(0,0%,100%,.85);
+    border: 1px solid #ccc;
+    color: #fff;
+    line-height: 1.2;
+    text-align: center;
+    padding: 0;
+    transition: all .4s ease;
+    padding: 8px 15px;
+    font-size: 15px;
+    border-radius: 3px;
+    font-weight: 400;
+    text-transform: capitalize;
+    width: auto;
+    text-decoration: none;
+    margin: 0px;
+}
+.packages-index .panel-heading h3{
+    float: left;
+}
+.packages-index .panel-heading.sub{
+    background: #403f3f !important;
+}
+.packages-index .panel-heading{
+    background: #0474ba;
+    color: white;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+}
+.packages-index .package-status .pack-head{
+    margin-bottom: 0px;
+    padding: 5px 15px;
+    color: #fff;
+    font-size: 13px;
+    line-height: 26px;
+    border: 1px solid white;
+    margin-bottom: 0px !important;
+}
+.packages-index .package-status{
+    background: #2caef4;
+    padding: 20px 30px;
+    display: inline-block;
+    width: 100%;
+}
+.package-details .resume-panel h4{
+    background: #403f3f !important;
+    color: white;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    font-size: 15px;
+    margin-top: 0px;
+}
+.package-details .resume-panel .page-heading{
+    padding: 20px 20px;
+}
+.package-details .resume-panel{
+    padding: 0px !important;
+}
+.package-details .package-button-sec {
+    margin-top: 15px;
+    padding: 0px 30px;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 100%;
+}
+.package-details .button1 {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 100%;
+    background-color: hsla(0,0%,100%,.85);
+    border: 1px solid #ccc;
+    color: #fff;
+    line-height: 1.2;
+    text-align: center;
+    padding: 0;
+    transition: all .4s ease;
+    padding: 8px 15px;
+    font-size: 15px;
+    border-radius: 3px;
+    font-weight: 400;
+    text-transform: capitalize;
+    width: auto;
+    text-decoration: none;
+    margin: 0px;
+}
+.package-details .button1 i {
+    font-size: 17px;
+    margin-right: 5px;
+    margin-top: -5px;
+}
+.admin-users-index .employee-create .btn-success{
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 0px !important;
+    background-color: #2caef4;
+    border: 0px;
+    color: #fff;
+    line-height: 1.2;
+    text-align: center;
+    transition: all .4s ease;
+    padding: 10px 25px;
+    font-size: 15px;
+    border-radius: 3px;
+    font-weight: 400;
+    text-transform: capitalize;
+    width: auto;
+    text-decoration: none;
+    margin: 0px;
+}
+.admin-users-index .employee-create .btn-reset{
+    background-color: #0474ba;
+}
+.panel-pricing:hover{
+    box-shadow: 0px 2px 12px -4px #000000b8;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+.panel-pricing {
+    border: solid 1px #b1afaf40;
+    text-align: center;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+.panel-pricing .panel-heading i{
+
+    background: #2caef4;
+    border: 5px solid #FFF;
+    border-radius: 100px;
+    box-shadow: 0 5px 20px #0474ba inset, 0 3px 0 #0474ba inset;
+    color: #ffffff;
+    display: block;
+    margin: 0 auto;
+    padding: 30px 0px;
+    text-align: center;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+    top: -40px;
+    width: 100px;
+    font-size: 30px;
+}
+.panel-pricing .panel-heading {
+    color: #333;
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 16px;
+}
+.panel-pricing .panel-heading h3 {
+    font-size: 30px;
+    float: none;
+    font-family: 'Dancing Script',cursive;
+    margin-top: 60px;
+} 
+.panel-pricing .display-2 {
+    font-size: 50px;
+    color: #ffffff;
+    border: solid 1px #e1e1e1;
+    padding: 30px;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    border-left: 0px;
+    border-right: 0px;
+    background: #2caef4;
+    margin-bottom: 40px;
+    font-weight: 700;
+    font-family: 'Raleway',sans-serif;
+}
+.panel-pricing .display-2 .currency {
+    font-size: 20px;
+    position: relative;
+    top: -45px;
+    letter-spacing: 0px;
+}
+.panel-pricing .display-2 .period {
+    font-size: 20px;
+    font-weight: 300;
+}
+.panel-pricing .panel-footer a{
+    width: 100%;
+    background: #2caef4;
+    margin-bottom: 0px;
+    color: white;
+}
+.panel-pricing .list-group-item {
+    color: #7d7d7d;
+    border: none;
+    padding-bottom: 0;
+    font-size: 13px;
+    line-height: 36px;
+}
+.user-profile-menu .user-footer .signin{
+    padding: 9px 20px !important;
+    color: white !important;
+}
+.user-profile-menu .user-footer .sign-out{
+    padding: 9px 20px;
+    margin-bottom: 0px;
+    border: none;
+    background: transparent;
+    color: white;
+}
+.fa-qualification:before{
+    content: "";
+    background: url(../images/icons/certificate.svg);
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-bottom: -4px;
+}
+.fa-jobstatus:before{
+    content: "";
+    background: url(../images/icons/employee.svg);
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-bottom: -4px;
+}
+.fa-nationality:before{
+    content: "";
+    background: url(../images/icons/flag.svg);
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-bottom: -4px;
 }

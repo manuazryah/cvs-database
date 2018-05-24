@@ -81,7 +81,7 @@ EmployerAsset::register($this);
 
                     <li class="dropdown user-profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?= yii::$app->homeUrl; ?>dash/images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
+                            <!--<img src="<?= yii::$app->homeUrl; ?>dash/images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />-->
                             <span>
                                 <?= Yii::$app->session['employer_data']['first_name'] ?>
                                 <i class="fa-angle-down"></i>
@@ -89,24 +89,24 @@ EmployerAsset::register($this);
                         </a>
 
                         <ul class="dropdown-menu user-profile-menu list-unstyled">
-                            <li class="user-header">
+<!--                            <li class="user-header">
                                 <img src="<?= yii::$app->homeUrl; ?>dash/images/user-4.png" alt="user-image" class="img-circle" />
                                 <p>
                                     <?= Yii::$app->session['employer_data']['first_name'] ?>
-                                    <!--<small>Member since Nov. 2012</small>-->
+                                    <small>Member since Nov. 2012</small>
                                 </p>
-                            </li>
-                            <li class="user-footer" style="background: #eeeeee;">
+                            </li>-->
+                            <li class="user-footer" style="background: #0474ba;">
                                 <div class="row">
                                     <div class="pull-left">
-                                        <?= Html::a('Profile', ['/employer/update'], ['class' => 'btn btn-white', 'style' => 'padding: 9px 20px;border: 1px solid #a09f9f;']) ?>
+                                        <?= Html::a('Profile', ['/employer/update'], ['class' => 'btn btn-white signin',]) ?>
                                     </div>
                                     <div class="pull-right">
                                         <?php
                                         echo ''
-                                        . Html::beginForm(['/employer/logout'], 'post', ['style' => 'margin-bottom: 0px;']) . '<a>'
+                                        . Html::beginForm(['/employer/logout'], 'post', ['style' => 'margin-bottom: 0px; padding: 0px;']) . '<a style="padding-bottom:0px;">'
                                         . Html::submitButton(
-                                                'Sign out', ['class' => 'btn btn-white', 'style' => 'border: 1px solid #a09f9f;']
+                                                'Sign out', ['class' => 'btn btn-white sign-out',]
                                         ) . '</a>'
                                         . Html::endForm()
                                         . '';
