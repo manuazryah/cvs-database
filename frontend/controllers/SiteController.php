@@ -288,7 +288,7 @@ class SiteController extends Controller {
 // To send HTML mail, the Content-type header must be set
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
-                "From: 'info@eazycheque.com";
+                "From: 'info@cvsdatabase.com";
         mail($to, $subject, $message, $headers);
         return true;
     }
@@ -360,7 +360,7 @@ class SiteController extends Controller {
 // To send HTML mail, the Content-type header must be set
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
-                "From: 'noreplay@cvs_database.com";
+                "From: 'noreplay@cvsdatabase.com";
         mail($to, $subject, $message, $headers);
     }
 
