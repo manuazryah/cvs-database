@@ -128,7 +128,7 @@ if ($model->current_country != '') {
                                                 <div class="form-group col-md-6 p-l">
                                                     <div class="form-group field-candidateprofile-name required">
                                                         <label class="control-label" for="candidateprofile-name">Name</label>
-                                                        <input type="text" id="candidateprofile-name" class="form-control" name="CandidateProfile[name]" value="manu" readonly="" aria-required="true">
+                                                        <input type="text" id="candidateprofile-name" class="form-control" name="CandidateProfile[name]" value="<?= $user->user_name != ''?$user->user_name:'' ?>" readonly="" aria-required="true">
                                                         <input type="hidden" name="CandidateProfile[name_view]" value="0"><label class="hide-view"><input type="checkbox" id="candidateprofile-name_view" name="CandidateProfile[name_view]" value="1" aria-invalid="false"> Hide Name In Public</label>
                                                     </div>
                                                 </div>

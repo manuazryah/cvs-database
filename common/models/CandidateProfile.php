@@ -47,7 +47,7 @@ class CandidateProfile extends \yii\db\ActiveRecord {
             [['title', 'nationality', 'name', 'dob', 'gender'], 'required'],
             [['candidate_id', 'nationality', 'current_country', 'job_type', 'gender', 'status'], 'integer'],
             [['candidate_id', 'nationality', 'current_country', 'job_type', 'gender', 'name_view'], 'integer'],
-            [['dob', 'date_of_updation', 'industry', 'skill', 'languages_known', 'driving_licences', 'current_city', 'upload_resume', 'total_experience'], 'safe'],
+            [['dob', 'date_of_updation', 'industry', 'skill', 'languages_known', 'driving_licences', 'current_city', 'upload_resume', 'total_experience','featured_cv'], 'safe'],
             [['executive_summary', 'extra_curricular_activities'], 'string'],
             [['expected_salary', 'photo', 'job_status', 'title'], 'string', 'max' => 100],
             [['hobbies'], 'string', 'max' => 200],

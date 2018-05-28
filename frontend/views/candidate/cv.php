@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
                                 <h3 class="mt0">Contact Info</h3>
                                 <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i> <?= $user_details->phone ?></div>
                                 <div class="loctext"><i class="fa fa-envelope" aria-hidden="true"></i> <?= $user_details->email ?></div>
-                                <div class="loctext"><i class="fa fa-globe" aria-hidden="true"></i> www.mywebsite.com</div>
+                                <!--<div class="loctext"><i class="fa fa-globe" aria-hidden="true"></i> www.mywebsite.com</div>-->
                                 <div class="cadsocial"> <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="<?= $user_details->google_link ?>" target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> <a href="<?= $user_details->facebook_link ?>" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="<?= $user_details->linked_in_link ?>" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>  <a href="<?= $user_details->youtube_link ?>" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>  </div>
                             </div>
                         </div>

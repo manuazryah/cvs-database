@@ -70,10 +70,10 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                             <?= \common\widgets\Alert::widget() ?>
                             <div class="tab-pane fade <?= $flag == 1 ? 'active in' : '' ?>" id="login">
                                 <?php Pjax::begin() ?>
-                                <?php $form1 = ActiveForm::begin(['id' => 'candidate-login-form']); ?>
+                                <?php $form1 = ActiveForm::begin(['id' => 'employer-login-form']); ?>
                                 <?= $form1->field($model, 'email')->textInput()->label('Enter E-mail') ?>
                                 <?= $form1->field($model, 'password')->passwordInput() ?>
-                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="candidate-resnd" class="resnd-btn">Resend Email Verification</a></p>
+                                <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="employer-resnd" class="resnd-btn">Resend Email Verification</a></p>
                                 <div class="clearfis"></div>
                                 <div class="text-left p-t-12">
                                     <span class="txt1">
@@ -92,7 +92,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                             </div>
                             <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="signup">
                                 <?php Pjax::begin() ?>
-                                <?php $form2 = ActiveForm::begin(['id' => 'candidate-signup-form']); ?>
+                                <?php $form2 = ActiveForm::begin(['id' => 'employer-signup-form']); ?>
                                 <?= $form2->field($model_register, 'first_name')->textInput() ?>
                                 <?= $form2->field($model_register, 'last_name')->textInput() ?>
                                 <?= $form2->field($model_register, 'email')->textInput() ?>
@@ -103,7 +103,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                                 <?php ActiveForm::end(); ?>
                                 <?php Pjax::end() ?>
                             </div>
-                            <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="forgot-password">
+                            <div class="tab-pane fade" id="forgot-password">
                                 <form id="forgot-pass-form">
                                     <label class="control-label" for="forgot-password-email">Email</label>
                                     <input type="text" id="ForgotPassword-email" class="form-control" name="forgot-password" aria-required="true" aria-invalid="true">
@@ -475,4 +475,63 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
         });
 
     });
+</script>
+<script>
+    $(document).ready(function () {
+       $(document).on("click", "#employer-resnd", function (e) {
+            var email = $('#employer-email').val();
+            if (validateEmail(email)) {
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: false,
+                    data: {email: email},
+                    url: '<?= Yii::$app->homeUrl ?>employer/resend-email-verification',
+                    success: function (data) {
+                        if (data == 1) {
+                            $('##').css('display', 'none');
+                            $('.field-employer-password .help-block-error').text('An email has been sent to your mail id (check your spam folder too)');
+                        } else {
+                            $('.field-employer-password .help-block-error').text('Invalid Employer.');
+                            e.preventDefault();
+                        }
+                    }
+                });
+            } else {
+                $('.field-employer-password .help-block-error').text('Enter a valid Email ID.');
+                e.preventDefault();
+            }
+        });
+
+        $(document).on('submit', '#forgot-pass-form', function (e) {
+            e.preventDefault();
+            var email = $('#ForgotPassword-email').val();
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {email: email},
+                url: '<?= Yii::$app->homeUrl ?>employer/forgot',
+                success: function (data) {
+                    if (data == 1) {
+                        $('#ForgotPassword-email').val('');
+                        $("#ForgotPassword-email").next(".invoice-validation").remove();
+                        $("#ForgotPassword-email").after("<div class='invoice-validation' style='color:red;margin-bottom: 20px;'>Password reset link has to send to your email.</div>");
+                    } else {
+                        $("#ForgotPassword-email").next(".invoice-validation").remove();
+                        $("#ForgotPassword-email").after("<div class='invoice-validation' style='color:red;margin-bottom: 20px;'>Invalid Email ID</div>");
+                    }
+                }
+            });
+        });
+
+    });
+    function validateEmail(sEmail) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(sEmail)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 </script>

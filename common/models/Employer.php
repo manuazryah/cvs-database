@@ -66,6 +66,7 @@ use yii\db\ActiveRecord;
             if (!$user) {
                 $this->addError($attribute, 'Incorrect username or password.');
             } elseif ($user->email_varification != 1) {
+                Yii::$app->session['log-err'] = 1;
                 $this->addError($attribute, 'Your email id is not varified. Please check your mail.');
             } elseif (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');

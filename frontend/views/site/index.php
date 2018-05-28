@@ -61,7 +61,7 @@ use yii\widgets\Pjax;
                                 <?php ActiveForm::end(); ?>
                                 <?php Pjax::end() ?>
                             </div>
-                            <div class="tab-pane fade <?= $flag == 0 ? 'active in' : '' ?>" id="forgot-password">
+                            <div class="tab-pane fade" id="forgot-password">
                                 <form id="forgot-pass-form">
                                     <label class="control-label" for="forgot-password-email">Email</label>
                                     <input type="text" id="ForgotPassword-email" class="form-control" name="forgot-password" aria-required="true" aria-invalid="true">

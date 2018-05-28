@@ -21,6 +21,7 @@ use yii\db\Expression;
 use kartik\mpdf\Pdf;
 use yii\helpers\ArrayHelper;
 use common\models\ForgotPasswordTokens;
+use common\models\EmployerRegister;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -54,14 +55,43 @@ class EmployerController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
+        if (!empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] != '') {
+            return $this->redirect(array('employer/home'));
+        }
         $flag = 1;
         $stat = 0;
         $this->layout = 'employer_home';
         $model_filter = new CvFilter();
         $model = new Employer();
         $model->scenario = 'login';
-        $model_register = new Employer();
-        $model_register->scenario = 'create';
+        $model_register = new EmployerRegister();
+        if ($model_register->load(Yii::$app->request->post())) {
+            if ($model_register->isNewRecord) {
+                $model_register->password = Yii::$app->security->generatePasswordHash($model_register->password);
+            }
+            $model_register->review_status = 0;
+            if ($model_register->validate() && $model_register->save()) {
+                $this->addPackage($model_register);
+                $this->sendMail($model_register);
+                Yii::$app->session->setFlash('success', 'Thank you for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
+                $model_register = new EmployerRegister();
+                $flag = 1;
+            } else {
+                $flag = 0;
+            }
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->login()) {
+                Yii::$app->SetValues->setLoginHistory(Yii::$app->session['candidate']['id'], 3);
+                return $this->redirect(['employer/home']);
+            } else {
+                if (isset(Yii::$app->session['log-err']) && Yii::$app->session['log-err'] == 1) {
+                    $stat = 1;
+                    unset(Yii::$app->session['log-err']);
+                }
+                $flag = 1;
+            }
+        }
         return $this->render('employer', [
                     'model_filter' => $model_filter,
                     'model' => $model,
@@ -76,6 +106,7 @@ class EmployerController extends Controller {
         $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['status' => 1]);
+        $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
         $model_filter = new CvFilter();
         $active_candidate = $this->getActiveCandidate();
         if ($active_candidate != '' && !empty($active_candidate)) {
@@ -132,7 +163,6 @@ class EmployerController extends Controller {
                 $filter_folders = $this->getFilterFolder($model_filter);
                 $dataProvider->query->andWhere(['id' => $filter_folders]);
             }
-            $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
         }
         return $this->render('search-result', [
                     'searchModel' => $searchModel,
@@ -287,6 +317,7 @@ class EmployerController extends Controller {
         $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['status' => 1]);
+        $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
         $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         $model = new CvSearch();
         $model_filter = new CvFilter();
@@ -343,7 +374,6 @@ class EmployerController extends Controller {
                 $filter_folders = $this->getFilterFolder($model_filter);
                 $dataProvider->query->andWhere(['id' => $filter_folders]);
             }
-            $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
         }
         return $this->render('dashboard', [
                     'searchModel' => $searchModel,
@@ -777,7 +807,7 @@ class EmployerController extends Controller {
             Yii::$app->session->setFlash('error', 'This Email Varification link is Expired');
             $flag = 0;
         }
-        $this->redirect(['/employer/login']);
+        $this->redirect(['/employer/index']);
     }
 
     /**
@@ -1278,35 +1308,26 @@ class EmployerController extends Controller {
     }
 
     public function actionForgot() {
-        $this->layout = 'employer_login_dashboard';
-        $model = new Employer();
-        $model->scenario = 'forgot';
-        if ($model->load(Yii::$app->request->post())) {
-            $check_exists = Employer::find()->where(['email' => $model->email])->one();
-
+        if (Yii::$app->request->isAjax) {
+            $email = $_POST['email'];
+            $check_exists = Employer::find()->where(['email' => $email])->one();
+            $flag = 0;
             if (!empty($check_exists)) {
                 $token_value = $this->tokenGenerator();
                 $token = $check_exists->id . '_' . $token_value;
                 //$val = base64_encode($token);
                 $val = Yii::$app->EncryptDecrypt->Encrypt('encrypt', $token);
 
-                $token_model = new ForgotPasswordTokens();
+                $token_model = new \common\models\ForgotPasswordTokens();
                 $token_model->user_id = $check_exists->id;
                 $token_model->token = $token_value;
                 $token_model->save();
                 $this->sendForgotMail($val, $check_exists);
-                $model = new Employer();
-                Yii::$app->getSession()->setFlash('success', 'A mail has been sent');
+                $flag = 1;
             } else {
-                Yii::$app->getSession()->setFlash('error', 'Invalid Email ID');
+                $flag = 0;
             }
-            return $this->render('forgot-password', [
-                        'model' => $model,
-            ]);
-        } else {
-            return $this->render('forgot-password', [
-                        'model' => $model,
-            ]);
+            echo $flag;
         }
     }
 

@@ -105,6 +105,7 @@ class CandidateController extends Controller {
         $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['status' => 1]);
+        $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
         $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         $model = new CvSearch();
         $model_filter = new CvFilter();

@@ -45,6 +45,20 @@ class CandidateRegister extends \yii\db\ActiveRecord {
             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
         ];
     }
+    public function validatePassword($attribute, $params) {
+        if (!$this->hasErrors()) {
+            $user = $this->getUser();
+            if (!$user) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            } elseif ($user->email_varification != 1) {
+                $this->addError($attribute, 'Your email id is not varified. Please check your mail.');
+            } elseif (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            } else {
+                Yii::$app->session['employer_data'] = $user->attributes;
+            }
+        }
+    }
 
     /**
      * {@inheritdoc}

@@ -54,7 +54,7 @@ AppAsset::register($this);
                     </div>
                     <div class="col-md-3 text-right who">
                         <?= Html::a('Jobseeker', ['/site/index'], ['class' => 'login active']) ?>
-                        <?= Html::a('Employer', ['/employer/index'], ['class' => 'signup', 'target' => '_blank']) ?>
+                        <?= Html::a('Employer', ['/employer/index'], ['class' => 'signup']) ?>
                     </div>
                 </div>
             </div>

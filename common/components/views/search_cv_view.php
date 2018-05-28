@@ -50,7 +50,10 @@ if (count($short_list_data) > 0) {
 } else {
     $msg = 'No Other Employers Shortlisted this CV';
 }
-$qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
+$qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['highest_qualification' => 1])->one();
+if(empty($qualification)){
+    $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
+}
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
 ?>
 <?php if ($candidate->status == 1) { ?>
@@ -89,7 +92,11 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                     </div>
                     <div class="search-min">
                         <div class="contact_details col-md-8 col-sm-4 p-l">
-                            <span><strong>* </strong><?= $qualification->course_name != '' ? common\models\Courses::findOne($qualification->course_name)->course_name : '' ?></span>
+                            <?php
+                            if(!empty($qualification)){ ?>
+                                <span><strong>* </strong><?= $qualification->course_name != '' ? $qualification->course_name : '' ?></span>
+                           <?php }
+                            ?>
                         </div>
                         <div class="contact_details col-md-4 col-sm-6 p-l">
                             <span><strong>* </strong><?= $year . ' Year ' . $month . ' Month' ?></span>

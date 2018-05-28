@@ -343,7 +343,7 @@ AppAsset::register($this);
 
                         <!-- Add your copyright text here -->
                         <div class="footer-text">
-                            <strong>© 2018 CVS Databade. All rights reserved.</strong>
+                            <strong>© 2018 CVsDatabase. All rights reserved.</strong>
                         </div>
 
 
