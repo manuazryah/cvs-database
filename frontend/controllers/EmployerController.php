@@ -1355,7 +1355,7 @@ class EmployerController extends Controller {
     }
 
     public function actionNewPassword($token) {
-        $this->layout = 'employer_login_dashboard';
+        $this->layout = 'employer_home';
         $data = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $token);
         $values = explode('_', $data);
         $token_exist = ForgotPasswordTokens::find()->where("user_id = " . $values[0] . " AND token = " . $values[1])->one();

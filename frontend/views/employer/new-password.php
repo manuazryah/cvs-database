@@ -9,55 +9,47 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Forgot Password';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="log-layout">
-    <a class="hiddenanchor" id="toregister"></a>
-    <a class="hiddenanchor" id="tologin"></a>
+<section id="forgot-password-sec">
+    <div class="dark-overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div id="form" class="">
+                <div class="bg-forgot">
+                    <div id="userform">
+                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                            <li class="active"><a href="#forgot" role="tab" data-toggle="tab" aria-expanded="true">Forgot Password</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade active in" id="forgot">
+                                <?= \common\widgets\Alert::widget(); ?>
+                                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                                <div class="form-group">
+                                    <div class="form-group field-employee-password">
+                                        <label class="control-label" for="new-password">New Password</label>
+                                        <input type="password" id="new-password" class="form-control" name="new-password" autofocus="false" required>
+                                        <p class="help-block help-block-error"></p>
+                                    </div>
 
-    <div id="wrapper">
-        <div id="login" class="animate form">
-            <section class="login_content">
-                <div>
-                    <img class="img-responsive" src="<?= Yii::$app->homeUrl; ?>images/site-logo.png" width="225"/>
-                </div>
-                <h1>Forgot Your Password ?</h1>
-                <p>Let us help you</p>
-                <p>Type your New Password here:</p>
-                <?= \common\widgets\Alert::widget(); ?>
-                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-                <div class="form-group">
-                    <div class="form-group field-employee-password">
-                        <label class="control-label" for="new-password">New Password</label>
-                        <input type="password" id="new-password" class="form-control" name="new-password" autofocus="false" required>
-                        <p class="help-block help-block-error"></p>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group field-employee-password">
+                                        <label class="control-label" for="confirm-password">Confirm Password</label>
+                                        <input type="password" id="confirm-password" class="form-control" name="confirm-password" autofocus="false" required>
+                                        <p class="help-block help-block-error"></p>
+                                    </div>
+
+                                </div>
+                                <div style="position: relative;">
+                                    <?= Html::submitButton('Submit', ['class' => 'btn btn-default submit', 'name' => 'login-button']) ?>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php ActiveForm::end(); ?>                             
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-                <div class="form-group">
-                    <div class="form-group field-employee-password">
-                        <label class="control-label" for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" class="form-control" name="confirm-password" autofocus="false" required>
-                        <p class="help-block help-block-error"></p>
-                    </div>
-
-                </div>
-                <div>
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-default submit', 'name' => 'login-button']) ?>
-                </div>
-                <div class="clearfix"></div>
-                <div class="separator">
-
-                    <p class="change_link">
-                        <a href="<?= Yii::$app->homeUrl; ?>site/index" class="to_register">Login to your account?</a>
-                    </p>
-                    <div class="clearfix"></div>
-                    <br />
-
-                </div>
-                <?php ActiveForm::end(); ?>
-                <!-- form -->
-            </section>
-            <!-- content -->
+            </div>
         </div>
     </div>
-    <div style="clear:both"></div>
 </div>
+</section>

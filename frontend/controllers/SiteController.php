@@ -87,7 +87,7 @@ class SiteController extends Controller {
                     $model_register->update();
                     $this->sendMail($model_register);
                     Yii::$app->session->setFlash('success', 'Thank you for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
-                    $model_register = new CandidateRegister();
+                    $model_register = new \common\models\CandidateRegister();
                     $flag = 1;
                 }
             } else {
