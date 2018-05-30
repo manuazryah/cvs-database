@@ -18,7 +18,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => S
             return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];
         }
 );
-$latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->orderBy(['id' => SORT_DESC])->limit(5)->all();
+$latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'featured_cv' => 1])->orderBy(['id' => SORT_DESC])->limit(5)->all();
 ?>
 <style>
     .select2-container-multi .select2-choices .select2-search-field input {
@@ -41,24 +41,13 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                         <div class="search_icon"><i class="fa fa-briefcase"></i></div>
                     </div>
                     <?= $form->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-', 'multiple' => TRUE])->label(FALSE) ?>
-                    <?php
-//                    $form->field($model_filter, 'location')->widget(\yii\jui\AutoComplete::classname(), ['options' => ['class' => 'ui-autocomplete-input form-control'],
-//                        'clientOptions' => [
-//                            'source' => $this->context->getLocation(),
-//                        ],
-//                    ])->label(FALSE)
-                    ?>
-                    <!--                    <div class="form-group col-md-6 padding-left radius2">
-                                            <input id="location" type="text" class="form-control" placeholder="Country / City" name="CvFilter[location]">
-                                            <div class="search_icon"><i class="fa fa-map-marker"></i></span></div>
-                                        </div>-->
                     <div class="btn-search">
                         <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                     </div>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
-            
+
             <div class="col-md-4" style="position: relative; float: right;">
                 <div id="form" class="form-fixed">
                     <div id="userform">
@@ -115,7 +104,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -179,22 +168,24 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
             </div>
         </div>
     </div>
-    <section class="featured">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="page-heading">
-                        <h2>Featured CV's</h2>
+    <?php
+    if (!empty($latest_cvs)) {
+        ?>
+        <section class="featured">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="page-heading">
+                            <h2>Featured CV's</h2>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="table-bg">
-                        <table class="table">
-                            <tbody>
-                                <?php
-                                if (!empty($latest_cvs)) {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-bg">
+                            <table class="table">
+                                <tbody>
+                                    <?php
                                     foreach ($latest_cvs as $latest_cv) {
                                         ?>
                                         <tr>
@@ -208,12 +199,14 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                                                         } else {
                                                             echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg" class="img-responsive"/>';
                                                         }
+                                                    } else {
+                                                        echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg" class="img-responsive"/>';
                                                     }
                                                     ?>
                                                 </div>
                                                 <h1><?= $latest_cv->title ?> <p><?= $latest_cv->name_view == 1 ? $latest_cv->name : '***********' ?></p></h1>
                                             </td>
-                                            <td class="work-time" style="width:10%;"><?= $latest_cv->expected_salary == '' ? '' : ExpectedSalary::findOne($latest_cv->expected_salary)->salary_range ?></td>
+                                            <td style="width:10%;"><?= $latest_cv->expected_salary == '' ? '' : '<span class="work-time">' . ExpectedSalary::findOne($latest_cv->expected_salary)->salary_range . '</span>' ?></td>
                                             <td style="width:40%;">
                                                 <?php
                                                 if ($latest_cv->skill != '') {
@@ -237,15 +230,17 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
                                         </tr>
                                         <?php
                                     }
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <?php
+    }
+    ?>
     <section class="employe ptop60">
         <div class="container">
             <div class="row">
@@ -478,7 +473,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1])->or
 </script>
 <script>
     $(document).ready(function () {
-       $(document).on("click", "#employer-resnd", function (e) {
+        $(document).on("click", "#employer-resnd", function (e) {
             var email = $('#employer-email').val();
             if (validateEmail(email)) {
                 $.ajax({

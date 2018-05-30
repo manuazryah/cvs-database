@@ -575,6 +575,32 @@ class CandidateController extends Controller {
         }
         return $model;
     }
+    
+    /**
+     * This Function set candidate into featured list
+     * @return mixed
+     */
+    public function actionSetFeatured($id) {
+        $model = CandidateProfile::find()->where(['id'=>$id])->one();
+        if(!empty($model)){
+            $model->featured_cv = 1;
+            $model->update();
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+    
+    /**
+     * This Function remove candidate from featured list
+     * @return mixed
+     */
+    public function actionRemoveFeatured($id) {
+        $model = CandidateProfile::find()->where(['id'=>$id])->one();
+        if(!empty($model)){
+            $model->featured_cv =0;
+            $model->update();
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 
     /**
      * This function find skills based on industry

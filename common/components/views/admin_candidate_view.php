@@ -51,7 +51,7 @@ if (count($short_list_data) > 0) {
     $msg = 'No Other Employers Shortlisted this CV';
 }
 $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['highest_qualification' => 1])->one();
-if(empty($qualification)){
+if (empty($qualification)) {
     $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
 }
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
@@ -70,6 +70,8 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             } else {
                                 echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . '../images/user-5.jpg"/>';
                             }
+                        } else {
+                            echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . '../images/user-5.jpg"/>';
                         }
                         ?>
                     </div>
@@ -94,10 +96,9 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                     </div>
                     <div class="search-min">
                         <div class="contact_details col-md-8 col-sm-4 p-l">
-                            <?php
-                            if(!empty($qualification)){ ?>
+                            <?php if (!empty($qualification)) { ?>
                                 <span><strong>* </strong><?= $qualification->course_name != '' ? $qualification->course_name : '' ?></span>
-                           <?php }
+                            <?php }
                             ?>
                         </div>
                         <div class="contact_details col-md-4 col-sm-6 p-l">
@@ -118,12 +119,12 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             </ul>
                         </div>
                     </div>
-    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                                    ?></p>-->
+    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                                             ?></p>-->
                     <div class="contact_details col-md-12 col-sm-12 p-l">
                         <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                     </div>
                     <!--                <div class="contact_details col-md-12 col-sm-12 p-l">
-                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                                    ?></span>
+                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                                             ?></span>
                                     </div>-->
                 </div>
             </div>
@@ -133,6 +134,17 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
                     <?= Html::a('</i>View CV <span><i class="fas fa-eye"></i></span>', ['/candidate/candidate/view', 'id' => $model->candidate_id], ['class' => 'button3']) ?>
                 </div>
+                <?php if ($model->featured_cv == 0) { ?>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                        <?= Html::a('<i class="fa-check"></i><span>Set Featured</span>', ['/candidate/candidate/set-featured', 'id' => $model->id], ['class' => 'btn btn-secondary btn-icon btn-icon-standalone', 'style' => 'margin-top:10px;']) ?>
+                    </div>
+                <?php } elseif ($model->featured_cv == 1) {
+                    ?>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                        <?= Html::a('<i class="fa fa-remove"></i><span>Remove Featured</span>', ['/candidate/candidate/remove-featured', 'id' => $model->id], ['class' => 'btn btn-red btn-icon btn-icon-standalone', 'style' => 'margin-top:10px;']) ?>
+                    </div>
+                <?php }
+                ?>
             </div>
         </div>
         <div class="bottom-box col-lg-12">

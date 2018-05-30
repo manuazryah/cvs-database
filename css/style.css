@@ -1764,6 +1764,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     max-width: 120px;
     text-align: center;
     padding: 5px 0px !important;
+    margin-top: 0px;
 }
 
 /*********************************** CV Search Result Start *********************************/
