@@ -907,9 +907,9 @@ class EmployerController extends Controller {
                 $candidate = \common\models\Candidate::findOne($candidate_profile->candidate_id);
                 $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $id])->one();
                 $model = \common\models\CandidateProfile::findOne($id);
-                $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $id])->all();
-                $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $id])->all();
-                $contact_info = \common\models\Candidate::find()->where(['id' => $id])->one();
+                $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $candidate_profile->candidate_id])->all();
+                $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $candidate_profile->candidate_id])->all();
+                $contact_info = \common\models\Candidate::find()->where(['id' => $candidate_profile->candidate_id])->one();
                 if (empty($view_cv)) {
                     if ($packages->end_date >= date('Y-m-d')) {
                         if ($packages->no_of_downloads_left >= 1) {
