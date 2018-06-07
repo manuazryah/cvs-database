@@ -39,8 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                                 if (file_exists($dirPath)) {
                                                                     echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . '../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
                                                                 } else {
-                                                                    echo '';
+                                                                    echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . '../images/user-4.jpg"/>';
                                                                 }
+                                                            } else {
+                                                                echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . '../images/user-4.jpg"/>';
                                                             }
                                                             ?>
                                                         </div>
