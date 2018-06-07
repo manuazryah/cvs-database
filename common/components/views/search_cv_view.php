@@ -83,7 +83,18 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                                 </ul>
                             </div>
                             <div class="contact_details p-l">
-                                <span class="employed-still-looking"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
+                                <?php
+                                if ($model->job_status == 1) {
+                                    $color = 'employed-still-looking';
+                                } elseif ($model->job_status == 2) {
+                                    $color = 'actively-looking';
+                                } elseif ($model->job_status == 3) {
+                                    $color = 'employed-not-looking';
+                                } else {
+                                    $color = '';
+                                }
+                                ?>
+                                <span class="<?= $color ?>"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                             </div>
                         </div>
                     </div>
@@ -142,9 +153,18 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             <div class="contact_details p-l skills-sec">
                 <span><strong>Skills:</strong> 
                     <ul class="skills-list">
-                        <li>Core Java</li>
-                        <li>Core Java</li>
-                        <li>Core Java</li>
+                       <?php
+                        $skill_datas = explode(',', $model->skill);
+                        if(!empty($skill_datas)){
+                            foreach ($skill_datas as $skill_data) { 
+                                $skill_row = common\models\Skills::find()->where(['id'=>$skill_data,'status'=>1])->one();
+                                if(!empty($skill_row)){ ?>
+                                    <li><?= $skill_row->skill ?></li>
+                                <?php }
+                                ?>
+                          <?php  }
+                        }
+                        ?>
                     </ul>
                 </span>
             </div>

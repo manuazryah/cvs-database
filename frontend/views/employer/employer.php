@@ -14,7 +14,17 @@ use yii\widgets\Pjax;
 
 $industry_datas = Industry::find()->where(['!=', 'id', 0])->andWhere(['status' => 1])->all();
 $skills_datas = Skills::find()->where(['!=', 'industry', 0])->andWhere(['status' => 1])->all();
-$city_datas = ArrayHelper::map(\common\models\City::find()->orderBy(['city' => SORT_ASC])->all(), 'id', function($model) {
+$str = '';
+$country_sort = common\models\Country::find()->orderBy(['country_name' => SORT_ASC])->all();
+if (!empty($country_sort)) {
+    foreach ($country_sort as $sort) {
+        $str .= $sort->id . ',';
+    }
+}
+if ($str != '') {
+    $str = rtrim($str, ',');
+}
+$city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db\Expression('FIELD (country, ' . $str . ')')])->all(), 'id', function($model) {
             return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];
         }
 );
