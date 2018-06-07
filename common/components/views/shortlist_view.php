@@ -79,21 +79,17 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             </div>
                             <div class="contact_details p-l">
                                 <ul class="unstyled">
-                                    <li><span><strong>Qualification:</strong><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></span></li>
+                                    <li><span><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></span></li>
                                 </ul>
                             </div>
                             <div class="contact_details p-l">
-                                <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
-                            </div>
-                            <div class="contact_details p-l">
-                                <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
+                                <span class="employed-still-looking"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                             </div>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="search-min">
                         <div class="contact_details col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <span><strong>Exp:</strong><?= $year . ' Year ' . $month . ' Month' ?>
                                 <ul class="firm">
                                     <?php
                                     if (!empty($work_experiences)) {
@@ -118,14 +114,20 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 ?>
                 <div class="button-box prit0">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                        <div class="contact_details col-md-12 col-sm-12 p-r refid">
+                            <span><strong>cv #</strong> <?= $profile_info->user_id ?></span>
+                        </div>
                         <div class="contact_details col-md-12 col-sm-12 p-l">
-                            <span><strong>Ref No:</strong> <?= $profile_info->user_id ?></span>
+                            <span><strong>Exp:</strong><?= $year . ' Year ' . $month . ' Month' ?>
                         </div>
                         <div class="contact_details col-md-12 col-sm-12 p-l">
                             <span><strong>Expected Salary($):</strong>  <?= $model->expected_salary != '' ? \common\models\ExpectedSalary::findOne($model->expected_salary)->salary_range : '' ?></span>
                         </div>
                         <div class="contact_details col-md-12 col-sm-12 p-l">
                             <span><strong>Currently:</strong> <?= $model->current_country != '' ? common\models\Country::findOne($model->current_country)->country_name : '' ?> <?= $model->current_city != '' ? ', ' . common\models\City::findOne($model->current_city)->city : '' ?></span>
+                        </div>
+                        <div class="contact_details col-md-12 col-sm-12 p-l">
+                            <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
                         </div>
                     </div>
                 </div>
@@ -143,7 +145,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                                 <?php } else {
                                     ?>
                                     <!--<p class="button5">Already Shortlisted</p>-->
-                                    <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2 remove-shortlist','title' => 'Remove from Shortlist']) ?>
+                                    <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2 remove-shortlist', 'title' => 'Remove from Shortlist']) ?>
                                 <?php }
                                 ?>
                                 <a href="" class="button1 fld-move mtop8" id="" data-val="<?= $model->candidate_id ?>">Change Folder</a>
@@ -155,7 +157,17 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             }
             ?>
         </div>
-
+        <div class="col-md-12">
+            <div class="contact_details p-l skills-sec">
+                <span><strong>Skills:</strong> 
+                    <ul class="skills-list">
+                        <li>Core Java</li>
+                        <li>Core Java</li>
+                        <li>Core Java</li>
+                    </ul>
+                </span>
+            </div>
+        </div>
         <div class="bottom-box col-lg-12">
             <div class="last-login col-md-6 col-sm-6 p-l">
                 <span><i>Last Logged in : <?= $last_login ?></i></span>

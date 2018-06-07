@@ -79,21 +79,17 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             </div>
                             <div class="contact_details p-l">
                                 <ul class="unstyled">
-                                    <li><span><i class="fa fa-qualification" aria-hidden="true"></i><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></span></li>
+                                    <li><span><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></span></li>
                                 </ul>
                             </div>
                             <div class="contact_details p-l">
-                                <span><i class="fa fa-jobstatus" aria-hidden="true"></i><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
-                            </div>
-                            <div class="contact_details p-l">
-                                <span><i class="fa fa-nationality" aria-hidden="true"></i><?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
+                                <span class="employed-still-looking"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                             </div>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="search-min">
                         <div class="contact_details col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <span><strong>Exp:</strong><?= $year . ' Year ' . $month . ' Month' ?>
                                 <ul class="firm">
                                     <?php
                                     if (!empty($work_experiences)) {
@@ -115,14 +111,20 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-l prit0" id="rightdiv">
             <div class="button-box prit0">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                    <div class="contact_details col-md-12 col-sm-12 p-r refid">
+                        <span><strong>cv #</strong> <?= $profile_info->user_id ?></span>
+                    </div>
                     <div class="contact_details col-md-12 col-sm-12 p-l">
-                        <span><strong>Ref No:</strong> <?= $profile_info->user_id ?></span>
+                        <span><strong>Exp:</strong><?= $year . ' Year ' . $month . ' Month' ?>
                     </div>
                     <div class="contact_details col-md-12 col-sm-12 p-l">
                         <span><strong>Expected Salary($):</strong>  <?= $model->expected_salary != '' ? \common\models\ExpectedSalary::findOne($model->expected_salary)->salary_range : '' ?></span>
                     </div>
                     <div class="contact_details col-md-12 col-sm-12 p-l">
                         <span><strong>Currently:</strong> <?= $model->current_country != '' ? common\models\Country::findOne($model->current_country)->country_name : '' ?> <?= $model->current_city != '' ? ', ' . common\models\City::findOne($model->current_city)->city : '' ?></span>
+                    </div>
+                    <div class="contact_details col-md-12 col-sm-12 p-l">
+                        <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
                     </div>
                 </div>
             </div>
@@ -136,11 +138,11 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             $shortlist = common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
                             if (empty($shortlist)) {
                                 ?>
-                            <a href="" title="Add to Shortlist" class="button1 shortlist-folder" id="short-list-modal" data-val="<?= $model->candidate_id ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                <a href="" title="Add to Shortlist" class="button1 shortlist-folder" id="short-list-modal" data-val="<?= $model->candidate_id ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                             <?php } else {
                                 ?>
-                                <!--<p class="button5">Already Shortlisted</p>-->
-                                <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2 remove-shortlist','title' => 'Remove from Shortlist']) ?>
+                                    <!--<p class="button5">Already Shortlisted</p>-->
+                                <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2 remove-shortlist', 'title' => 'Remove from Shortlist']) ?>
                             <?php }
                             ?>
                             <?php // Html::a('Quick Download <br><span><i class="fas fa-file-pdf"></i>', ['quick-download', 'id' => $model->id], ['class' => 'button2'])  ?>
@@ -149,7 +151,17 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 </div>
             </div>
         </div>
-
+        <div class="col-md-12">
+            <div class="contact_details p-l skills-sec">
+                <span><strong>Skills:</strong> 
+                    <ul class="skills-list">
+                        <li>Core Java</li>
+                        <li>Core Java</li>
+                        <li>Core Java</li>
+                    </ul>
+                </span>
+            </div>
+        </div>
         <div class="bottom-box col-lg-12">
             <div class="last-login col-md-6 col-sm-6 p-l">
                 <span><i>Last Logged in : <?= $last_login ?></i></span>

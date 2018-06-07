@@ -1,17 +1,11 @@
-/*********Roboto And Roboto Slabgoogle font************/
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
-
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900');
 
 body{
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #2c2e2f;
     background-color: #fff;
-    padding: 0px;
-    margin: 0px;
-    line-height: 24px;
-    font-weight: normal;
-    color: #222222;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
 }
 /***********default css*************/
 a{
@@ -116,6 +110,10 @@ input[type=checkbox], input[type=radio]{     margin-top: 6px;
     float: left;
     width: 100%;
     background: #fff;
+    border-bottom: 1px solid #eee;
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0,.15);
+    -moz-box-shadow: 0 0 1px rgba(0,0,0,.15);
+    box-shadow: 0 0 1px rgba(0,0,0,.15);
 }
 .site-logo{
     margin: 8px 0px;
@@ -697,7 +695,7 @@ ul.follow li {
 ul.follow li a {
     font-size: 20px;
     color: #fff;
-    display: block;
+    display: inherit;
 
 }
 ul.follow li:hover{ margin: -10px 5px; }
@@ -929,10 +927,6 @@ ul.bottom_link li a {
     padding: 25px;
 }
 .about_us .page-heading h2{ margin: 0px;}
-.page-heading span{
-    font-size: 14px;
-    color: #7d7d7d;
-}
 .resume2 .borderfull-width {
     margin: 0px;
 }
@@ -2610,4 +2604,473 @@ label span{ color: #7d7d7d; font-weight: 500;}
 }
 .fright span{
     margin-top: 34px;
+}
+
+.admin-users-index .panel-heading span ul li:last-child{
+    margin-right: 0px;
+}
+.admin-users-index .panel-heading span ul li a{
+    color: white;
+    text-decoration: none;
+}
+.admin-users-index .panel-heading span ul li{
+    float: left;
+    margin-right: 15px;
+}
+.admin-users-index .panel-heading span ul{
+    padding: 0px;
+    list-style: none;
+    float: right;
+    margin-bottom: 0;
+}
+.admin-users-index .panel-heading span strong{
+    margin-right: 10px;
+}
+.admin-users-index .panel-heading span{
+    float: right;
+}
+.admin-users-index .panel-heading .panel-title{
+    float: left;
+}
+.admin-users-index .panel-heading{
+    background: #0474ba;
+    color: white;
+    display: inline-block;
+    width: 100%;
+}
+.admin-users-index .select2-search-field input{
+    background: white !important;
+    padding: 6px 12px !important;
+    height: 37px;
+}
+.admin-users-index .search-sec #filter-search .job-search button{
+    width: 100%;
+    height: 49px;
+    margin-bottom: 0px;
+    background: #0a3254;
+    color: white;
+    -webkit-transition: all .6s;
+    -moz-transition: all .6s;
+    transition: all .6s;
+}
+.admin-users-index .search-sec #filter-search .job-search button:hover{
+    color: #fff;
+    background-color: #0773b9;
+    -webkit-transition: all .6s;
+    -moz-transition: all .6s;
+    transition: all .6s;
+}
+.admin-users-index .search-sec #filter-search .job-search .select2-search-field input{
+    height: 48px;
+    background: white !important;
+}
+.admin-users-index .search-sec #filter-search .job-search .form-control{
+    height: 50px;
+    border: none;
+    border-right: 1px solid #e8e8e8;
+}
+.admin-users-index .search-sec #filter-search .job-search .form-group .help-block{
+    display: none;
+}
+.admin-users-index .search-sec #filter-search .job-search .form-group{
+    margin-bottom: 0px;
+}
+.admin-users-index .search-sec #filter-search .job-search{
+    width: 100%;    
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.admin-users-index .search-sec #filter-search{
+    display: -webkit-box;
+    margin-bottom: 0px;
+}
+.admin-users-index .search-sec{
+    border: 1px solid #cccccc8f;
+    margin: 15px 0;
+}
+.nav-userinfo.user-profile-menu .user-footer btn{
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+}
+.nav-userinfo.user-profile-menu .user-footer{
+    background: #262626;
+}
+.admin-users-index .account-info{
+    background: #2caef4;
+    padding: 20px 30px;
+}
+.admin-users-index .account-info .top-box-btm{
+    border: 1px solid white;
+}
+.admin-users-index .account-info .top-box-btm .color-white{
+    color: white;
+    text-align: center;
+}
+.admin-users-index .account-info .top-box-btm p{
+    color: #fff;
+}
+.admin-users-index .mailbox-env .box .main-title{
+    background: #0474ba;
+    margin: 0px;
+    padding: 15px 10px;
+    color: white;
+    margin-bottom: 0;
+    font-size: 16px;
+}
+.admin-users-index .mailbox-env .box .job_title{
+    padding: 15px;
+    background: #e8e8e8;
+}
+.admin-users-index .mailbox-env .box input.form-control{
+    background: #e8e8e857;
+    display: block;
+    height: 32px;
+    padding: 6px 12px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    border: 1px solid #e4e4e4;
+    border-radius: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+
+}
+.admin-users-index .mailbox-env .box{
+    padding: 0px;
+}
+.search-scroll{
+    max-height: 112px;
+    overflow: hidden;
+    padding: 0px 10px 15px 10px;
+    border: 1px solid #e1e1e1;
+}
+.cv-contact .cv-contact-head{
+    margin: 0px;
+    font-size: 14px;
+    color: #222222;
+    font-weight: 600;
+}
+.cv-contact-details .table>tbody>tr>th{
+    border-top: 0px;
+    font-size: 12px;
+    vertical-align: middle;
+    color: #7d7d7d;
+    padding: 10px;
+}
+.cv-contact-details .table>tbody>tr>td{
+    border-top: 0px;
+    font-size: 12px;
+    vertical-align: middle;
+    color: #7d7d7d;
+    padding: 10px;
+}
+.cv-contact-details table.table tr {
+    border: none;
+}
+.cv-downlod .cv-dwn-head {
+    padding-top: 0px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    color: #2a7fbd;
+    padding-left: 10px;
+    font-weight: 600;
+}
+#industryTable{
+    margin-top: 10px;
+}
+#skillTable{
+    margin-top: 10px;
+}
+.emp-company-view h4{
+    background: #403f3f;
+    padding: 8px 10px;
+    color: white;
+    font-size: 15px;
+}
+.admin-users-index .page-heading p{
+    margin-bottom: 0px;
+}
+.admin-users-index .contact_details .firm{
+    /*position: absolute;*/
+    /*left: 10px;*/
+    list-style: none;
+    padding-left: 0px;
+}
+.admin-users-index .contact_details .firm li:before{
+    content: "\f10c";
+    font-family: FontAwesome;
+    display: inline-block;
+    margin-right: 5px;
+}
+.admin-users-index .contact_details .firm li{
+    float: left;
+    margin-right: 35px;
+    margin-bottom: 5px;
+}
+.admin-users-index .page_listing.candidate .summary{
+    text-align: right;
+    margin-bottom: 10px;
+    position: absolute;
+    right: 0;
+    top: 15px;
+}
+.sorting_content {
+    border: solid 1px #e1e1e1;
+    padding-top: 0px;
+    overflow: hidden;
+    /* border-bottom: solid 1px #e1e1e1; */
+    margin-bottom: 15px;
+}
+.sorting_content:hover {
+    box-shadow: 0 0 16px #ccc;
+    transition: all .4s ease;
+}
+.candidate .sorting_content .bottom_text {
+    border-right: 1px solid #e1e1e1;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.tab-image {
+    float: left;
+    text-align: center;
+    /* margin-right: 20px; */
+    margin-bottom: 10px;
+}
+.text-shorting {
+    overflow: hidden;
+}
+.text-shorting h1 {
+    font-size: 16px;
+    color: #333;
+    line-height: 22px;
+    font-weight: 500;
+    margin: 0px;
+}
+.text-shorting h1 strong {
+    line-height: 25px;
+}
+.sorting_content strong {
+    color: #000000 !important;
+}
+.sorting_content .unstyled {
+    /* margin-bottom: 10px; */
+}
+ul.unstyled li {
+    list-style: none;
+}
+.contact_details span {
+    line-height: 24px;
+    color: #555;
+    display: block;
+    padding-bottom: 0px;
+    font-size: 13px;
+    text-transform: capitalize;
+}
+.candidate .sorting_content .contact_details span {
+    font-size: 13px;
+    line-height: 1.8;
+}
+.contact_details span i {
+    padding-right: 8px;
+    color: #333;
+}
+.fa-qualification:before {
+    content: "";
+    background: url(../images/icons/certificate.svg);
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-bottom: -4px;
+}
+.fa-jobstatus:before {
+    content: "";
+    background: url(../images/icons/employee.svg);
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-bottom: -4px;
+}
+.fa-nationality:before {
+    content: "";
+    background: url(../images/icons/flag.svg);
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-bottom: -4px;
+}
+.admin-users-index .contact_details .firm {
+    /* position: absolute; */
+    /* left: 10px; */
+    list-style: none;
+    padding-left: 0px;
+}
+.admin-users-index .contact_details .firm li {
+    float: left;
+    margin-right: 35px;
+    margin-bottom: 5px;
+}
+.admin-users-index .contact_details .firm li:before {
+    content: "\f10c";
+    font-family: FontAwesome;
+    display: inline-block;
+    margin-right: 5px;
+}
+.admin-users-index .page_listing .button-box {
+    margin-top: 0px;
+    display: inline-block;
+    width: 100%;
+    padding: 20px;
+    border-left: 1px solid #e1e1e1;
+    padding-top: 20px;
+    margin-left: -1px;
+    padding-bottom: 20px;
+}
+.candidate .sorting_content .button3 {
+    float: left;
+    padding: 5px 20px 6px;
+    font-size: 14px;
+    color: #2caef4;
+    border-color: #2caef4;
+    width: calc(100% - 40px);
+    min-width: 88px;
+    margin: 0 8px 0 0;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+    display: inline-block;
+    border: 1px solid #2caef4;
+    background-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 400;
+    text-decoration: none;
+    border-radius: 2px;
+    line-height: 1.5;
+}
+.bottom-box {
+    display: inline-block;
+    border-top: 1px solid #e1e1e1;
+    padding: 7px 15px;
+    background: #f3f5f4;
+}
+.candidate .sorting_content .contact_details span strong {
+    font-size: 13px;
+    margin-right: 5px;
+    font-weight: 500;
+    color: #1b1b1b !important;
+    line-height: 1.8;
+    float: left;
+}
+input[type=checkbox], input[type=radio] {
+    margin-top: 3px;
+    float: left;
+    margin-right: 10px;
+}
+#nationalityTable {
+    margin-top: 10px;
+}
+#skillTable {
+    margin-top: 10px;
+}
+.page-heading {
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+.search-noscroll {
+    padding: 10px 10px 10px 10px;
+    border: 1px solid #e1e1e1;
+}
+.check-label label {
+    display: block !important;
+    clear: both !important;
+    color: #979898;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.search-scroll {
+    max-height: 112px;
+    overflow: hidden;
+    padding: 0px 10px 15px 10px;
+    border: 1px solid #e1e1e1;
+}
+.search-scroll:hover {
+    overflow-y: scroll;
+}
+.search-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+.search-scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+.pad-tp {
+    padding-top: 10px;
+}
+.refid{
+    position: absolute;
+    top: -20px;
+}
+.refid span{
+    text-transform: initial;
+    text-align: right;
+    float: right;
+}
+.employed-still-looking{
+    background: #ffca31;
+    border-radius: 30px;
+    width: fit-content;
+    padding: 0px 30px;
+    color: white !important;
+}
+.employed-not-looking{
+    background: #f8222e;
+    border-radius: 30px;
+    width: fit-content;
+    padding: 0px 30px;
+    color: white !important;
+}
+.actively-looking{
+    background: #00b24e;
+    border-radius: 30px;
+    width: fit-content;
+    padding: 0px 30px;
+    color: white !important;
+}
+.skills-sec{
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+.skills-sec .skills-list{
+    list-style: none;
+    padding: 0px;
+}
+.skills-sec .skills-list li{
+    float: left;
+    background: #eeeef0;
+    border-radius: 30px;
+    color: black;
+    padding: 2px 10px;
+    margin-right: 5px;
+}
+#rightdiv{
+    margin-top: 10px;
+}
+.mtop60{
+    margin-top: 60px !important;
 }
