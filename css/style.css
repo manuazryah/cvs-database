@@ -1314,7 +1314,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     border-top: 1px solid #e1e1e1;
 }
 .prit0{
-    padding-right: 0px;
+    padding-right: 0px !important;
 }
 .ptop15{
     padding-top: 15px;
@@ -1645,7 +1645,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .candidate .sorting_content .bottom-box{
     display: inline-block;
     border-top: 1px solid #e1e1e1;
-    padding: 7px 15px;
+    padding: 3px 15px;
     background: #f3f5f4;
 }
 .site-banner .btn-default:hover{
@@ -1770,7 +1770,6 @@ label span{ color: #7d7d7d; font-weight: 500;}
     border: none;
 }
 .cv-search-result .mailbox-env .box {
-    border: 1px solid #e1e1e1;
     padding-top: 15px;
     margin-bottom: 30px;
 }
@@ -1794,8 +1793,12 @@ label span{ color: #7d7d7d; font-weight: 500;}
     font-weight: 500;
     margin-bottom: 0px;
 }
+.admin-users-index .mailbox-env .box .page-heading {
+    border: 1px solid #e1e1e1;
+    margin-bottom: 7px;
+}
 .cv-search-result .page-heading {
-    padding-bottom: 20px;
+    padding-bottom: 0px;
     overflow: hidden;
 }
 .cv-search-result .check-label label {
@@ -2713,19 +2716,19 @@ label span{ color: #7d7d7d; font-weight: 500;}
 .admin-users-index .mailbox-env .box .main-title{
     background: #0474ba;
     margin: 0px;
-    padding: 15px 10px;
+    padding: 10px 10px;
     color: white;
     margin-bottom: 0;
     font-size: 16px;
 }
 .admin-users-index .mailbox-env .box .job_title{
-    padding: 15px;
+    padding: 7px 15px;
     background: #e8e8e8;
 }
 .admin-users-index .mailbox-env .box input.form-control{
     background: #e8e8e857;
     display: block;
-    height: 32px;
+    height: 26px;
     padding: 6px 12px;
     font-size: 13px;
     line-height: 1.42857143;
@@ -2850,7 +2853,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     margin: 0px;
 }
 .text-shorting h1 strong {
-    line-height: 25px;
+    line-height: 15px;
 }
 .sorting_content strong {
     color: #000000 !important;
@@ -2866,11 +2869,11 @@ ul.unstyled li {
     color: #555;
     display: block;
     padding-bottom: 0px;
-    font-size: 13px;
+    font-size: 12px;
     text-transform: capitalize;
 }
 .candidate .sorting_content .contact_details span {
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.8;
 }
 .contact_details span i {
@@ -2913,7 +2916,7 @@ ul.unstyled li {
 .admin-users-index .contact_details .firm li {
     float: left;
     margin-right: 35px;
-    margin-bottom: 5px;
+    font-size: 12px;
 }
 .admin-users-index .contact_details .firm li:before {
     content: "\f10c";
@@ -2922,19 +2925,19 @@ ul.unstyled li {
     margin-right: 5px;
 }
 .admin-users-index .page_listing .button-box {
-    margin-top: 0px;
     display: inline-block;
     width: 100%;
-    padding: 20px;
+    padding: 10px 20px 0px 20px;
     border-left: 1px solid #e1e1e1;
-    padding-top: 20px;
     margin-left: -1px;
-    padding-bottom: 20px;
+}
+.admin-users-index .page_listing .button-box .button-sec {
+    margin-top: 5px;
 }
 .candidate .sorting_content .button3 {
     float: left;
-    padding: 5px 20px 6px;
-    font-size: 14px;
+    padding: 4px 20px 4px;
+    font-size: 13px;
     color: #2caef4;
     border-color: #2caef4;
     width: calc(100% - 40px);
@@ -2960,10 +2963,10 @@ ul.unstyled li {
     background: #f3f5f4;
 }
 .candidate .sorting_content .contact_details span strong {
-    font-size: 13px;
+    font-size: 12px;
     margin-right: 5px;
     font-weight: 500;
-    color: #1b1b1b !important;
+    color: #1b1b1b;
     line-height: 1.8;
     float: left;
 }
@@ -2999,7 +3002,7 @@ input[type=checkbox], input[type=radio] {
     max-height: 112px;
     overflow: hidden;
     padding: 0px 10px 15px 10px;
-    border: 1px solid #e1e1e1;
+    border: none;
 }
 .search-scroll:hover {
     overflow-y: scroll;
@@ -3023,11 +3026,21 @@ input[type=checkbox], input[type=radio] {
 .refid{
     position: absolute;
     top: -20px;
+    padding-right: 0;
+}
+.refid span strong{
+    color: white !important;
 }
 .refid span{
     text-transform: initial;
     text-align: right;
     float: right;
+    background: #2caef4;
+    color: white;
+    padding: 0 10px;
+}
+.admin-users-index .employed-still-looking{
+    margin-top: 5px;
 }
 .employed-still-looking{
     background: #ffca31;
@@ -3036,12 +3049,18 @@ input[type=checkbox], input[type=radio] {
     padding: 0px 30px;
     color: white !important;
 }
+.admin-users-index .employed-not-looking{
+    margin-top: 5px;
+}
 .employed-not-looking{
     background: #f8222e;
     border-radius: 30px;
     width: fit-content;
     padding: 0px 30px;
     color: white !important;
+}
+.admin-users-index .actively-looking{
+    margin-top: 5px;
 }
 .actively-looking{
     background: #00b24e;
@@ -3050,11 +3069,15 @@ input[type=checkbox], input[type=radio] {
     padding: 0px 30px;
     color: white !important;
 }
+.admin-users-index .contact_details .search-min {
+    margin-top: 10px;
+    display: inline-block;
+}
 .skills-sec{
     display: inline-block;
     width: 100%;
     margin-bottom: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 .skills-sec .skills-list{
     list-style: none;
@@ -3067,10 +3090,17 @@ input[type=checkbox], input[type=radio] {
     color: black;
     padding: 2px 10px;
     margin-right: 5px;
+    font-size: 10px;
 }
 #rightdiv{
     margin-top: 10px;
 }
 .mtop60{
     margin-top: 60px !important;
+}
+.admin-users-index .search-min .contact_details {
+    padding-left: 5px;
+}
+.panel .panel-body {
+    color: #979898;
 }

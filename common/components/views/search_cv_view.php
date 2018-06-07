@@ -97,25 +97,25 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                                 <span class="<?= $color ?>"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
                             </div>
                         </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="search-min">
-                        <div class="contact_details col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <ul class="firm">
-                                <?php
-                                if (!empty($work_experiences)) {
-                                    foreach ($work_experiences as $work_experience) {
-                                        ?>
+                        <div class="search-min">
+                            <div class="contact_details col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                <ul class="firm">
+                                    <?php
+                                    if (!empty($work_experiences)) {
+                                        foreach ($work_experiences as $work_experience) {
+                                            ?>
 
-                                        <li> <?= $work_experience->designation . ' at ' . $work_experience->company_name ?></li>
-                                        <?php
+                                            <li> <?= $work_experience->designation . ' at ' . $work_experience->company_name ?></li>
+                                            <?php
+                                        }
                                     }
-                                }
-                                ?>
-                            </ul>
-                            </span>
+                                    ?>
+                                </ul>
+                                </span>
+                            </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
@@ -153,16 +153,18 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             <div class="contact_details p-l skills-sec">
                 <span><strong>Skills:</strong> 
                     <ul class="skills-list">
-                       <?php
+                        <?php
                         $skill_datas = explode(',', $model->skill);
-                        if(!empty($skill_datas)){
-                            foreach ($skill_datas as $skill_data) { 
-                                $skill_row = common\models\Skills::find()->where(['id'=>$skill_data,'status'=>1])->one();
-                                if(!empty($skill_row)){ ?>
+                        if (!empty($skill_datas)) {
+                            foreach ($skill_datas as $skill_data) {
+                                $skill_row = common\models\Skills::find()->where(['id' => $skill_data, 'status' => 1])->one();
+                                if (!empty($skill_row)) {
+                                    ?>
                                     <li><?= $skill_row->skill ?></li>
                                 <?php }
                                 ?>
-                          <?php  }
+                            <?php
+                            }
                         }
                         ?>
                     </ul>

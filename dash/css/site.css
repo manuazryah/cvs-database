@@ -760,6 +760,7 @@ a {
 .sorting_content:hover{
     box-shadow: 0 0 16px #ccc;
     transition: all .4s ease;
+    border-left: 3px solid #2caef4;
     border-top-left-radius: .25em;
     border-bottom-left-radius: .25em;
 }
@@ -818,7 +819,7 @@ a {
     align-self: flex-start;
     display: inline-block;
     border: 1px solid #2caef4;
-    background-color: transparent;
+    background-color: #2caef421;
     -webkit-font-smoothing: antialiased;
     text-align: center;
     cursor: pointer;
@@ -1422,9 +1423,11 @@ input[type=checkbox], input[type=radio] {
 }
 .admin-users-index .search-sec #filter-search .job-search button{
     width: 100%;
-    height: 49px;
+    height: 50px;
     margin-bottom: 0px;
     background: #0a3254;
+    border-bottom: 0px;
+    box-shadow: none;
     color: white;
     -webkit-transition: all .6s;
     -moz-transition: all .6s;
@@ -1433,6 +1436,8 @@ input[type=checkbox], input[type=radio] {
 .admin-users-index .search-sec #filter-search .job-search button:hover{
     color: #fff;
     background-color: #0773b9;
+    border-bottom: 0px;
+    box-shadow: none;
     -webkit-transition: all .6s;
     -moz-transition: all .6s;
     transition: all .6s;
@@ -1477,7 +1482,7 @@ input[type=checkbox], input[type=radio] {
     /*padding: 20px 30px;*/
 }
 .admin-users-index .account-info .top-box-btm{
-    border: 1px solid white;
+    border: 1px solid transparent;
 }
 .admin-users-index .account-info .top-box-btm .color-white{
     color: white;
@@ -1522,9 +1527,9 @@ input[type=checkbox], input[type=radio] {
     display: inline-block;
     cursor: pointer;
     border-radius: 100%;
-    background-color: hsla(0,0%,100%,.85);
-    border: 1px solid #ccc;
-    color: #999;
+    background: #cc3f4424;
+    border: 1px solid #f53c2e;
+    color: #f53c2e;
     height: 28px;
     width: 32px;
     line-height: 27px;
@@ -1537,7 +1542,7 @@ input[type=checkbox], input[type=radio] {
     border-radius: 3px;
 }
 .candidate .sorting_content .remove-shortlist:hover{
-    background: #cc3f440d;
+    background: #cc3f4424;
     border: 1px solid #f53c2e;
     color: #f53c2e;
 }
@@ -1545,23 +1550,23 @@ input[type=checkbox], input[type=radio] {
     display: inline-block;
     cursor: pointer;
     border-radius: 100%;
-    background-color: hsla(0,0%,100%,.85);
-    border: 1px solid #ccc;
-    color: #999;
-    height: 32px;
+    background: #4caf5026;
+    border: 1px solid #02b24d;
+    color: #02b24d;
+    height: 28px;
     width: 32px;
     line-height: 27px;
     text-align: center;
     padding: 0;
     transition: all .4s ease;
     padding: 6px;
-    font-size: 17px;
+    font-size: 14px;
     border-radius: 3px;
 }
 .candidate .sorting_content .shortlist-folder:hover{
-    background: aliceblue;
-    border: 1px solid #2caef4;
-    color: #2caef4;
+    background: #4caf5026;
+    border: 1px solid #02b24d;
+    color: #02b24d;
 }
 .candidate .sorting_content .contact_details .button-sec{
     width: 100%;

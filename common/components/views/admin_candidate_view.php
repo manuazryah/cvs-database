@@ -58,100 +58,138 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
 ?>
 <?php if ($candidate->status == 1) { ?>
     <div class="sorting_content" id="admin-cv-listing">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 prit0" id="leftdiv">
             <div class="overflow">
                 <div class="bottom_text">
-                    <div class="tab-image">
-                        <?php
-                        if ($model->photo != '') {
-                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
-                            if (file_exists($dirPath)) {
-                                echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . '../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pad0">
+                        <div class="tab-image">
+                            <?php
+                            if ($model->photo != '') {
+                                $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                                if (file_exists($dirPath)) {
+                                    echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . '../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                } else {
+                                    echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . '../images/user-5.jpg"/>';
+                                }
                             } else {
                                 echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . '../images/user-5.jpg"/>';
                             }
-                        } else {
-                            echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . '../images/user-5.jpg"/>';
-                        }
-                        ?>
-                    </div>
-                    <div class="text-shorting">
-                        <div class="contact_details col-md-4 col-sm-4 p-l">
-                            <h1><strong><?= $name ?></strong></h1>
-                        </div>
-                        <div class="contact_details col-md-6 col-sm-6 p-l">
-                            <span><strong>Reference No:</strong> <?= $profile_info->user_id ?></span>
-                        </div>
-                        <div class="contact_details col-lg-10 p-l">
-                            <ul class="unstyled">
-                                <li><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="contact_details col-md-4 col-sm-4 p-l">
-                        <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
-                    </div>
-                    <div class="contact_details col-md-6 col-sm-6 p-l">
-                        <span><strong>Currently:</strong> <?= $model->current_country != '' ? common\models\Country::findOne($model->current_country)->country_name : '' ?> <?= $model->current_city != '' ? ', ' . common\models\City::findOne($model->current_city)->city : '' ?></span>
-                    </div>
-                    <div class="search-min">
-                        <div class="contact_details col-md-8 col-sm-4 p-l">
-                            <?php if (!empty($qualification)) { ?>
-                                <span><strong>* </strong><?= $qualification->course_name != '' ? $qualification->course_name : '' ?></span>
-                            <?php }
                             ?>
                         </div>
-                        <div class="contact_details col-md-4 col-sm-6 p-l">
-                            <span><strong>* </strong><?= $year . ' Year ' . $month . ' Month' ?></span>
-                        </div>
-                        <div class="contact_details col-md-12 col-sm-12 p-l">
-                            <ul>
+                    </div>
+                    <div class="contact_details col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                        <div class="text-shorting">
+                            <div class="contact_details p-l">
+                                <h1><strong><?= $name ?></strong></h1>
+                            </div>
+                            <div class="contact_details p-l">
+                                <ul class="unstyled">
+                                    <li><span><?= strlen($model->title) > 60 ? substr($model->title, 0, 60) . '...' : $model->title; ?></span></li>
+                                </ul>
+                            </div>
+                            <div class="contact_details p-l">
                                 <?php
-                                if (!empty($work_experiences)) {
-                                    foreach ($work_experiences as $work_experience) {
-                                        ?>
-
-                                        <li> <?= $work_experience->designation . ' at ' . $work_experience->company_name ?></li>
-                                        <?php
-                                    }
+                                if ($model->job_status == 1) {
+                                    $color = 'employed-still-looking';
+                                } elseif ($model->job_status == 2) {
+                                    $color = 'actively-looking';
+                                } elseif ($model->job_status == 3) {
+                                    $color = 'employed-not-looking';
+                                } else {
+                                    $color = '';
                                 }
                                 ?>
-                            </ul>
+                                <span class="<?= $color ?>"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
+                            </div>
+                        </div>
+                        <div class="search-min">
+                            <div class="contact_details col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                <ul class="firm">
+                                    <?php
+                                    if (!empty($work_experiences)) {
+                                        foreach ($work_experiences as $work_experience) {
+                                            ?>
+
+                                            <li> <?= $work_experience->designation . ' at ' . $work_experience->company_name ?></li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                                </span>
+                            </div>
                         </div>
                     </div>
-    <!--<p class="col-md-12 p-l"><?php // strlen($model->executive_summary) > 160 ? substr($model->executive_summary, 0, 160) . '...' : $model->executive_summary;                                                                             ?></p>-->
-                    <div class="contact_details col-md-12 col-sm-12 p-l">
-                        <span><strong>Job Status:</strong> <?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
-                    </div>
-                    <!--                <div class="contact_details col-md-12 col-sm-12 p-l">
-                                        <span><strong>Total Experience:</strong> <?php // $year . ' Year ' . $month . ' Month'                                                                                             ?></span>
-                                    </div>-->
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 p-l">
-            <div class="button-box" style="margin-top: 20px;">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-l prit0" id="rightdiv">
+            <div class="button-box prit0">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                    <?= Html::a('</i>View CV <span><i class="fas fa-eye"></i></span>', ['/candidate/candidate/view', 'id' => $model->candidate_id], ['class' => 'button3']) ?>
+                    <div class="contact_details col-md-12 col-sm-12 p-r refid">
+                        <span><strong>cv #</strong> <?= $profile_info->user_id ?></span>
+                    </div>
+                    <div class="contact_details col-md-12 col-sm-12 p-l">
+                        <span><strong>Exp:</strong><?= $year . ' Year ' . $month . ' Month' ?>
+                    </div>
+                    <div class="contact_details col-md-12 col-sm-12 p-l">
+                        <span><strong>Expected Salary($):</strong>  <?= $model->expected_salary != '' ? \common\models\ExpectedSalary::findOne($model->expected_salary)->salary_range : '' ?></span>
+                    </div>
+                    <div class="contact_details col-md-12 col-sm-12 p-l">
+                        <span><strong>Currently:</strong> <?= $model->current_country != '' ? common\models\Country::findOne($model->current_country)->country_name : '' ?> <?= $model->current_city != '' ? ', ' . common\models\City::findOne($model->current_city)->city : '' ?></span>
+                    </div>
+                    <div class="contact_details col-md-12 col-sm-12 p-l">
+                        <span><strong>Nationality:</strong> <?= $model->nationality != '' ? common\models\Country::findOne($model->nationality)->country_name : '' ?></span>
+                    </div>
                 </div>
-                <?php if ($model->featured_cv == 0) { ?>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-l prit0">
+                <div class="button-box ptop0">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                        <?= Html::a('<i class="fa-check"></i><span>Set Featured</span>', ['/candidate/candidate/set-featured', 'id' => $model->id], ['class' => 'btn btn-secondary btn-icon btn-icon-standalone', 'style' => 'margin-top:10px;']) ?>
+                        <div class="button-sec">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                                <?= Html::a('</i>View CV', ['/candidate/candidate/view', 'id' => $model->candidate_id], ['class' => 'button3']) ?>
+                                <?php if ($model->featured_cv == 0) { ?>
+                                    <?= Html::a('<i class="fa fa-check" aria-hidden="true"></i>', ['/candidate/candidate/set-featured', 'id' => $model->id], ['class' => 'set-featured', 'title' => 'Set as Featured']) ?>
+                                <?php } elseif ($model->featured_cv == 1) {
+                                    ?>
+                                    <?= Html::a('<i class="fa fa-remove" aria-hidden="true"></i>', ['/candidate/candidate/remove-featured', 'id' => $model->id], ['class' => 'remove-featured', 'title' => 'Remove from Featured']) ?>
+                                <?php }
+                                ?>
+                            </div>
+                        </div>
                     </div>
-                <?php } elseif ($model->featured_cv == 1) {
-                    ?>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                        <?= Html::a('<i class="fa fa-remove"></i><span>Remove Featured</span>', ['/candidate/candidate/remove-featured', 'id' => $model->id], ['class' => 'btn btn-red btn-icon btn-icon-standalone', 'style' => 'margin-top:10px;']) ?>
-                    </div>
-                <?php }
-                ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="contact_details p-l skills-sec">
+                <span><strong>Skills:</strong> 
+                    <ul class="skills-list">
+                        <?php
+                        $skill_datas = explode(',', $model->skill);
+                        if (!empty($skill_datas)) {
+                            foreach ($skill_datas as $skill_data) {
+                                $skill_row = common\models\Skills::find()->where(['id' => $skill_data, 'status' => 1])->one();
+                                if (!empty($skill_row)) {
+                                    ?>
+                                    <li><?= $skill_row->skill ?></li>
+                                <?php }
+                                ?>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </ul>
+                </span>
             </div>
         </div>
         <div class="bottom-box col-lg-12">
             <div class="last-login col-md-6 col-sm-6 p-l">
                 <span><i>Last Logged in : <?= $last_login ?></i></span>
             </div>
-            <div class="last-login col-md-6 col-sm-6 p-l">
+            <div class="last-login col-md-6 col-sm-6 p-l text-right">
                 <span><em><?= $msg ?></em></span>
             </div>
         </div>

@@ -160,7 +160,7 @@ $action = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
 
             <div class="main-content">
                 <?= $content; ?>
-
+                <div class="clearfix"></div>
                 <footer class="main-footer sticky footer-type-1">
 
                     <div class="footer-inner">
