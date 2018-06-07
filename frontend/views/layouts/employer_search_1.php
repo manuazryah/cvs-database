@@ -52,16 +52,10 @@ AppAsset::register($this);
                             </div>
                         </nav>
                     </div>
-                    <div class="col-md-3 text-right who">
-                        <?= Html::a('Employer', ['/employer/index'], ['class' => 'login active']) ?>
-                        <?= Html::a('Jobseeker', ['/site/index'], ['class' => 'signup']) ?>
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <?= $content ?>
-        </div>
+        <?= $content ?>
         <footer id="footer">
             <div class="container">
                 <div class="row">
