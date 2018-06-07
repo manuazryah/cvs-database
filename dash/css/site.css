@@ -1670,9 +1670,10 @@ input[type=checkbox], input[type=radio] {
     text-transform: capitalize;
 }
 .job-header .jobinfo .candidateinfo .desi {
-    font-size: 18px;
+    font-size: 15px;
     color: #666;
     margin-bottom: 15px;
+    line-height: 20px;
 }
 .job-header .jobinfo .candidateinfo.cont-right{
     border-left: 1px solid #e4e4e4;

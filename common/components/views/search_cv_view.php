@@ -68,7 +68,9 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                                 } else {
                                     echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
                                 }
-                            }
+                            }else {
+                                    echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                                }
                             ?>
                         </div>
                     </div>

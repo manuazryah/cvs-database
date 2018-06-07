@@ -895,7 +895,7 @@ class EmployerController extends Controller {
     public function actionViewCv($id) {
         $id = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $id);
         if (empty(Yii::$app->session['employer_data']) && Yii::$app->session['employer_data'] == '') {
-            return $this->redirect(array('employer/login'));
+            return $this->redirect(array('employer/index'));
         }
         $candidate_profile = \common\models\CandidateProfile::findOne($id);
         if ($candidate_profile->status == 1) {
