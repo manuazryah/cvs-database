@@ -33,7 +33,6 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
         <div class="col-md-12">
             <div class="panel-heading">
                 <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
-                <span><strong>For Support Contact Us: </strong><ul><li><a href="tel:+971 50 4752515"><i class="fa fa-phone"></i> +971 50 4752515</a></li><li><a href="mailto:info@cvs.ae"><i class="fa fa-envelope-o"></i> info@cvs.ae</a></li></ul></span>
             </div>
             <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12 pad0 search-sec">
                 <?= \common\widgets\Alert::widget() ?>

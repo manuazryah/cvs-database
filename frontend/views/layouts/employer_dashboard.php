@@ -76,6 +76,10 @@ EmployerAsset::register($this);
                 <!-- notifications and other links -->
                 <ul class="nav nav-userinfo navbar-right">
                     <li>
+                        <a href="tel:+971 50 4752515"><strong style="margin-right: 10px;">Support: </strong> +971 50 4752515</a>
+                    </li>
+                    <li><a href="mailto:info@cvs.ae"> admin@CVsDatabase.com</a></li>
+                    <li>
                         <a href="<?= Yii::$app->homeUrl; ?>employer/home"><i class="fa-home"></i> Home</a>
                     </li>
 
@@ -89,13 +93,13 @@ EmployerAsset::register($this);
                         </a>
 
                         <ul class="dropdown-menu user-profile-menu list-unstyled">
-<!--                            <li class="user-header">
-                                <img src="<?= yii::$app->homeUrl; ?>dash/images/user-4.png" alt="user-image" class="img-circle" />
-                                <p>
-                                    <?= Yii::$app->session['employer_data']['first_name'] ?>
-                                    <small>Member since Nov. 2012</small>
-                                </p>
-                            </li>-->
+                            <!--                            <li class="user-header">
+                                                            <img src="<?= yii::$app->homeUrl; ?>dash/images/user-4.png" alt="user-image" class="img-circle" />
+                                                            <p>
+                            <?= Yii::$app->session['employer_data']['first_name'] ?>
+                                                                <small>Member since Nov. 2012</small>
+                                                            </p>
+                                                        </li>-->
                             <li class="user-footer" style="background: #0474ba;">
                                 <div class="row">
                                     <div class="pull-left">
@@ -132,7 +136,7 @@ EmployerAsset::register($this);
 
 
                     <ul id="main-menu" class="main-menu">
-                        <li>
+                        <li class="active">
                             <?= Html::a('<i class="fa fa-search"></i> <span class="title">Search CV</span>', ['/employer/home'], ['class' => 'title']) ?>
                         </li>
                         <li>
@@ -182,9 +186,9 @@ EmployerAsset::register($this);
         </div>
 
         <!-- Page Loading Overlay -->
-<!--        <div class="page-loading-overlay">
-            <div class="loader-2"></div>
-        </div>-->
+        <!--        <div class="page-loading-overlay">
+                    <div class="loader-2"></div>
+                </div>-->
         <?php $this->endBody() ?>
     </body>
 </html>

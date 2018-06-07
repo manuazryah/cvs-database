@@ -261,7 +261,7 @@ form .form-group .form-control{
 }
 .sidebar-menu {
     width: 205px;
-    background: #0575ba;
+    background: #fff;
     border-right: 1px solid #eee;
 }
 .sidebar-menu .main-menu {
@@ -270,7 +270,7 @@ form .form-group .form-control{
     margin-top: 0px;
 }
 .sidebar-menu .main-menu a {
-    color: #ffffff;
+    color: #2caef4;
     border-bottom: 1px solid #0a84d2;
     padding-left: 15px; 
     font-size: 12px;
@@ -288,7 +288,7 @@ form .form-group .form-control{
     margin: 9px 0px;
     color: #419d87;
 }
-.sidebar-menu .main-menu a:hover {
+.sidebar-menu .main-menu a:hover, .sidebar-menu .main-menu li.active a {
     background: #0c6096;
 }
 .sidebar-menu .main-menu ul {
@@ -733,7 +733,7 @@ a {
 }
 .top-box-btm p {
     margin-bottom: 0px;
-    padding: 5px 0;
+    padding: 0px;
     color: #7d7d7d;
     font-size: 13px;
     line-height: 26px;
@@ -760,6 +760,8 @@ a {
 .sorting_content:hover{
     box-shadow: 0 0 16px #ccc;
     transition: all .4s ease;
+    border-top-left-radius: .25em;
+    border-bottom-left-radius: .25em;
 }
 .sorting_content {
     border: solid 1px #e1e1e1;
@@ -805,8 +807,8 @@ a {
 }
 .candidate .sorting_content .button3 {
     float: left;
-    padding: 5px 20px 6px;
-    font-size: 14px;
+    padding: 4px 20px 4px;
+    font-size: 12px;
     color: #2caef4;
     border-color: #2caef4;
     width: calc(100% - 40px);
@@ -835,7 +837,7 @@ a {
 .bottom-box {
     display: inline-block;
     border-top: 1px solid #e1e1e1;
-    padding: 7px 15px;
+    padding: 3px 15px;
     background: #f3f5f4;
 }
 .filter p{
@@ -848,6 +850,9 @@ a {
     color: #7d7d7d;
     font-size: 13px;
     line-height: 27px;
+}
+.tab-image img{
+    width: 66px;
 }
 .tab-image {
     float: left;
@@ -929,7 +934,6 @@ ul.unstyled li {
     padding-bottom: 0px;
     overflow: hidden;
     margin-bottom: 7px;
-    border: 1px solid #e1e1e1;
 }
 .search-scroll{
     max-height: 112px;
@@ -1458,6 +1462,7 @@ input[type=checkbox], input[type=radio] {
 .admin-users-index .search-sec{
     border: 1px solid #cccccc8f;
     margin: 15px 0;
+    margin-bottom: 0px;
 }
 .nav-userinfo.user-profile-menu .user-footer btn{
     background: transparent;
@@ -1469,7 +1474,7 @@ input[type=checkbox], input[type=radio] {
 }
 .admin-users-index .account-info{
     background: #2caef4;
-    padding: 20px 30px;
+    /*padding: 20px 30px;*/
 }
 .admin-users-index .account-info .top-box-btm{
     border: 1px solid white;
@@ -1484,7 +1489,7 @@ input[type=checkbox], input[type=radio] {
 .admin-users-index .mailbox-env .box .main-title{
     background: #0474ba;
     margin: 0px;
-    padding: 15px 10px;
+    padding: 10px 10px;
     color: white;
     margin-bottom: 0;
     font-size: 16px;
@@ -1499,6 +1504,9 @@ input[type=checkbox], input[type=radio] {
 }
 .admin-users-index .mailbox-env .box{
     padding: 0px;
+}
+.admin-users-index .mailbox-env .box .page-heading{
+    border: 1px solid #e1e1e1; 
 }
 .admin-users-index .page_listing .button-box{
     margin-top: 0px;
@@ -1517,14 +1525,14 @@ input[type=checkbox], input[type=radio] {
     background-color: hsla(0,0%,100%,.85);
     border: 1px solid #ccc;
     color: #999;
-    height: 32px;
+    height: 28px;
     width: 32px;
     line-height: 27px;
     text-align: center;
     padding: 0;
     transition: all .4s ease;
     padding: 6px;
-    font-size: 17px;
+    font-size: 14px;
     margin-top: 0px;
     border-radius: 3px;
 }
@@ -1567,7 +1575,7 @@ input[type=checkbox], input[type=radio] {
 }
 .candidate .sorting_content .bottom_text{
     border-right: 1px solid #e1e1e1;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     margin-top: 10px;
 }
 .candidate .sorting_content .contact_details span{
@@ -1575,10 +1583,10 @@ input[type=checkbox], input[type=radio] {
     line-height: 1.8;
 }
 .candidate .sorting_content .contact_details span strong{
-    font-size: 13px;
+    font-size: 12px;
     margin-right: 5px;
     font-weight: 500;
-    color: #1b1b1b !important;
+    color: #1b1b1b ;
     line-height: 1.8;
     float: left;
 }
@@ -1589,7 +1597,14 @@ input[type=checkbox], input[type=radio] {
     /*margin-bottom: 10px;*/
 }
 .text-shorting h1 strong{
-    line-height: 25px;
+    line-height: 15px;
+}
+.admin-users-index .search-min .contact_details{
+    padding-left: 5px;
+}
+.admin-users-index .contact_details .search-min{
+    margin-top: 10px;
+    display: inline-block;
 }
 .admin-users-index .contact_details .firm{
     /*position: absolute;*/
@@ -1606,7 +1621,7 @@ input[type=checkbox], input[type=radio] {
 .admin-users-index .contact_details .firm li{
     float: left;
     margin-right: 35px;
-    margin-bottom: 5px;
+    font-size: 12px;
 }
 .admin-users-index .page_listing.candidate .summary{
     text-align: right;
@@ -2434,7 +2449,7 @@ input[type=checkbox], input[type=radio] {
     margin-bottom: -4px;
 }
 .candidate .sorting_content .contact_details span {
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.8;
 }
 
@@ -2446,27 +2461,34 @@ input[type=checkbox], input[type=radio] {
 #rightdiv {
     margin-top: 10px;
 }
+.admin-users-index .page_listing .button-box .button-sec{
+    margin-top: 5px;
+}
 .admin-users-index .page_listing .button-box {
-    margin-top: 0px;
     display: inline-block;
     width: 100%;
-    padding: 20px;
+    padding: 10px 20px 0px 20px;
     border-left: 1px solid #e1e1e1;
-    padding-top: 20px;
     margin-left: -1px;
-    padding-bottom: 20px;
 }
 .refid{
     position: absolute;
     top: -20px;
+    padding-right: 0;
+}
+.refid span strong{
+    color: white !important;
 }
 .refid span{
     text-transform: initial;
     text-align: right;
     float: right;
+    background: #2caef4;
+    color: white;
+    padding: 0 10px;
 }
 .admin-users-index .employed-still-looking{
-    margin-top: 15px;
+    margin-top: 5px;
 }
 .employed-still-looking{
     background: #ffca31;
@@ -2476,7 +2498,7 @@ input[type=checkbox], input[type=radio] {
     color: white !important;
 }
 .admin-users-index .employed-not-looking{
-    margin-top: 15px;
+    margin-top: 5px;
 }
 .employed-not-looking{
     background: #f8222e;
@@ -2486,7 +2508,7 @@ input[type=checkbox], input[type=radio] {
     color: white !important;
 }
 .admin-users-index .actively-looking{
-    margin-top: 15px;
+    margin-top: 5px;
 }
 .actively-looking{
     background: #00b24e;
@@ -2499,7 +2521,7 @@ input[type=checkbox], input[type=radio] {
     display: inline-block;
     width: 100%;
     margin-bottom: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 .skills-sec span{
     margin: 0px;
@@ -2516,7 +2538,14 @@ input[type=checkbox], input[type=radio] {
     color: black;
     padding: 2px 10px;
     margin-right: 5px;
+    font-size: 10px;
 }
 #rightdiv{
     margin-top: 10px;
+}
+.navbar.horizontal-menu .navbar-inner>.nav>li>a:hover {
+    background: none;
+}
+.sidebar-menu .ps-scrollbar-x-rail .ps-scrollbar-x, .sidebar-menu .ps-scrollbar-y-rail .ps-scrollbar-y {
+    background-color: rgba(255, 255, 255, 0);
 }
