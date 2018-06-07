@@ -6,6 +6,7 @@ use frontend\assets\EmployerAsset;
 use yii\helpers\Html;
 
 EmployerAsset::register($this);
+$action = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
 ?>
 <?php $this->beginPage() ?>
 <html lang="en">
@@ -136,19 +137,19 @@ EmployerAsset::register($this);
 
 
                     <ul id="main-menu" class="main-menu">
-                        <li class="active">
+                        <li class="<?= $action == 'employer/home' ? 'active' : '' ?>">
                             <?= Html::a('<i class="fa fa-search"></i> <span class="title">Search CV</span>', ['/employer/home'], ['class' => 'title']) ?>
                         </li>
-                        <li>
+                        <li class="<?= $action == 'employer/view' ? 'active' : '' ?>">
                             <?= Html::a('<i class="fa fa-eye"></i> <span class="title">Your Profile </span>', ['/employer/view'], ['class' => 'title']) ?>
                         </li>
-                        <li>
+                        <li class="<?= $action == 'employer/change-password' ? 'active' : '' ?>">
                             <?= Html::a('<i class="fa fa-lock"></i> <span class="title">Change Password</span>', ['/employer/change-password'], ['class' => 'title']) ?>
                         </li>
-                        <li>
+                        <li class="<?= $action == 'employer/user-plans' || $action == 'employer/upgrade-package' ? 'active' : '' ?>">
                             <?= Html::a('<i class="fa fa-list"></i> <span class="title">Package Details</span>', ['/employer/user-plans'], ['class' => 'title']) ?>
                         </li>
-                        <li>
+                        <li class="<?= $action == 'employer/shortlist-folder' ? 'active' : '' ?>">
                             <?= Html::a('<i class="fa fa-folder-open"></i> <span class="title">Shortlist Folder</span>', ['/employer/shortlist-folder'], ['class' => 'title']) ?>
                         </li>
                     </ul>

@@ -23,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <div class="panel-heading">
                 <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
-                <span><strong>For Support Contact Us: </strong><ul><li><a href="tel:+971 50 4752515"><i class="fa fa-phone"></i> +971 50 4752515</a></li><li><a href="mailto:info@cvs.ae"><i class="fa fa-envelope-o"></i> info@cvs.ae</a></li></ul></span>
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
