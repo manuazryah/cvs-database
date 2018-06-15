@@ -58,7 +58,7 @@ class CandidateController extends Controller {
         $model = Candidate::findOne($id);
         $model->scenario = 'update';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-            
+
         }
         return $this->render('index', [
                     'model' => $model,
@@ -755,11 +755,9 @@ class CandidateController extends Controller {
     public function actionDeleteProfile() {
         $id = Yii::$app->session['candidate']['id'];
         $user_details = Candidate::find()->where(['id' => $id])->one();
-//        $user_profile = CandidateProfile::find()->where(['candidate_id' => $id])->one();
         $user_details->status = 0;
         $user_details->update();
-//        $user_profile->status = 0;
-//        $user_profile->update();
+        unset(Yii::$app->session['candidate']);
         $this->redirect(['/site/index']);
     }
 

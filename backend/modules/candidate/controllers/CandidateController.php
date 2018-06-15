@@ -22,7 +22,7 @@ use yii\db\Expression;
  * CandidateController implements the CRUD actions for Candidate model.
  */
 class CandidateController extends Controller {
-    
+
     public function beforeAction($action) {
         if (!parent::beforeAction($action)) {
             return false;
@@ -175,7 +175,7 @@ class CandidateController extends Controller {
                     'user_plans' => $user_plans,
         ]);
     }
-    
+
     public function getActiveCandidate() {
         $can_arr = \common\models\Candidate::find()->where(['status' => 1])->all();
         $cv_data = [];
@@ -192,7 +192,7 @@ class CandidateController extends Controller {
      */
     public function actionView($id) {
         $candidate = $this->findModel($id);
-        $model = \common\models\CandidateProfile::find()->where(['candidate_id'=>$candidate->id])->one();
+        $model = \common\models\CandidateProfile::find()->where(['candidate_id' => $candidate->id])->one();
         $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $candidate->id])->all();
         $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $candidate->id])->all();
 
@@ -251,7 +251,38 @@ class CandidateController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (!empty($model)) {
+            $candidate_profile = CandidateProfile::find()->where(['candidate_id' => $model->id])->one();
+            $candidate_education = CandidateEducation::find()->where(['candidate_id' => $model->id])->all();
+            $candidate_experience = WorkExperiance::find()->where(['candidate_id' => $model->id])->all();
+            $shortlist_folder = \common\models\ShortList::find()->where(['candidate_id' => $model->id])->all();
+            if (!empty($candidate_education)) {
+                foreach ($candidate_education as $education) {
+                    if (!empty($education)) {
+                        $education->delete();
+                    }
+                }
+            }
+            if (!empty($candidate_experience)) {
+                foreach ($candidate_experience as $experience) {
+                    if (!empty($experience)) {
+                        $experience->delete();
+                    }
+                }
+            }
+            if (!empty($shortlist_folder)) {
+                foreach ($shortlist_folder as $folder) {
+                    if (!empty($folder)) {
+                        $folder->delete();
+                    }
+                }
+            }
+            if (!empty($candidate_profile)) {
+                $candidate_profile->delete();
+            }
+            $model->delete();
+        }
 
         return $this->redirect(['index']);
     }
@@ -575,28 +606,28 @@ class CandidateController extends Controller {
         }
         return $model;
     }
-    
+
     /**
      * This Function set candidate into featured list
      * @return mixed
      */
     public function actionSetFeatured($id) {
-        $model = CandidateProfile::find()->where(['id'=>$id])->one();
-        if(!empty($model)){
+        $model = CandidateProfile::find()->where(['id' => $id])->one();
+        if (!empty($model)) {
             $model->featured_cv = 1;
             $model->update();
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
-    
+
     /**
      * This Function remove candidate from featured list
      * @return mixed
      */
     public function actionRemoveFeatured($id) {
-        $model = CandidateProfile::find()->where(['id'=>$id])->one();
-        if(!empty($model)){
-            $model->featured_cv =0;
+        $model = CandidateProfile::find()->where(['id' => $id])->one();
+        if (!empty($model)) {
+            $model->featured_cv = 0;
             $model->update();
         }
         return $this->redirect(Yii::$app->request->referrer);

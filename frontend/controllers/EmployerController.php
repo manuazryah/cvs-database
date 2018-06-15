@@ -865,7 +865,11 @@ class EmployerController extends Controller {
 
     public function GenerateTransactionNo() {
         $last_pack = EmployerPackages::find()->orderBy(['transaction_id' => SORT_DESC])->one();
-        $transaction_no = $last_pack->transaction_id + 1;
+        if (!empty($last_pack)) {
+            $transaction_no = $last_pack->transaction_id + 1;
+        } else {
+            $transaction_no = 1000;
+        }
         return $transaction_no;
     }
 
@@ -1377,6 +1381,48 @@ class EmployerController extends Controller {
         } else {
             Yii::$app->getSession()->setFlash('error', "You can't reset password using this link.Please Try again");
         }
+    }
+
+    public function actionPricing() {
+        $model = \common\models\Packages::find()->all();
+        $this->layout = 'employer_home';
+        return $this->render('pricing', [
+                    'model' => $model,
+        ]);
+    }
+
+    public function actionContact() {
+        $model = \common\models\Packages::find()->all();
+        $this->layout = 'employer_home';
+        return $this->render('contact', [
+                    'model' => $model,
+        ]);
+    }
+
+    public function actionBlog() {
+        $this->layout = 'employer_home';
+        return $this->render('blog', [
+        ]);
+    }
+
+    public function actionBlogView() {
+        $this->layout = 'employer_home';
+        return $this->render('blog-view', [
+        ]);
+    }
+
+    /*
+     * Delete Employer profile
+     * This function disable employer
+     */
+
+    public function actionDeleteProfile() {
+        $id = Yii::$app->session['employer_data']['id'];
+        $user_details = Employer::find()->where(['id' => $id])->one();
+        $user_details->status = 0;
+        $user_details->update();
+        unset(Yii::$app->session['employer_data']);
+        $this->redirect(['/employer/index']);
     }
 
 }

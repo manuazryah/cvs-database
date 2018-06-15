@@ -14,7 +14,7 @@ use common\models\EmployerPackages;
  * EmployerController implements the CRUD actions for Employer model.
  */
 class EmployerController extends Controller {
-    
+
     public function beforeAction($action) {
         if (!parent::beforeAction($action)) {
             return false;
@@ -69,7 +69,7 @@ class EmployerController extends Controller {
                     'model' => $this->findModel($id),
         ]);
     }
-    
+
     /*
      * Unrevied Employer gridview
      */
@@ -141,13 +141,13 @@ class EmployerController extends Controller {
     }
 
     public function GenerateTransactionNo() {
-        $a = mt_rand(100000, 999999);
-        $transaction_exist = EmployerPackages::find()->where(['transaction_id' => $a])->one();
-        if (empty($transaction_exist)) {
-            return $a;
+        $last_pack = EmployerPackages::find()->orderBy(['transaction_id' => SORT_DESC])->one();
+        if (!empty($last_pack)) {
+            $transaction_no = $last_pack->transaction_id + 1;
         } else {
-            $this->GenerateTransactionNo();
+            $transaction_no = 1000;
         }
+        return $transaction_no;
     }
 
     /**
@@ -211,7 +211,30 @@ class EmployerController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if (!empty($model)) {
+            $user_packages = EmployerPackages::find()->where(['employer_id' => $model->id])->one();
+            $user_plans = \common\models\UserPlanHistory::find()->where(['user_id' => $model->id])->all();
+            $shortlist_folder = \common\models\ShortList::find()->where(['employer_id' => $model->id])->all();
+            if (!empty($user_plans)) {
+                foreach ($user_plans as $plans) {
+                    if (!empty($plans)) {
+                        $plans->delete();
+                    }
+                }
+            }
+            if (!empty($shortlist_folder)) {
+                foreach ($shortlist_folder as $folder) {
+                    if (!empty($folder)) {
+                        $folder->delete();
+                    }
+                }
+            }
+            if (!empty($user_packages)) {
+                $user_packages->delete();
+            }
+            $model->delete();
+        }
 
         return $this->redirect(['index']);
     }

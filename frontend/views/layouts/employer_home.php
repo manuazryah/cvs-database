@@ -44,10 +44,9 @@ AppAsset::register($this);
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav scrollto">
                                     <li><?= Html::a('Home', ['/employer/index']) ?></li>
-                                    <li><?= Html::a('Employers', ['/employer/index']) ?></li>
-                                    <li><?= Html::a('Job Sekeers', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Blog', ['/employer/index']) ?></li>
-                                    <li><?= Html::a('Contact Us', ['/employer/index']) ?></li>
+                                    <li><?= Html::a('Pricing', ['/employer/pricing']) ?></li>
+                                    <li><?= Html::a('Blog', ['/employer/blog']) ?></li>
+                                    <li><?= Html::a('Contact Us', ['/employer/contact']) ?></li>
                                 </ul>
                             </div>
                         </nav>

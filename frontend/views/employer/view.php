@@ -21,6 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="package-button-sec">
                 <?= Html::a('<i class="fa-th-list"></i>Edit Your Profile', ['/employer/update'], ['class' => 'btn btn-warning  btn-icon  button1', 'style' => 'float: right; background: #2caef4;" title="Edit Your Profile"']) ?>
+                <?=
+                Html::a('<i class="fa fa-trash"></i>Delete Profile', ['/employer/delete-profile'], ['class' => 'btn btn-warning  btn-icon  button1', 'style' => 'float: right; background: #bd0707;" title="Delete Profile"', 'data' => [
+                        'confirm' => 'Are you sure you want to delete your profile?',
+                    ],])
+                ?>
             </div>
             <div>
             </div>

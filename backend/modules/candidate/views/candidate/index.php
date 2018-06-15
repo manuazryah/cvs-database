@@ -30,14 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                                ['class' => 'yii\grid\SerialColumn'],
 //                                                            'id',
                             'user_name',
                             'email:email',
 //                            'password',
                             'user_id',
-                            'phone',
-                            'address:ntext',
+//                            'phone',
+//                            'address:ntext',
                             // 'alternate_phone',
                             // 'alternate_address:ntext',
                             // 'facebook_link',
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->status == 1 ? 'Enabled' : 'Disabled';
                                 },
                             ],
-                            [
+                                [
                                 'attribute' => 'review_status',
                                 'format' => 'raw',
                                 'filter' => [1 => 'Reviewed', 0 => 'Unreviewed'],
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             // 'date_of_updation',
                             // 'email_varification_status:email',
                             ['class' => 'yii\grid\ActionColumn',
-                                'template' => '{view}{update}',
+                                'template' => '{delete}{view}{update}',
                             ],
                         ],
                     ]);

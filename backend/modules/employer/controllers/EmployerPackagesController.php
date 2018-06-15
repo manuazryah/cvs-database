@@ -166,13 +166,13 @@ class EmployerPackagesController extends Controller {
     }
 
     public function GenerateTransactionNo() {
-        $a = mt_rand(100000, 999999);
-        $transaction_exist = EmployerPackages::find()->where(['transaction_id' => $a])->one();
-        if (empty($transaction_exist)) {
-            return $a;
+        $last_pack = EmployerPackages::find()->orderBy(['transaction_id' => SORT_DESC])->one();
+        if (!empty($last_pack)) {
+            $transaction_no = $last_pack->transaction_id + 1;
         } else {
-            $this->GenerateTransactionNo();
+            $transaction_no = 1000;
         }
+        return $transaction_no;
     }
 
     /**

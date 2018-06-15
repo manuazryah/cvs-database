@@ -30,18 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                                ['class' => 'yii\grid\SerialColumn'],
 //                                                            'id',
                             'first_name',
                             'last_name',
                             'email:email',
-                            [
+                                [
                                 'attribute' => 'phone',
                                 'value' => function ($model) {
                                     return $model->phone == '' ? '' : $model->phone;
                                 },
                             ],
-                            [
+                                [
                                 'attribute' => 'company_name',
                                 'value' => function ($model) {
                                     return $model->company_name == '' ? '' : $model->company_name;
@@ -62,8 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->status == 1 ? 'Enabled' : 'Disabled';
                                 },
                             ],
-                            ['class' => 'yii\grid\ActionColumn',
-                                'template' => '{view}{update}',
+                                ['class' => 'yii\grid\ActionColumn',
+                                'template' => '{delete}{view}{update}',
                             ],
                         ],
                     ]);
