@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
                         <ul>
                             <li><?= Html::a('User Details', ['/candidate/index']) ?></li>
                             <li><?= Html::a('Profile Edit', ['/candidate/update-profile']) ?></li>
-                            <li><?= Html::a('Online CV', ['/candidate/online-curriculum-vitae']) ?></li>
+                            <li><?= Html::a('CV View', ['/candidate/online-curriculum-vitae']) ?></li>
                             <li class="active"><?= Html::a('Reset Password', ['/candidate/reset-password']) ?></li>
                         </ul>
                     </aside>

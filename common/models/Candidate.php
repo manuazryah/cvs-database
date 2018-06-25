@@ -39,19 +39,19 @@ class Candidate extends ActiveRecord implements IdentityInterface {
      */
     public function rules() {
         return [
-                [['email', 'user_name', 'password', 'password_repeat', 'phone'], 'required', 'on' => 'create'],
-                [['email', 'user_name', 'password', 'address', 'phone'], 'required', 'on' => 'create-admin'],
-                [['email', 'user_name', 'phone', 'address'], 'required', 'on' => 'update'],
-                [['email', 'user_name', 'phone', 'address'], 'required', 'on' => 'update-admin'],
-                [['email'], 'unique', 'on' => 'update'],
-                [['email'], 'unique', 'on' => 'create-admin'],
-                [['email'], 'unique', 'on' => 'update-admin'],
-                [['status', 'email_varification_status', 'review_status'], 'integer'],
-                [['date_of_creation', 'date_of_updation', 'phone', 'address', 'alternate_phone', 'alternate_address'], 'safe'],
-                [['email', 'user_name', 'password', 'user_id', 'facebook_link', 'linked_in_link', 'google_link', 'youtube_link'], 'string', 'max' => 100],
-                ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match", 'on' => 'create'],
-                [['user_name', 'password'], 'required', 'on' => 'login'],
-                [['password'], 'validatePassword', 'on' => 'login'],
+            [['email', 'user_name', 'password', 'password_repeat', 'phone'], 'required', 'on' => 'create'],
+            [['email', 'user_name', 'password', 'address', 'phone'], 'required', 'on' => 'create-admin'],
+            [['email', 'user_name', 'phone', 'address'], 'required', 'on' => 'update'],
+            [['email', 'user_name', 'phone', 'address'], 'required', 'on' => 'update-admin'],
+            [['email'], 'unique', 'on' => 'update'],
+            [['email'], 'unique', 'on' => 'create-admin'],
+            [['email'], 'unique', 'on' => 'update-admin'],
+            [['status', 'email_varification_status', 'review_status'], 'integer'],
+            [['date_of_creation', 'date_of_updation', 'phone', 'address', 'alternate_phone', 'alternate_address'], 'safe'],
+            [['email', 'user_name', 'password', 'user_id', 'facebook_link', 'linked_in_link', 'google_link', 'youtube_link'], 'string', 'max' => 100],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match", 'on' => 'create'],
+            [['user_name', 'password'], 'required', 'on' => 'login'],
+            [['password'], 'validatePassword', 'on' => 'login'],
         ];
     }
 
@@ -66,7 +66,11 @@ class Candidate extends ActiveRecord implements IdentityInterface {
             } elseif (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             } else {
-                Yii::$app->session['candidate'] = $user->attributes;
+                if ($user->status == 1) {
+                    Yii::$app->session['candidate'] = $user->attributes;
+                } else {
+                    $this->addError($attribute, 'Your account has been deactivated. Kindly send email to admin@cvsdatabase.com');
+                }
             }
         }
     }
@@ -107,7 +111,7 @@ class Candidate extends ActiveRecord implements IdentityInterface {
 
     protected function getUser() {
         if ($this->_user === null) {
-            $this->_user = static::find()->where('email = :uname and status = :stat', ['uname' => $this->user_name, 'stat' => '1'])->one();
+            $this->_user = static::find()->where('email = :uname', ['uname' => $this->user_name])->one();
         }
         return $this->_user;
     }

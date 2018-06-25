@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <a href="" class="btn btn-warning button1 shortlist-folder" id="short-list-modal" data-val="<?= $model->candidate_id ?>"><i class="fa fa-heart-o" aria-hidden="true"></i>Shortlist to Folder</a>
                     <?php } else {
                         ?>
-                        <span class="short-list-span">You are already shortlisted in - <span style=""><em><?= $shortlist->folder_name ?></em></span></span>
+                        <span class="short-list-span">This CV is already shortlisted to <span style=""><em><?= $shortlist->folder_name ?></em></span></span>
                         <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>Remove from shortlist', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'btn btn-warning button1 shortlist-folder', 'title' => 'Remove from Shortlist', 'style' => 'float: right; margin-top: -5px; margin-right: 0;']) ?>
                     <?php }
                     ?>
@@ -127,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ?>
                                         <div class="contact_details">
                                             <div class="fleft">
-                                                <span><strong><?= $experience->designation ?> at <br> <span class="wrk-exp"><?= $experience->company_name ?>  <?= $experience->country != '' ? ' in ' . common\models\Country::findOne($experience->country)->country_name : '' ?></span></strong></span>
+                                                <span><strong><?= $experience->designation ?> <br> <span class="wrk-exp"><?= $experience->company_name ?>  <?= $experience->country != '' ? ' in ' . common\models\Country::findOne($experience->country)->country_name : '' ?></span></strong></span>
                                             </div>
                                             <div class="fright">
                                                 <span> <?= date("M Y", strtotime($experience->from_date)) ?> - <?= date("M Y", strtotime($experience->to_date)) ?></span>

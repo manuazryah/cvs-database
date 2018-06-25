@@ -15,27 +15,29 @@ use yii\helpers\ArrayHelper;
     <?php $form = ActiveForm::begin(); ?>
     <?= \common\widgets\Alert::widget(); ?>
     <div class="row">
-        <div class='col-md-4 col-sm-6 col-xs-12'>
+        <div class='col-md-6 col-sm-6 col-xs-12'>
             <?php $posts = ArrayHelper::map(AdminPosts::findAll(['status' => 1]), 'id', 'post_name'); ?>
             <?= $form->field($model, 'post_id')->dropDownList($posts, ['prompt' => '-Choose a Post-']) ?>
 
         </div>
-        <div class='col-md-4 col-sm-6 col-xs-12'>
+        <div class='col-md-6 col-sm-6 col-xs-12'>
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-        </div>
-        <div class='col-md-4 col-sm-6 col-xs-12'>
-            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
         </div>
     </div>
     <div class="row">
-        <div class='col-md-8 col-sm-6 col-xs-12'>
-            <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
+        <div class='col-md-6 col-sm-6 col-xs-12'>
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
         </div>
-        <div class='col-md-4 col-sm-6 col-xs-12'>
+        <div class='col-md-6 col-sm-6 col-xs-12'>
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-md-12 col-sm-12 col-xs-12'>
+            <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
 
         </div>
     </div>

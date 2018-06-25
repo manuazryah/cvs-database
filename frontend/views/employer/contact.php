@@ -31,7 +31,7 @@ use yii\helpers\Html;
                 <div class="heading-center">
                     <h3 class="title">Our Helpline 24×7 Available</h3>
                     <div class="line-under"></div>
-                    <div class="content">Call us at <strong class="text-second">+0123 125 1457</strong> or Email us at <strong class="text-theme">support@site.com</strong></div>
+                    <div class="content">Call us at <strong class="text-second">+971 50 475 2515</strong><br>Email us at <strong class="text-theme">admin@cvsdatabase.com</strong></div>
                 </div>
             </div>
         </div>

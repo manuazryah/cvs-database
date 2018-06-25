@@ -71,7 +71,11 @@ use yii\db\ActiveRecord;
             } elseif (!$user || !Yii::$app->security->validatePassword($this->password, $user->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             } else {
-                Yii::$app->session['employer_data'] = $user->attributes;
+                if ($user->status == 1) {
+                     Yii::$app->session['employer_data'] = $user->attributes;
+                } else {
+                    $this->addError($attribute, 'Your account has been deactivated. Kindly send email to admin@cvsdatabase.com');
+                }
             }
         }
     }
@@ -111,7 +115,7 @@ use yii\db\ActiveRecord;
 
     protected function getUser() {
         if ($this->_user === null) {
-            $this->_user = static::find()->where(['email' => $this->email, 'status' => '1'])->one();
+            $this->_user = static::find()->where(['email' => $this->email])->one();
         }
 
         return $this->_user;

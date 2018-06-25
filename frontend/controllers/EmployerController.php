@@ -921,7 +921,7 @@ class EmployerController extends Controller {
                             $packages->update();
                             $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
                             $this->CandidateEmail($id);
-                            Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
+                            Yii::$app->session->setFlash('success', "You have already viewed this CV. No credit is deducted from your package.");
                             return $this->render('cv-view', [
                                         'model' => $model,
                                         'model_education' => $model_education,

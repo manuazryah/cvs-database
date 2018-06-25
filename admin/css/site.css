@@ -157,7 +157,7 @@ html .select2-drop .select2-results li.select2-result-selectable .select2-result
 form .form-group .form-control{
     color: #464646;
     font-size: 14px;
-    height: 40px;
+    /*height: 40px;*/
 }
 .form-group label{
     color: #484848;
@@ -289,7 +289,8 @@ form .form-group .form-control{
     color: #419d87;
 }
 .sidebar-menu .main-menu a:hover, .sidebar-menu .main-menu li.active a {
-    background: #1a2226;
+    background: #343e44;
+    color: #c56f22;
 }
 .sidebar-menu .main-menu ul {
     background: #2c3b41;
@@ -350,7 +351,7 @@ table.table tr {
     font-weight: 600;
 }
 .panel {
-   border-radius: 5px;
+    border-radius: 5px;
     background-color: #fff;
     /* border-top: 2px solid #3c8dbc; */
     border: 1px solid rgba(0,0,0,.0625)!important;
@@ -1336,13 +1337,13 @@ input[type=checkbox], input[type=radio] {
         margin-bottom: 20px;
         list-style: none;
         margin-bottom: 0;
-        background: #013c56;
+        background: #222d32;
     }
 }
 @media screen and (max-width: 768px){
     .navbar.horizontal-menu .navbar-inner .navbar-nav a {
         color: #ffffff;
-        border-bottom: 1px solid #035679;
+        border-bottom: 1px solid #1a2226;
         text-decoration: none;
         display: block;
         padding: 13px 5px;
@@ -1350,8 +1351,8 @@ input[type=checkbox], input[type=radio] {
 }
 @media screen and (max-width: 768px){
     .navbar.horizontal-menu .navbar-inner .navbar-nav a:hover {
-        color: #fff;
-        background: #004c6d;
+        background: #343e44;
+        color: #c56f22;
     }
 }
 .navbar-inner .navbar-nav a:hover {

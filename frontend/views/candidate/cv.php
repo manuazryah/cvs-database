@@ -302,32 +302,6 @@ use yii\widgets\ActiveForm;
                         </div>
                     </div>
 
-                    <!-- Contact Company start -->
-                    <div class="job-header">
-                        <div class="jobdetail">
-                            <h3>Contact <?= $user_details->user_name ?></h3>
-                            <div class="formpanel">
-                                <div class="formrow">
-                                    <input type="text" class="form-control" placeholder="Your Name">
-                                </div>
-                                <div class="formrow">
-                                    <input type="text" class="form-control" placeholder="Your Email">
-                                </div>
-                                <div class="formrow">
-                                    <input type="text" class="form-control" placeholder="Phone">
-                                </div>
-                                <div class="formrow">
-                                    <input type="text" class="form-control" placeholder="Subject">
-                                </div>
-                                <div class="formrow">
-                                    <textarea class="form-control" placeholder="Message"></textarea>
-                                </div>
-                                <?= Html::submitButton('Submit', ['class' => 'btn btn-larger btn-block submit']) ?>
-                                <?php // Html::a('Reset', ['reset-password'], ['class' => 'btn btn-large btn-default']) ?>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

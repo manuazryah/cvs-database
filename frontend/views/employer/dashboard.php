@@ -47,7 +47,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                         <?= $form1->field($model_filter, 'keyword')->textInput(['placeholder' => 'Job title / keywords'])->label(FALSE) ?>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 pad0">
-                        <?= $form1->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-', 'multiple' => TRUE])->label(FALSE) ?>
+                        <?= $form1->field($model_filter, 'location')->dropDownList($city_datas, ['multiple' => TRUE])->label(FALSE) ?>
                     </div>
                     <div class="col-lg-2 col-md-5 col-sm-5 col-xs-12 pad0">
                         <?= Html::submitButton('Search', ['class' => 'btn btn-default fright']) ?>
@@ -400,6 +400,41 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                         if (isset($model_filter->job_types) && $model_filter->job_types != '') {
                                             foreach ($model_filter->job_types as $job_type_value) {
                                                 $your_search_filter .= '"' . common\models\JobType::findOne($job_type_value)->job_type . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->salary_range) && $model_filter->salary_range != '') {
+                                            foreach ($model_filter->salary_range as $salary_range_value) {
+                                                $your_search_filter .= '"' . common\models\ExpectedSalary::findOne($salary_range_value)->salary_range . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->nationality) && $model_filter->nationality != '') {
+                                            foreach ($model_filter->nationality as $nationality_value) {
+                                                $your_search_filter .= '"' . common\models\Country::findOne($nationality_value)->country_name . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->experience) && $model_filter->experience != '') {
+                                            foreach ($model_filter->experience as $experience_value) {
+                                                $your_search_filter .= '"' . common\models\ExperienceSearch::findOne($experience_value)->experience_search . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->gender) && $model_filter->gender != '') {
+                                            foreach ($model_filter->gender as $gender_value) {
+                                                $your_search_filter .= '"' . common\models\Gender::findOne($gender_value)->gender . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->language) && $model_filter->language != '') {
+                                            foreach ($model_filter->language as $language_value) {
+                                                $your_search_filter .= '"' . common\models\Languages::findOne($language_value)->language . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->job_status) && $model_filter->job_status != '') {
+                                            foreach ($model_filter->job_status as $job_status_value) {
+                                                $your_search_filter .= '"' . common\models\JobStatus::findOne($job_status_value)->job_status . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->folder_name) && $model_filter->folder_name != '') {
+                                            foreach ($model_filter->folder_name as $folder_name_value) {
+                                                $your_search_filter .= '"' . $folder_name_value . '", ';
                                             }
                                         }
                                         ?>

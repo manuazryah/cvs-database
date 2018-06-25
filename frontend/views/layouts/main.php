@@ -158,7 +158,7 @@ AppAsset::register($this);
 <script>
     $(document).ready(function () {
         $(window).bind('scroll', function () {
-            var navHeight = $(window).height() - 75;
+            var navHeight = $(window).height();
             if ($(window).scrollTop() > navHeight) {
                 $('.header-stricky').addClass('fixed');
             } else {

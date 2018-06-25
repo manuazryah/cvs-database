@@ -645,8 +645,6 @@ class CandidateController extends Controller {
             'model_experience' => $model_experience,
             'candidate' => $candidate,
         ]);
-        echo $content;
-        exit;
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE,
@@ -759,6 +757,15 @@ class CandidateController extends Controller {
         $user_details->update();
         unset(Yii::$app->session['candidate']);
         $this->redirect(['/site/index']);
+    }
+    
+    public function actionGetFromDate() {
+        $from_date = '';
+        if (Yii::$app->request->isAjax) {
+            $to_date = $_POST['to_date'];
+            $from_date = date('Y-m-d', strtotime('-1 day', strtotime($to_date)));
+        }
+        return $from_date;
     }
 
 }

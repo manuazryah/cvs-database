@@ -4152,3 +4152,17 @@ button, html input[type=button], input[type=reset], input[type=submit] {
     margin-top: 20px;
 }
 /*****************************************************BLOG-DETAIL_END******************************************/
+.search-filter-summery{
+    background: #39aff7;
+    padding: 10px 10px;
+    color: white;
+    margin-bottom: 20px;
+}
+.search-filter-summery span{
+    color: #650606;
+    font-weight: bold;
+    font-size: 20px;
+}
+.search-filter-summery .panel-title{
+    font-size: 14px;
+}

@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                                                            'id',
                             'package_name',
                             'no_of_days',
-                            'no_of_profile_view',
+//                            'no_of_profile_view',
                             'no_of_downloads',
                             'package_price',
                             // 'status',

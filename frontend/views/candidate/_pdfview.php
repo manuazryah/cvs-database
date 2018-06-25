@@ -178,7 +178,7 @@
                                 </tr>
                                 <?php foreach ($model_education as $education) { ?>
                                     <tr>
-                                        <td><?= $education->course_name != '' ? \common\models\Courses::findOne($education->course_name)->cource_code : '' ?></td>
+                                        <td><?= $education->course_name != '' ? $education->course_name : '' ?></td>
                                         <td><?= $education->collage_university ?></td>
                                         <td><?= $education->country != '' ? \common\models\Country::findOne($education->country)->country_name : '' ?></td>
                                         <td><?= date("M Y", strtotime($education->from_year)) ?></td>

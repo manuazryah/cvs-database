@@ -53,7 +53,7 @@ if (count($short_list_data) > 0) {
 $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
 ?>
-<?php if ($candidate->status == 1) { ?>
+<?php if ($profile_info->status == 1) { ?>
     <div class="sorting_content">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 prit0" id="leftdiv">
             <div class="overflow">
@@ -123,7 +123,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-l prit0" id="rightdiv">
             <?php
-            if ($candidate->status == 1) {
+            if ($profile_info->status == 1) {
                 ?>
                 <div class="button-box prit0">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
@@ -203,14 +203,31 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
     </div>
 <?php } else { ?>
     <div class="sorting_content">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 prit0" id="leftdiv">
             <div class="overflow">
                 <div class="bottom_text">
-                    <div class="contact_details col-md-12 col-sm-12 p-l">
-                        <h2><strong>Employee Details Not Available</strong></h2>
-                    </div>
+                    <h2><strong>Employee Details Not Available</strong></h2>
+                    <div class="clearfix"></div>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-l prit0" id="rightdiv">
+                <div class="button-box prit0">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                        <div class="contact_details col-md-12 col-sm-12 p-r refid">
+                            <span><strong>cv #</strong> <?= $profile_info->user_id ?></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-l prit0">
+                    <div class="button-box ptop0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                            <div class="button-sec" style="float: right;">
+                                <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2 remove-shortlist', 'title' => 'Remove from Shortlist']) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
         <div class="bottom-box col-lg-12">
             <div class="last-login col-md-6 col-sm-6 p-l">

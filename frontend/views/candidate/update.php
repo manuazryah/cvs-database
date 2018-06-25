@@ -18,7 +18,11 @@ $city_datas = [];
 if ($model->current_country != '') {
     $city_datas = ArrayHelper::map(\common\models\City::find()->where(['country' => $model->current_country])->all(), 'id', 'city');
 }
+$previous_date = date('Y-m-d', strtotime('-1 day'));
+$current_date = date('Y-m-d');
 ?>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <style>
     .marg-bot-0 .form-group{
         margin-bottom: 0px;
@@ -60,7 +64,7 @@ if ($model->current_country != '') {
                         <ul>
                             <li><?= Html::a('User Details', ['/candidate/index']) ?></li>
                             <li class="active"><?= Html::a('Profile Edit', ['/candidate/update-profile']) ?></li>
-                            <li><?= Html::a('Online CV', ['/candidate/online-curriculum-vitae']) ?></li>
+                            <li><?= Html::a('CV View', ['/candidate/online-curriculum-vitae']) ?></li>
                             <li><?= Html::a('Reset Password', ['/candidate/reset-password']) ?></li>
                         </ul>
                     </aside>
@@ -128,7 +132,7 @@ if ($model->current_country != '') {
                                                 <div class="form-group col-md-6 p-l">
                                                     <div class="form-group field-candidateprofile-name required">
                                                         <label class="control-label" for="candidateprofile-name">Name</label>
-                                                        <input type="text" id="candidateprofile-name" class="form-control" name="CandidateProfile[name]" value="<?= $user->user_name != ''?$user->user_name:'' ?>" readonly="" aria-required="true">
+                                                        <input type="text" id="candidateprofile-name" class="form-control" name="CandidateProfile[name]" value="<?= $user->user_name != '' ? $user->user_name : '' ?>" readonly="" aria-required="true">
                                                         <input type="hidden" name="CandidateProfile[name_view]" value="0"><label class="hide-view"><input type="checkbox" id="candidateprofile-name_view" name="CandidateProfile[name_view]" value="1" aria-invalid="false"> Hide Name In Public</label>
                                                     </div>
                                                 </div>
@@ -163,7 +167,7 @@ if ($model->current_country != '') {
                                                     'type' => DatePicker::TYPE_INPUT,
                                                     'pluginOptions' => [
                                                         'autoclose' => true,
-                                                        'format' => 'dd-M-yyyy'
+                                                        'format' => 'dd-mm-yyyy'
                                                     ]
                                                 ])->label('DOB');
                                                 ?>
@@ -197,7 +201,7 @@ if ($model->current_country != '') {
                                             }
                                             ?>
                                             <?php $industries = ArrayHelper::map(\common\models\Industry::find()->where(['status' => 1])->andWhere(['>', 'id', 0])->all(), 'id', 'industry_name'); ?>
-                                            <?= $form->field($model, 'industry')->dropDownList($industries, ['prompt' => 'Choose Industry', 'multiple' => 'multiple'])->label('<h5 class="section-title">Industries</h5>') ?>
+                                            <?= $form->field($model, 'industry')->dropDownList($industries, ['prompt' => 'Choose Industry', 'multiple' => 'multiple'])->label('Industries') ?>
                                             <?= Html::button('<span> Not in the list ? Request New</span>', ['value' => Url::to('../candidate/add-industry'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                                         </div>
 
@@ -207,13 +211,13 @@ if ($model->current_country != '') {
                                                 $model->skill = explode(',', $model->skill);
                                             }
                                             ?>
-                                            <?= $form->field($model, 'skill')->dropDownList($skills, ['prompt' => 'Choose Skills', 'multiple' => 'multiple'])->label('<h5 class="section-title">Skills</h5>') ?>
+                                            <?= $form->field($model, 'skill')->dropDownList($skills, ['prompt' => 'Choose Skills', 'multiple' => 'multiple'])->label('Skills') ?>
                                             <?= Html::button('<span> Not in the list ? Request New</span>', ['value' => Url::to('../candidate/add-skill'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                                         </div>
                                         <div class="clearfix"></div>
 
                                         <!-- Experience -->
-                                        <h5>Experience</h5>
+                                        <label class="control-label" for="candidateprofile-experience">Experience</label>
                                         <div id="p_experience">
                                             <?php
                                             $i = 0;
@@ -237,7 +241,7 @@ if ($model->current_country != '') {
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="formrow">
-                                                                        <input type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control" placeholder="Join From" value="<?= $datas->from_date ?>">
+                                                                        <input id="exp_from_date-<?= $i ?>" type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control exp-from-date" placeholder="Join From" value="<?= $datas->from_date ?>">
                                                                         <label for="chkispresent">
                                                                             <input type="checkbox" data-val="<?= $datas->present_status ?>" class="chkispresent" id="chkispresent-<?= $i ?>" name="expupdatee[<?= $datas->id; ?>][present_status][]" <?= $datas->present_status == 1 ? ' checked' : '' ?>/>
                                                                             I currently work here
@@ -250,7 +254,7 @@ if ($model->current_country != '') {
                                                                             Present
                                                                         </div>
                                                                         <div id="notpresent-<?= $i ?>" class="notpresent">
-                                                                            <input type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control" placeholder="End on" value="<?= $datas->to_date ?>">
+                                                                            <input id="exp_to_date-<?= $i ?>" type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control exp-to-date" placeholder="End on" value="<?= $datas->to_date ?>">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -283,54 +287,60 @@ if ($model->current_country != '') {
                                             }
                                             ?>
                                             <input type="hidden" id="experience_row_count" value="<?= $i ?>"/>
-                                            <div class="append-box">
-                                                <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="formrow">
-                                                            <input type="text" name="expcreate[company_name][]" class="form-control" placeholder="Company">
+                                            <?php
+                                            if (empty($model_experience)) {
+                                                ?>
+                                                <div class="append-box">
+                                                    <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="formrow">
+                                                                <input type="text" name="expcreate[company_name][]" class="form-control" placeholder="Company">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="formrow">
-                                                            <input type="text" name="expcreate[designation][]" class="form-control" placeholder="Designation">
+                                                        <div class="col-md-6">
+                                                            <div class="formrow">
+                                                                <input type="text" name="expcreate[designation][]" class="form-control" placeholder="Designation">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="formrow">
-                                                            <input type="date" name="expcreate[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d') ?>">
-                                                            <label for="chkispresent">
-                                                                <input type="checkbox" id="chkispresent-<?= $i ?>" class="chkispresent" name="expcreate[present_status][]"/>
-                                                                I currently work here
-                                                            </label>
+                                                        <div class="col-md-3">
+                                                            <div class="formrow">
+                                                                <input id="exp_from_date-<?= $i ?>" type="date" name="expcreate[from_date][]" class="form-control exp-from-date" placeholder="Join From" value="<?= date('Y-m-d', strtotime('-1 month')) ?>">
+                                                                <label for="chkispresent">
+                                                                    <input type="checkbox" id="chkispresent-<?= $i ?>" class="chkispresent" name="expcreate[present_status][]"/>
+                                                                    I currently work here
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div id="ispresent-<?= $i ?>" class="ispresent" style="display: none">
-                                                            Present
+                                                        <div class="col-md-3">
+                                                            <div id="ispresent-<?= $i ?>" class="ispresent" style="display: none">
+                                                                Present
+                                                            </div>
+                                                            <div id="notpresent-<?= $i ?>" class="notpresent">
+                                                                <input id="exp_to_date-<?= $i ?>" type="date" name="expcreate[to_date][]" class="form-control exp-to-date" placeholder="End on" value="<?= date('Y-m-d') ?>">
+                                                            </div>
                                                         </div>
-                                                        <div id="notpresent-<?= $i ?>" class="notpresent">
-                                                            <input type="date" name="expcreate[to_date][]" class="form-control" placeholder="End on" value="<?= date('Y-m-d') ?>">
+                                                        <div class="col-md-6">
+                                                            <div class="formrow">
+                                                                <select class="form-control" name="expcreate[country][]">
+                                                                    <option value="">Select Country</option>
+                                                                    <?php foreach ($country_datas as $country_data) { ?>
+                                                                        <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
+                                                                    <?php }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="formrow">
-                                                            <select class="form-control" name="expcreate[country][]">
-                                                                <option value="">Select Country</option>
-                                                                <?php foreach ($country_datas as $country_data) { ?>
-                                                                    <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
-                                                                <?php }
-                                                                ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="formrow">
-                                                            <textarea class="textarea form-control" name="expcreate[job_responsibility][]" placeholder="Job Responsibility"></textarea>
+                                                        <div class="col-md-12">
+                                                            <div class="formrow">
+                                                                <textarea class="textarea form-control" name="expcreate[job_responsibility][]" placeholder="Job Responsibility"></textarea>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <?php
+                                            }
+                                            ?>
                                         </div>
                                         <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
                                             <a id="addexperience" class="btn btn-icon btn-blue addScnt btn-larger btn-block" ><i class="fa fa-plus"></i> Add More</a>
@@ -340,7 +350,7 @@ if ($model->current_country != '') {
                                         <br/>
                                         <div class="speration"></div>
                                         <!-- Education -->
-                                        <h5>Education</h5>
+                                        <label class="control-label" for="candidateprofile-education">Education</label>
                                         <div id="p_scents">
                                             <!--<input type="hidden" id="delete_port_vals"  name="delete_port_vals" value="">-->
                                             <?php
@@ -384,12 +394,12 @@ if ($model->current_country != '') {
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="formrow">
-                                                                        <input type="date" name="updatee[<?= $data->id; ?>][from_date][]" class="form-control" value="<?= $data->from_year ?>" placeholder="Join From">
+                                                                        <input id="edu_from_date-<?= $j ?>" type="date" name="updatee[<?= $data->id; ?>][from_date][]" class="form-control edu-from-date" value="<?= $data->from_year ?>" placeholder="Join From">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="formrow">
-                                                                        <input type="date" name="updatee[<?= $data->id; ?>][to_date][]" class="form-control" value="<?= $data->to_year ?>" placeholder="End On">
+                                                                        <input id="edu_to_date-<?= $j ?>" type="date" name="updatee[<?= $data->id; ?>][to_date][]" class="form-control edu-to-date" value="<?= $data->to_year ?>" placeholder="End On">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
@@ -416,53 +426,55 @@ if ($model->current_country != '') {
                                             }
                                             ?>
                                             <input type="hidden" id="education_row_count" value="<?= $j ?>"/>
-                                            <div class="append-box">
-                                    <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="formrow">
-                                                            <select class="form-control" name="create[qualification][]">
-                                                                <option value="">Select Qualification</option>
-                                                                <?php foreach ($course_datas as $course_data) { ?>
-                                                                    <option value="<?= $course_data->id ?>"><?= $course_data->course_name ?></option>
-                                                                <?php }
-                                                                ?>
-                                                            </select>
+                                            <?php if (empty($model_education)) { ?>
+                                                <div class="append-box">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="formrow">
+                                                                <select class="form-control" name="create[qualification][]">
+                                                                    <option value="">Select Qualification</option>
+                                                                    <?php foreach ($course_datas as $course_data) { ?>
+                                                                        <option value="<?= $course_data->id ?>"><?= $course_data->course_name ?></option>
+                                                                    <?php }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="formrow">
-                                                            <input type="text" class="form-control" name="create[course][]" placeholder="Course Name">
+                                                        <div class="col-md-6">
+                                                            <div class="formrow">
+                                                                <input type="text" class="form-control" name="create[course][]" placeholder="Course Name">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="formrow">
-                                                            <input type="text" class="form-control" name="create[college][]" placeholder="College / University">
+                                                        <div class="col-md-12">
+                                                            <div class="formrow">
+                                                                <input type="text" class="form-control" name="create[college][]" placeholder="College / University">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="formrow">
-                                                            <input type="date" name="create[from_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d') ?>">
+                                                        <div class="col-md-3">
+                                                            <div class="formrow">
+                                                                <input id="edu_from_date-<?= $j ?>" type="date" name="create[from_date][]" class="form-control edu-from-date" placeholder="Join From" value="<?= date('Y-m-d') ?>">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="formrow">
-                                                            <input type="date" name="create[to_date][]" class="form-control" placeholder="Join From" value="<?= date('Y-m-d') ?>">
+                                                        <div class="col-md-3">
+                                                            <div class="formrow">
+                                                                <input id="edu_to_date-<?= $j ?>" type="date" name="create[to_date][]" class="form-control edu-to-date" placeholder="Join From" value="<?= date('Y-m-d') ?>">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="formrow">
-                                                            <select class="form-control" name="create[country][]">
-                                                                <option value="">Select Country</option>
-                                                                <?php foreach ($country_datas as $country_data) { ?>
-                                                                    <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
-                                                                <?php }
-                                                                ?>
-                                                            </select>
+                                                        <div class="col-md-6">
+                                                            <div class="formrow">
+                                                                <select class="form-control" name="create[country][]">
+                                                                    <option value="">Select Country</option>
+                                                                    <?php foreach ($country_datas as $country_data) { ?>
+                                                                        <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
+                                                                    <?php }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            <?php }
+                                            ?>
                                         </div>
                                         <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
                                             <a id="addeducation" class="btn btn-icon btn-blue addScnt btn-larger btn-block" ><i class="fa fa-plus"></i> Add More</a>
@@ -700,14 +712,37 @@ if ($model->current_country != '') {
         });
 
 
+        $(document).on('change', '.exp-from-date', function (event) {
+            var current_row_id = $(this).attr('id').match(/\d+/);
+            getFromDate(current_row_id);
+        });
+
+        $(document).on('change', '.exp-to-date', function (event) {
+            var current_row_id = $(this).attr('id').match(/\d+/);
+            getToDate(current_row_id);
+        });
+        $(document).on('change', '.edu-from-date', function (event) {
+            var current_row_id = $(this).attr('id').match(/\d+/);
+            getEduFromDate(current_row_id);
+        });
+
+        $(document).on('change', '.edup-to-date', function (event) {
+            var current_row_id = $(this).attr('id').match(/\d+/);
+            getEduToDate(current_row_id);
+        });
+
         $(document).on('click', '.chkispresent', function (event) {
             var current_row_id = $(this).attr('id').match(/\d+/);
             if ($(this).is(":checked")) {
                 $("#ispresent-" + current_row_id).show();
                 $("#notpresent-" + current_row_id).hide();
+                getFromDate(current_row_id);
+                getFromDate(current_row_id);
             } else {
                 $("#ispresent-" + current_row_id).hide();
                 $("#notpresent-" + current_row_id).show();
+                getFromDate(current_row_id);
+                getFromDate(current_row_id);
             }
         });
         $(document).on('click', '.modalButton', function () {
@@ -718,6 +753,58 @@ if ($model->current_country != '') {
         });
         experienceCheck();
     });
+    function getToDate(current_row_id) {
+        var to_date = $('#exp_to_date-' + current_row_id).val();
+        var from_date = $('#exp_from_date-' + current_row_id).val();
+        if (to_date < from_date) {
+            var strDate = '<?php echo $current_date; ?>';
+            $('#exp_to_date-' + current_row_id).val(strDate);
+            alert('To date must be greater than from date');
+        }
+    }
+    function getFromDate(current_row_id) {
+        var from_date = $('#exp_from_date-' + current_row_id).val();
+        var to_date = $('#exp_to_date-' + current_row_id).val();
+        if (from_date > to_date) {
+            alert('From date must be less than to date');
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: "to_date=" + to_date,
+                url: '<?= Yii::$app->homeUrl ?>candidate/get-from-date',
+                success: function (data) {
+                    $('#exp_from_date-' + current_row_id).val(data);
+                }
+            });
+        }
+    }
+    function getEduToDate(current_row_id) {
+        var to_date = $('#edu_to_date-' + current_row_id).val();
+        var from_date = $('#edu_from_date-' + current_row_id).val();
+        if (to_date < from_date) {
+            var strDate = '<?php echo $current_date; ?>';
+            $('#edu_to_date-' + current_row_id).val(strDate);
+            alert('To date must be greater than from date');
+        }
+    }
+    function getEduFromDate(current_row_id) {
+        var from_date = $('#edu_from_date-' + current_row_id).val();
+        var to_date = $('#edu_to_date-' + current_row_id).val();
+        if (from_date > to_date) {
+            alert('From date must be less than to date');
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: "to_date=" + to_date,
+                url: '<?= Yii::$app->homeUrl ?>candidate/get-from-date',
+                success: function (data) {
+                    $('#edu_from_date-' + current_row_id).val(data);
+                }
+            });
+        }
+    }
     function experienceCheck() {
         var row_count = $('#experience_row_count').val();
         for (i = 1; i < row_count; i++) {

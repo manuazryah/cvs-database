@@ -50,7 +50,7 @@ class Packages extends \yii\db\ActiveRecord {
             'no_of_days' => 'No Of Days',
             'no_of_profile_view' => 'No Of Profile View',
             'package_price' => 'Package Price',
-            'no_of_downloads' => 'No Of CV Downloads',
+            'no_of_downloads' => 'No Of Profile View',
             'status' => 'Status',
             'CB' => 'Cb',
             'UB' => 'Ub',

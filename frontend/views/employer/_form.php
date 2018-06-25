@@ -48,12 +48,7 @@ use dosamigos\ckeditor\CKEditor;
     </div>
     <div class="row">
         <div class='col-md-12 col-sm-12 col-xs-12'>
-            <?=
-            $form->field($model, 'description')->widget(CKEditor::className(), [
-                'options' => ['rows' => 3],
-                'preset' => 'basic'
-            ])
-            ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => '6']) ?>
         </div>
     </div>
     <div class="row">
@@ -62,9 +57,6 @@ use dosamigos\ckeditor\CKEditor;
         </div>
         <div class='col-md-4 col-sm-4 col-xs-12'>
             <?= $form->field($model, 'position')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class='col-md-4 col-sm-4 col-xs-12'>
-            <?= $form->field($model, 'status')->dropDownList(['1' => 'Enabled', '0' => 'Disabled']) ?>
         </div>
     </div>
     <div class="form-group">

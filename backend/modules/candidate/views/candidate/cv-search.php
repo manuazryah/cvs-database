@@ -389,6 +389,36 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                 $your_search_filter .= '"' . common\models\JobType::findOne($job_type_value)->job_type . '", ';
                                             }
                                         }
+                                        if (isset($model_filter->salary_range) && $model_filter->salary_range != '') {
+                                            foreach ($model_filter->salary_range as $salary_range_value) {
+                                                $your_search_filter .= '"' . common\models\ExpectedSalary::findOne($salary_range_value)->salary_range . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->nationality) && $model_filter->nationality != '') {
+                                            foreach ($model_filter->nationality as $nationality_value) {
+                                                $your_search_filter .= '"' . common\models\Country::findOne($nationality_value)->country_name . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->experience) && $model_filter->experience != '') {
+                                            foreach ($model_filter->experience as $experience_value) {
+                                                $your_search_filter .= '"' . common\models\ExperienceSearch::findOne($experience_value)->experience_search . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->gender) && $model_filter->gender != '') {
+                                            foreach ($model_filter->gender as $gender_value) {
+                                                $your_search_filter .= '"' . common\models\Gender::findOne($gender_value)->gender . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->language) && $model_filter->language != '') {
+                                            foreach ($model_filter->language as $language_value) {
+                                                $your_search_filter .= '"' . common\models\Languages::findOne($language_value)->language . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->job_status) && $model_filter->job_status != '') {
+                                            foreach ($model_filter->job_status as $job_status_value) {
+                                                $your_search_filter .= '"' . common\models\JobStatus::findOne($job_status_value)->job_status . '", ';
+                                            }
+                                        }
                                         ?>
                                         <p><span class="color-drk">Your Search Filter</span>: <?= $your_search_filter ?></p>
                                     </div>
