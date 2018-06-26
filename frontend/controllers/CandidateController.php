@@ -112,6 +112,7 @@ class CandidateController extends Controller {
             $cv_ = $model->upload_resume;
         }
         if ($model->load(Yii::$app->request->post())) {
+            $model->candidate_id = $id;
             $data = Yii::$app->request->post();
             $this->SetDatas($model);
             $files = UploadedFile::getInstance($model, 'photo');
@@ -417,7 +418,6 @@ class CandidateController extends Controller {
      */
     public function SetDatas($model) {
         if ($model != null) {
-            $model->candidate_id = Yii::$app->session['candidate']['id'];
             if (isset($model->dob) && $model->dob != '') {
                 $model->dob = date("Y-m-d", strtotime($model->dob));
             }

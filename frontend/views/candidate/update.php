@@ -108,6 +108,8 @@ $current_date = date('Y-m-d');
                                                             } else {
                                                                 echo '<img class="img-responsive" style="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
                                                             }
+                                                        } else {
+                                                            echo '<img class="img-responsive" style="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
                                                         }
                                                         if ($model->photo != '') {
                                                             $label = '<i class="fa fa-camera"></i> Update Profile Picture';

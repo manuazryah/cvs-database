@@ -187,10 +187,17 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             </div>
         </div>
         <div class="bottom-box col-lg-12">
-            <div class="last-login col-md-6 col-sm-6 p-l">
+            <div class="last-login col-md-4 col-sm-4 p-l">
                 <span><i>Last Logged in : <?= $last_login ?></i></span>
             </div>
-            <div class="last-login col-md-6 col-sm-6 p-l text-right">
+            <div class="last-login col-md-3 col-sm-3 p-l">
+                <?php
+                if($model->featured_cv == 1){ ?>
+                    <span><em>Featured</span>
+               <?php }
+                ?>
+            </div>
+            <div class="last-login col-md-5 col-sm-5 p-l text-right">
                 <span><em><?= $msg ?></em></span>
             </div>
         </div>

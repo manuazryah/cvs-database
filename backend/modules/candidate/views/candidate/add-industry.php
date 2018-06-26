@@ -10,18 +10,26 @@ $this->title = 'Add Industry';
 $this->params['breadcrumbs'][] = ['label' => 'Industries', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<main id="maincontent" class="my-account">
-    <section class="manage">
-        <div class="row">
-            <div class="col-md-12">
-                <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'industry_name')->textInput(['maxlength' => true]) ?>
-                <?= Html::submitButton('Submit', ['class' => 'btn btn-success mrg-top-btn', 'id' => 'add_industry']) ?>
-                <?php ActiveForm::end(); ?>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+
+            </div>
+            <div class="panel-body">
+                <div class="panel-body"><div class="candidate-create">
+                        <?php $form = ActiveForm::begin(); ?>
+                        <?= $form->field($model, 'industry_name')->textInput(['maxlength' => true]) ?>
+                        <?= Html::submitButton('Submit', ['class' => 'btn btn-success mrg-top-btn', 'id' => 'add_industry']) ?>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-</main>
+    </div>
+</div>
 <style>
     #modalContent{
         display: inline-block;
@@ -29,9 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     #maincontent{
         padding: 0px;
-    }
-    #add_industry{
-        margin-top: 0px;
     }
 </style>
 <script>

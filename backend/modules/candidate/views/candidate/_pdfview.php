@@ -8,7 +8,7 @@
                             <tr>
                                 <td style="width: 90%">
                                     <table style="width: 100%">
-                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px;"><?= $model->name ?></h4></strong></td></tr>
+                                        <tr><td colspan="2"><strong><h4 style="margin-bottom: 20px; text-transform: capitalize;"><?= $model->name ?></h4></strong></td></tr>
                                         <tr>
                                             <td style="line-height: 30px;"><strong>Title : </strong><?= $model->title ?></td>
                                             <td style="line-height: 30px;"><strong>Reference No : </strong><?= $candidate->user_id ?></td>
@@ -34,9 +34,9 @@
                                 <td style="width: 10%">
                                     <?php
                                     if ($model->photo != '') {
-                                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
                                         if (file_exists($dirPath)) {
-                                            echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . '../uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                            echo '<img class="img-responsive" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
                                         } else {
                                             echo '';
                                         }
@@ -178,7 +178,7 @@
                                 </tr>
                                 <?php foreach ($model_education as $education) { ?>
                                     <tr>
-                                        <td><?= $education->course_name != '' ? \common\models\Courses::findOne($education->course_name)->cource_code : '' ?></td>
+                                        <td><?= $education->course_name != '' ? $education->course_name : '' ?></td>
                                         <td><?= $education->collage_university ?></td>
                                         <td><?= $education->country != '' ? \common\models\Country::findOne($education->country)->country_name : '' ?></td>
                                         <td><?= date("M Y", strtotime($education->from_year)) ?></td>

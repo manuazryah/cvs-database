@@ -6,23 +6,31 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Industry */
 
-$this->title = 'Add Industry';
+$this->title = 'Add Skills';
 $this->params['breadcrumbs'][] = ['label' => 'Industries', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<main id="maincontent" class="my-account">
-    <section class="manage">
-        <div class="row">
-            <div class="col-md-12">
-                <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'industry')->hiddenInput(['value' => 0])->label(FALSE) ?>
-                <?= $form->field($model, 'skill')->textInput(['maxlength' => true]) ?>
-                <?= Html::submitButton('Submit', ['class' => 'btn btn-success mrg-top-btn', 'id' => 'add_skill']) ?>
-                <?php ActiveForm::end(); ?>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+
+            </div>
+            <div class="panel-body">
+                <div class="panel-body"><div class="candidate-create">
+                        <?php $form = ActiveForm::begin(); ?>
+                        <?= $form->field($model, 'industry')->hiddenInput(['value' => 0])->label(FALSE) ?>
+                        <?= $form->field($model, 'skill')->textInput(['maxlength' => true]) ?>
+                        <?= Html::submitButton('Submit', ['class' => 'btn btn-success mrg-top-btn', 'id' => 'add_skill']) ?>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-</main>
+    </div>
+</div>
 <style>
     #modalContent{
         display: inline-block;
@@ -30,9 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     #maincontent{
         padding: 0px;
-    }
-    #add_skill{
-        margin-top: 0px;
     }
 </style>
 <script>
@@ -42,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
         if (valid()) {
             var industry_name = $('#industry-industry_name').val();
             $.ajax({
-                url: '<?= Yii::$app->homeUrl ?>candidate/add-industry',
+                url: '<?= Yii::$app->homeUrl ?>candidate/candidate/add-industry',
                 type: "post",
                 data: {industry_name: industry_name},
                 success: function (data) {

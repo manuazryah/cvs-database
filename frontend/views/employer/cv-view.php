@@ -308,13 +308,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $i = 0;
                                         if (!empty($skill)) {
                                             foreach ($skill as $value) {
-
-                                                if ($i != 0) {
-                                                    $result1 .= ', ';
-                                                }
                                                 $skills = common\models\Skills::findOne($value);
-                                                $result1 .= $skills->skill;
-                                                $i++;
+                                                if ($skills->status == 1) {
+                                                    if ($i != 0) {
+                                                        $result1 .= ', ';
+                                                    }
+                                                    $result1 .= $skills->skill;
+                                                    $i++;
+                                                }
                                             }
                                         }
                                         echo $result1;

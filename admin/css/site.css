@@ -2555,3 +2555,271 @@ input[type=checkbox], input[type=radio] {
 .sidebar-menu .ps-scrollbar-x-rail .ps-scrollbar-x, .sidebar-menu .ps-scrollbar-y-rail .ps-scrollbar-y {
     background-color: rgba(255, 255, 255, 0);
 }
+
+/*********************** Profile Update Start **************************************/
+#maincontent {
+    padding: 45px 0px;
+    position: relative;
+    overflow: hidden;
+    float: left;
+    width: 100%;
+}
+.my-account .manage {
+    background: #f6f6f6;
+    /* padding-top: 60px; */
+}
+.my-account .manage .rightside-box .form-group {
+    margin-bottom: 5px;
+}
+.my-account .manage .rightside-box .wysihtml5-toolbar{
+    display: none;
+}
+.my-account .manage .rightside-box {
+    background: #ffffff;
+    /*margin-top: 25px;*/
+    /*margin-bottom: 60px;*/
+    padding: 22px;
+    /*border: solid 1px #e1e1e1;*/
+    border-radius: 0px;
+}
+
+.mt95 {
+    margin-top: 95px !important;
+}
+.my-account .manage .formpanel {
+    margin-top: 20px;
+}
+.my-account .userccount .delete-account {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.my-account .rightside-box .profile {
+    position: absolute;
+    margin: 0 auto;
+    left: 0px;
+    /* right: 0px; */
+    float: none;
+    top: -110px;
+}
+.my-account .profile-image {
+    position: relative;
+    overflow: hidden;
+}
+.my-account .rightside-box .profile .profile-image {
+    margin: 0 auto;
+    max-width: 200px;
+    max-height: 200px;
+    overflow: visible;
+    float: left;
+}
+.my-account .rightside-box .profile .profile-image img {
+    box-shadow: 0px 0px 6px #00000057;
+}
+.my-account .profile-image .field-candidateprofile-photo {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0px;
+    /* background: black; */
+    margin-bottom: 0px;
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: 15px 10px;
+    cursor: pointer;
+}
+.my-account .rightside-box .profile .profile-header {
+    float: left;
+    margin-left: 25px;
+    margin-top: 80px;
+}
+.profile-header .main-heading {
+    margin-left: 7px;
+    font-size: 24px;
+    color: #333;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.profile-header .sub-heading {
+    font-size: 17px;
+    color: #666;
+    margin-top: 10px;
+    text-transform: none;
+    font-weight: 500;
+}
+.mb80 {
+    margin-bottom: 80px; 
+}
+
+.candidate_prof_add {
+    background: white;
+    padding: 0px;
+    float: right;
+    border-color: white;
+    color: #067db1;
+    font-weight: 500;
+}
+.my-account .candidate_prof_add {
+    color: #939394;
+    font-weight: 400;
+}
+.my-account .candidate_prof_add {
+    olor: #939394 !important;
+    font-weight: 400;
+    margin: 10px;
+}
+.my-account .candidate_prof_add:hover {
+    color: #262a3c;
+}
+.btn-larger {
+    padding: 6px 20px !important;
+    border-radius: 0px;
+    font-size: 14px;
+    color: #fff;
+    -webkit-transition: all .6s;
+    -moz-transition: all .6s;
+    transition: all .6s;
+    letter-spacing: 1px;
+    background-color: #2caef3;
+    margin-top: 10px;
+    width: 117px;
+    float: left;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.my-account #addexperience {
+    background: #444444;
+    color: white;
+    width: auto;
+    text-transform: capitalize;
+    float: right;
+    margin-bottom: 25px;
+}
+.my-account #addeducation {
+    background: #444444;
+    color: white;
+    width: auto;
+    text-transform: capitalize;
+    float: right;
+    margin-bottom: 25px;
+}
+.my-account .profile-image{
+    position: relative;
+    overflow: hidden;
+}
+.my-account .profile-image:hover .field-candidateprofile-photo{
+    visibility: visible;
+    transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -webkit-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+}
+.my-account .profile-image .field-candidateprofile-photo{
+    visibility: hidden;
+    position: absolute;
+    bottom: 0px;
+    /*background: black;*/
+    margin-bottom: 0px;
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: 15px 10px;
+    cursor: pointer;
+}
+.my-account .profile-image .field-candidateprofile-photo label{
+    color: #fff;
+    margin-bottom: 0px;
+    position: absolute;
+    bottom: 0px;
+    margin: 0 auto;
+    text-align: center;
+    left: 0px;
+    right: 0px;
+    padding: 5px 0px;
+    background: black;
+}
+.my-account .profile-image .field-candidateprofile-photo #candidateprofile-photo{
+    position: absolute;
+    opacity: 0;
+    right: 0px;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.my-account .select2-container-multi .select2-choices{
+    background-image: none;
+}
+.my-account .select2-container-active .select2-choices{
+    background-image: none; 
+}
+.my-account .section-title {
+    font-size: 20px;
+    color: #555;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.my-account #addexperience{
+    background: #444444;
+    color: white;
+    width: auto;
+    text-transform: capitalize;
+    float: right;
+    margin-bottom: 25px;
+}
+.my-account #addeducation {
+    background: #444444;
+    color: white;
+    width: auto;
+    text-transform: capitalize;
+    float: right;
+    margin-bottom: 25px;
+}
+.my-account .submit{
+    width: fit-content;
+}
+.my-account .manage .panel-body{
+    position: relative;
+}
+.my-account .userccount .delete-account .delete-profile:before{
+    content: "\f1f8";
+    font-family: FontAwesome;
+    display: inline-block;
+}
+.my-account .userccount .delete-account{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.my-account .candidate_prof_add{
+    color: #939394;
+    font-weight: 400;
+}
+.my-account .candidate_prof_add:hover {
+    color: #262a3c;
+}
+.my-account .rightside-box .profile{
+    position: absolute;
+    margin: 0 auto; 
+    left: 0px;
+    /*right: 0px;*/
+    float: none; 
+    top: -110px;
+}
+.my-account .rightside-box .profile .profile-header{
+    float: left;
+    margin-left: 25px;
+    margin-top: 80px;
+}
+.my-account .rightside-box .profile .profile-image{
+    margin: 0 auto;
+    max-width: 200px;
+    max-height: 200px;    
+    overflow: visible;
+    float: left;
+}
+.my-account .rightside-box .profile .profile-image img{
+    box-shadow: 0px 0px 6px #00000057; 
+}
+/*********************** Profile Update End **************************************/

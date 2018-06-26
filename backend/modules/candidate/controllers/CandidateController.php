@@ -105,7 +105,8 @@ class CandidateController extends Controller {
         $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['status' => 1]);
-        $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
+        $featured_recent = $this->getRecentFeatured();
+        $dataProvider->query->orderBy([new \yii\db\Expression('FIELD (id, ' . implode(',', $featured_recent) . ')')]);
         $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         $model = new CvSearch();
         $model_filter = new CvFilter();
@@ -174,6 +175,25 @@ class CandidateController extends Controller {
                     'model_filter' => $model_filter,
                     'user_plans' => $user_plans,
         ]);
+    }
+    
+     public function getRecentFeatured() {
+        $featured_arr = \common\models\CandidateProfile::find()->where(['status' => 1, 'featured_cv' => 1])->orderBy(['date_of_updation' => SORT_DESC])->all();
+        $featured_arr_data = [];
+        foreach ($featured_arr as $ind_val) {
+            $featured_arr_data[] = $ind_val->id;
+        }
+        $latest_arr = \common\models\CandidateProfile::find()->where(['status' => 1])->orderBy(['date_of_updation' => SORT_DESC])->all();
+        $latest_arr_data = [];
+        foreach ($latest_arr as $ind_vals) {
+            $latest_arr_data[] = $ind_vals->id;
+        }
+        foreach ($latest_arr_data as $value) {
+            if (!in_array($value, $featured_arr_data)) {
+                $featured_arr_data[] = $value;
+            }
+        }
+        return $featured_arr_data;
     }
 
     public function getActiveCandidate() {
@@ -304,7 +324,7 @@ class CandidateController extends Controller {
 
     public function actionUpdateProfile($id) {
         $user = Candidate::findOne($id);
-        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        $model = CandidateProfile::find()->where(['candidate_id' => $user->id])->one();
         if (empty($model)) {
             $model = new CandidateProfile();
             $photo_ = '';
@@ -358,6 +378,7 @@ class CandidateController extends Controller {
                     'model_education' => $model_education,
                     'model_experience' => $model_experience,
                     'user' => $user,
+                    'id' => $id,
         ]);
     }
 
@@ -407,6 +428,11 @@ class CandidateController extends Controller {
             $create = $data['create'];
             $arr = [];
             $i = 0;
+            foreach ($create['qualification'] as $val) {
+                $arr[$i]['qualification'] = $val;
+                $i++;
+            }
+            $i = 0;
             foreach ($create['course'] as $val) {
                 $arr[$i]['course'] = $val;
                 $i++;
@@ -443,6 +469,7 @@ class CandidateController extends Controller {
         foreach ($arr as $val) {
             $aditional = new CandidateEducation();
             $aditional->candidate_id = $model->candidate_id;
+            $aditional->qualification = $val['qualification'];
             $aditional->course_name = $val['course'];
             $aditional->collage_university = $val['college'];
             $aditional->country = $val['country'];
@@ -465,6 +492,7 @@ class CandidateController extends Controller {
             $arr = [];
             $i = 0;
             foreach ($update as $key => $val) {
+                $arr[$key]['qualification'] = $val['qualification'][0];
                 $arr[$key]['course'] = $val['course'][0];
                 $arr[$key]['college'] = $val['college'][0];
                 $arr[$key]['country'] = $val['country'][0];
@@ -475,6 +503,7 @@ class CandidateController extends Controller {
             foreach ($arr as $key => $value) {
                 $aditional = CandidateEducation::findOne($key);
                 if (!empty($aditional)) {
+                    $aditional->qualification = $value['qualification'];
                     $aditional->course_name = $value['course'];
                     $aditional->collage_university = $value['college'];
                     $aditional->country = $value['country'];
@@ -525,8 +554,16 @@ class CandidateController extends Controller {
                 $arr[$i]['country'] = $val;
                 $i++;
             }
+            $i = 0;
+            if (isset($create['present_status']) && $create['present_status'] != '') {
+                foreach ($create['present_status'] as $val) {
+                    $arr[$i]['present_status'] = $val;
+                    $i++;
+                }
+            }
             $this->SaveExperience($arr, $model);
         }
+        return TRUE;
     }
 
     /**
@@ -543,6 +580,13 @@ class CandidateController extends Controller {
             $aditional->from_date = $val['from_date'];
             $aditional->to_date = $val['to_date'];
             $aditional->country = $val['country'];
+            if (isset($val['present_status']) && $val['present_status'] != '') {
+                if ($val['present_status'] == 'on') {
+                    $aditional->present_status = 1;
+                } else {
+                    $aditional->present_status = 0;
+                }
+            }
             if (!empty($aditional->company_name)) {
                 $aditional->save();
             }
@@ -566,6 +610,9 @@ class CandidateController extends Controller {
                 $arr[$key]['from_date'] = $val['from_date'][0];
                 $arr[$key]['to_date'] = $val['to_date'][0];
                 $arr[$key]['country'] = $val['country'][0];
+                if (isset($val['present_status'][0]) && $val['present_status'][0] != '') {
+                    $arr[$key]['present_status'] = $val['present_status'][0];
+                }
                 $i++;
             }
             foreach ($arr as $key => $value) {
@@ -576,6 +623,13 @@ class CandidateController extends Controller {
                 $aditional->from_date = $value['from_date'];
                 $aditional->to_date = $value['to_date'];
                 $aditional->country = $value['country'];
+                if (isset($value['present_status']) && $value['present_status'] != '') {
+                    if ($value['present_status'] == 'on') {
+                        $aditional->present_status = 1;
+                    } else {
+                        $aditional->present_status = 0;
+                    }
+                }
                 $aditional->save();
             }
         }
@@ -633,7 +687,7 @@ class CandidateController extends Controller {
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    /**
+   /**
      * This function find skills based on industry
      * @return skills
      */
@@ -679,11 +733,13 @@ class CandidateController extends Controller {
      */
     public function actionGetAcadamics() {
         if (Yii::$app->request->isAjax) {
+            $j = $_POST['next'];
             $course_datas = \common\models\Courses::find()->where(['status' => 1])->all();
             $country_datas = \common\models\Country::find()->where(['status' => 1])->all();
             $new_row = $this->renderPartial('academics_row', [
                 'course_datas' => $course_datas,
                 'country_datas' => $country_datas,
+                'j' => $j,
             ]);
             return $new_row;
         }
@@ -713,9 +769,11 @@ class CandidateController extends Controller {
      */
     public function actionGetExperience() {
         if (Yii::$app->request->isAjax) {
+            $i = $_POST['next'];
             $country_datas = \common\models\Country::find()->where(['status' => 1])->all();
             $new_row = $this->renderPartial('experince_row', [
                 'country_datas' => $country_datas,
+                'i' => $i,
             ]);
             return $new_row;
         }
@@ -734,6 +792,25 @@ class CandidateController extends Controller {
                 if ($model->delete()) {
                     $flag = 1;
                 }
+            }
+            return $flag;
+        }
+    }
+
+    public function actionSetHighest() {
+        if (Yii::$app->request->isAjax) {
+            $id = $_POST['id'];
+            $model = CandidateEducation::find()->where(['id' => $id])->one();
+            $flag = 0;
+            if (!empty($model)) {
+                $data_exist = CandidateEducation::find()->where(['highest_qualification' => 1, 'candidate_id' => $model->candidate_id])->one();
+                if (!empty($data_exist)) {
+                    $data_exist->highest_qualification = 0;
+                    $data_exist->update();
+                }
+                $model->highest_qualification = 1;
+                $model->update();
+                $flag = 1;
             }
             return $flag;
         }
@@ -1200,6 +1277,14 @@ class CandidateController extends Controller {
             }
         }
         return $cv_data;
+    }
+    public function actionGetFromDate() {
+        $from_date = '';
+        if (Yii::$app->request->isAjax) {
+            $to_date = $_POST['to_date'];
+            $from_date = date('Y-m-d', strtotime('-1 day', strtotime($to_date)));
+        }
+        return $from_date;
     }
 
 }

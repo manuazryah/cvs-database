@@ -106,7 +106,8 @@ class EmployerController extends Controller {
         $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['status' => 1]);
-        $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
+        $featured_recent = $this->getRecentFeatured();
+        $dataProvider->query->orderBy([new \yii\db\Expression('FIELD (id, ' . implode(',', $featured_recent) . ')')]);
         $model_filter = new CvFilter();
         $active_candidate = $this->getActiveCandidate();
         if ($active_candidate != '' && !empty($active_candidate)) {
@@ -317,7 +318,8 @@ class EmployerController extends Controller {
         $searchModel = new CandidateProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['status' => 1]);
-        $dataProvider->query->orderBy(['date_of_updation' => SORT_DESC]);
+        $featured_recent = $this->getRecentFeatured();
+        $dataProvider->query->orderBy([new \yii\db\Expression('FIELD (id, ' . implode(',', $featured_recent) . ')')]);
         $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
         $model = new CvSearch();
         $model_filter = new CvFilter();
@@ -382,6 +384,25 @@ class EmployerController extends Controller {
                     'model_filter' => $model_filter,
                     'user_plans' => $user_plans,
         ]);
+    }
+
+    public function getRecentFeatured() {
+        $featured_arr = \common\models\CandidateProfile::find()->where(['status' => 1, 'featured_cv' => 1])->orderBy(['date_of_updation' => SORT_DESC])->all();
+        $featured_arr_data = [];
+        foreach ($featured_arr as $ind_val) {
+            $featured_arr_data[] = $ind_val->id;
+        }
+        $latest_arr = \common\models\CandidateProfile::find()->where(['status' => 1])->orderBy(['date_of_updation' => SORT_DESC])->all();
+        $latest_arr_data = [];
+        foreach ($latest_arr as $ind_vals) {
+            $latest_arr_data[] = $ind_vals->id;
+        }
+        foreach ($latest_arr_data as $value) {
+            if (!in_array($value, $featured_arr_data)) {
+                $featured_arr_data[] = $value;
+            }
+        }
+        return $featured_arr_data;
     }
 
     public function getActiveCandidate() {
@@ -717,6 +738,7 @@ class EmployerController extends Controller {
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->review_status = 0;
             $model->save();
+            Yii::$app->session->setFlash('success', 'Saved Your Profile');
             return $this->redirect(['update']);
         }
 
