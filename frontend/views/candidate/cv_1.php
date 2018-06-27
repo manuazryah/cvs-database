@@ -1,27 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ListView;
-use yii\widgets\Pjax;
 use yii\widgets\ActiveForm;
-
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\AdminUsersSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'CV for :' . $model->name;
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="modal fade" id="modal-6">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-        </div>
-    </div>
-</div>
-<main id="maincontent" class="my-account employer-cv-view">
+<main id="maincontent" class="my-account jobseaker-cv-view">
     <section class="resume manage">
-        <div class=""> 
+        <div class="container"> 
+
             <!-- Job Header start -->
             <div class="job-header">
                 <div class="jobinfo">
@@ -42,10 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     }
                                     ?>
                                 </div>
-                                <div class="title"><?= $contact_info->user_name ?></div>
+                                <div class="title"><?= $user_details->user_name ?></div>
                                 <div class="desi"><?= $model->title ?></div>
                                 <div class="loctext"><i class="fa fa-flag" aria-hidden="true"></i> <?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></div>
-                                <div class="loctext"><i class="fa fa-map-marker" aria-hidden="true"></i> Currently at: <?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?> , <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></div>
+                                <div class="loctext"><i class="fa fa-map-marker" aria-hidden="true"></i> <?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?> , <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></div>
                                 <div class="loctext">
                                     <?php
                                     if ($model->job_status == 1) {
@@ -58,7 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $color = '';
                                     }
                                     ?>
-                                    <span class="<?= $color ?>"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span></div>
+                                    <span class="<?= $color ?>"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
+                                </div>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
@@ -66,9 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             <!-- Candidate Contact -->
                             <div class="candidateinfo cont-right jobdetail">
                                 <h3 class="mt0">Contact Info</h3>
-                                <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i>  <?= $user_details->phone ?><?= $user_details->alternate_phone != '' ? ', ' . $user_details->alternate_phone : '' ?></div>
-                                <div class="loctext"><i class="fa fa-envelope" aria-hidden="true"></i> <?= $contact_info->email ?></div>
-                                <div class="cadsocial"> <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="<?= $contact_info->google_link ?>" target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> <a href="<?= $contact_info->facebook_link ?>" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="<?= $contact_info->linked_in_link ?>" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>  <a href="<?= $contact_info->youtube_link ?>" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>  </div>
+                                <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i> <?= $user_details->phone ?></div>
+                                <div class="loctext"><i class="fa fa-envelope" aria-hidden="true"></i> <?= $user_details->email ?></div>
+                                <!--<div class="loctext"><i class="fa fa-globe" aria-hidden="true"></i> www.mywebsite.com</div>-->
+                                <div class="cadsocial"> <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="<?= $user_details->google_link ?>" target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> <a href="<?= $user_details->facebook_link ?>" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="<?= $user_details->linked_in_link ?>" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>  <a href="<?= $user_details->youtube_link ?>" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>  </div>
                             </div>
                         </div>
                     </div>
@@ -76,30 +63,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <!-- Buttons -->
                 <div class="jobButtons"> 
-                    <?= \common\widgets\Alert::widget() ?>
-                    <?php
-                    $shortlist = common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
-                    if (empty($shortlist)) {
-                        ?>
-                        <a href="" class="btn btn-warning button1 shortlist-folder" id="short-list-modal" data-val="<?= $model->candidate_id ?>"><i class="fa fa-heart-o" aria-hidden="true"></i>Shortlist to Folder</a>
-                    <?php } else {
-                        ?>
-                        <span class="short-list-span">This CV is already shortlisted to <span style=""><em><?= $shortlist->folder_name ?></em></span></span>
-                        <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>Remove from shortlist', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'btn btn-warning button1 shortlist-folder', 'title' => 'Remove from Shortlist', 'style' => 'float: right; margin-top: -5px; margin-right: 0;']) ?>
-                    <?php }
-                    ?>
+                    <?= Html::a('<i class="fa fa-paper-plane" aria-hidden="true"></i> Edit my online CV', ['update-profile'], ['class' => 'btn apply']) ?>
+                    <?= Html::a('<img width="20" src="' . Yii::$app->homeUrl . 'images/pdf-icon.png" > Download my online CV', ['pdf-export'], ['target' => '_blank', 'class' => 'btn']) ?>
+                    <?= Html::a('<img width="20" src="' . Yii::$app->homeUrl . 'images/word-icon.png" > Download my online CV', ['word-export'], ['target' => '_blank', 'class' => 'btn']) ?>
                 </div>
             </div>
 
             <!-- Job Detail start -->
-            <div class="">
-                <div class="col-md-8 pl0"> 
+            <div class="row">
+                <div class="col-md-8"> 
                     <!-- About Employee start -->
                     <div class="job-header">
                         <div class="contentbox">
                             <div class="page-heading">
                                 <h3>Executive summary</h3>
-                                <div class="contact_details executive-sum-cont col-md-12 p-l">
+                                <div class="contact_details col-md-12 p-l">
                                     <p><?= $model->executive_summary ?></p>
                                 </div>
                                 <div class="borderfull-width"></div>
@@ -139,10 +117,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ?>
                                         <div class="contact_details">
                                             <div class="fleft">
-                                                <span><strong><?= $experience->designation ?> <br> <span class="wrk-exp"><?= $experience->company_name ?>  <?= $experience->country != '' ? ' in ' . common\models\Country::findOne($experience->country)->country_name : '' ?></span></strong></span>
+                                                <span><strong><?= $experience->designation ?> at <?= $experience->company_name ?>  <?= $experience->country != '' ? ' in ' . common\models\Country::findOne($experience->country)->country_name : '' ?></strong></span>
                                             </div>
                                             <div class="fright">
-                                                <span> <?= date("M Y", strtotime($experience->from_date)) ?> - <?= date("M Y", strtotime($experience->to_date)) ?></span>
+                                                <span> <?= date("M Y", strtotime($experience->from_date)) ?> - <?= $experience->present_status == 1 ? 'present' : date("M Y", strtotime($experience->to_date)) ?></span>
                                             </div>
                                             <div class="clearfix"></div>
                                             <br>
@@ -277,7 +255,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
 
                 </div>
-                <div class="col-md-4 pr0"> 
+                <div class="col-md-4"> 
                     <!-- Candidate Detail start -->
                     <div class="job-header">
                         <div class="jobdetail">
@@ -285,7 +263,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <ul class="jbdetail">
                                 <li class="row">
                                     <div class="col-md-6 col-xs-6">Reference No:</div>
-                                    <div class="col-md-6 col-xs-6"><span> <?= $contact_info->user_id ?></span></div>
+                                    <div class="col-md-6 col-xs-6"><span> <?= $user_details->user_id ?></span></div>
                                 </li>
                                 <li class="row">
                                     <div class="col-md-6 col-xs-6">Job Type:</div>
@@ -311,57 +289,29 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="job-header">
                         <div class="jobdetail">
                             <h3>Skills</h3>
-
                             <div class="skillswrap"> 
-                                <?php
-                                if ($model->skill != '') {
-                                    $skill = explode(',', $model->skill);
-                                    $result1 = '';
-                                    $i = 0;
-                                    if (!empty($skill)) {
-                                        foreach ($skill as $value) {
-                                            $skills = common\models\Skills::findOne($value);
-                                            if ($skills->status == 1) {
-                                                if ($i != 0) {
-                                                    $result1 .= ', ';
+                                <span>
+                                    <?php
+                                    if ($model->skill != '') {
+                                        $skill = explode(',', $model->skill);
+                                        $result1 = '';
+                                        $i = 0;
+                                        if (!empty($skill)) {
+                                            foreach ($skill as $value) {
+                                                $skills = common\models\Skills::findOne($value);
+                                                if ($skills->status == 1) {
+                                                    if ($i != 0) {
+                                                        $result1 .= ', ';
+                                                    }
+                                                    $result1 .= $skills->skill;
+                                                    $i++;
                                                 }
-                                                $result1 .= $skills->skill;
-                                                $i++;
                                             }
                                         }
+                                        echo $result1;
                                     }
-                                }
-                                $result1_array = explode(',', $result1);
-                                ?>
-                                <div class="skills-sec">
-                                    <ul class="skills-list">
-                                        <?php
-                                        if (!empty($result1_array)) {
-                                            foreach ($result1_array as $result1_val) {
-                                                if ($result1_val != '') {
-                                                    ?>
-                                                    <li><?= $result1_val ?></li>
-                                                    <?php
-                                                }
-                                            }
-                                        }
-                                        ?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Google Map start -->
-                    <div class="job-header">
-                        <div class="jobdetail">
-                            <h3>Notes</h3>
-
-                            <div class="notes"> 
-                                <form action="" id="usrform">
-                                    <textarea rows="10" cols="50" placeholder="Add your notes here" form="usrform"></textarea>
-                                    <button type="submit" class="btn btn-larger btn-block" >Save</button>
-                                </form>
+                                    ?>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -371,42 +321,20 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </section>
 </main>
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '#short-list-modal', function (e) {
-            e.preventDefault();
-            var candidate_id = $(this).attr('data-val');
-            $.ajax({
-                type: 'POST',
-                cache: false,
-                async: false,
-                data: {candidate_id: candidate_id},
-                url: '<?= Yii::$app->homeUrl ?>employer/get-short-list',
-                success: function (data) {
-                    $(".modal-content").html(data);
-                    $('#modal-6').modal('show', {backdrop: 'static'});
-                }
-            });
-        });
-
-        $(document).on('submit', '#shortlist-form', function (e) {
-            e.preventDefault();
-            var candidate_id = $('#shortlist-candate_id').val();
-            var folder_name = $('#shortlist-folder_name').val();
-            $.ajax({
-                type: 'POST',
-                cache: false,
-                async: false,
-                data: {candidate_id: candidate_id, folder_name: folder_name},
-                url: '<?= Yii::$app->homeUrl ?>employer/save-shortlist',
-                success: function (data) {
-                    $('#modal-6').modal('hide');
-                    location.reload();
-                }
-            });
-        });
-    }
-    );
+<script type="text/javascript">
+    $('#candidateprofile-upload_resume').bind('change', function (e) {
+        var fileExtension = ['pdf', 'doc'];
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            alert("Only formats are allowed : " + fileExtension.join(', '));
+        } else {
+            var f = this.files[0]
+            if (f.size > 2097152 || f.fileSize > 2097152)
+            {
+                alert("Allowed file size exceeded. (Max. 2 MB)")
+                this.value = null;
+            } else {
+                $("#cv-upload").submit();
+            }
+        }
+    });
 </script>
-
-

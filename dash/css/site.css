@@ -843,6 +843,38 @@ a {
     padding: 3px 15px;
     background: #f3f5f4;
 }
+.bottom-box .featured-tag{
+    background: #b80000;
+    color: #fff;
+    font-weight: 600;
+    padding: 4px 10px;
+    position: relative;
+    z-index: 2;
+}
+.bottom-box .featured-tag:before{
+    left: -13px;
+    position: absolute;
+    content: '';
+    border-radius: 0;
+    top: -9px;
+    z-index: -1;
+    border: 22px solid transparent;
+    border-right: 25px solid #b80000;
+    border-left: 0;
+    transform: rotate(90deg);
+}
+.bottom-box .featured-tag:after{
+    right: -13px;
+    position: absolute;
+    content: '';
+    border-radius: 0;
+    top: -9px;
+    z-index: -1;
+    border: 22px solid transparent;
+    border-right: 25px solid #b80000;
+    border-left: 0;
+    transform: rotate(90deg);
+}
 .filter p{
     padding-top: 3px;
     color: #7d7d7d;
@@ -1140,7 +1172,7 @@ input[type=checkbox], input[type=radio] {
 .shortlist-folder-label ul li{
     position: relative;
 }
-.shortlist-folder-label ul li:hover{
+.shortlist-folder-label ul li:hover, li.active{
     background: #f1f1f1;
 }
 .shortlist-folder-label ul li .options{
@@ -2556,4 +2588,31 @@ input[type=checkbox], input[type=radio] {
 }
 .sidebar-menu .ps-scrollbar-x-rail .ps-scrollbar-x, .sidebar-menu .ps-scrollbar-y-rail .ps-scrollbar-y {
     background-color: rgba(255, 255, 255, 0);
+}
+.employer-cv-view .loctext span{
+    padding: 3px 30px;
+    line-height: 2.5;
+}
+.skillswrap .skills-sec .skills-list li{
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+.jobdetail .notes{
+    margin-top: 20px;
+
+}
+.jobdetail .notes textarea{
+    max-width: 310px;
+    max-height:180px;
+    padding: 8px 10px;
+    outline: none;
+    background: #ffff99 !important;
+    border-color: #e6e6e6;
+    color: black;
+}
+.jobdetail .notes .btn-larger{
+    float: none;
+    background-color: #c1bcbc;
+    margin: 0 auto;
+    margin-top: 10px;
 }

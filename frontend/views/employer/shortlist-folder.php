@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="clearfix"></div>
                                 <div class="page-heading check-label shortlist-folder-label pad0 mt0 mb0">
                                     <ul class="mb0">
-                                        <li>
+                                        <li class="active">
                                             <?= Html::a('<i class="fa fa-folder-open"></i>  All', ['shortlist-folder'], ['class' => 'btn btn-folder-view']) ?>
                                         </li>
                                         <?php

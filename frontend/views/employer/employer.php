@@ -193,56 +193,102 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-bg">
-                            <table class="table">
-                                <tbody>
+                            <div class="table">
+                                <?php foreach ($latest_cvs as $latest_cv) { ?>
                                     <?php
-                                    foreach ($latest_cvs as $latest_cv) {
-                                        ?>
-                                        <tr>
-                                            <td style="width:40%;">
-                                                <div class="tab-image">
-                                                    <?php
-                                                    if ($latest_cv->photo != '') {
-                                                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $latest_cv->id . '.' . $latest_cv->photo;
-                                                        if (file_exists($dirPath)) {
-                                                            echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $latest_cv->id . '.' . $latest_cv->photo . '" class="img-responsive"/>';
-                                                        } else {
-                                                            echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg" class="img-responsive"/>';
-                                                        }
+                                    $model_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $latest_cv->id])->all();
+                                    $tot_diff = 0;
+                                    $month = 0;
+                                    $year = 0;
+                                    foreach ($model_experiences as $experiences) {
+                                        $date1 = $experiences->from_date;
+                                        $date2 = $experiences->to_date;
+
+                                        $ts1 = strtotime($date1);
+                                        $ts2 = strtotime($date2);
+
+                                        $year1 = date('Y', $ts1);
+                                        $year2 = date('Y', $ts2);
+
+                                        $month1 = date('m', $ts1);
+                                        $month2 = date('m', $ts2);
+                                        $tot_diff += (($year2 - $year1) * 12) + ($month2 - $month1);
+                                    }
+                                    if ($tot_diff > 0) {
+                                        $month = $tot_diff % 12;
+                                        $year = (int) ($tot_diff / 12);
+                                    }
+                                    ?>
+                                    <div class="candidate-list">
+                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 pl0">
+                                            <div class="tab-image">
+                                                <?php
+                                                if ($latest_cv->photo != '') {
+                                                    $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $latest_cv->id . '.' . $latest_cv->photo;
+                                                    if (file_exists($dirPath)) {
+                                                        echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $latest_cv->id . '.' . $latest_cv->photo . '" class="img-responsive"/>';
                                                     } else {
                                                         echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg" class="img-responsive"/>';
                                                     }
-                                                    ?>
-                                                </div>
-                                                <h1><?= $latest_cv->title ?> <p><?= $latest_cv->name_view == 1 ? $latest_cv->name : '***********' ?></p></h1>
-                                            </td>
-                                            <td style="width:10%;"><?= $latest_cv->expected_salary == '' ? '' : '<span class="work-time">' . ExpectedSalary::findOne($latest_cv->expected_salary)->salary_range . '</span>' ?></td>
-                                            <td style="width:40%;">
-                                                <?php
-                                                if ($latest_cv->skill != '') {
-                                                    $str_datas = explode(",", $latest_cv->skill);
-                                                    $i = 0;
-                                                    $strr = '';
-                                                    foreach ($str_datas as $str_data) {
-                                                        $i++;
-                                                        $strr .= Skills::findOne($str_data)->skill;
-                                                        $strr .= ', ';
-                                                    }
-                                                    echo $strr;
                                                 } else {
-                                                    echo '';
+                                                    echo '<img width="70px" height="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg" class="img-responsive"/>';
                                                 }
                                                 ?>
-                                            </td>
-                                            <td style="width:10%;">
-                                                <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $latest_cv->id)], ['class' => 'table-btn-default']) ?>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                                            </div>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 xlpl0">
+                                                <h1><strong><?= $latest_cv->name_view == 1 ? $latest_cv->name : '***********' ?></strong> - <?= $latest_cv->title ?></h1>
+                                                <div class="">
+                                                    <div class="contact_details col-lg-6 col-md-6 col-sm-6 col-xs-6 p-l">
+                                                        <span><strong>Currently:</strong> <?= $latest_cv->current_country != '' ? common\models\Country::findOne($latest_cv->current_country)->country_name : '' ?> <?= $latest_cv->current_city != '' ? ', ' . common\models\City::findOne($latest_cv->current_city)->city : '' ?> </span>
+                                                    </div>
+                                                    <div class="contact_details col-lg-6 col-md-6 col-sm-6 col-xs-6 p-l">
+                                                        <span><strong>Exp:</strong><?= $year . ' Year ' . $month . ' Month' ?></span>
+                                                    </div>
+                                                    <div class="contact_details col-lg-6 col-md-6 col-sm-6 col-xs-6 p-l">
+                                                        <span><strong>Nationality:</strong> <?= $latest_cv->nationality != '' ? common\models\Country::findOne($latest_cv->nationality)->country_name : '' ?></span>
+                                                    </div>
+                                                    <div class="contact_details col-lg-6 col-md-6 col-sm-6 col-xs-6 p-l">
+                                                        <span><strong>Expected Salary($):</strong>  <?= $latest_cv->expected_salary == '' ? '' : ExpectedSalary::findOne($latest_cv->expected_salary)->salary_range ?></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pl0">
+                                                    <div class="contact_details p-l skills-sec">
+                                                        <span><strong>Skills:</strong> 
+                                                            <ul class="skills-list">
+                                                                <?php
+                                                                $skill_datas = explode(',', $latest_cv->skill);
+                                                                if (!empty($skill_datas)) {
+                                                                    foreach ($skill_datas as $skill_data) {
+                                                                        $skill_row = common\models\Skills::find()->where(['id' => $skill_data, 'status' => 1])->one();
+                                                                        if (!empty($skill_row)) {
+                                                                            ?>
+                                                                            <li><?= $skill_row->skill ?></li>
+                                                                        <?php }
+                                                                        ?>
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </ul>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 mob-pos pr0">
+                                            <div class="action-box">
+                                                <div class="contact_details col-md-12 col-sm-12 p-r refid">
+                                                    <span><strong>cv # 00001</span>
+                                                </div>
+                                                <div class="contact_details col-md-12 col-sm-12 p-r action-btn">
+                                                    <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $latest_cv->id)], ['class' => 'table-btn-default']) ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>

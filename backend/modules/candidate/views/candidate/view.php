@@ -50,7 +50,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         <div class="desi"><?= $model->title ?></div>
                                                         <div class="loctext"><i class="fa fa-flag" aria-hidden="true"></i> <?= $model->nationality != '' ? \common\models\Country::findOne($model->nationality)->country_name : '' ?></div>
                                                         <div class="loctext"><i class="fa fa-map-marker" aria-hidden="true"></i> <?= $model->current_country != '' ? \common\models\Country::findOne($model->current_country)->country_name : '' ?> , <?= $model->current_city != '' ? \common\models\City::findOne($model->current_city)->city : '' ?></div>
-                                                        <div class="loctext employed-looking"><i class="fa fa-cube" aria-hidden="true"></i> Employed but looking for job</div>
+                                                        <div class="loctext employed-looking">
+                                                            <?php
+                                                            if ($model->job_status == 1) {
+                                                                $color = 'employed-still-looking';
+                                                            } elseif ($model->job_status == 2) {
+                                                                $color = 'actively-looking';
+                                                            } elseif ($model->job_status == 3) {
+                                                                $color = 'employed-not-looking';
+                                                            } else {
+                                                                $color = '';
+                                                            }
+                                                            ?>
+                                                            <span class="<?= $color ?>"><?= $model->job_status != '' ? common\models\JobStatus::findOne($model->job_status)->job_status : '' ?></span>
+                                                        </div>
                                                         <div class="clearfix"></div>
                                                     </div>
                                                 </div>
@@ -58,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <!-- Candidate Contact -->
                                                     <div class="candidateinfo cont-right jobdetail">
                                                         <h3 class="mt0">Contact Info</h3>
-                                                        <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i> <?= $candidate->phone ?></div>
+                                                        <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i>  <?= $candidate->phone ?><?= $candidate->alternate_phone != '' ? ', ' . $candidate->alternate_phone : '' ?></div>
                                                         <div class="loctext"><i class="fa fa-envelope" aria-hidden="true"></i> <?= $candidate->email ?></div>
                                                         <div class="cadsocial"> <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="<?= $candidate->google_link ?>" target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> <a href="<?= $candidate->facebook_link ?>" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="<?= $candidate->linked_in_link ?>" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>  <a href="<?= $candidate->youtube_link ?>" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>  </div>
                                                     </div>
@@ -289,28 +302,41 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <div class="jobdetail">
                                                     <h3>Skills</h3>
                                                     <div class="skillswrap"> 
-                                                        <span>
-                                                            <?php
-                                                            if ($model->skill != '') {
-                                                                $skill = explode(',', $model->skill);
-                                                                $result1 = '';
-                                                                $i = 0;
-                                                                if (!empty($skill)) {
-                                                                    foreach ($skill as $value) {
-                                                                        $skills = common\models\Skills::findOne($value);
-                                                                        if ($skills->status == 1) {
-                                                                            if ($i != 0) {
-                                                                                $result1 .= ', ';
-                                                                            }
-                                                                            $result1 .= $skills->skill;
-                                                                            $i++;
+                                                        <?php
+                                                        if ($model->skill != '') {
+                                                            $skill = explode(',', $model->skill);
+                                                            $result1 = '';
+                                                            $i = 0;
+                                                            if (!empty($skill)) {
+                                                                foreach ($skill as $value) {
+                                                                    $skills = common\models\Skills::findOne($value);
+                                                                    if ($skills->status == 1) {
+                                                                        if ($i != 0) {
+                                                                            $result1 .= ', ';
+                                                                        }
+                                                                        $result1 .= $skills->skill;
+                                                                        $i++;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        $result1_array = explode(',', $result1);
+                                                        ?>
+                                                        <div class="skills-sec">
+                                                            <ul class="skills-list">
+                                                                <?php
+                                                                if (!empty($result1_array)) {
+                                                                    foreach ($result1_array as $result1_val) {
+                                                                        if ($result1_val != '') {
+                                                                            ?>
+                                                                            <li><?= $result1_val ?></li>
+                                                                            <?php
                                                                         }
                                                                     }
                                                                 }
-                                                                echo $result1;
-                                                            }
-                                                            ?>
-                                                        </span>
+                                                                ?>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

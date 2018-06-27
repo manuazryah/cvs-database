@@ -199,7 +199,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             <div class="last-login col-md-3 col-sm-3 p-l">
                 <?php
                 if($model->featured_cv == 1){ ?>
-                    <span><em>Featured</span>
+                <span class="featured-tag">Featured</span>
                <?php }
                 ?>
             </div>
@@ -240,7 +240,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             <div class="last-login col-md-6 col-sm-6 p-l">
                 <span><i>Last Logged in : <?= $last_login ?></i></span>
             </div>
-            <div class="last-login col-md-6 col-sm-6 p-l">
+            <div class="last-login col-md-6 col-sm-6 p-l text-right">
                 <span><em><?= $msg ?></em></span>
             </div>
         </div>

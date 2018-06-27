@@ -8,6 +8,12 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 /***********default css*************/
+.pl0{
+    padding-left: 0px;
+}
+.pr0{
+    padding-right: 0px;
+}
 a{
     text-decoration: none;
 }
@@ -370,17 +376,13 @@ input[type=checkbox], input[type=radio]{     margin-top: 6px;
 tr {
     border-bottom: solid 1px #e1e1e1;
 }
-.tab-image {
-    float: left;
-    text-align: center;
-    margin-right: 20px;
-}
 .table>tbody>tr>td h1{
-    font-size: 16px;
+    font-size: 15px;
     color: #333;
     line-height: 30px;
     font-weight: 500;
     margin: 0px;
+    text-transform: capitalize;
 }
 .table>tbody>tr>td  p{
     color: #7d7d7d;
@@ -2151,6 +2153,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     height: 150px;
     background: #cbcbcb;
     margin-right: 20px;
+    margin-top: 8px;
     /*border: 5px solid #3192c5;*/
 }
 .job-header .jobinfo .candidateinfo .title {
@@ -2160,10 +2163,10 @@ label span{ color: #7d7d7d; font-weight: 500;}
     text-transform: capitalize;
 }
 .job-header .jobinfo .candidateinfo .desi {
-    font-size: 18px;
+    font-size: 16px;
     color: #666;
     margin-top: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .job-header .jobinfo .candidateinfo.cont-right{
     border-left: 1px solid #e4e4e4;
@@ -2840,7 +2843,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     float: left;
     text-align: center;
     /* margin-right: 20px; */
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 .text-shorting {
     overflow: hidden;
@@ -4165,4 +4168,69 @@ button, html input[type=button], input[type=reset], input[type=submit] {
 }
 .search-filter-summery .panel-title{
     font-size: 14px;
+}
+.jobseaker-cv-view .loctext span{
+    padding: 3px 30px;
+    line-height: 2.5;
+}
+.skillswrap .skills-sec .skills-list li{
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+.table .candidate-list{
+    display: inline-block;
+    width: 100%;
+    padding: 15px;
+    padding-bottom: 0px;
+    border-bottom: solid 1px #e1e1e1;
+}
+.table .candidate-list h1{
+    font-size: 15px;
+    color: #333;
+    line-height: 30px;
+    font-weight: 500;
+    margin: 0px;
+    text-transform: capitalize;
+}
+.table .candidate-list .contact_details span{
+    font-size: 13px;
+    font-weight: 600;
+}
+.table .candidate-list .contact_details span strong{
+    margin-right: 5px;
+}
+.table .candidate-list .skills-sec .skills-list{
+    margin: 0px;
+}
+.table .candidate-list .skills-sec .skills-list li{
+    padding: 0px 10px;
+    color: #555;
+}
+.table .candidate-list .skills-sec span strong{
+    float: left;
+}
+.table .candidate-list .action-box{
+    position: relative;
+}
+.table .candidate-list .action-box .refid{
+    position: absolute;
+    top: -15px;
+    right: -16px;
+}
+.table .candidate-list .action-box .action-btn{
+    margin-top: 70px;
+}
+.table .candidate-list .action-box .action-btn a{
+    font-size: 13px;
+    color: #2caef4;
+    font-weight: 500;
+    padding: 8px 10px;
+    border-radius: 2px;
+    float: right;
+    border: solid 1px #2caef4;
+}
+.table .candidate-list .action-box .action-btn a:hover, .table .candidate-list .action-box .action-btn a:focus{
+    background-color: #2caef4;
+    color: #fff;
+    border: solid 1px #2caef4;
 }

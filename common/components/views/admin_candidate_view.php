@@ -216,7 +216,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             <div class="last-login col-md-6 col-sm-6 p-l">
                 <span><i>Last Logged in : <?= $last_login ?></i></span>
             </div>
-            <div class="last-login col-md-6 col-sm-6 p-l">
+            <div class="last-login col-md-6 col-sm-6 p-l text-right">
                 <span><em><?= $msg ?></em></span>
             </div>
         </div>

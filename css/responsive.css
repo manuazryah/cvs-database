@@ -1,6 +1,6 @@
 @media (min-width:1300px){
     .my-account aside.fixed {
-        width: 16.5%;
+        width: 12%;
         top: 80px;
     }
 }
@@ -114,6 +114,9 @@
     .input-group-btn{ right: 68px;}
 }
 @media (max-width:767px){ 
+    .xlpl0{
+        padding-left: 0px;
+    }
     .overflow .fact-box {
         margin-bottom: 30px;
     }
@@ -134,6 +137,7 @@
     .tab-image {
         float: none;
         margin-right: 0;
+        margin-bottom: 15px;
     }
     header{
         width: auto;
@@ -172,8 +176,34 @@
     }
     .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover, .navbar-default .navbar-nav .open .dropdown-menu>.active>a, .navbar-default .navbar-nav .open .dropdown-menu>.active>a:focus, .navbar-default .navbar-nav .open .dropdown-menu>.active>a:hover{ color: #fff; background: transparent;}
     .header-stricky .col-md-3.text-right{ margin-right: 0px;}
+
+    .table .candidate-list{
+        position: relative;
+    }
+    .table .candidate-list .mob-pos{
+        position: absolute;
+        top: 0px;
+        right: 0;
+        width: 20%;
+    }
+    .table .candidate-list .mob-pos .action-box{
+        display: flex;
+    }
+    .table .candidate-list .mob-pos .action-box .refid{
+        top: 0px;
+        right: 0px;
+    }
+    .table .candidate-list .mob-pos .action-box strong{
+        width: 92%;
+    }
+    .table .candidate-list .action-box .action-btn{
+        margin-top: 40px;
+    }
 }
 @media (max-width:545px){ 
+    .xlpl0{
+        padding-left: 0px;
+    }
     .client {
         width: 100%;
     }
