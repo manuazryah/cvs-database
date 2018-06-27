@@ -82,7 +82,10 @@ class EmployerController extends Controller {
         }
         if ($model->load(Yii::$app->request->post())) {
             if ($model->login()) {
-                Yii::$app->SetValues->setLoginHistory(Yii::$app->session['candidate']['id'], 3);
+                $employer = Employer::findOne(Yii::$app->session['employer_data']['id']);
+                $employer->last_login = date('Y-m-d h:i:s');
+                $employer->save();
+                Yii::$app->SetValues->setLoginHistory(Yii::$app->session['employer_data']['id'], 3);
                 return $this->redirect(['employer/home']);
             } else {
                 if (isset(Yii::$app->session['log-err']) && Yii::$app->session['log-err'] == 1) {
@@ -434,7 +437,7 @@ class EmployerController extends Controller {
         $cv_data = [];
         $arr = [];
         $query = new yii\db\Query();
-        $query->select(['*'])->from('candidate_profile')->andWhere(['or', ['like', 'title', $data], ['like', 'executive_summary', $data], ['like', 'hobbies', $data],]);
+        $query->select(['*'])->from('candidate_profile')->andWhere(['or', ['like', 'title', $data], ['like', 'executive_summary', $data], ['like', 'hobbies', $data], ['like', 'name', $data], ['like', 'extra_curricular_activities', $data]]);
         $command = $query->createCommand();
         $result = $command->queryAll();
         if (!empty($result)) {
@@ -448,7 +451,7 @@ class EmployerController extends Controller {
         $result1 = $command1->queryAll();
         if (!empty($result1)) {
             foreach ($result1 as $ind_val) {
-                $course_details = \common\models\CandidateEducation::find()->where(['course_name' => $ind_val])->all();
+                $course_details = \common\models\CandidateEducation::find()->where(['qualification' => $ind_val])->all();
                 if (!empty($course_details)) {
                     foreach ($course_details as $course_detail) {
                         $arr[] = $course_detail['candidate_id'];
@@ -465,9 +468,42 @@ class EmployerController extends Controller {
                 $arr[] = $ind_val['candidate_id'];
             }
         }
+        $query3 = new yii\db\Query();
+        $query3->select(['*'])->from('candidate_education')->andWhere(['or', ['like', 'course_name', $data], ['like', 'collage_university', $data],]);
+        $command4 = $query3->createCommand();
+        $result4 = $command4->queryAll();
+        if (!empty($result4)) {
+            foreach ($result4 as $ind_val) {
+                $arr[] = $ind_val['candidate_id'];
+            }
+        }
+
+        $query5 = new yii\db\Query();
+        $query5->select(['id'])->from('skills')->andWhere(['or', ['like', 'skill', $data],]);
+        $command5 = $query5->createCommand();
+        $result5 = $command5->queryAll();
+        if (!empty($result5)) {
+            foreach ($result5 as $ind_val) {
+                $results5 = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:skill, skill)'))->addParams([':skill' => $ind_val['id']])->all();
+                if (!empty($results5)) {
+                    foreach ($results5 as $ind_value) {
+                        $arr[] = $ind_value['candidate_id'];
+                    }
+                }
+            }
+        }
+        
         $candidate_reference = \common\models\Candidate::find()->where(['user_id' => $data])->one();
         if (!empty($candidate_reference)) {
             $arr[] = $candidate_reference['id'];
+        }
+        $candidate_email = \common\models\Candidate::find()->where(['email' => $data])->one();
+        if (!empty($candidate_email)) {
+            $arr[] = $candidate_email['id'];
+        }
+        $candidate_phone = \common\models\Candidate::find()->where(['phone' => $data])->orWhere(['alternate_phone' => $data])->one();
+        if (!empty($candidate_phone)) {
+            $arr[] = $candidate_phone['id'];
         }
 
         if (!empty($arr)) {

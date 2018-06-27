@@ -96,6 +96,9 @@ class SiteController extends Controller {
         }
         if ($model->load(Yii::$app->request->post())) {
             if ($model->login()) {
+                $candidate = Candidate::findOne(Yii::$app->session['candidate']['id']);
+                $candidate->last_login = date('Y-m-d h:i:s');
+                $candidate->save();
                 Yii::$app->SetValues->setLoginHistory(Yii::$app->session['candidate']['id'], 2);
                 return $this->redirect(['candidate/index']);
             } else {

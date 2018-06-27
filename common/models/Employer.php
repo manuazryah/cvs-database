@@ -49,7 +49,7 @@ use yii\db\ActiveRecord;
                 [['user_name'], 'required', 'message' => 'Email is Required', 'on' => 'forgot'],
                 [['country', 'status','review_status'], 'integer'],
                 [['address'], 'string'],
-                [['DOC', 'DOU', 'email_varification','description'], 'safe'],
+                [['DOC', 'DOU', 'email_varification','description','last_login'], 'safe'],
                 [['first_name', 'last_name', 'email', 'password', 'company_name', 'location', 'company_email', 'position'], 'string', 'max' => 100],
                 [['phone', 'company_phone_number'], 'string', 'max' => 20],
                 [['email'], 'unique', 'on' => 'create'],

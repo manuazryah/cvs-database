@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                 </div>
-                <div class="panel-body">
+                <div class="panel-body table-responsive">
                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
                     <?= Html::a('<i class="fa-th-list"></i><span> Create Employer</span>', ['create'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
@@ -41,12 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->phone == '' ? '' : $model->phone;
                                 },
                             ],
-                                [
-                                'attribute' => 'company_name',
-                                'value' => function ($model) {
-                                    return $model->company_name == '' ? '' : $model->company_name;
-                                },
-                            ],
+//                                [
+//                                'attribute' => 'company_name',
+//                                'value' => function ($model) {
+//                                    return $model->company_name == '' ? '' : $model->company_name;
+//                                },
+//                            ],
                             // 'country',
                             // 'location',
                             // 'address:ntext',
@@ -55,11 +55,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             // 'position',
                             // 'email_varification:email',
                             [
-                                'attribute' => 'status',
+                                'attribute' => 'review_status',
                                 'format' => 'raw',
-                                'filter' => [1 => 'Enabled', 0 => 'Disabled'],
+                                'filter' => [1 => 'Reviewed', 0 => 'Unreviewed'],
                                 'value' => function ($model) {
-                                    return $model->status == 1 ? 'Enabled' : 'Disabled';
+                                    return $model->review_status == 1 ? 'Reviewed' : 'Unreviewed';
+                                },
+                            ],
+                                        [
+                                'attribute' => 'last_login',
+                                'value' => function ($model) {
+                                    return $model->last_login != '' ? $model->last_login : '';
                                 },
                             ],
                                 ['class' => 'yii\grid\ActionColumn',

@@ -60,6 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->review_status == 1 ? 'Reviewed' : 'Unreviewed';
                                 },
                             ],
+                                [
+                                'attribute' => 'last_login',
+                                'value' => function ($model) {
+                                    return $model->last_login != '' ? $model->last_login : '';
+                                },
+                            ],
                             // 'date_of_creation',
                             // 'date_of_updation',
                             // 'email_varification_status:email',
