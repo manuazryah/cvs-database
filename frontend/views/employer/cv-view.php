@@ -358,8 +358,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             <h3>Notes</h3>
 
                             <div class="notes"> 
-                                <form action="" id="usrform">
-                                    <textarea rows="10" cols="50" placeholder="Add your notes here" form="usrform"></textarea>
+                                <form action="" id="employer-note" method="post">
+                                    <input type="hidden" id="candidate_note_id" value="<?= $contact_info->id ?>"/>
+                                    <textarea id="employer_note" rows="10" cols="50" placeholder="Add your notes here" form="usrform"></textarea>
                                     <button type="submit" class="btn btn-larger btn-block" >Save</button>
                                 </form>
                             </div>
@@ -405,8 +406,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             });
         });
-    }
-    );
+        $(document).on('submit', '#employer-note', function (e) {
+            e.preventDefault();
+            var note = $('#employer_note').val();
+            var candidate_id = $('#candidate_note_id').val();
+            alert(note);
+            alert(candidate_id);
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                async: false,
+                data: {candidate_id: candidate_id, note: note},
+                url: '<?= Yii::$app->homeUrl ?>employer/save-notes',
+                success: function (data) {
+                }
+            });
+        });
+    });
 </script>
 
 

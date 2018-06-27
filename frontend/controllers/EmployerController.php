@@ -1482,5 +1482,13 @@ class EmployerController extends Controller {
         unset(Yii::$app->session['employer_data']);
         $this->redirect(['/employer/index']);
     }
+    
+    public function actionSaveNotes() {
+        if (Yii::$app->request->isAjax) {
+            $employer_id = Yii::$app->session['employer_data']['id'];
+            $candidate_id = $_POST['candidate_id'];
+            $notes = $_POST['note'];
+        }
+    }
 
 }
