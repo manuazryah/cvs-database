@@ -25,17 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
                     <?= Html::a('<i class="fa-th-list"></i><span> Create Employer</span>', ['create'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
+                    <?= Html::a('<i class="fa fa-file-excel-o"></i><span> Export to Excel</span>', ['exports'], ['class' => 'btn btn-warning  btn-icon btn-icon-standalone']) ?>
                     <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                                ['class' => 'yii\grid\SerialColumn'],
+                            ['class' => 'yii\grid\SerialColumn'],
 //                                                            'id',
                             'first_name',
                             'last_name',
                             'email:email',
-                                [
+                            [
                                 'attribute' => 'phone',
                                 'value' => function ($model) {
                                     return $model->phone == '' ? '' : $model->phone;
@@ -62,13 +63,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->review_status == 1 ? 'Reviewed' : 'Unreviewed';
                                 },
                             ],
-                                        [
+                            [
                                 'attribute' => 'last_login',
                                 'value' => function ($model) {
                                     return $model->last_login != '' ? $model->last_login : '';
                                 },
                             ],
-                                ['class' => 'yii\grid\ActionColumn',
+                            ['class' => 'yii\grid\ActionColumn',
                                 'template' => '{delete}{view}{update}',
                             ],
                         ],

@@ -290,5 +290,17 @@ class EmployerController extends Controller {
         }
         return $this->redirect(['shortlist-folders', 'id' => $id]);
     }
+    
+     public function actionExports() {
+        $test = '';
+        $model = Employer::find()->all();
+        if (!empty($model)) {
+            $test = $this->renderPartial('report_xls', ['model' => $model]);
+        }
+        $file = "employer-details.xls";
+        header("Content-type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=$file");
+        return $test;
+    }
 
 }

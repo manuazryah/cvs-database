@@ -196,7 +196,7 @@ $current_date = date('Y-m-d');
                                         <!-- Industries -->
                                         <div class="form-group col-md-12 p-l p-r marg-bot-0">
                                             <?php
-                                            $skills = [];
+//                                            $skills = [];
                                             if (isset($model->industry) && $model->industry != '') {
                                                 $model->industry = explode(',', $model->industry);
 //                                                $skills = ArrayHelper::map(\common\models\Skills::find()->where(['in', 'industry', $model->industry])->all(), 'id', 'skill');

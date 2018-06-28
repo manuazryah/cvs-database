@@ -202,7 +202,11 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                                     $year = 0;
                                     foreach ($model_experiences as $experiences) {
                                         $date1 = $experiences->from_date;
-                                        $date2 = $experiences->to_date;
+                                        if ($experiences->present_status == 1) {
+                                            $date2 = date('Y-m-d');
+                                        } else {
+                                            $date2 = $experiences->to_date;
+                                        }
 
                                         $ts1 = strtotime($date1);
                                         $ts2 = strtotime($date2);

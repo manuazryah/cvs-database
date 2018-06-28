@@ -336,7 +336,7 @@ class CandidateController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $model->candidate_id = $id;
             $data = Yii::$app->request->post();
-            $this->SetDatas($model);
+            $model = $this->SetDatas($model);
             $files = UploadedFile::getInstance($model, 'photo');
             $files_resume = UploadedFile::getInstance($model, 'upload_resume');
             if (empty($files)) {
@@ -555,11 +555,9 @@ class CandidateController extends Controller {
                 $i++;
             }
             $i = 0;
-            if (isset($create['present_status']) && $create['present_status'] != '') {
-                foreach ($create['present_status'] as $val) {
-                    $arr[$i]['present_status'] = $val;
-                    $i++;
-                }
+            foreach ($create['present_status'] as $val) {
+                $arr[$i]['present_status'] = $val;
+                $i++;
             }
             $this->SaveExperience($arr, $model);
         }
@@ -578,14 +576,12 @@ class CandidateController extends Controller {
             $aditional->designation = $val['designation'];
             $aditional->job_responsibility = $val['job_responsibility'];
             $aditional->from_date = $val['from_date'];
-            $aditional->to_date = $val['to_date'];
             $aditional->country = $val['country'];
-            if (isset($val['present_status']) && $val['present_status'] != '') {
-                if ($val['present_status'] == 'on') {
-                    $aditional->present_status = 1;
-                } else {
-                    $aditional->present_status = 0;
-                }
+            $aditional->present_status = $val['present_status'];
+            if($aditional->present_status == 1){
+                $aditional->to_date = '';
+            }else{
+                $aditional->to_date = $val['to_date'];
             }
             if (!empty($aditional->company_name)) {
                 $aditional->save();
@@ -608,10 +604,12 @@ class CandidateController extends Controller {
                 $arr[$key]['designation'] = $val['designation'][0];
                 $arr[$key]['job_responsibility'] = $val['job_responsibility'][0];
                 $arr[$key]['from_date'] = $val['from_date'][0];
-                $arr[$key]['to_date'] = $val['to_date'][0];
                 $arr[$key]['country'] = $val['country'][0];
-                if (isset($val['present_status'][0]) && $val['present_status'][0] != '') {
-                    $arr[$key]['present_status'] = $val['present_status'][0];
+                $arr[$key]['present_status'] = $val['present_status'][0];
+                if($val['present_status'][0] == 1){
+                     $arr[$key]['to_date'] = '';
+                }else{
+                     $arr[$key]['to_date'] = $val['to_date'][0];
                 }
                 $i++;
             }
@@ -623,13 +621,7 @@ class CandidateController extends Controller {
                 $aditional->from_date = $value['from_date'];
                 $aditional->to_date = $value['to_date'];
                 $aditional->country = $value['country'];
-                if (isset($value['present_status']) && $value['present_status'] != '') {
-                    if ($value['present_status'] == 'on') {
-                        $aditional->present_status = 1;
-                    } else {
-                        $aditional->present_status = 0;
-                    }
-                }
+                $aditional->present_status = $value['present_status'];
                 $aditional->save();
             }
         }
@@ -1319,6 +1311,18 @@ class CandidateController extends Controller {
             $from_date = date('Y-m-d', strtotime('-1 day', strtotime($to_date)));
         }
         return $from_date;
+    }
+    
+    public function actionExports() {
+        $test = '';
+        $model = Candidate::find()->all();
+        if (!empty($model)) {
+            $test = $this->renderPartial('report_xls', ['model' => $model]);
+        }
+        $file = "jobseeker-details.xls";
+        header("Content-type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=$file");
+        return $test;
     }
 
 }
