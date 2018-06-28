@@ -105,13 +105,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                                     $i = 0;
                                                                     if (!empty($industry)) {
                                                                         foreach ($industry as $val) {
-
-                                                                            if ($i != 0) {
-                                                                                $result .= ', ';
-                                                                            }
                                                                             $industries = common\models\Industry::findOne($val);
-                                                                            $result .= $industries->industry_name;
-                                                                            $i++;
+                                                                            if ($industries->status == 1) {
+                                                                                if ($i != 0) {
+                                                                                    $result .= ', ';
+                                                                                    $result .= $industries->industry_name;
+                                                                                    $i++;
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                     echo $result;

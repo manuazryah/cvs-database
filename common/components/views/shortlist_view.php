@@ -23,7 +23,11 @@ $month = 0;
 $year = 0;
 foreach ($model_experiences as $experiences) {
     $date1 = $experiences->from_date;
-    $date2 = $experiences->to_date;
+    if ($experiences->present_status == 1) {
+        $date2 = date('Y-m-d');
+    } else {
+        $date2 = $experiences->to_date;
+    }
 
     $ts1 = strtotime($date1);
     $ts2 = strtotime($date2);
@@ -197,10 +201,9 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 <span><i>Last Logged in : <?= $last_login ?></i></span>
             </div>
             <div class="last-login col-md-3 col-sm-3 p-l">
-                <?php
-                if($model->featured_cv == 1){ ?>
-                <span class="featured-tag">Featured</span>
-               <?php }
+                <?php if ($model->featured_cv == 1) { ?>
+                    <span class="featured-tag">Featured</span>
+                <?php }
                 ?>
             </div>
             <div class="last-login col-md-5 col-sm-5 p-l text-right">
@@ -219,22 +222,22 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-l prit0" id="rightdiv">
-                <div class="button-box prit0">
+            <div class="button-box prit0">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
+                    <div class="contact_details col-md-12 col-sm-12 p-r refid">
+                        <span><strong>cv #</strong> <?= $profile_info->user_id ?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-l prit0">
+                <div class="button-box ptop0">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                        <div class="contact_details col-md-12 col-sm-12 p-r refid">
-                            <span><strong>cv #</strong> <?= $profile_info->user_id ?></span>
+                        <div class="button-sec" style="float: right;">
+                            <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2 remove-shortlist', 'title' => 'Remove from Shortlist']) ?>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-l prit0">
-                    <div class="button-box ptop0">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                            <div class="button-sec" style="float: right;">
-                                <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['un-shortlist', 'id' => $model->candidate_id], ['class' => 'button2 remove-shortlist', 'title' => 'Remove from Shortlist']) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
         </div>
         <div class="bottom-box col-lg-12">
             <div class="last-login col-md-6 col-sm-6 p-l">

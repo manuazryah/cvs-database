@@ -124,14 +124,31 @@ class SkillsController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $skill_exists = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:skill, skill)'))->addParams([':skill' => $id])->exists();
+        $skill_exists = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:skill, skill)'))->addParams([':skill' => $id])->all();
         if (empty($skill_exists)) {
             $this->findModel($id)->delete();
-            Yii::$app->session->setFlash('success', "Skill Removed Successfully");
         } else {
-            Yii::$app->session->setFlash('error', "Can't remove bacause this skill is already in use.");
+            foreach ($skill_exists as $value) {
+                $skill = explode(',', $value->skill);
+                $new_arr =[];
+                if(!empty($skill)){
+                    foreach ($skill as $val) {
+                        if($val != $id){
+                            $new_arr[]=$val;
+                        }
+                    }
+                }
+                if(!empty($new_arr)){
+                    $new_skill = implode(",", $new_arr);
+                }else{
+                    $new_skill = '';
+                }
+                $value->skill = $new_skill;
+                $value->update();
+            }
+            $this->findModel($id)->delete();
         }
-
+        Yii::$app->session->setFlash('success', "Skill Removed Successfully");
         return $this->redirect(['index']);
     }
 

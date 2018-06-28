@@ -116,12 +116,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                             if (!empty($industry)) {
                                                 foreach ($industry as $val) {
 
-                                                    if ($i != 0) {
-                                                        $result .= ', ';
-                                                    }
                                                     $industries = common\models\Industry::findOne($val);
-                                                    $result .= $industries->industry_name;
-                                                    $i++;
+                                                    if ($industries->status == 1) {
+                                                        if ($i != 0) {
+                                                            $result .= ', ';
+                                                            $result .= $industries->industry_name;
+                                                            $i++;
+                                                        }
+                                                    }
                                                 }
                                             }
                                             echo $result;
@@ -359,8 +361,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             <div class="notes"> 
                                 <form action="" id="employer-note" method="post">
+                                    <?php
+                                    $note_val = '';
+                                    if (!empty($notes)) {
+                                        $note_val = $notes->note;
+                                    }
+                                    ?>
                                     <input type="hidden" id="candidate_note_id" value="<?= $contact_info->id ?>"/>
-                                    <textarea id="employer_note" rows="10" cols="50" placeholder="Add your notes here" form="usrform"></textarea>
+                                    <textarea id="employer_note" rows="10" cols="50" placeholder="Add your notes here" form="usrform"><?= $note_val ?></textarea>
                                     <button type="submit" class="btn btn-larger btn-block" >Save</button>
                                 </form>
                             </div>

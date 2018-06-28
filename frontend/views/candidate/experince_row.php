@@ -14,10 +14,8 @@
         <div class="col-md-3">
             <div class="formrow">
                 <input id="exp_from_date-<?= $i ?>" type="date" name="expcreate[from_date][]" class="form-control exp-from-date" placeholder="Join From" value="<?= date('Y-m-d', strtotime('-1 month')) ?>">
-                <label for="chkispresent">
-                    <input type="checkbox" id="chkispresent-<?= $i ?>" class="chkispresent" name="expcreate[present_status][]"/>
-                    I currently work here
-                </label>
+                <input id="exp_present_status-<?= $i ?>" type="hidden" name="expcreate[present_status][]" class="form-control exp-from-date" placeholder="Join From" value="">
+                                                            <input id="exp_present_status_btn-<?= $i ?>" type="radio" name="present_status" value="male"> I Currently Work Here
             </div>
         </div>
         <div class="col-md-3">

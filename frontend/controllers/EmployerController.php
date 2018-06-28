@@ -492,7 +492,7 @@ class EmployerController extends Controller {
                 }
             }
         }
-        
+
         $candidate_reference = \common\models\Candidate::find()->where(['user_id' => $data])->one();
         if (!empty($candidate_reference)) {
             $arr[] = $candidate_reference['id'];
@@ -972,6 +972,7 @@ class EmployerController extends Controller {
                 $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $candidate_profile->candidate_id])->all();
                 $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $candidate_profile->candidate_id])->all();
                 $contact_info = \common\models\Candidate::find()->where(['id' => $candidate_profile->candidate_id])->one();
+                $notes = \common\models\EmployerNotes::find()->where(['candidate_id' => $candidate_profile->candidate_id, 'employer_id' => Yii::$app->session['employer_data']['id']])->one();
                 if (empty($view_cv)) {
                     if ($packages->end_date >= date('Y-m-d')) {
                         if ($packages->no_of_downloads_left >= 1) {
@@ -985,6 +986,7 @@ class EmployerController extends Controller {
                                         'model_education' => $model_education,
                                         'model_experience' => $model_experience,
                                         'contact_info' => $contact_info,
+                                        'notes' => $notes,
                             ]);
                         } else {
                             Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
@@ -999,12 +1001,14 @@ class EmployerController extends Controller {
                     $view_cv->update();
 //                    $this->CandidateEmail($id);
 //                return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
-                    Yii::$app->session->setFlash('success', "You have already viewed this profile.No credits deduct from your package.");
+                    Yii::$app->session->setFlash('success', "You have already viewed this CV. No credit is deducted from your package.");
                     return $this->render('cv-view', [
                                 'model' => $model,
                                 'model_education' => $model_education,
                                 'model_experience' => $model_experience,
                                 'contact_info' => $contact_info,
+                                'contact_info' => $contact_info,
+                                'notes' => $notes,
                     ]);
                 }
             }
@@ -1482,12 +1486,23 @@ class EmployerController extends Controller {
         unset(Yii::$app->session['employer_data']);
         $this->redirect(['/employer/index']);
     }
-    
+
     public function actionSaveNotes() {
         if (Yii::$app->request->isAjax) {
             $employer_id = Yii::$app->session['employer_data']['id'];
             $candidate_id = $_POST['candidate_id'];
             $notes = $_POST['note'];
+            $notes_exist = \common\models\EmployerNotes::find()->where(['employer_id' => $employer_id, 'candidate_id' => $candidate_id])->one();
+            if (empty($notes_exist)) {
+                $model = new \common\models\EmployerNotes();
+                $model->employer_id = $employer_id;
+                $model->candidate_id = $candidate_id;
+                $model->note = $notes;
+                $model->save();
+            } else {
+                $notes_exist->note = $notes;
+                $notes_exist->save();
+            }
         }
     }
 

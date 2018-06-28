@@ -106,13 +106,14 @@ use yii\widgets\ActiveForm;
                                                         $i = 0;
                                                         if (!empty($industry)) {
                                                             foreach ($industry as $val) {
-
-                                                                if ($i != 0) {
-                                                                    $result .= ', ';
-                                                                }
                                                                 $industries = common\models\Industry::findOne($val);
-                                                                $result .= $industries->industry_name;
-                                                                $i++;
+                                                                if ($industries->status == 1) {
+                                                                    if ($i != 0) {
+                                                                        $result .= ', ';
+                                                                        $result .= $industries->industry_name;
+                                                                        $i++;
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                         echo $result;
@@ -302,12 +303,12 @@ use yii\widgets\ActiveForm;
                                 <div class="job-header">
                                     <div class="jobdetail">
                                         <h3>Skills</h3>
-                                        
+
                                         <div class="skillswrap"> 
                                             <?php
+                                            $result1 = '';
                                             if ($model->skill != '') {
                                                 $skill = explode(',', $model->skill);
-                                                $result1 = '';
                                                 $i = 0;
                                                 if (!empty($skill)) {
                                                     foreach ($skill as $value) {
@@ -332,7 +333,7 @@ use yii\widgets\ActiveForm;
                                                             if ($result1_val != '') {
                                                                 ?>
                                                                 <li><?= $result1_val ?></li>
-                                                            <?php
+                                                                <?php
                                                             }
                                                         }
                                                     }

@@ -23,7 +23,11 @@ $month = 0;
 $year = 0;
 foreach ($model_experiences as $experiences) {
     $date1 = $experiences->from_date;
-    $date2 = $experiences->to_date;
+    if ($experiences->present_status == 1) {
+        $date2 = date('Y-m-d');
+    } else {
+        $date2 = $experiences->to_date;
+    }
 
     $ts1 = strtotime($date1);
     $ts2 = strtotime($date2);
@@ -190,10 +194,9 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 <span><i>Last Logged in : <?= $last_login ?></i></span>
             </div>
             <div class="last-login col-md-3 col-sm-3 p-l">
-                <?php
-                if($model->featured_cv == 1){ ?>
+                <?php if ($model->featured_cv == 1) { ?>
                     <span><em>Featured</span>
-               <?php }
+                <?php }
                 ?>
             </div>
             <div class="last-login col-md-5 col-sm-5 p-l text-right">

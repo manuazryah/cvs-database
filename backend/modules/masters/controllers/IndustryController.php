@@ -124,13 +124,31 @@ class IndustryController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $industry_exists = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:industry, industry)'))->addParams([':industry' => $id])->exists();
+        $industry_exists = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:industry, industry)'))->addParams([':industry' => $id])->all();
         if (empty($industry_exists)) {
             $this->findModel($id)->delete();
-            Yii::$app->session->setFlash('success', "Industry Removed Successfully");
         } else {
-            Yii::$app->session->setFlash('error', "Can't remove bacause this industry is already in use.");
+            foreach ($industry_exists as $value) {
+                $industry = explode(',', $value->industry);
+                $new_arr =[];
+                if(!empty($industry)){
+                    foreach ($industry as $val) {
+                        if($val != $id){
+                            $new_arr[]=$val;
+                        }
+                    }
+                }
+                if(!empty($new_arr)){
+                    $new_industry = implode(",", $new_arr);
+                }else{
+                    $new_industry = '';
+                }
+                $value->industry = $new_industry;
+                $value->update();
+            }
+            $this->findModel($id)->delete();
         }
+        Yii::$app->session->setFlash('success', "Industry Removed Successfully");
         return $this->redirect(['index']);
     }
 
