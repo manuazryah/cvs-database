@@ -711,7 +711,7 @@ $current_date = date('Y-m-d');
         });
 
 
-        $(document).on('change', '.exp-from-date', function (event) {
+        $(document).on('blur', '.exp-from-date', function (event) {
             var current_row_id = $(this).attr('id').match(/\d+/);
             getFromDate(current_row_id);
         });
@@ -720,7 +720,7 @@ $current_date = date('Y-m-d');
             var current_row_id = $(this).attr('id').match(/\d+/);
             getToDate(current_row_id);
         });
-        $(document).on('change', '.edu-from-date', function (event) {
+        $(document).on('blur', '.edu-from-date', function (event) {
             var current_row_id = $(this).attr('id').match(/\d+/);
             getEduFromDate(current_row_id);
         });
