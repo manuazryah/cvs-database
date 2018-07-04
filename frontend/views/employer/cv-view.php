@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <!-- Candidate Contact -->
                             <div class="candidateinfo cont-right jobdetail">
                                 <h3 class="mt0">Contact Info</h3>
-                                <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i>  <?= $user_details->phone ?><?= $user_details->alternate_phone != '' ? ', ' . $user_details->alternate_phone : '' ?></div>
+                                <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i>  <?= $contact_info->phone ?><?= $contact_info->alternate_phone != '' ? ', ' . $contact_info->alternate_phone : '' ?></div>
                                 <div class="loctext"><i class="fa fa-envelope" aria-hidden="true"></i> <?= $contact_info->email ?></div>
                                 <div class="cadsocial"> <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="<?= $contact_info->google_link ?>" target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> <a href="<?= $contact_info->facebook_link ?>" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="<?= $contact_info->linked_in_link ?>" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>  <a href="<?= $contact_info->youtube_link ?>" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>  </div>
                             </div>
@@ -316,9 +316,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                             <div class="skillswrap"> 
                                 <?php
+                                 $result1 = '';
                                 if ($model->skill != '') {
                                     $skill = explode(',', $model->skill);
-                                    $result1 = '';
                                     $i = 0;
                                     if (!empty($skill)) {
                                         foreach ($skill as $value) {
