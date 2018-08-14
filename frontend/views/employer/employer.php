@@ -75,12 +75,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                                 <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="employer-resnd" class="resnd-btn">Resend Email Verification</a></p>
                                 <div class="clearfis"></div>
                                 <div class="text-left p-t-12">
-                                    <span class="txt1">
-                                        Forgot
-                                    </span>
                                     <!--<li class="<?= $flag == 0 ? 'active' : '' ?>"><a href="#forgot-password" role="tab" data-toggle="tab" aria-expanded="true">forgot</a></li>-->
                                     <a href="#forgot-password" role="tab" data-toggle="tab" aria-expanded="true" class="txt2" href="#">
-                                        Password?
+                                        <span class="txt1">Forgot Password?</span>
                                     </a>
                                 </div>
                                 <div>
@@ -145,7 +142,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                         <div class="box">
                             <h5 class="heading">CVs by skills</h5>
                             <ul>
-                              <?php foreach ($skills_datas as $skills_data) { ?>
+                                <?php foreach ($skills_datas as $skills_data) { ?>
                                     <li>
                                         <a href="#"><?= $skills_data->skill ?></a>
                                     </li>
@@ -158,7 +155,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                         <div class="box b0">
                             <h5 class="heading">CVs by location</h5>
                             <ul>
-                                 <?php foreach ($city_datas as $city_data) {
+                                <?php foreach ($city_datas as $city_data) {
                                     ?>
                                     <li>
                                         <a href="#"> <?= $city_data ?></a>

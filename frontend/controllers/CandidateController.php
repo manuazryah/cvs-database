@@ -58,7 +58,7 @@ class CandidateController extends Controller {
         $model = Candidate::findOne($id);
         $model->scenario = 'update';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
-
+            
         }
         return $this->render('index', [
                     'model' => $model,
@@ -178,9 +178,9 @@ class CandidateController extends Controller {
         $tot_experience = 0;
         foreach ($model_experiences as $experiences) {
             $date1 = $experiences->from_date;
-            if($experiences->present_status == 1){
+            if ($experiences->present_status == 1) {
                 $date2 = date('Y-m-d');
-            }else{
+            } else {
                 $date2 = $experiences->to_date;
             }
             $ts1 = strtotime($date1);
@@ -351,8 +351,10 @@ class CandidateController extends Controller {
      */
     public function SaveExperience($arr, $model) {
         foreach ($arr as $val) {
-            if($val['present_status'] == ''){
-              $present_status = 0;
+            if ($val['present_status'] == 'on') {
+                $present_status = 1;
+            } else {
+                $present_status = 0;
             }
             $aditional = new WorkExperiance();
             $aditional->candidate_id = $model->candidate_id;
@@ -362,9 +364,9 @@ class CandidateController extends Controller {
             $aditional->from_date = $val['from_date'];
             $aditional->country = $val['country'];
             $aditional->present_status = $present_status;
-            if($aditional->present_status == 1){
+            if ($aditional->present_status == 1) {
                 $aditional->to_date = '';
-            }else{
+            } else {
                 $aditional->to_date = $val['to_date'];
             }
             if (!empty($aditional->company_name)) {
@@ -389,14 +391,16 @@ class CandidateController extends Controller {
                 $arr[$key]['job_responsibility'] = $val['job_responsibility'][0];
                 $arr[$key]['from_date'] = $val['from_date'][0];
                 $arr[$key]['country'] = $val['country'][0];
-                if($val['present_status'][0] == ''){
-                   $present_status = 0;
+                if ($val['present_status'][0] == 'on') {
+                    $present_status = 1;
+                } else {
+                    $present_status = 0;
                 }
                 $arr[$key]['present_status'] = $present_status;
-                if($present_status == 1){
-                     $arr[$key]['to_date'] = '';
-                }else{
-                     $arr[$key]['to_date'] = $val['to_date'][0];
+                if ($present_status == 1) {
+                    $arr[$key]['to_date'] = '';
+                } else {
+                    $arr[$key]['to_date'] = $val['to_date'][0];
                 }
                 $i++;
             }
@@ -616,8 +620,8 @@ class CandidateController extends Controller {
         $id = Yii::$app->session['candidate']['id'];
         $user_details = Candidate::find()->where(['id' => $id])->one();
         $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
-        if(empty($model)){
-            $model=new CandidateProfile();
+        if (empty($model)) {
+            $model = new CandidateProfile();
         }
         $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
         $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
@@ -764,7 +768,7 @@ class CandidateController extends Controller {
         unset(Yii::$app->session['candidate']);
         $this->redirect(['/site/index']);
     }
-    
+
     public function actionGetFromDate() {
         $from_date = '';
         if (Yii::$app->request->isAjax) {

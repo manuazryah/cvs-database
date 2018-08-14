@@ -35,12 +35,9 @@ use yii\widgets\Pjax;
                                 <p class="error-block" style="<?= $stat == 1 ? 'display: block;' : 'display: none;' ?>"><a id="candidate-resnd" class="resnd-btn">Resend Email Verification</a></p>
                                 <div class="clearfis"></div>
                                 <div class="text-left p-t-12">
-                                    <span class="txt1">
-                                        Forgot
-                                    </span>
                                     <!--<li class="<?= $flag == 0 ? 'active' : '' ?>"><a href="#forgot-password" role="tab" data-toggle="tab" aria-expanded="true">forgot</a></li>-->
                                     <a href="#forgot-password" role="tab" data-toggle="tab" aria-expanded="true" class="txt2" href="#">
-                                        Password?
+                                        <span class="txt1">Forgot Password?</span>
                                     </a>
                                 </div>
                                 <div>
