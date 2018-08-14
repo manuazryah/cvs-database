@@ -49,8 +49,21 @@ if ($model->name_view == 1) {
     $name = $model->name;
 }
 $short_list_data = \common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
-if (count($short_list_data) > 0) {
-    $msg = count($short_list_data) . ' Other Employers Shortlisted this CV';
+$cvview_list_data = \common\models\CvViewHistory::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
+$short_list_count = [];
+if(!empty($short_list_data)){
+    foreach ($short_list_data as $short_list_val) {
+       $short_list_count[] = $short_list_val->employer_id;
+    }
+}
+if(!empty($cvview_list_data)){
+    foreach ($cvview_list_data as $cvview_list_val) {
+        $short_list_count[] = $cvview_list_val->employer_id;
+    }
+}
+$short_list_count = array_unique($short_list_count); 
+if (count($short_list_count) > 0) {
+    $msg = count($short_list_count) . ' Other employers viewed / shortlisted this CV';
 } else {
     $msg = 'No Other Employers Shortlisted this CV';
 }
@@ -155,10 +168,10 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
                                 <?= Html::a('</i>View CV', ['/candidate/candidate/view', 'id' => $model->candidate_id], ['class' => 'button3']) ?>
                                 <?php if ($model->featured_cv == 0) { ?>
-                                    <?= Html::a('<i class="fa fa-check" aria-hidden="true"></i>', ['/candidate/candidate/set-featured', 'id' => $model->id], ['class' => 'set-featured', 'title' => 'Set as Featured']) ?>
+                                    <?= Html::a('<i class="fa fa-heart-o" aria-hidden="true"></i>', ['/candidate/candidate/set-featured', 'id' => $model->id], ['class' => 'set-featured', 'title' => 'Set as Featured']) ?>
                                 <?php } elseif ($model->featured_cv == 1) {
                                     ?>
-                                    <?= Html::a('<i class="fa fa-remove" aria-hidden="true"></i>', ['/candidate/candidate/remove-featured', 'id' => $model->id], ['class' => 'remove-featured', 'title' => 'Remove from Featured']) ?>
+                                    <?= Html::a('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['/candidate/candidate/remove-featured', 'id' => $model->id], ['class' => 'remove-featured', 'title' => 'Remove from Featured']) ?>
                                 <?php }
                                 ?>
                             </div>
@@ -195,7 +208,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             </div>
             <div class="last-login col-md-3 col-sm-3 p-l">
                 <?php if ($model->featured_cv == 1) { ?>
-                    <span><em>Featured</span>
+                <span class="featured-tag">Featured</span>
                 <?php }
                 ?>
             </div>

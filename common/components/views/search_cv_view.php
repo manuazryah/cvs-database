@@ -49,10 +49,23 @@ if ($model->name_view == 1) {
     $name = $model->name;
 }
 $short_list_data = \common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
-if (count($short_list_data) > 0) {
-    $msg = count($short_list_data) . ' Other Employers Shortlisted this CV';
+$cvview_list_data = \common\models\CvViewHistory::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
+$short_list_count = [];
+if(!empty($short_list_data)){
+    foreach ($short_list_data as $short_list_val) {
+       $short_list_count[] = $short_list_val->employer_id;
+    }
+}
+if(!empty($cvview_list_data)){
+    foreach ($cvview_list_data as $cvview_list_val) {
+        $short_list_count[] = $cvview_list_val->employer_id;
+    }
+}
+$short_list_count = array_unique($short_list_count); 
+if (count($short_list_count) > 0) {
+    $msg = count($short_list_count) . ' Other employers viewed / shortlisted this CV';
 } else {
-    $msg = 'No Other Employers Shortlisted this CV';
+    $msg = '';
 }
 $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
@@ -149,12 +162,36 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 <div class="button-box ptop0">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
                         <div class="button-sec">
-                            <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id)], ['class' => 'button3']) ?>
+                            <?php if (isset(Yii::$app->user->identity->id)) { ?>
+                                <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id)], ['class' => 'button3']) ?>
+                            <?php } else { ?>
+                                 <?= Html::a('View CV', 'javascript:void(0)', ['class' => 'table-btn-default myBtn', 'id' => 'myBtn']) ?>
+                                ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+           <!--/**************Qualification**************/-->
+        <div class="col-md-12">
+            <div class="contact_details p-l skills-sec">
+                <span><strong>Qualification:</strong> 
+                    <ul class="skills-list">
+                        <?php
+                        if (!empty($education)) {
+                            foreach ($education as $qualification) {
+                                ?>
+                                <li><?= $qualification->course_name ?></li>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <!--/******************/-->
         <div class="col-md-12">
             <div class="contact_details p-l skills-sec">
                 <span><strong>Skills:</strong> 
@@ -184,7 +221,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             <div class="last-login col-md-3 col-sm-3 p-l">
                 <?php
                 if($model->featured_cv == 1){ ?>
-                    <span><em>Featured</span>
+                   <span class="featured-tag">Featured</span>
                <?php }
                 ?>
             </div>

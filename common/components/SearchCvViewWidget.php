@@ -20,6 +20,7 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
 use common\models\CandidateProfile;
+use common\models\CandidateEducation;
 
 class SearchCvViewWidget extends Widget {
 
@@ -34,10 +35,12 @@ class SearchCvViewWidget extends Widget {
 
     public function run() {
         $model = CandidateProfile::findOne($this->id);
+        $education = CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->all();
         $profile_info = \common\models\Candidate::find()->where(['id' => $model->candidate_id])->one();
         return $this->render('search_cv_view', [
                     'model' => $model,
                     'profile_info' => $profile_info,
+                    'education' => $education,
         ]);
         //return Html::encode($this->message);
     }

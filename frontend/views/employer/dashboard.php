@@ -58,10 +58,10 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
             <div class="account-info">
                 <div class="box">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 top-box-btm">
-                        <div class="col-lg-4 brit"><p>Search Result : <span>Total <?= $dataProvider->getTotalCount() ?> CVs Found</span></p></div>
+                        <div class="col-lg-4 brit"><p>Search Result : Total <span><?= $dataProvider->getTotalCount() ?> CVs</span> Found</p></div>
                         <div class="col-lg-8 pad0">
-                            <div class="col-lg-7"><p class="color-white txt-center">You have <?= $user_plans->no_of_downloads_left ?> Credits Remaining for CV Download</p></div>
-                            <div class="col-lg-5 blft txt-right"><p>Your Credit Expiry on <?= date("d M Y", strtotime($user_plans->end_date)) ?></p></div>
+                            <div class="col-lg-7"><p class="color-white txt-center">You have <span><?= $user_plans->no_of_downloads_left ?> Credits</span> Remaining for CV Download</p></div>
+                            <div class="col-lg-5 blft txt-right"><p>Your Credit Expiry on <span><?= date("d M Y", strtotime($user_plans->end_date)) ?></span></p></div>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -460,6 +460,41 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
         </div>
     </div>
 </div>
+<input type="hidden" class="login_session" value="<?= Yii::$app->session['login-session'] ?>">
+<div id="employer_detail" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Welcome to www.cvsdatabase.com</h4>
+            </div>
+            <div class="modal-body">
+                <p>Your Credit Details</p>
+                <table class="table">
+                    <tr>
+                        <td>Credits Remaining</td>
+                        <td>:</td>
+                        <td><?= $user_plans->no_of_downloads_left ?></td>
+                    </tr>
+                    <tr>
+                        <td>Valid Until</td>
+                        <td>:</td>
+                        <td><?= date('Y-M-d', strtotime($user_plans->end_date)); ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(window).on('load', function () {
+        if ($('.login_session').val() === "open") {
+            $('#employer_detail').modal('show');
+        }
+    });
+</script>
+<?php Yii::$app->session['login-session'] = 'close' ?>
 <script>
     $(document).ready(function () {
         $('input[type="checkbox"]').change(function () {

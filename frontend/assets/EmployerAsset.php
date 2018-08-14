@@ -20,6 +20,7 @@ class EmployerAsset extends AssetBundle {
         'dash/css/xenon-components.css',
         'dash/css/xenon-skins.css',
         'dash/css/site.css',
+        'dash/css/responsive.css',
     ];
     public $js = [
         'dash/js/bootstrap.min.js',

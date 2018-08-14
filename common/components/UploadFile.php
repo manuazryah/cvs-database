@@ -87,14 +87,14 @@ class UploadFile extends Component {
 	public function ImageResize($sizes, $path, $model, $image) {
 
 		foreach ($sizes as $size) {
-			$savePath = $path . '/' . $size[name] . '.' . $image->extension;
+			$savePath = $path . '/' . $size['name'] . '.' . $image->extension;
 
 			$fileName = $path . '/' . $model->id . '.' . $image->extension;
 
-			$resized_image = $path . '/' . $size[name] . '.' . $image->extension;
+			$resized_image = $path . '/' . $size['name'] . '.' . $image->extension;
 			if (file_exists($resized_image))
 				unlink($resized_image);
-			Image::getImagine()->open($fileName)->thumbnail(new Box($size[width], $size[height]))->save($savePath, ['quality' => 90]);
+			Image::getImagine()->open($fileName)->thumbnail(new Box($size['width'], $size['height']))->save($savePath, ['quality' => 90]);
 			//unlink($fileName);
 		}
 	}

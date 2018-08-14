@@ -59,9 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="form-group col-md-12 p-l p-r">
                             <?= $form->field($model, 'address')->textarea(['rows' => 3]) ?>
                         </div>
-                        <div class="form-group col-md-12 p-l p-r">
-                            <?= $form->field($model, 'alternate_address')->textarea(['rows' => 3]) ?>
-                        </div>
                         <div class="clearfix"></div>
                         <?= Html::submitButton('Submit', ['class' => 'btn btn-larger btn-block submit ']) ?>
                         <?php ActiveForm::end(); ?>

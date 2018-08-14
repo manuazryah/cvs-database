@@ -24,16 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="panel-body">
                     <?=
-                    $this->render('_form', [
-                        'model' => $model,
-                    ])
-                    ?>
-                    <?=
                     GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                                ['class' => 'yii\grid\SerialColumn'],
 //                                                            'id',
                             'package_name',
                             'no_of_days',
@@ -46,35 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             // 'DOC',
                             // 'DOU',
                             ['class' => 'yii\grid\ActionColumn',
-                                'template' => '{update}{delete}',
-                                'contentOptions' => ['style' => 'width:100px;'],
-                                'buttons' => [
-                                    'update' => function ($url, $model) {
-                                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                                    'title' => Yii::t('app', 'update'),
-                                                    'class' => '',
-                                        ]);
-                                    },
-                                    'delete' => function ($url, $model) {
-                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                                                    'title' => Yii::t('app', 'delete'),
-                                                    'class' => '',
-                                                    'data' => [
-                                                        'confirm' => 'Are you sure you want to delete?',
-                                                    ],
-                                        ]);
-                                    },
-                                ],
-                                'urlCreator' => function ($action, $model) {
-                                    if ($action === 'update') {
-                                        $url = Url::to(['index', 'id' => $model->id]);
-                                        return $url;
-                                    }
-                                    if ($action === 'delete') {
-                                        $url = Url::to(['delete', 'id' => $model->id]);
-                                        return $url;
-                                    }
-                                }],
+                                'template' => '{update}',
+                            ],
                         ],
                     ]);
                     ?>

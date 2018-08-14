@@ -30,21 +30,29 @@ $this->params['breadcrumbs'][] = $this->title;
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                                ['class' => 'yii\grid\SerialColumn'],
+                            ['class' => 'yii\grid\SerialColumn'],
 //                            'id',
                             [
                                 'attribute' => 'transaction_id',
                                 'label' => 'Transaction',
                             ],
-                                [
+                            [
                                 'attribute' => 'employer_id',
                                 'label' => 'Employer',
                                 'value' => function ($model) {
-                                    return $model->employer_id == '' ? '' : common\models\Employer::findOne($model->employer_id)->first_name;
+                                    $employer = '';
+                                    if ($model->employer_id != '') {
+                                        $employer = Employer::find()->where(['id' => $model->employer_id])->one();
+                                    }
+                                    if (!empty($employer) && $employer != '') {
+                                        return $employer->first_name;
+                                    } else {
+                                        return '';
+                                    }
                                 },
                                 'filter' => ArrayHelper::map(Employer::find()->asArray()->all(), 'id', 'first_name'),
                             ],
-                                [
+                            [
                                 'attribute' => 'package',
                                 'value' => function ($model) {
                                     return $model->package == '' ? '' : common\models\Packages::findOne($model->package)->package_name;
@@ -62,11 +70,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'no_of_downloads',
                                 'label' => 'Total Credits',
                             ],
-                                [
+                            [
                                 'attribute' => 'no_of_downloads_left',
                                 'label' => 'Remaining Credits',
                             ],
-                                [
+                            [
                                 'attribute' => 'end_date',
                                 'label' => 'Expiry Date',
                             ],

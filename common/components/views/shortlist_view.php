@@ -49,8 +49,21 @@ if ($model->name_view == 1) {
     $name = $model->name;
 }
 $short_list_data = \common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
-if (count($short_list_data) > 0) {
-    $msg = count($short_list_data) . ' Other Employers Shortlisted this CV';
+$cvview_list_data = \common\models\CvViewHistory::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
+$short_list_count = [];
+if(!empty($short_list_data)){
+    foreach ($short_list_data as $short_list_val) {
+       $short_list_count[] = $short_list_val->employer_id;
+    }
+}
+if(!empty($cvview_list_data)){
+    foreach ($cvview_list_data as $cvview_list_val) {
+        $short_list_count[] = $cvview_list_val->employer_id;
+    }
+}
+$short_list_count = array_unique($short_list_count); 
+if (count($short_list_count) > 0) {
+    $msg = count($short_list_count) . ' Other employers viewed / shortlisted this CV';
 } else {
     $msg = 'No Other Employers Shortlisted this CV';
 }

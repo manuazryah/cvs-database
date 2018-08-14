@@ -271,7 +271,7 @@ class SiteController extends Controller {
   <title>Email verification</title>
 </head>
 <body>
-  <p>Thank you very much for signing up at www.cv-database.com !</p></br>
+  <p>Thank you very much for signing up at www.cvsdatabase.com !</p></br>
 <p>Please click on the below link to verify your email address:</p>
   <table>
 
@@ -283,7 +283,7 @@ class SiteController extends Controller {
     </tr>
 
   </table>
-<p> For any queries/ support kindly email to info@cvdatabase.com</p>
+<p> For any queries/ support kindly email to admin@cvsdatabase.com</p>
 </body>
 </html>
 ';
@@ -291,7 +291,7 @@ class SiteController extends Controller {
 // To send HTML mail, the Content-type header must be set
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
-                "From: 'info@cvsdatabase.com";
+                "From: 'admin@cvsdatabase.com";
         mail($to, $subject, $message, $headers);
         return true;
     }
@@ -398,5 +398,14 @@ class SiteController extends Controller {
             Yii::$app->getSession()->setFlash('error', "You can't reset password using this link.Please Try again");
         }
     }
+   
+     public function actionPrivacyPolicy() {
+        return $this->render('privacy_policy');
+    }
+     public function actionConditions() {
+        return $this->render('conditions');
+    }
+
 
 }
+

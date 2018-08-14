@@ -62,6 +62,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->status == 1 ? 'Enabled' : 'Disabled';
                                 },
                             ],
+                            [
+                                'attribute' => 'review_status',
+                                'format' => 'raw',
+                                'filter' => [1 => 'Reviewed', 0 => 'Unreviewed'],
+                                'value' => function ($model) {
+                                    return $model->review_status == 1 ? 'Reviewed' : 'Unreviewed';
+                                },
+                            ],
                             ['class' => 'yii\grid\ActionColumn',
                                 'template' => '{view}{update}',
                             ],

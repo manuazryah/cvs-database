@@ -27,105 +27,25 @@ use yii\helpers\Html;
 <main id="maincontent">
     <section class="contact-page">
         <div class="container">
-            <div class="row row-flex results-default">
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_4.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">Andy Green on May 15, 2018</div>
-                            <h3 class="title"><a href="">The best IT jobs for new college  grads and other tips</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
+            <?php if ($blogs) { ?>
+                <div class="row row-flex results-default">
+
+                    <!-- ./ one article -->
+                    <?php foreach ($blogs as $blog) { ?>
+                        <div class="col-md-4">
+                            <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl . 'uploads/blog/' . $blog->id . '/image.' . $blog->image . '?' . rand(); ?>" alt="<?= !empty($blog->image_alt) ? $blog->image_alt : '' ?>" class="preview">
+                                <div class="body">
+                                    <div class="top"><?= date('M d, Y', strtotime($blog->date)); ?></div>
+                                    <h3 class="title"><a href=""><?= $blog->title ?></a></h3> </div>
+                                <div class="footer">
+                                    <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view', 'id' => yii::$app->EncryptDecrypt->Encrypt('encrypt', $blog->id)]) ?>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    <?php } ?>
+                    <!-- ./ one article -->
                 </div>
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_7.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">James Craig on May 11, 2018</div>
-                            <h3 class="title"><a href="">Entry-level jobs to prove your  need to be great</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_6.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">Andy Green on May 07, 2018</div>
-                            <h3 class="title"><a href="">US jobs are being threatened by  automation</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- ./ one article -->
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_8.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">Andy Green on May 07, 2018</div>
-                            <h3 class="title"><a href="">US jobs are being threatened by  automation</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- ./ one article -->
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_2.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">Andy Green on May 07, 2018</div>
-                            <h3 class="title"><a href="">US jobs are being threatened by  automation</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- ./ one article -->
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_10.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">Andy Green on May 07, 2018</div>
-                            <h3 class="title"><a href="">US jobs are being threatened by  automation</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- ./ one article -->
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_5.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">Andy Green on May 07, 2018</div>
-                            <h3 class="title"><a href="">US jobs are being threatened by  automation</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- ./ one article -->
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_3.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">Andy Green on May 07, 2018</div>
-                            <h3 class="title"><a href="">US jobs are being threatened by  automation</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- ./ one article -->
-                <div class="col-md-4">
-                    <div class="thumbnail thumbnail-article"> <img src="<?= Yii::$app->homeUrl; ?>images/blog/advice_9.jpg" alt="" class="preview">
-                        <div class="body">
-                            <div class="top">Andy Green on May 07, 2018</div>
-                            <h3 class="title"><a href="">US jobs are being threatened by  automation</a></h3> </div>
-                        <div class="footer">
-                            <?= Html::a('Read More<i class="arrow_carrot-right"></i>', ['/employer/blog-view']) ?>
-                        </div>
-                    </div>
-                </div>
-                <!-- ./ one article -->
-            </div>
+            <?php } ?>
         </div>
     </section>
 </main>

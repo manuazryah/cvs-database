@@ -49,10 +49,23 @@ if ($model->name_view == 1) {
     $name = $model->name;
 }
 $short_list_data = \common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
-if (count($short_list_data) > 0) {
-    $msg = count($short_list_data) . ' Other Employers Shortlisted this CV';
+$cvview_list_data = \common\models\CvViewHistory::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
+$short_list_count = [];
+if(!empty($short_list_data)){
+    foreach ($short_list_data as $short_list_val) {
+       $short_list_count[] = $short_list_val->employer_id;
+    }
+}
+if(!empty($cvview_list_data)){
+    foreach ($cvview_list_data as $cvview_list_val) {
+        $short_list_count[] = $cvview_list_val->employer_id;
+    }
+}
+$short_list_count = array_unique($short_list_count); 
+if (count($short_list_count) > 0) {
+    $msg = count($short_list_count) . ' Other employers viewed / shortlisted this CV';
 } else {
-    $msg = 'No Other Employers Shortlisted this CV';
+    $msg = '';
 }
 $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
@@ -168,6 +181,25 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 </div>
             </div>
         </div>
+           <!--/**************Qualification**************/-->
+        <div class="col-md-12">
+            <div class="contact_details p-l skills-sec">
+                <span><strong>Qualification:</strong> 
+                    <ul class="skills-list">
+                        <?php
+                        if (!empty($education)) {
+                            foreach ($education as $qualification) {
+                                ?>
+                                <li><?= $qualification->course_name ?></li>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <!--/******************/-->
         <div class="col-md-12">
             <div class="contact_details p-l skills-sec">
                 <span><strong>Skills:</strong> 

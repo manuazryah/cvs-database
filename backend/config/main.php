@@ -34,6 +34,9 @@ return [
         'employer' => [
             'class' => 'backend\modules\employer\Module',
         ],
+        'cms' => [
+            'class' => 'backend\modules\cms\Module',
+        ],
     ],
     'components' => [
         'request' => [

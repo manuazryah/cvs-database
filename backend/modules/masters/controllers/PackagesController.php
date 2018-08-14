@@ -48,25 +48,12 @@ class PackagesController extends Controller {
      * Lists all Packages models.
      * @return mixed
      */
-    public function actionIndex($id = NULL) {
+    public function actionIndex() {
         $searchModel = new PackagesSearch();
-        if (isset($id) && $id != '')
-            $model = $this->findModel($id);
-        else
-            $model = new Packages();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if ($model->load(Yii::$app->request->post()) && Yii::$app->SetValues->Attributes($model) && $model->save()) {
-            if (isset($id) && $id != '')
-                Yii::$app->session->setFlash('success', "Updated Successfully");
-            else
-                Yii::$app->session->setFlash('success', "Package added Successfully");
-            $model = new Packages();
-            return $this->redirect(['index']);
-        }
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    'model' => $model,
         ]);
     }
 
@@ -108,12 +95,11 @@ class PackagesController extends Controller {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
+            Yii::$app->session->setFlash('success', "Package added Successfully");
+            return $this->redirect(['update', 'id' => $model->id]);
+        } return $this->render('update', [
                         'model' => $model,
             ]);
-        }
     }
 
     /**

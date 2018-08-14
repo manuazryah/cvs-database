@@ -12,14 +12,12 @@ use dosamigos\ckeditor\CKEditor;
 
 <div class="employer-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?= \common\widgets\Alert::widget() ?>
+    <?= \common\components\AlertMessageWidget::widget() ?>
     <div class="row">
         <div class='col-md-3 col-sm-6 col-xs-12'>
             <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class='col-md-3 col-sm-6 col-xs-12'>
-            <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
-        </div>
+        
         <div class='col-md-3 col-sm-6 col-xs-12'>
             <?= $form->field($model, 'email')->textInput(['maxlength' => true,'readonly' => TRUE]) ?>
         </div>

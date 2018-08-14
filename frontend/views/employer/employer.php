@@ -41,16 +41,16 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
         <div class="row">
             <div class="col-md-8">
                 <div class="banner-content">
-                    <h1>Search between more them <br> 50,000 open CV's.</h1>
-                    <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.<br> Nam eget dui consequat vitae, eleifend ac etiam rhoncus</p>
+                    <h1>The Fastest Way to Hire Talent</h1>
+                    <p>Easily Search for C.Vs from great candidates based in the UAE and other Gulf countries</p>
                 </div>
                 <div class="job-search cv-search">
                     <?php $form = ActiveForm::begin(['action' => 'cv-search', 'id' => 'search_form', 'method' => 'post',]); ?>
-                    <div class="form-group col-md-6 padding-left b-r radius">
+                    <div class="form-group col-md-5 padding-left radius">
                         <input type="text" class="form-control" placeholder="Job title / keywords" name="CvFilter[keyword]">
                         <div class="search_icon"><i class="fa fa-briefcase"></i></div>
                     </div>
-                    <?= $form->field($model_filter, 'location')->dropDownList($city_datas, ['prompt' => '-Country / City-', 'multiple' => TRUE])->label(FALSE) ?>
+                    <?= $form->field($model_filter, 'location')->dropDownList($city_datas, ['multiple' => TRUE])->label(FALSE) ?>
                     <div class="btn-search">
                         <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
                     </div>
@@ -93,9 +93,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                                 <?php Pjax::begin() ?>
                                 <?php $form2 = ActiveForm::begin(['id' => 'employer-signup-form']); ?>
                                 <?= $form2->field($model_register, 'first_name')->textInput() ?>
-                                <?= $form2->field($model_register, 'last_name')->textInput() ?>
                                 <?= $form2->field($model_register, 'email')->textInput() ?>
                                 <?= $form2->field($model_register, 'password')->passwordInput() ?>
+                                <?= $form->field($model_register, 'password_repeat')->passwordInput() ?>
                                 <div>
                                     <?= Html::submitButton('Sign up', ['class' => 'btn btn-larger btn-block', 'name' => 'candidate-signup-button']) ?>
                                 </div>
@@ -123,46 +123,45 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
         <div class="row">
             <div class="col-md-9">
                 <div class="page-heading">
-                    <h2>Find CV's by Skill, Industry & Location</h2>
-                    <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu.</p>
+                    <h2>Find Cvs by Skills, Industry  and Location</h2>
+                    <p>Our comprehensive CVs database covers all functional areas and candidate skills that every company irrespective of size will be looking to recruit. Start your search today!</p>
                 </div>
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#Industry">CV's By Industry</a></li>
-                    <li><a data-toggle="tab" href="#Skills">CV's By Skills</a></li>
-                    <li><a data-toggle="tab" href="#Location">CV's By Location</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="Industry" class="tab-pane fade in active">
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
+
+                <div class="cvs-sort-list">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pad0">
+                        <div class="box">
+                            <h5 class="heading">CVs by Industry</h5>
+                            <ul>
                                 <?php foreach ($industry_datas as $industry_data) { ?>
                                     <li>
-                                        <a href="#"><i class="fa fa-angle-right"></i> <?= $industry_data->industry_name ?></a>
+                                        <a href="#"><?= $industry_data->industry_name ?></a>
                                     </li>
                                 <?php }
                                 ?>
                             </ul>
                         </div>
                     </div>
-                    <div id="Skills" class="tab-pane fade">
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
-                                <?php foreach ($skills_datas as $skills_data) { ?>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pad0">
+                        <div class="box">
+                            <h5 class="heading">CVs by skills</h5>
+                            <ul>
+                              <?php foreach ($skills_datas as $skills_data) { ?>
                                     <li>
-                                        <a href="#"><i class="fa fa-angle-right"></i> <?= $skills_data->skill ?></a>
+                                        <a href="#"><?= $skills_data->skill ?></a>
                                     </li>
                                 <?php }
                                 ?>
                             </ul>
                         </div>
                     </div>
-                    <div id="Location" class="tab-pane fade">
-                        <div class="col-md-4 padding-left">
-                            <ul class="unstyled">
-                                <?php foreach ($city_datas as $city_data) {
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pad0">
+                        <div class="box b0">
+                            <h5 class="heading">CVs by location</h5>
+                            <ul>
+                                 <?php foreach ($city_datas as $city_data) {
                                     ?>
                                     <li>
-                                        <a href="#"><i class="fa fa-angle-right"></i> <?= $city_data ?></a>
+                                        <a href="#"> <?= $city_data ?></a>
                                     </li>
                                 <?php }
                                 ?>
@@ -173,7 +172,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
             </div>
             <div class="col-md-3">
                 <div class="Resume pad0">
-                    <img class="img-responsive" src="images/home/2-sec-bg.jpg" alt="" title=""/>
+                    <img class="img-responsive" src="<?= Yii::$app->homeUrl; ?>images/Add-Section-1.jpg" alt="" title=""/>
                 </div>
             </div>
         </div>
@@ -186,7 +185,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                 <div class="row">
                     <div class="col-md-12">
                         <div class="page-heading">
-                            <h2>Featured CV's</h2>
+                            <h2>Featured CVs</h2>
                         </div>
                     </div>
                 </div>
@@ -240,7 +239,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                                                 ?>
                                             </div>
                                             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 xlpl0">
-                                                <h1><strong><?= $latest_cv->name_view == 1 ? $latest_cv->name : '***********' ?></strong> - <?= $latest_cv->title ?></h1>
+                                                <h1><strong><?= $latest_cv->name_view == 1 ? '***********' : $latest_cv->name ?></strong> - <?= $latest_cv->title ?></h1>
                                                 <div class="">
                                                     <div class="contact_details col-lg-6 col-md-6 col-sm-6 col-xs-6 p-l">
                                                         <span><strong>Currently:</strong> <?= $latest_cv->current_country != '' ? common\models\Country::findOne($latest_cv->current_country)->country_name : '' ?> <?= $latest_cv->current_city != '' ? ', ' . common\models\City::findOne($latest_cv->current_city)->city : '' ?> </span>
@@ -282,10 +281,17 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 mob-pos pr0">
                                             <div class="action-box">
                                                 <div class="contact_details col-md-12 col-sm-12 p-r refid">
-                                                    <span><strong>cv # 00001</span>
+                                                    <?php
+                                                    $user_id = common\models\Candidate::findOne($latest_cv->candidate_id)->user_id;
+                                                    ?>                                                    
+                                                    <span><strong>cv # <?= $user_id ?></span>
                                                 </div>
                                                 <div class="contact_details col-md-12 col-sm-12 p-r action-btn">
-                                                    <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $latest_cv->id)], ['class' => 'table-btn-default']) ?>
+                                                    <?php if (isset(Yii::$app->user->identity->id)) { ?>
+                                                        <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $latest_cv->id)], ['class' => 'table-btn-default']) ?>
+                                                    <?php } else { ?>
+                                                        <?= Html::a('View CV', 'javascript:void(0)', ['class' => 'table-btn-default myBtn', 'id' => 'myBtn']) ?>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -301,77 +307,77 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
         <?php
     }
     ?>
-    <section class="employe ptop60">
+    <section class="employe">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <div class="page-heading">
-                        <h2>Top Employes</h2>
-                        <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
+                        <h2>Trusted by Recruiters</h2>
+                        <p>Some of the companies that CV's Database has helped find great talent</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe1.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe1.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe2.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe2.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe3.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe3.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe4.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe4.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe5.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe5.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe6.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe6.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe6.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe6.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe5.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe5.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe4.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe4.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe3.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe3.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe2.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe2.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="images/home/employe1.png" alt="" class="img-responsive"  /></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe1.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
             </div>
@@ -382,8 +388,8 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
             <div class="row">
                 <div class="col-md-4 text-right">
                     <div class="page-heading2">
-                        <h1>CV<span>s</span></h1>
-                        <strong>success stories</strong>
+                        <h1>Job <span>Seekers</span></h1>
+                        <strong><mark class="blue">success stories</mark></strong>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -391,9 +397,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                         <ul class="slides list-inline">
                             <li>
                                 <div class="testi-box clearfix text-center">
-                                    <img src="images/home/t1.png" alt="" class="img-responsive">
+                                    <img src="<?= yii::$app->homeUrl; ?>images/home/t1.png" alt="" class="img-responsive">
                                     <div class="content">
-                                        <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
+                                        <p>I was able to get a job just a few days from  when i arrived in Dubai. I couldn't imagine how soon i was able to start working and i love my job. Thank you CVs Database</p>
                                         <div class="content-hr"></div>
                                         <h4>Wabidullah Sharif</h4>
                                         <span>Web Designer</span>
@@ -402,9 +408,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                             </li>
                             <li>
                                 <div class="testi-box clearfix text-center">
-                                    <img src="images/home/t1.png" alt="" class="img-responsive">
+                                    <img src="<?= yii::$app->homeUrl; ?>images/home/t1.png" alt="" class="img-responsive">
                                     <div class="content">
-                                        <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
+                                        <p>I was able to get a job just a few days from  when i arrived in Dubai. I couldn't imagine how soon i was able to start working and i love my job. Thank you CVs Database</p>
                                         <div class="content-hr"></div>
                                         <h4>Wabidullah Sharif</h4>
                                         <span>Web Designer</span>
@@ -413,9 +419,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                             </li>
                             <li>
                                 <div class="testi-box clearfix text-center">
-                                    <img src="images/home/t1.png" alt="" class="img-responsive">
+                                    <img src="<?= yii::$app->homeUrl; ?>images/home/t1.png" alt="" class="img-responsive">
                                     <div class="content">
-                                        <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
+                                        <p>I was able to get a job just a few days from  when i arrived in Dubai. I couldn't imagine how soon i was able to start working and i love my job. Thank you CVs Database</p>
                                         <div class="content-hr"></div>
                                         <h4>Wabidullah Sharif</h4>
                                         <span>Web Designer</span>
@@ -433,15 +439,15 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <div class="page-heading heading3">
-                        <h2>We are Popular <span>Everywhere</span></h2>
-                        <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. </p>
+                        <h2>Covering the<br><span>UAE and the Gulf region</span></h2>
+                        <p>We work with recruiters in the UAE and other Gulf Cuntries to fulfill their urgent recruitment needs.</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class="vector_map">
-                        <img src="images/home/map.png" alt="" class="img-responsive">
+                        <img src="<?= yii::$app->homeUrl; ?>images/home/map.png" alt="" class="img-responsive">
                     </div>
                 </div>
             </div>
@@ -454,10 +460,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                     <div class="left-col">
                         <div class="col-text">
                             <div class="page-heading heading4">
-                                <h2>Join Thousands of Companies That Realy on <span>CVs Database</span></h2>
+                                <h2>Joins hundreds of Companies that rely on <span>CVs Database</span></h2>
                                 <hr>
-                                <p>Sed consequat, leo eget bibendum sodales, augue cursus nunc, quis <br /> gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum <br />purus quam, scelerisque ut.</p>
-                                <a href="#" class="btn Read_more">Read More</a>
+                                <p>Some of the UAE and Gulf regions's leading companies rely on CVsDatabase to find great candidates. </p>
                             </div>
                         </div>
                     </div>
@@ -481,7 +486,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
             <div class="row">
                 <div class="col-md-6">
                     <div class="block1">
-                        <a href="#"><img src="images/home/blog1.jpg" alt="" class="img-responsive"></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog1.jpg" alt="" class="img-responsive"></a>
                         <div class="block1_desc">
                             <div class="col-md-2 col-sm-2 padding-left text-right">
                                 <h3>April 25, <span>2017</span></h3>
@@ -494,7 +499,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                 </div>
                 <div class="col-md-6">
                     <div class="block1">
-                        <a href="#"><img src="images/home/blog2.jpg" alt="" class="img-responsive"></a>
+                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog2.jpg" alt="" class="img-responsive"></a>
                         <div class="block1_desc">
                             <div class="col-md-2 col-sm-2 padding-left text-right">
                                 <h3>March 13, <span>2017</span></h3>
@@ -509,6 +514,20 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
         </div>
     </section>
 </main>
+<div id="returnModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p><?= Html::a('<button type="button" class="btn btn-primary">Log in</button>', ['employer/index']) ?> to read the CV</p>
+            </div>
+        </div>
+
+    </div>
+</div>
 <script>
     $(function () {
         $(".field-cvfilter-location").addClass("col-md-6 padding-left radius2");
@@ -589,4 +608,9 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
             return false;
         }
     }
+</script>
+<script>
+    $('.myBtn').on('click', function () {
+        $('#returnModal').modal('toggle');
+    });
 </script>

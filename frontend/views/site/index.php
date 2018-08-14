@@ -13,12 +13,13 @@ use yii\widgets\Pjax;
         <div class="row">
             <div class="col-md-8">
                 <div class="banner-content">
-                    <h1>Search between more them <br /> 50,000 open jobs.</h1>
-                    <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.<br /> Nam eget dui consequat vitae, eleifend ac etiam rhoncus</p>
+                    <h1>The eazy way to <br>Get hired</h1>
+                    <p><mark>Submit your C.V and get selected by top recruiters <br>in the UAE and other Gulf countries</mark></p>
                 </div>
             </div>
             <div class="col-md-4" style="position: relative; float: right;">
                 <div id="form" class="form-fixed">
+                    <h3>submit your <strong>CV</strong> now</h3>
                     <div id="userform">
                         <ul class="nav nav-tabs nav-justified" role="tablist">
                             <li class="<?= $flag == 1 ? 'active' : '' ?>"><a href="#login" role="tab" data-toggle="tab" aria-expanded="false">Log in</a></li>
@@ -83,9 +84,9 @@ use yii\widgets\Pjax;
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <div class="page-heading">
-                        <h2>Make a Difference with Your Online Resume</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <a href="#" class="btn btn-default">Read More</a>
+                        <h2>Save time on your job search</h2>
+                        <p>CVs Database os trusted by thousands of companies of all sizes an industries to hire talent in the shortest time possible. Ther's no need to look anywhere else. CVs Database is the only website you'll ever need to find your next job...</p>
+                        <!--<a href="#" class="btn btn-default">Read More</a>-->
                     </div>
                 </div>
             </div>
@@ -96,8 +97,8 @@ use yii\widgets\Pjax;
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <div class="page-heading">
-                        <h2>Top Employes</h2>
-                        <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
+                        <h2>Trusted by Recruiters</h2>
+                        <p>Some of the companies that CV's Database has helped find great talent</p>
                     </div>
                 </div>
             </div>
@@ -172,8 +173,8 @@ use yii\widgets\Pjax;
             <div class="row">
                 <div class="col-md-4 text-right">
                     <div class="page-heading2">
-                        <h1>Job <span>Xpress</span></h1>
-                        <strong>success stories</strong>
+                        <h1>Job <span>Seekers</span></h1>
+                        <strong><mark class="blue">success stories</mark></strong>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -183,7 +184,7 @@ use yii\widgets\Pjax;
                                 <div class="testi-box clearfix text-center">
                                     <img src="<?= yii::$app->homeUrl; ?>images/home/t1.png" alt="" class="img-responsive">
                                     <div class="content">
-                                        <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
+                                        <p>I was able to get a job just a few days from  when i arrived in Dubai. I couldn't imagine how soon i was able to start working and i love my job. Thank you CVs Database</p>
                                         <div class="content-hr"></div>
                                         <h4>Wabidullah Sharif</h4>
                                         <span>Web Designer</span>
@@ -194,7 +195,7 @@ use yii\widgets\Pjax;
                                 <div class="testi-box clearfix text-center">
                                     <img src="<?= yii::$app->homeUrl; ?>images/home/t1.png" alt="" class="img-responsive">
                                     <div class="content">
-                                        <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
+                                        <p>I was able to get a job just a few days from  when i arrived in Dubai. I couldn't imagine how soon i was able to start working and i love my job. Thank you CVs Database</p>
                                         <div class="content-hr"></div>
                                         <h4>Wabidullah Sharif</h4>
                                         <span>Web Designer</span>
@@ -205,7 +206,7 @@ use yii\widgets\Pjax;
                                 <div class="testi-box clearfix text-center">
                                     <img src="<?= yii::$app->homeUrl; ?>images/home/t1.png" alt="" class="img-responsive">
                                     <div class="content">
-                                        <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
+                                        <p>I was able to get a job just a few days from  when i arrived in Dubai. I couldn't imagine how soon i was able to start working and i love my job. Thank you CVs Database</p>
                                         <div class="content-hr"></div>
                                         <h4>Wabidullah Sharif</h4>
                                         <span>Web Designer</span>
@@ -223,8 +224,8 @@ use yii\widgets\Pjax;
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <div class="page-heading heading3">
-                        <h2>We are Popular <span>Everywhere</span></h2>
-                        <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. </p>
+                        <h2>Covering the<br><span>UAE and the Gulf region</span></h2>
+                        <p>We work with recruiters in the UAE and other Gulf Cuntries to fulfill their urgent recruitment needs.</p>
                     </div>
                 </div>
             </div>
@@ -242,7 +243,7 @@ use yii\widgets\Pjax;
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <div class="page-heading">
-                        <h2>Latest News form <span>Jobxpress</span></h2>
+                        <h2>Latest News form <span>Jobseekers</span></h2>
                         <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
                     </div>
                 </div>

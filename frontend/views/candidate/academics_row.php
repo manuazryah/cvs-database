@@ -1,8 +1,10 @@
 <div class="append-box">
     <ul class="choose-qualification">
         <li>
-            <input type="radio" id="f-option-<?= $j ?>" name="create[highest_qualification][]" class="highest-gualification">
-            <label for="f-option-<?= $j ?>">Highest Qualification</label>
+            <label for="f-option-<?= $j ?>">
+            <input type="radio" id="f-option-<?= $j ?>" name="create[highest_qualification][]" class="option-input radio set_highest">
+            Highest Qualification
+            </label>
             <div class="check"></div>
         </li>
     </ul>

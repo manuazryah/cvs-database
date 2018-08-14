@@ -25,13 +25,25 @@ AppAsset::register($this);
         <div class="header-stricky">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
                         <div class="site-logo">
                             <a href="index.php"><img src="<?= Yii::$app->homeUrl ?>images/home/site-logo.png" alt="" class="img-responsive" /></a>
                         </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                         <nav class="navbar navbar-default navbar-static-top">
+                            <a class="site-logo hidden-lg hidden-md visible-sm visible-xs" href="index.php"><img src="<?= Yii::$app->homeUrl ?>images/home/site-logo.png" alt="" class="img-responsive" /></a>
+                            <div class=" hidden-lg hidden-md">   
+                                <?php
+                                        echo '<i>'
+                                        . Html::beginForm(['/candidate/logout'], 'post', ['style' => '', 'class' => 'sign-out']) . '<a>'
+                                        . Html::submitButton(
+                                                '<i class="fa fa-sign-out" aria-hidden="true"></i> Sign out', ['class' => '', 'style' => '']
+                                        ) . '</a>'
+                                        . Html::endForm()
+                                        . '</i>';
+                                        ?>
+                            </div>
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                                     <span class="sr-only">Toggle navigation</span>
@@ -42,12 +54,7 @@ AppAsset::register($this);
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav scrollto">
-                                    <li><?= Html::a('Home', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Employers', ['/employer/index']) ?></li>
-                                    <li><?= Html::a('Job Sekeers', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Blog', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Contact Us', ['/site/index']) ?></li>
-                                    <li class="dropdown user-prfile-img"><a class="dropdown-toggle" data-toggle="dropdown" href=""><img width="20" height="20" src="<?= Yii::$app->homeUrl ?>images/icons/user-icon-3.svg" alt="" class="img-responsive" /> Hi <b><?= Yii::$app->session['candidate']['id'] != '' ? Yii::$app->session['candidate']['user_name'] : '' ?></b> <i class=" fa fa-angle-down"></i></a>
+                                    <li class="dropdown user-prfile-img hidden-sm hidden-xs"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><img width="20" height="20" src="<?= Yii::$app->homeUrl ?>images/icons/user-icon-3.svg" alt="" class="img-responsive" /> Hi <b><?= Yii::$app->session['candidate']['id'] != '' ? Yii::$app->session['candidate']['user_name'] : '' ?></b> <i class=" fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu">
                                             <li><?= Html::a('My Account', ['/candidate/update-profile']) ?></li>
                                             <?php
@@ -77,7 +84,7 @@ AppAsset::register($this);
 <script>
     $(document).ready(function () {
         $(window).bind('scroll', function () {
-            var navHeight = $(window).height() - 550;
+            var navHeight = $(window).height() - 300;
             if ($(window).scrollTop() > navHeight) {
                 $('.header-stricky').addClass('fixed');
             } else {
@@ -85,7 +92,7 @@ AppAsset::register($this);
             }
         });
         $(window).bind('scroll', function () {
-            var navHeight = $(window).height() - 75;
+            var navHeight = $(window).height() - 300;
             if ($(window).scrollTop() > navHeight) {
                 $('aside').addClass('fixed');
             } else {

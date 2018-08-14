@@ -44,7 +44,7 @@ class CandidateProfile extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['title', 'nationality', 'name', 'dob', 'gender'], 'required'],
+            [['title', 'nationality', 'name', 'dob', 'gender', 'current_country', 'current_city'], 'required'],
             [['candidate_id', 'nationality', 'current_country', 'job_type', 'gender', 'status'], 'integer'],
             [['candidate_id', 'nationality', 'current_country', 'job_type', 'gender', 'name_view'], 'integer'],
             [['dob', 'date_of_updation', 'industry', 'skill', 'languages_known', 'driving_licences', 'current_city', 'upload_resume', 'total_experience','featured_cv'], 'safe'],

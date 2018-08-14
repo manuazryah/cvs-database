@@ -10,6 +10,24 @@ body {
 
 a {
 }
+.pad15{
+    padding: 15px;
+}
+.pad30{
+    padding: 30px;
+}
+.padl15{
+    padding-left: 15px;
+}
+.padr15{
+    padding-right: 15px;
+}
+.mb30{
+    margin-bottom: 30px;
+}
+.bg-white{
+    background: white;
+}    
 .form-inline .form-group{
     width: 100%;
     margin-bottom: 22px;
@@ -737,7 +755,7 @@ a {
     margin-bottom: 0px;
     padding: 0px;
     color: #7d7d7d;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 26px;
 }
 .pad0 {
@@ -840,40 +858,43 @@ a {
 .bottom-box {
     display: inline-block;
     border-top: 1px solid #e1e1e1;
-    padding: 3px 15px;
+    padding: 0px 15px;
     background: #f3f5f4;
 }
+.bottom-box .last-login span i, .bottom-box .last-login span em{
+    padding: 5px;
+    display: block;
+}
 .bottom-box .featured-tag{
-    background: #b80000;
-    color: #fff;
+    background: transparent;
+    color: #ffbb12;
     font-weight: 600;
-    padding: 4px 10px;
+    padding: 6px 25px;
     position: relative;
     z-index: 2;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: block;
+    width: fit-content;
+    cursor: pointer;
 }
 .bottom-box .featured-tag:before{
-    left: -13px;
+    left: 7px;
     position: absolute;
-    content: '';
-    border-radius: 0;
-    top: -9px;
+    content: "\f006";
+    font-family: FontAwesome;
     z-index: -1;
-    border: 22px solid transparent;
-    border-right: 25px solid #b80000;
-    border-left: 0;
-    transform: rotate(90deg);
+    font-size: 12px;
+    top: 8px;
 }
 .bottom-box .featured-tag:after{
-    right: -13px;
+    right: 7px;
     position: absolute;
-    content: '';
-    border-radius: 0;
-    top: -9px;
+    content: "\f006";
+    font-family: FontAwesome;
     z-index: -1;
-    border: 22px solid transparent;
-    border-right: 25px solid #b80000;
-    border-left: 0;
-    transform: rotate(90deg);
+    font-size: 12px;
+    top: 8px;
 }
 .filter p{
     padding-top: 3px;
@@ -1525,6 +1546,13 @@ input[type=checkbox], input[type=radio] {
 .admin-users-index .account-info .top-box-btm p{
     color: #fff;
 }
+.admin-users-index .account-info .top-box-btm p span{
+    color: #ffc840;
+    font-size: 15px;
+    background: transparent;
+    padding: 5px 8px;
+    font-weight: 600;
+}
 .admin-users-index .mailbox-env .box .main-title{
     background: #0474ba;
     margin: 0px;
@@ -1723,6 +1751,128 @@ input[type=checkbox], input[type=radio] {
     width: 20px;
     color: #3192c5;
 }
+.job-header .contentbox {
+    padding: 20px;
+}
+.job-header .contentbox .contact_details{
+    padding-left: 10px !important;
+}
+.job-header .contentbox h3 {
+    background: #403f3f;
+    padding: 8px 10px;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 0px;
+}
+.job-header .contentbox p {
+    line-height: 24px;
+    color: #555;
+    margin-bottom: 20px;
+}
+.job-header .contentbox ul {
+    margin-bottom: 30px;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+.job-header .contentbox ul li {
+    padding: 10px 0 10px 25px;
+    position: relative;
+    line-height: 1.5px;
+    color: #555;
+    font-size: 14px;
+} 
+.job-header .contentbox ul.check-list li:before {
+    content: '\f00c';
+    font-family: 'FontAwesome';
+    color: #3191c5;
+    position: absolute;
+    left: 0;
+}
+.educationList {
+    margin-bottom: 0 !important;
+}
+.educationList li {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 30px !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    margin-top: 30px;
+}
+.educationList li:last-child {
+    border-bottom: 0;
+}
+.educationList li:hover {
+    border-bottom-color: #0773b9;
+}
+.educationList li .date {
+    width: 90px;
+    height: 90px;
+    background: #888;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 700;
+    padding-top: 17px;
+    line-height: 18px;
+    float: left;
+    color: #fff;
+    margin-right: 20px;
+}
+.educationList li h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #3191c5;
+    margin-bottom: 5px;
+}
+.job-header .contentbox p {
+    line-height: 24px;
+    color: #555;
+    margin-bottom: 20px;
+}
+.educationList li p {
+    margin-bottom: 0 !important;
+}
+.jobdetail {
+    padding: 20px;
+}
+.jobdetail h3 {
+    font-size: 18px;
+    color: #333;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.jbdetail {
+    margin-top: 20px;
+    padding-left: 0px;
+    list-style: none;
+}
+.jbdetail li {
+    margin-bottom: 5px;
+    color: #908f8f;
+}
+.jbdetail li span {
+    display: block;
+    text-align: right;
+    color: #000;
+    font-weight: 600;
+}
+.jbdetail li span.permanent {
+    color: #a8d815;
+}
+.jbdetail li span.freelance {
+    color: #F07200;
+    background: none;
+    padding: 0;
+}
+.skillswrap {
+    margin-top: 20px;
+}
+.skillswrap h5 {
+    color: #7b7b7b;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
 .cadsocial {
     margin-top: 10px;
 }
@@ -1783,7 +1933,7 @@ input[type=checkbox], input[type=radio] {
     margin-bottom: 20px;
 }
 .job-header .contentbox ul {
-    margin-bottom: 30px;
+    margin-top: 10px;
     margin-bottom: 30px;
     list-style: none;
     padding-left: 0;
@@ -1945,12 +2095,12 @@ input[type=checkbox], input[type=radio] {
 }
 .cv-work-experience .contact_details{
     padding: 11px 15px;
-    border: 1px solid #eceaea;
+    /*border: 1px solid #eceaea;*/
     margin-bottom: 20px;
 }
 .cv-work-experience .inner-tbl1{
     padding: 11px 15px;
-    border: 1px solid #eceaea;
+    /*border: 1px solid #eceaea;*/
     margin-bottom: 20px;
 }
 .cv-work-experience .inner-tbl1 tr td{
@@ -2207,7 +2357,7 @@ input[type=checkbox], input[type=radio] {
     font-size: 13px;
 }
 .job-header .contentbox ul li:before{
-    content: "-";
+    content: "\f105";
     display: inline-block;
     font-family: FontAwesome;
     margin-right: 8px;
@@ -2216,6 +2366,8 @@ input[type=checkbox], input[type=radio] {
 }
 .job-header .contentbox ul li{
     padding-left: 0px;
+    display: -webkit-inline-box;
+    width: 100%;
 }
 .wrk-exp{
     display: inline-block;
@@ -2292,12 +2444,14 @@ input[type=checkbox], input[type=radio] {
     line-height: 26px;
     border: 1px solid white;
     margin-bottom: 0px !important;
+    background: #2caef4;
 }
 .packages-index .package-status{
-    background: #2caef4;
+    /* background: #2caef4; */
     padding: 20px 30px;
     display: inline-block;
     width: 100%;
+    padding-top: 0;
 }
 .package-details .resume-panel h4{
     background: #403f3f !important;
@@ -2615,4 +2769,199 @@ input[type=checkbox], input[type=radio] {
     background-color: #c1bcbc;
     margin: 0 auto;
     margin-top: 10px;
+}
+.admin-users-index .employee-create .form-group label{
+    background: #403f3f;
+    color: white;
+    display: inline-block;
+    width: 100%;
+    padding: 5px 6px;
+    border-bottom: 1px solid transparent;
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+.has-error .control-label {
+    color: #ffffff;
+    background: #a94442 !important;
+}
+.pricing-table .package-details .pricing-heading .main-head{
+    padding: 30px 15px 12px;
+    background: #849090;
+}
+.pricing-table .package-details .pricing-heading h1{
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 30px;
+}
+.pricing-table .package-details .pricing-heading h5{
+    font-size: 19px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #c5c7c8;
+    margin-top: 0px;
+}
+.pricing-table .package-details ul{
+    list-style: none;
+    padding: 0px;
+}
+.pricing-table .package-details ul li{
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #849090;
+    padding: 15px;
+    background: #f3f3f3;
+    border-right: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    min-height: 51px;
+    max-height: 51px;
+    overflow: hidden;
+}
+.pricing-table .package-details ul li:nth-child(2){
+    background: #fff;
+}
+.pricing-table .package-pricing{
+    display: grid;
+    text-align: center;
+    margin-bottom: 115px;
+    position: relative;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1); 
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1); 
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 200ms ease-in;
+    transform: scale(1);   
+}
+.pricing-table .package-pricing:hover{
+    box-shadow: 0px 0px 8px #00000054;
+    z-index: 2;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.1);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.1);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.1);
+    transition: all 200ms ease-in;
+    transform: scale(1.1);
+}
+.pricing-table .package-pricing .pricing-heading{
+    display: inline-block;
+    padding: 15px 0;
+}
+.pricing-table .package-pricing.free .pricing-heading, .pricing-table .package-pricing.free .buynow-sec{
+    background: #95d051;
+}
+.pricing-table .package-pricing.platinum .pricing-heading, .pricing-table .package-pricing.platinum .buynow-sec{
+    background: #e5e4e2;
+}
+.pricing-table .package-pricing.gold .pricing-heading, .pricing-table .package-pricing.gold .buynow-sec{
+    background: #e8af0d;
+}
+.pricing-table .package-pricing.silver .pricing-heading, .pricing-table .package-pricing.silver .buynow-sec{
+    background: #a7a4a4;
+}
+.pricing-table .package-pricing.bronze .pricing-heading, .pricing-table .package-pricing.bronze .buynow-sec{
+    background: #d07c15;
+}
+.pricing-table .package-pricing .pricing-heading h5{
+    font-size: 18px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #504f4f;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+.pricing-table .package-pricing .pricing-heading h1{
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: 600;
+    font-size: 30px;
+}
+.pricing-table .package-pricing .pricing-heading span{
+    color: #fff;
+    text-align: right;
+    float: right;
+    padding-right: 15px;
+}
+.pricing-table .package-pricing ul{
+    list-style: none;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+.pricing-table .package-pricing ul li{
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #849090;
+    padding: 15px;
+    background: #f3f3f3;
+    border-right: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    min-height: 51px;
+}
+.pricing-table .package-pricing ul li:nth-child(2){
+    background: #fff;
+}
+.pricing-table .package-pricing ul li:last-child{
+    border-bottom: 0px;
+}
+.pricing-table .package-pricing .buynow-sec{
+    display: flex;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    padding: 30px 25px 15px 25px;
+}
+.pricing-table .package-pricing .buynow-sec:before{
+    display: inline-block;
+    content: "";
+    position: absolute;
+    width: 0; 
+    height: 0; 
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #fff;
+}
+.pricing-table .package-pricing .buynow-sec a{
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid white;
+    padding: 10px 20px;
+    margin: 0 auto;
+    width: inherit;
+}
+.bottom-box .last-login.text-right, .bottom-box .last-login.text-right span em{
+    padding-right: 0;
+}
+.page-heading .contact_details{
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+    /*width: 100%;*/
+}
+.page-heading .inner-tbl1{
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+    width: 100%;
+}
+.page-heading .inner-tbl1 tbody{
+    width: 100%;
+    display: table;
+}
+.form-group iframe{
+    width: 100%;
 }

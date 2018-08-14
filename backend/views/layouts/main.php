@@ -140,6 +140,9 @@ AppAsset::register($this);
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> City', ['/masters/city/index'], ['class' => 'title']) ?>
                                 </li>
                                 <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Languages', ['/masters/languages/index'], ['class' => 'title']) ?>
+                                </li>
+                                <li>
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Courses', ['/masters/courses/index'], ['class' => 'title']) ?>
                                 </li>
                                 <li>
@@ -162,6 +165,18 @@ AppAsset::register($this);
                         <?php
                     }
                     ?>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-cc-diners-club"></i>
+                            <span class="title">CMS</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <?= Html::a('<i class="fa fa-angle-double-right"></i> Blog', ['/cms/blog/index'], ['class' => 'title']) ?>
+                            </li>
+
+                        </ul>
+                    </li>
                 </ul>
 
                 <!-- notifications and other links -->
@@ -172,7 +187,6 @@ AppAsset::register($this);
 
                     <li class="dropdown user-profile">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?= yii::$app->homeUrl; ?>images/user-4.png" alt="user-image" class="img-circle img-inline userpic-32" width="28" />
                             <span>
                                 <?= Yii::$app->user->identity->user_name ?>
                                 <i class="fa-angle-down"></i>
@@ -180,24 +194,24 @@ AppAsset::register($this);
                         </a>
 
                         <ul class="dropdown-menu user-profile-menu list-unstyled">
-                            <li class="user-header">
-                                <img src="<?= yii::$app->homeUrl; ?>images/user-4.png" alt="user-image" class="img-circle" />
-                                <p>
-                                    <?= Yii::$app->user->identity->user_name ?>
-                                    <!--<small>Member since Nov. 2012</small>-->
-                                </p>
-                            </li>
-                            <li class="user-footer" style="background: #eeeeee;">
+                            <!--                            <li class="user-header">
+                                                            <img src="<?= yii::$app->homeUrl; ?>images/user-4.png" alt="user-image" class="img-circle" />
+                                                            <p>
+                            <?= Yii::$app->user->identity->user_name ?>
+                                                                <small>Member since Nov. 2012</small>
+                                                            </p>
+                                                        </li>-->
+                            <li class="user-footer" style="background: #0474ba;">
                                 <div class="row">
                                     <div class="pull-left">
-                                        <?= Html::a('Profile', ['/admin/admin-users/update', 'id' => Yii::$app->user->identity->id], ['class' => 'btn btn-white', 'style' => 'padding: 9px 20px;border: 1px solid #a09f9f;']) ?>
+                                        <?= Html::a('Profile', ['/admin/admin-users/update', 'id' => Yii::$app->user->identity->id], ['class' => 'btn btn-white signin', 'style' => '']) ?>
                                     </div>
                                     <div class="pull-right">
                                         <?php
                                         echo ''
-                                        . Html::beginForm(['/site/logout'], 'post', ['style' => 'margin-bottom: 0px;']) . '<a>'
+                                        . Html::beginForm(['/site/logout'], 'post', ['style' => 'margin-bottom: 0px; padding: 0px;']) . '<a style="padding-bottom:0px;">'
                                         . Html::submitButton(
-                                                'Sign out', ['class' => 'btn btn-white', 'style' => 'border: 1px solid #a09f9f;']
+                                                'Sign out', ['class' => 'btn btn-white sign-out', 'style' => 'border: 1px solid #a09f9f;']
                                         ) . '</a>'
                                         . Html::endForm()
                                         . '';
@@ -306,6 +320,9 @@ AppAsset::register($this);
                                         <?= Html::a('<i class="fa fa-angle-double-right"></i> City', ['/masters/city/index'], ['class' => 'title']) ?>
                                     </li>
                                     <li>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Languages', ['/masters/languages/index'], ['class' => 'title']) ?>
+                                    </li>
+                                    <li>
                                         <?= Html::a('<i class="fa fa-angle-double-right"></i> Courses', ['/masters/courses/index'], ['class' => 'title']) ?>
                                     </li>
                                     <li>
@@ -328,6 +345,18 @@ AppAsset::register($this);
                             <?php
                         }
                         ?>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-cc-diners-club"></i>
+                                <span class="title">CMS</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Blog', ['/cms/blog/index'], ['class' => 'title']) ?>
+                                </li>
+
+                            </ul>
+                        </li>
                     </ul>
 
                 </div>

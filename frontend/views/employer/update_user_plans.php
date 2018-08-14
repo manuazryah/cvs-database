@@ -33,20 +33,59 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="package-button-sec">
                     <?= \common\widgets\Alert::widget() ?>
                     <button id="pack-histry-btn" class="btn btn-warning button1 btn-icon" style="float:right;margin-left: 20px; background: #2caef4;" title="Package History"><i class="fa fa-history" aria-hidden="true"></i>Package History</button>
-                    <?= Html::a('<i class="fa fa-level-up"></i>Upgrade Your Package', ['upgrade-package'], ['class' => 'btn btn-warning  btn-icon  button1', 'style' => 'float:right; background: #0474ba;' , 'title' => 'Upgrade Package']) ?>
+                    <?= Html::a('<i class="fa fa-level-up"></i>Upgrade Your Package', ['upgrade-package'], ['class' => 'btn btn-warning  btn-icon  button1', 'style' => 'float:right; background: #0474ba;', 'title' => 'Upgrade Package']) ?>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="package-status">
                             <div class="col-md-6 pl0">
-                                <p class="pack-head">Remaining (Current Credit + Previous Credit)<span class="pack-head-span"> <?= $user_package->no_of_downloads_left ?></span></p>
+                                <p class="pack-head">Remaining Credit's (Previous + Current)<span class="pack-head-span"> <?= $user_package->no_of_downloads_left ?></span></p>
                             </div>
                             <div class="col-md-6 pr0">
                                 <p class="pack-head">Credits expiry on <span class="pack-head-span"> <?= date("d-M-Y", strtotime($user_package->end_date)); ?></span></p>
                             </div>
                         </div>
                         <div class="clearfix"></div>
+<!--                        <section class="pricing-table">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs pad0">
+                                        <div class="package-details">
+                                            <div class="pricing-heading">
+                                                <div class="main-head">
+                                                    <h1>Pricing</h1>
+                                                    <h5>Table</h5>
+                                                </div>
+                                            </div>
+                                            <ul>
+                                                <li>Validity</li>
+                                                <li>Total Downloads</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 pad0">
+                                        <div class="package-pricing bronze">
+                                            <div class="pricing-heading">
+                                                <div class="col-lg-12">
+                                                    <h5>Platinum</h5>
+                                                    <h1>500.00 $</h1>
+                                                    <span>per/month</span>
+                                                </div>
+                                            </div>
+                                            <ul>
+                                                <li>90 Days</li>
+                                                <li>750 Downloads</li>
+                                            </ul>
+                                            <div class="col-lg-12">
+                                                <div class="buynow-sec">
+                                                    <a class="buy-now" href="/cvs-database/employer/index">Buy Now</a>                                        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>-->
                         <div class="panel panel-default">
                             <div class="current_pack">
                                 <div class="panel-heading sub">

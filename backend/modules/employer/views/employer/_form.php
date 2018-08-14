@@ -77,6 +77,12 @@ use yii\helpers\ArrayHelper;
 
         </div>
     </div>
+    <div class="row">
+        <div class='col-md-3 col-sm-6 col-xs-12 left_padd'>
+            <?= $form->field($model, 'review_status')->dropDownList(['1' => 'Reviewed', '0' => 'Unreviewed']) ?>
+
+        </div>
+    </div>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => 'btn btn-success']) ?>
     </div>

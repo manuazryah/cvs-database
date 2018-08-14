@@ -18,6 +18,17 @@ AppAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <script src="<?= Yii::$app->homeUrl ?>js/jquery3.1.js"></script>
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+        <script type="text/javascript">
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+            (function () {
+                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/5b6ab15be21878736ba2bb0f/default';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
         <?php $this->head() ?>
     </head>
     <body>
@@ -43,18 +54,17 @@ AppAsset::register($this);
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav scrollto">
-                                    <li><?= Html::a('Home', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Employers', ['/employer/index']) ?></li>
-                                    <li><?= Html::a('Job Sekeers', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Blog', ['/site/index']) ?></li>
-                                    <li><?= Html::a('Contact Us', ['/site/index']) ?></li>
+                                    <li><?= Html::a('Home', ['/employer/index']) ?></li>
+                                    <li><?= Html::a('Pricing', ['/employer/pricing']) ?></li>
+                                    <li><?= Html::a('Blog', ['/employer/blog']) ?></li>
+                                    <li><?= Html::a('Contact Us', ['/employer/contact']) ?></li>
                                 </ul>
                             </div>
                         </nav>
                     </div>
                     <div class="col-md-3 text-right who">
-                        <?= Html::a('Employer', ['/employer/index'], ['class' => 'login active']) ?>
-                        <?= Html::a('Jobseeker', ['/site/index'], ['class' => 'signup']) ?>
+                        <?php //<?= Html::a('Employer', ['/employer/index'], ['class' => 'login active']) ?>
+                        <?= Html::a('Jobseeker', ['/site/index'], ['class' => 'signup active']) ?>
                     </div>
                 </div>
             </div>
@@ -69,37 +79,31 @@ AppAsset::register($this);
                         <h5>Information</h5>
                         <hr>
                         <ul class="footer-link">
-                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">About us</a></li>
                             <li><a href="#">Terms & Conditions</a></li>
                             <li><a href="#">Privacy Policy</a></li>
                             <li><a href="#">Careers with Us</a></li>
-                            <li><a href="#">Sitemap</a></li>
-                            <li><a href="#">FAQs</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-block">
-                        <h5>For Employers</h5>
-                        <hr>
-                        <ul class="footer-link">
-                            <li><a href="#">Browse Jobs</a></li>
-                            <li><a href="#">Browse categories</a></li>
-                            <li><a href="#">Submit Resume</a></li>
-                            <li><a href="#">Candidate Dashboard</a></li>
-                            <li><a href="#">Job Alerts</a></li>
-                            <li><a href="#">My Bookmarks</a></li>
+                            <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>
                     <div class="footer-block">
                         <h5>For Jobseekers</h5>
                         <hr>
                         <ul class="footer-link">
-                            <li><a href="#">Local Jobs</a></li>
-                            <li><a href="#">Comapny Directory</a></li>
-                            <li><a href="#">Browse Jobs</a></li>
-                            <li><a href="#">Salar Estimator</a></li>
-                            <li><a href="#">Resume Designer</a></li>
-                            <li><a href="#">Consultancy</a></li>
-                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Submit CV's</a></li>
+                            <li><a href="#">Register</a></li>
+                            <li><a href="#">Sign in</a></li>
+                            <li><a href="#">FAQ - Jobseeker</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-block">
+                        <h5>For Employers</h5>
+                        <hr>
+                        <ul class="footer-link">
+                            <li><a href="#">Search CV's</a></li>
+                            <li><a href="#">Register</a></li>
+                            <li><a href="#">Sign in</a></li>
+                            <li><a href="#">FAQ - Employer</a></li>
                         </ul>
                     </div>
                     <div class="footer-block">
@@ -110,9 +114,6 @@ AppAsset::register($this);
                             <li><a href="#">Govt. Jobs</a></li>
                             <li><a href="#">International Jobs</a></li>
                             <li><a href="#">Jobs by Company</a></li>
-                            <li><a href="#">Jobs by Category</a></li>
-                            <li><a href="#">Jobs by Location</a></li>
-                            <li><a href="#">Jobs by Skill</a></li>
                         </ul>
                     </div>
                     <div class="footer-block footer-block2">
@@ -122,15 +123,15 @@ AppAsset::register($this);
                             <li><a href="#" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#" title="Twitter"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#" title="Google"><span class="ti-google"></span></a></li>
-                            <li><a href="#" title="RSS"><i class="fa fa-rss"></i></a></li>
+<!--                            <li><a href="#" title="Google"><span class="ti-google"></span></a></li>
+                            <li><a href="#" title="RSS"><i class="fa fa-rss"></i></a></li>-->
                         </ul>
                         <div class="border"></div>
                         <div class="register">
-                            <a href="#">8,368,480 <span>Registerd Members</span></a>
+                            <a href="#">8,368,480 <span>Reg Jobseekers</span></a>
                         </div>
                         <div class="register job">
-                            <a href="#">1,50,000 <span>Latest Jobs</span></a>
+                            <a href="#">1,50,000 <span>Reg Employers</span></a>
                         </div>
                     </div>
                 </div>
@@ -139,7 +140,7 @@ AppAsset::register($this);
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-sm-6 padding-left">
-                            <span>&#169; 2018 CVS Databade. All rights reserved.</span>
+                            <span>&#169; 2018 CVs Database. All rights reserved.</span>
                         </div>
                         <!--                        <div class="col-md-6 col-sm-6 text-right padding-left">
                                                     <ul class="bottom_link">

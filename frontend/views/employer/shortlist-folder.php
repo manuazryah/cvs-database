@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="clearfix"></div>
                                 <div class="page-heading check-label shortlist-folder-label pad0 mt0 mb0">
                                     <ul class="mb0">
-                                        <li class="active">
+                                        <li class="<?= empty($folder_name) ? 'active' : '' ?>">
                                             <?= Html::a('<i class="fa fa-folder-open"></i>  All', ['shortlist-folder'], ['class' => 'btn btn-folder-view']) ?>
                                         </li>
                                         <?php
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         if (!empty($folders)) {
                                             foreach ($folders as $folder) {
                                                 ?>
-                                                <li>
+                                                <li class="<?= ($folder_name == $folder->folder_name) ? 'active' : '' ?>">
                                                     <?= Html::a('<i class="fa fa-folder-open"></i>  ' . $folder->folder_name, ['shortlist-folder', 'folder' => $folder->folder_name], ['class' => 'btn btn-folder-view']) ?>
                                                     <ul class="options">
                                                         <li>

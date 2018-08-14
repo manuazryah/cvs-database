@@ -18,7 +18,7 @@ class EmployerReviewsSearch extends Employer
     public function rules()
     {
         return [
-            [['id', 'country', 'email_varification', 'status'], 'integer'],
+            [['id', 'country', 'email_varification', 'status', 'review_status'], 'integer'],
             [['first_name', 'last_name', 'email', 'phone', 'password', 'company_name', 'location', 'address', 'company_email', 'company_phone_number', 'position', 'DOC', 'DOU'], 'safe'],
         ];
     }
@@ -71,6 +71,7 @@ class EmployerReviewsSearch extends Employer
             ->andFilterWhere(['like', 'last_name', $this->last_name])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'review_status', $this->review_status])
             ->andFilterWhere(['like', 'password', $this->password])
             ->andFilterWhere(['like', 'company_name', $this->company_name])
             ->andFilterWhere(['like', 'location', $this->location])

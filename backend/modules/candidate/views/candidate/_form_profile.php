@@ -474,9 +474,9 @@ $current_date = date('Y-m-d');
                                             <div class="col-md-6">
                                                 <?php
                                                 if ($model->upload_resume != '') {
-                                                    $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
+                                                    $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/../uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
                                                     if (file_exists($dirPath)) {
-                                                        echo '<a class="" href="' . Yii::$app->homeUrl . 'uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume . '" target="_blank"><span><i class="fa fa-file-pdf-o"></i> Download CV</span></a>';
+                                                        echo '<a class="" href="' . Yii::$app->homeUrl . '../uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume . '" target="_blank"><span><i class="fa fa-file-pdf-o"></i> Download CV</span></a>';
                                                     } else {
                                                         echo '';
                                                     }

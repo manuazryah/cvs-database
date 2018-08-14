@@ -58,7 +58,7 @@ $current_date = date('Y-m-d');
     <section class="manage">
         <div class="container">
             <div class="row">
-                <div class="col-lg-2 col-md-2 col-sm-2 col-lg-12">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-lg-12">
                     <aside  id="target" class="aside">
                         <h4 class="title">My Account</h4>
                         <ul>
@@ -69,8 +69,8 @@ $current_date = date('Y-m-d');
                         </ul>
                     </aside>
                 </div>
-                <div class="col-lg-10 col-md-10 col-sm-10 col-lg-12">
-                    <div class="rightside-box mt95">
+                <div class="col-lg-10 col-md-9 col-sm-9 col-lg-12">
+                    <div class="rightside-box">
                         <div class="row">
                             <div class="col-md-12">
                                 <?php
@@ -83,6 +83,7 @@ $current_date = date('Y-m-d');
                                             ]
                                 ]);
                                 ?>
+                                <div class="update_alert"><?= \common\widgets\Alert::widget() ?></div>
                                 <div class="userccount">
                                     <div class="formpanel">
                                         <div class="delete-account">
@@ -128,14 +129,14 @@ $current_date = date('Y-m-d');
                                         </div>
                                         <div class="clearfix"></div>
                                         <br>
-                                        <div class="mb80"></div>
+                                        <div class=" hidden-md hidden-sm hidden-xs"></div>
                                         <div class="">
                                             <div class="form-group col-md-12 p-l p-r">
                                                 <div class="form-group col-md-6 p-l">
                                                     <div class="form-group field-candidateprofile-name required">
                                                         <label class="control-label" for="candidateprofile-name">Name</label>
                                                         <input type="text" id="candidateprofile-name" class="form-control" name="CandidateProfile[name]" value="<?= $user->user_name != '' ? $user->user_name : '' ?>" readonly="" aria-required="true">
-                                                        <input type="hidden" name="CandidateProfile[name_view]" value="0"><label class="hide-view"><input type="checkbox" id="candidateprofile-name_view" name="CandidateProfile[name_view]" value="1" aria-invalid="false"> Hide Name In Public</label>
+                                                        <input type="hidden" name="CandidateProfile[name_view]" value="0"><label class="hide-view"><input type="checkbox" <?= $model->name_view == '1' ? 'checked="checked"' : '' ?> id="candidateprofile-name_view" name="CandidateProfile[name_view]" value="1" aria-invalid="false"> Hide Name In Public</label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-6 p-r">
@@ -191,7 +192,7 @@ $current_date = date('Y-m-d');
                                                 <textarea class="textarea" name="CandidateProfile[executive_summary]" style="width: 810px; height: 200px" id=""><?= $model->executive_summary ?></textarea>
                                             </div>
                                         </div>
-                                        <hr>
+
 
                                         <!-- Industries -->
                                         <div class="form-group col-md-12 p-l p-r marg-bot-0">
@@ -251,11 +252,11 @@ $current_date = date('Y-m-d');
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <div class="formrow">
-                                                                        <div id="ispresent-<?= $i ?>" class="ispresent" style="display: <?= $datas->present_status == 1 ? 'block' : 'none'  ?>">
+                                                                        <div id="ispresent-<?= $i ?>" class="ispresent" style="display: <?= $datas->present_status == 1 ? 'block' : 'none' ?>">
                                                                             Present
                                                                         </div>
-                                                                        <div id="notpresent-<?= $i ?>" class="notpresent" style="display: <?= $datas->present_status == 1 ? 'none' : 'block'  ?>">
-                                                                            <input id="exp_to_date-<?= $i ?>" type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control exp-to-date" placeholder="End on" value="<?= $datas->present_status == 1 ? date('Y-m-d') : $datas->to_date  ?>">
+                                                                        <div id="notpresent-<?= $i ?>" class="notpresent" style="display: <?= $datas->present_status == 1 ? 'none' : 'block' ?>">
+                                                                            <input id="exp_to_date-<?= $i ?>" type="date" name="expupdatee[<?= $datas->id; ?>][to_date][]" class="form-control exp-to-date" placeholder="End on" value="<?= $datas->present_status == 1 ? date('Y-m-d') : $datas->to_date ?>">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -345,7 +346,7 @@ $current_date = date('Y-m-d');
                                             <a id="addexperience" class="btn btn-icon btn-blue addScnt btn-larger btn-block" ><i class="fa fa-plus"></i> Add More</a>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <hr>
+
                                         <br/>
                                         <div class="speration"></div>
                                         <!-- Education -->
@@ -479,7 +480,7 @@ $current_date = date('Y-m-d');
                                             <a id="addeducation" class="btn btn-icon btn-blue addScnt btn-larger btn-block" ><i class="fa fa-plus"></i> Add More</a>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <hr>
+
                                         <br/>
                                         <div class="form-group col-md-12 p-l p-r">
                                             <?= $form->field($model, 'hobbies')->textInput(['maxlength' => true]) ?>
@@ -517,21 +518,24 @@ $current_date = date('Y-m-d');
                                                 ?>
                                                 <div class="clearfix"></div>
                                                 <div class="col-md-6 p-l">
-                                                    <div class="form-control">
+                                                    <div class="form-control change-cv">
                                                         <?= $form->field($model, 'upload_resume')->fileInput(['maxlength' => true])->label($label) ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <?php
-                                                    if ($model->upload_resume != '') {
-                                                        $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
-                                                        if (file_exists($dirPath)) {
-                                                            echo '<a class="" href="' . Yii::$app->homeUrl . 'uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume . '" target="_blank"><span><i class="fa fa-file-pdf-o"></i> Download CV</span></a>';
-                                                        } else {
-                                                            echo '';
+                                                    <div class="form-control download-cv">
+                                                        <label class="control-label">Download CV</label>
+                                                        <?php
+                                                        if ($model->upload_resume != '') {
+                                                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume;
+                                                            if (file_exists($dirPath)) {
+                                                                echo '<a class="" href="' . Yii::$app->homeUrl . 'uploads/candidate/resume/' . $model->id . '.' . $model->upload_resume . '" target="_blank"><span><i class="fa fa-file-pdf-o"></i> Download CV</span></a>';
+                                                            } else {
+                                                                echo '';
+                                                            }
                                                         }
-                                                    }
-                                                    ?>
+                                                        ?>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

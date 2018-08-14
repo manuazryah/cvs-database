@@ -5,15 +5,373 @@
     }
 }
 @media (min-width:992px) and (max-width:1200px){
-    /*    .header-stricky .who{
-            width: 23%;
-        }*/
+    .pricing-table .package-details ul li{
+        font-size: 12px;
+    }
+    .pricing-table .package-pricing ul li{
+        font-size: 12px;
+    }
+    .pricing-table .package-details .pricing-heading h1{
+        font-size: 25px;
+    }
+    .pricing-table .package-pricing .pricing-heading h1{
+        font-size: 25px;
+    }
+    .my-account .manage .rightside-box{
+        margin-top: 25px !important;
+    }
+    .my-account .rightside-box .profile{
+        position: unset;
+    }
+    .my-account .manage .formpanel {
+        margin-top: 0px;
+    }
+    .my-account aside.fixed {
+        width: 212.5px;
+    }
+    .profile-header .main-heading{
+        font-size: 20px;
+    }
+    .profile-header .sub-heading{
+        font-size: 16px;
+    }
+    .my-account .form-control{
+        font-size: 13px;
+    }
+}
+@media (min-width:768px) and (max-width:992px){
+    .my-account .manage .rightside-box{
+        margin-top: 25px !important;
+    }
+    .my-account .rightside-box .profile{
+        position: unset;
+        left: 0px;
+        right: 0px;
+        display: grid;
+    }
+    .my-account .rightside-box .profile .profile-header {
+        float: left;
+        margin-left: 0;
+        margin-top: 0;
+        text-align: center;
+    }
+    .my-account .manage .formpanel {
+        margin-top: 0px;
+    }
+    .my-account aside.fixed {
+        width: 157.5px;
+    }
+    .profile-header .main-heading{
+        font-size: 20px;
+    }
+    .profile-header .sub-heading{
+        font-size: 16px;
+    }
+    .my-account .form-control{
+        font-size: 13px;
+    }
+    .navbar-nav>li, .navbar-header {
+        float: none !important;
+    }
+    .navbar-nav{
+        width: 100%;
+        background: #e7e7e7;
+        text-align: left;
+    }
+    .navbar-nav>li, .navbar-header{
+        padding: 12px 15px;
+        margin-right: 0px;
+        transition: all ease-in-out 300m;
+        display: block;
+    }
+    .navbar-nav>li, .navbar-header {
+        float: none;
+        display: block;
+        padding: 0px;
+        margin-right: 0px;
+        border-bottom: 1px solid #96969626;
+        text-align: left;
+        margin-right: 0 !important;
+    }
+    .navbar-nav>li a:hover, .navbar-nav>li.active a{
+        background-color: #0d5f96 !important;
+        color: white !important;
+    }
+    .navbar-default .nav>li:hover>a:after, .navbar-default .nav>li.active>a:after{
+        display: none;
+    }
+    .navbar-default .nav>li>a{
+        padding: .5rem 1rem;
+        width: 100%;
+    }
+    .navbar-toggle {
+        display: block;
+        margin-top: 13px;
+        margin-bottom: 0;
+    }
+    .site-logo{
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+        width: fit-content;
+        float: left;
+    }
+    .site-logo img{
+        width: 65%;
+    }
+    .navbar .sign-out{
+        display: inline-block;
+        float: right;
+        position: absolute;
+        right: 80px;
+        top: 18px;
+    }
+    .navbar .sign-out button{
+        background: white;
+        border: 1px solid white;
+        padding: 6px 9px;
+        margin-top: -3px;
+    }
+    .navbar .sign-out button i{
+        font-size
+    }
+}
+@media (min-width:600px) and (max-width:768px){
+    .my-account .manage .rightside-box{
+        margin-top: 25px !important;
+    }
+    .my-account .rightside-box .profile{
+        position: unset;
+        left: 0px;
+        right: 0px;
+        display: grid;
+    }
+    .my-account .rightside-box .profile .profile-header {
+        float: left;
+        margin-left: 0;
+        margin-top: 0;
+        text-align: center;
+    }
+    .my-account .manage .formpanel {
+        margin-top: 0px;
+    }
+    .my-account aside.fixed {
+        width: 157.5px;
+    }
+    .profile-header .main-heading{
+        font-size: 20px;
+    }
+    .profile-header .sub-heading{
+        font-size: 16px;
+    }
+    .my-account .form-control{
+        font-size: 13px;
+    }
+    .navbar-nav>li, .navbar-header {
+        float: none !important;
+    }
+    .navbar-nav{
+        width: 100%;
+        background: #e7e7e7;
+        text-align: left;
+    }
+    .navbar-nav>li, .navbar-header{
+        padding: 12px 15px;
+        margin-right: 0px;
+        transition: all ease-in-out 300m;
+        display: block;
+    }
+    .navbar-nav>li, .navbar-header {
+        float: none;
+        display: block;
+        padding: 0px;
+        margin-right: 0px;
+        border-bottom: 1px solid #96969626;
+        text-align: left;
+        margin-right: 0 !important;
+    }
+    .navbar-nav>li a:hover, .navbar-nav>li.active a{
+        background-color: #0d5f96 !important;
+        color: white !important;
+    }
+    .navbar-default .nav>li:hover>a:after, .navbar-default .nav>li.active>a:after{
+        display: none;
+    }
+    .navbar-default .nav>li>a{
+        padding: .5rem 1rem;
+        width: 100%;
+    }
+    .navbar-toggle {
+        display: block;
+        margin-top: 13px;
+        margin-bottom: 0;
+    }
+    .site-logo{
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+        width: fit-content;
+        float: left;
+    }
+    .site-logo img{
+        width: 65%;
+    }
+    .navbar .sign-out{
+        display: inline-block;
+        float: right;
+        position: absolute;
+        right: 80px;
+        top: 18px;
+    }
+    .navbar .sign-out button{
+        background: white;
+        border: 1px solid white;
+        padding: 6px 9px;
+        margin-top: -3px;
+    }
+    .navbar .sign-out button i{
+        font-size
+    }
+    .my-account aside.fixed{
+        position: unset;
+        width: 100%;
+    }
+    .navbar-nav {
+        float: left;
+        margin: 0;
+    }
+    .wysihtml5-sandbox{
+        width: 100%;
+    }
+}
+@media only screen and (max-width:600px){
+    .my-account .manage .rightside-box{
+        margin-top: 25px !important;
+    }
+    .my-account .rightside-box .profile{
+        position: unset;
+        left: 0px;
+        right: 0px;
+        display: grid;
+    }
+    .my-account .rightside-box .profile .profile-header {
+        float: left;
+        margin-left: 0;
+        margin-top: 0;
+        text-align: center;
+    }
+    .my-account .manage .formpanel {
+        margin-top: 0px;
+    }
+    .my-account aside.fixed {
+        width: 157.5px;
+    }
+    .profile-header .main-heading{
+        font-size: 20px;
+    }
+    .profile-header .sub-heading{
+        font-size: 16px;
+    }
+    .my-account .form-control{
+        font-size: 13px;
+    }
+    .navbar-nav>li, .navbar-header {
+        float: none !important;
+    }
+    .navbar-nav{
+        width: 100%;
+        background: #e7e7e7;
+        text-align: left;
+    }
+    .navbar-nav>li, .navbar-header{
+        padding: 12px 15px;
+        margin-right: 0px;
+        transition: all ease-in-out 300m;
+        display: block;
+    }
+    .navbar-nav>li, .navbar-header {
+        float: none;
+        display: block;
+        padding: 0px;
+        margin-right: 0px;
+        border-bottom: 1px solid #96969626;
+        text-align: left;
+        margin-right: 0 !important;
+    }
+    .navbar-nav>li a:hover, .navbar-nav>li.active a{
+        background-color: #0d5f96 !important;
+        color: white !important;
+    }
+    .navbar-default .nav>li:hover>a:after, .navbar-default .nav>li.active>a:after{
+        display: none;
+    }
+    .navbar-default .nav>li>a{
+        padding: .5rem 1rem;
+        width: 100%;
+    }
+    .navbar-toggle {
+        display: block;
+        margin-top: 13px;
+        margin-bottom: 0;
+    }
+    .site-logo{
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+        width: fit-content;
+        float: left;
+    }
+    .site-logo img{
+        width: 65%;
+    }
+    .navbar .sign-out{
+        display: inline-block;
+        float: right;
+        position: absolute;
+        right: 80px;
+        top: 18px;
+    }
+    .navbar .sign-out button{
+        background: white;
+        border: 1px solid white;
+        padding: 6px 9px;
+        margin-top: -3px;
+    }
+    .navbar .sign-out button i{
+        font-size
+    }
+    .my-account aside.fixed{
+        position: unset;
+        width: 100%;
+    }
+    .navbar-nav {
+        float: left;
+        margin: 0;
+    }
+    .wysihtml5-sandbox{
+        width: 100%;
+    }
 }
 
 /**************media Query************/
 @media (max-width:1199px){
+    .navbar-nav>li{
+        margin-right: 5px;
+    }
     .navbar-default .nav>li>a {
-        padding: 14px 11px 30px;
+        padding: 14px 11px 5px;
     }
     .page-heading2 h1 {
         font-size: 45px;
@@ -40,7 +398,22 @@
     }
     .navbar-toggle {
         display: block;
-        margin-top: -35px;
+        margin-top: 13px;
+        margin-bottom: 0;
+    }
+    .site-logo{
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+        width: fit-content;
+        float: left;
+    }
+    .site-logo img{
+        width: 65%;
     }
     .navbar-collapse.collapse.in {
         display: block!important;
@@ -112,6 +485,39 @@
         margin-right: 16px;
     }
     .input-group-btn{ right: 68px;}
+    .pricing-table .package-pricing .pricing-heading h5{
+        font-size: 22px;
+    }
+    .pricing-table .package-pricing{
+        margin: 0 15px;
+        margin-bottom: 115px;
+    }
+    .pricing-table .package-pricing ul li{
+        border-left: 1px solid #e2e2e2;
+    }
+    .pricing-table .package-pricing{
+        position: relative;
+        -webkit-transition: all 200ms ease-in;
+        -webkit-transform: scale(1); 
+        -ms-transition: all 200ms ease-in;
+        -ms-transform: scale(1); 
+        -moz-transition: all 200ms ease-in;
+        -moz-transform: scale(1);
+        transition: all 200ms ease-in;
+        transform: scale(1);   
+    }
+    .pricing-table .package-pricing:hover{
+        box-shadow: 0px 0px 8px #00000054;
+        z-index: 2;
+        -webkit-transition: all 200ms ease-in;
+        -webkit-transform: scale(1.1);
+        -ms-transition: all 200ms ease-in;
+        -ms-transform: scale(1.1);   
+        -moz-transition: all 200ms ease-in;
+        -moz-transform: scale(1.1);
+        transition: all 200ms ease-in;
+        transform: scale(1.1);
+    }
 }
 @media (max-width:767px){ 
     .xlpl0{
@@ -198,6 +604,18 @@
     }
     .table .candidate-list .action-box .action-btn{
         margin-top: 40px;
+    }
+    .pricing-table .package-pricing:hover{
+        box-shadow: none;
+        z-index: 2;
+        -webkit-transition: all 200ms ease-in;
+        -webkit-transform: scale(1);
+        -ms-transition: all 200ms ease-in;
+        -ms-transform: scale(1);   
+        -moz-transition: all 200ms ease-in;
+        -moz-transform: scale(1);
+        transition: all 200ms ease-in;
+        transform: scale(1);
     }
 }
 @media (max-width:545px){ 

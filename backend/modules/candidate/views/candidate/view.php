@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <div class="row">
                                                 <div class="col-md-8 col-sm-8"> 
                                                     <!-- Candidate Info -->
+                                                    <?php if (!empty($model)) { ?>
                                                     <div class="candidateinfo im-user-detail">
                                                         <div class="userPic">
                                                             <?php
@@ -66,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         </div>
                                                         <div class="clearfix"></div>
                                                     </div>
+                                                 <?php }?>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4"> 
                                                     <!-- Candidate Contact -->
@@ -73,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         <h3 class="mt0">Contact Info</h3>
                                                         <div class="loctext"><i class="fa fa-phone" aria-hidden="true"></i>  <?= $candidate->phone ?><?= $candidate->alternate_phone != '' ? ', ' . $candidate->alternate_phone : '' ?></div>
                                                         <div class="loctext"><i class="fa fa-envelope" aria-hidden="true"></i> <?= $candidate->email ?></div>
-                                                        <div class="cadsocial"> <a href="http://www.twitter.com" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="<?= $candidate->google_link ?>" target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> <a href="<?= $candidate->facebook_link ?>" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="<?= $candidate->linked_in_link ?>" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>  <a href="<?= $candidate->youtube_link ?>" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>  </div>
+                                                        <div class="cadsocial"> <a href="<?= $candidate->google_link ?>" target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> <a href="<?= $candidate->facebook_link ?>" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="<?= $candidate->linked_in_link ?>" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>  <a href="<?= $candidate->youtube_link ?>" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>  </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,6 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </div>
 
                                     <!-- Job Detail start -->
+                                    <?php if (!empty($model)) { ?>
                                     <div class="">
                                         <div class="col-md-8 pl0"> 
                                             <!-- About Employee start -->
@@ -99,9 +102,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         <div class="contact_details col-md-12 p-l">
                                                             <p>
                                                                 <?php
+                                                                $result = '';
                                                                 if ($model->industry != '') {
                                                                     $industry = explode(',', $model->industry);
-                                                                    $result = '';
+                                                                    
                                                                     $i = 0;
                                                                     if (!empty($industry)) {
                                                                         foreach ($industry as $val) {
@@ -193,9 +197,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         <div class="contact_details col-md-12 p-l">
                                                             <span>
                                                                 <?php
+                                                                $result2 = '';
                                                                 if ($model->languages_known != '') {
                                                                     $language = explode(',', $model->languages_known);
-                                                                    $result2 = '';
+                                                                    
                                                                     $i = 0;
                                                                     if (!empty($language)) {
                                                                         foreach ($language as $language_data) {
@@ -220,9 +225,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                         <div class="contact_details col-md-12 p-l">
                                                             <span>
                                                                 <?php
+                                                                $result3 = '';
                                                                 if ($model->driving_licences != '') {
                                                                     $driving_licence = explode(',', $model->driving_licences);
-                                                                    $result3 = '';
+                                                                    
                                                                     $i = 0;
                                                                     if (!empty($driving_licence)) {
                                                                         foreach ($driving_licence as $driving_licence_data) {
@@ -304,9 +310,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <h3>Skills</h3>
                                                     <div class="skillswrap"> 
                                                         <?php
+                                                         $result1 = '';
                                                         if ($model->skill != '') {
                                                             $skill = explode(',', $model->skill);
-                                                            $result1 = '';
+                                                           
                                                             $i = 0;
                                                             if (!empty($skill)) {
                                                                 foreach ($skill as $value) {
@@ -344,6 +351,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                         </div>
                                     </div>
+                                    <?php }?>
                                 </div>
                             </section>
                         </main>

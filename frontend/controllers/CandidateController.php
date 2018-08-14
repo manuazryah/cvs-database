@@ -141,6 +141,7 @@ class CandidateController extends Controller {
                 $this->AddExperiences($model, $data);
                 $this->ExperienceUpdate($model, $data);
                 $this->CalculateTotalExperience($model);
+                Yii::$app->session->setFlash('success', 'Updated Your Profile');
             }
         }
         $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
@@ -350,6 +351,9 @@ class CandidateController extends Controller {
      */
     public function SaveExperience($arr, $model) {
         foreach ($arr as $val) {
+            if($val['present_status'] == ''){
+              $present_status = 0;
+            }
             $aditional = new WorkExperiance();
             $aditional->candidate_id = $model->candidate_id;
             $aditional->company_name = $val['company_name'];
@@ -357,7 +361,7 @@ class CandidateController extends Controller {
             $aditional->job_responsibility = $val['job_responsibility'];
             $aditional->from_date = $val['from_date'];
             $aditional->country = $val['country'];
-            $aditional->present_status = $val['present_status'];
+            $aditional->present_status = $present_status;
             if($aditional->present_status == 1){
                 $aditional->to_date = '';
             }else{
@@ -385,8 +389,11 @@ class CandidateController extends Controller {
                 $arr[$key]['job_responsibility'] = $val['job_responsibility'][0];
                 $arr[$key]['from_date'] = $val['from_date'][0];
                 $arr[$key]['country'] = $val['country'][0];
-                $arr[$key]['present_status'] = $val['present_status'][0];
-                if($val['present_status'][0] == 1){
+                if($val['present_status'][0] == ''){
+                   $present_status = 0;
+                }
+                $arr[$key]['present_status'] = $present_status;
+                if($present_status == 1){
                      $arr[$key]['to_date'] = '';
                 }else{
                      $arr[$key]['to_date'] = $val['to_date'][0];
@@ -609,6 +616,9 @@ class CandidateController extends Controller {
         $id = Yii::$app->session['candidate']['id'];
         $user_details = Candidate::find()->where(['id' => $id])->one();
         $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        if(empty($model)){
+            $model=new CandidateProfile();
+        }
         $model_education = CandidateEducation::find()->where(['candidate_id' => $id])->all();
         $model_experience = WorkExperiance::find()->where(['candidate_id' => $id])->all();
         if ($model->load(Yii::$app->request->post())) {

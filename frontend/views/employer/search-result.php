@@ -429,6 +429,26 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
         </div>
     </div>
 </div>
+<div id="returnModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                
+                <p><?= Html::a('<button type="button" class="btn btn-primary">Log in</button>', ['employer/index']) ?> to read the CV</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $('.myBtn').on('click', function () {
+        $('#returnModal').modal('toggle');
+    });
+</script>
 <script>
     $(document).ready(function () {
         $('input[type="checkbox"]').change(function () {

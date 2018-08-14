@@ -22,6 +22,7 @@ use kartik\mpdf\Pdf;
 use yii\helpers\ArrayHelper;
 use common\models\ForgotPasswordTokens;
 use common\models\EmployerRegister;
+use common\models\Blog;
 
 /**
  * EmployerController implements the CRUD actions for Employer model.
@@ -68,6 +69,7 @@ class EmployerController extends Controller {
         if ($model_register->load(Yii::$app->request->post())) {
             if ($model_register->isNewRecord) {
                 $model_register->password = Yii::$app->security->generatePasswordHash($model_register->password);
+                $model_register->password_repeat = $model_register->password;
             }
             $model_register->review_status = 0;
             if ($model_register->validate() && $model_register->save()) {
@@ -86,6 +88,7 @@ class EmployerController extends Controller {
                 $employer->last_login = date('Y-m-d h:i:s');
                 $employer->save();
                 Yii::$app->SetValues->setLoginHistory(Yii::$app->session['employer_data']['id'], 3);
+                Yii::$app->session['login-session'] = 'open';
                 return $this->redirect(['employer/home']);
             } else {
                 if (isset(Yii::$app->session['log-err']) && Yii::$app->session['log-err'] == 1) {
@@ -289,7 +292,7 @@ class EmployerController extends Controller {
   <title>Email verification</title>
 </head>
 <body>
-  <p>Thank you very much for signing up at www.cv-database.com !</p></br>
+  <p>Thank you very much for signing up at www.cvsdatabase.com !</p></br>
 <p>Please click on the below link to verify your email address:</p>
   <table>
 
@@ -301,14 +304,14 @@ class EmployerController extends Controller {
     </tr>
 
   </table>
-<p> For any queries/ support kindly email to info@cvdatabase.com</p>
+<p> For any queries/ support kindly email to admin@cvsdatabase.com</p>
 </body>
 </html>
 ';
-//        exit;
+//echo $message;        exit;
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= 'From: info@cvsdatabase.com' . "\r\n";
+        $headers .= 'From: admin@cvsdatabase.com' . "\r\n";
 
         mail($to, $subject, $message, $headers);
         return true;
@@ -377,7 +380,7 @@ class EmployerController extends Controller {
             }
             if ($model_filter->folder_name != '') {
                 $filter_folders = $this->getFilterFolder($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_folders]);
+                $dataProvider->query->andWhere(['candidate_id' => $filter_folders]);
             }
         }
         return $this->render('dashboard', [
@@ -980,7 +983,7 @@ class EmployerController extends Controller {
                             $packages->update();
                             $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
                             $this->CandidateEmail($id);
-                            Yii::$app->session->setFlash('success', "You have already viewed this CV. No credit is deducted from your package.");
+                            Yii::$app->session->setFlash('success', "One credit is deducted from your package.");
                             return $this->render('cv-view', [
                                         'model' => $model,
                                         'model_education' => $model_education,
@@ -993,7 +996,7 @@ class EmployerController extends Controller {
                             return $this->redirect(Yii::$app->request->referrer);
                         }
                     } else {
-                        Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
+                        Yii::$app->session->setFlash('error', "You Can't view CVs.Because Your plan has expired.Please Upgrade Your Package");
                         return $this->redirect(Yii::$app->request->referrer);
                     }
                 } else {
@@ -1046,29 +1049,8 @@ class EmployerController extends Controller {
   <title>CVS Job Notification</title>
 </head>
 <body>
-  <p>Your CV is viewed. The company details given below.</p></br>
-  <table>
-  <tr>
-  <td>Company Name</td>
-  <td>:</td>
-  <td>' . $employer->company_name . '</td>
-  </tr>
-   <tr>
-  <td>Company Email</td>
-  <td>:</td>
-  <td>' . $employer->company_email . '</td>
-  </tr>
-  <tr>
-  <td>Phone Number</td>
-  <td>:</td>
-  <td>' . $employer->company_phone_number . '</td>
-  </tr>
-  <tr>
-  <td>Address</td>
-  <td>:</td>
-  <td>' . $employer->address . '</td>
-  </tr>
-  </table>
+  <p>Your CV is viewed by ' . $employer->company_name . '.</p>
+  
 </body>
 </html>
 ';
@@ -1076,7 +1058,7 @@ class EmployerController extends Controller {
 // To send HTML mail, the Content-type header must be set
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-            $headers .= 'From: info@cvsdatabase.com' . "\r\n";
+            $headers .= 'From: admin@cvsdatabase.com' . "\r\n";
 
             mail($to, $subject, $message, $headers);
         }
@@ -1094,12 +1076,9 @@ class EmployerController extends Controller {
     }
 
     public function actionUpgradePackage() {
-        $searchModel = new PackagesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere([' != ', 'id', 1]);
+        $model = \common\models\Packages::find()->all();
         return $this->render('user_plans', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+                    'model' => $model,
         ]);
     }
 
@@ -1153,6 +1132,7 @@ class EmployerController extends Controller {
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'model_filter' => $model_filter,
+                    'folder_name' => $folder,
         ]);
     }
 
@@ -1462,14 +1442,20 @@ class EmployerController extends Controller {
     }
 
     public function actionBlog() {
+        $blogs = Blog::find()->where(['status' => 1])->all();
         $this->layout = 'employer_home';
         return $this->render('blog', [
+                    'blogs' => $blogs
         ]);
     }
 
-    public function actionBlogView() {
+    public function actionBlogView($id) {
+        $blog = Blog::findOne(yii::$app->EncryptDecrypt->Encrypt('decrypt', $id));
+        $recent_blog = Blog::find()->where(['status' => 1])->andWhere(['<>', 'id', yii::$app->EncryptDecrypt->Encrypt('decrypt', $id)])->orderBy(['id' => SORT_DESC])->limit(3)->all();
         $this->layout = 'employer_home';
         return $this->render('blog-view', [
+                    'blog' => $blog,
+                    'recent_blog' => $recent_blog,
         ]);
     }
 

@@ -19,7 +19,8 @@ use Yii;
  */
 class EmployerRegister extends \yii\db\ActiveRecord {
 
-   private $_user;
+    public $password_repeat;
+    private $_user;
     public $rememberMe = true;
     public $created_at;
     public $updated_at;
@@ -36,14 +37,15 @@ class EmployerRegister extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-                [['first_name', 'last_name', 'email', 'password'], 'required'],
+                [['first_name', 'email', 'password', 'password_repeat', 'location'], 'required'],
                 [['country', 'status','review_status'], 'integer'],
                 [['address'], 'string'],
                 [['DOC', 'DOU', 'email_varification','description'], 'safe'],
-                [['first_name', 'last_name', 'email', 'password', 'company_name', 'location', 'company_email', 'position'], 'string', 'max' => 100],
+                [['first_name', 'email', 'password', 'company_name', 'location', 'company_email', 'position'], 'string', 'max' => 100],
                 [['phone', 'company_phone_number'], 'string', 'max' => 20],
                 [['email'], 'unique'],
                 [['email', 'company_email'], 'email'],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
         ];
     }
 
