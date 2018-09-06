@@ -13,7 +13,7 @@ use yii\web\JsExpression;
 use yii\widgets\Pjax;
 
 $industry_datas = Industry::find()->where(['!=', 'id', 0])->andWhere(['status' => 1])->all();
-$skills_datas = Skills::find()->where(['!=', 'industry', 0])->andWhere(['status' => 1])->all();
+$skills_datas = Skills::find()->where(['status' => 1])->all();
 $str = '';
 $country_sort = common\models\Country::find()->orderBy(['country_name' => SORT_ASC])->all();
 if (!empty($country_sort)) {
@@ -35,11 +35,11 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
         height: 62px;
     }
 </style>
-<div class="site-banner right-img">
+<div class="site-banner right-img employer-banner">
     <div class="banner-overlay" style="background: #1a72ba7d;"></div>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8 employer-search hidden-sm hidden-xs order-two-sm">
                 <div class="banner-content">
                     <h1>The Fastest Way to Hire Talent</h1>
                     <p>Easily Search for C.Vs from great candidates based in the UAE and other Gulf countries</p>
@@ -58,7 +58,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                 </div>
             </div>
 
-            <div class="col-md-4" style="position: relative; float: right;">
+            <div class="col-md-4 signup-box">
                 <div id="form" class="form-fixed">
                     <div id="userform">
                         <ul class="nav nav-tabs nav-justified" role="tablist">
@@ -112,10 +112,29 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                 </div>
             </div>
 
+            <div class="col-md-8 employer-search hidden-lg hidden-md">
+                <div class="banner-content">
+                    <h1>The Fastest Way to Hire Talent</h1>
+                    <p>Easily Search for C.Vs from great candidates based in the UAE and other Gulf countries</p>
+                </div>
+                <div class="job-search cv-search">
+                    <?php $form = ActiveForm::begin(['action' => 'cv-search', 'id' => 'search_form', 'method' => 'post',]); ?>
+                    <div class="form-group col-md-5 padding-left radius">
+                        <input type="text" class="form-control" placeholder="Job title / keywords" name="CvFilter[keyword]">
+                        <div class="search_icon"><i class="fa fa-briefcase"></i></div>
+                    </div>
+                    <?= $form->field($model_filter, 'location')->dropDownList($city_datas, ['multiple' => TRUE])->label(FALSE) ?>
+                    <div class="btn-search">
+                        <?= Html::submitButton('Search', ['class' => 'btn btn-default']) ?>
+                    </div>
+                    <?php ActiveForm::end(); ?>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
-<main id="maincontent">
+<main id="maincontent" class="employer-index">
     <div class="container skill">
         <div class="row">
             <div class="col-md-9">
@@ -125,7 +144,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                 </div>
 
                 <div class="cvs-sort-list">
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pad0">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pad0">
                         <div class="box">
                             <h5 class="heading">CVs by Industry</h5>
                             <ul>
@@ -138,7 +157,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pad0">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pad0">
                         <div class="box">
                             <h5 class="heading">CVs by skills</h5>
                             <ul>
@@ -151,7 +170,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pad0">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pad0">
                         <div class="box b0">
                             <h5 class="heading">CVs by location</h5>
                             <ul>
@@ -192,33 +211,33 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                             <div class="table">
                                 <?php foreach ($latest_cvs as $latest_cv) { ?>
                                     <?php
-                                    $model_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $latest_cv->id])->all();
-                                    $tot_diff = 0;
-                                    $month = 0;
-                                    $year = 0;
-                                    foreach ($model_experiences as $experiences) {
-                                        $date1 = $experiences->from_date;
-                                        if ($experiences->present_status == 1) {
-                                            $date2 = date('Y-m-d');
-                                        } else {
-                                            $date2 = $experiences->to_date;
-                                        }
+                                    $model_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $latest_cv->candidate_id])->all();
+$tot_diff = 0;
+$month = 0;
+$year = 0;
+foreach ($model_experiences as $experiences) {
+    $date1 = $experiences->from_date;
+    if ($experiences->present_status == 1) {
+        $date2 = date('Y-m-d');
+    } else {
+        $date2 = $experiences->to_date;
+    }
 
-                                        $ts1 = strtotime($date1);
-                                        $ts2 = strtotime($date2);
+    $ts1 = strtotime($date1);
+    $ts2 = strtotime($date2);
 
-                                        $year1 = date('Y', $ts1);
-                                        $year2 = date('Y', $ts2);
+    $year1 = date('Y', $ts1);
+    $year2 = date('Y', $ts2);
 
-                                        $month1 = date('m', $ts1);
-                                        $month2 = date('m', $ts2);
-                                        $tot_diff += (($year2 - $year1) * 12) + ($month2 - $month1);
-                                    }
-                                    if ($tot_diff > 0) {
-                                        $month = $tot_diff % 12;
-                                        $year = (int) ($tot_diff / 12);
-                                    }
-                                    ?>
+    $month1 = date('m', $ts1);
+    $month2 = date('m', $ts2);
+    $tot_diff += (($year2 - $year1) * 12) + ($month2 - $month1);
+}
+if ($tot_diff > 0) {
+    $month = $tot_diff % 12;
+    $year = (int) ($tot_diff / 12);
+}
+?>
                                     <div class="candidate-list">
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 pl0">
                                             <div class="tab-image">
@@ -485,10 +504,10 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                     <div class="block1">
                         <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog1.jpg" alt="" class="img-responsive"></a>
                         <div class="block1_desc">
-                            <div class="col-md-2 col-sm-2 padding-left text-right">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-left text-right">
                                 <h3>April 25, <span>2017</span></h3>
                             </div>
-                            <div class="col-md-10 col-sm-10">
+                            <div class="col-md-10 col-sm-10 col-xs-10">
                                 <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies tellus eget condimentum nisi.</p>
                             </div>
                         </div>
@@ -498,10 +517,10 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                     <div class="block1">
                         <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog2.jpg" alt="" class="img-responsive"></a>
                         <div class="block1_desc">
-                            <div class="col-md-2 col-sm-2 padding-left text-right">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-left text-right">
                                 <h3>March 13, <span>2017</span></h3>
                             </div>
-                            <div class="col-md-10 col-sm-10">
+                            <div class="col-md-10 col-sm-10 col-xs-10">
                                 <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies tellus eget condimentum nisi.</p>
                             </div>
                         </div>

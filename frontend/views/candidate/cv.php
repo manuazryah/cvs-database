@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-2 col-md-2 col-sm-2 col-lg-12">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-lg-12">
                     <aside  id="target" class="aside">
                         <h4 class="title">My Account</h4>
                         <ul>
@@ -19,13 +19,13 @@ use yii\widgets\ActiveForm;
                         </ul>
                     </aside>
                 </div>
-                <div class="col-lg-10 col-md-10 col-sm-10 col-lg-12">
+                <div class="col-lg-10 col-md-9 col-sm-9 col-lg-12">
                     <div class="rightside-box">
                         <!-- Job Header start -->
                         <div class="job-header">
                             <div class="jobinfo">
                                 <div class="row">
-                                    <div class="col-md-8 col-sm-8"> 
+                                    <div class="col-md-8"> 
                                         <!-- Candidate Info -->
                                         <?php if (!empty($model)) { ?>
                                             <div class="candidateinfo im-user-detail">
@@ -64,7 +64,7 @@ use yii\widgets\ActiveForm;
                                             </div>
                                         <?php } ?>
                                     </div>
-                                    <div class="col-md-4 col-sm-4"> 
+                                    <div class="col-md-4"> 
                                         <!-- Candidate Contact -->
                                         <?php if (!empty($model)) { ?>
                                             <div class="candidateinfo cont-right jobdetail">
@@ -88,7 +88,7 @@ use yii\widgets\ActiveForm;
                         <!-- Job Detail start -->
                         <?php if (!empty($model)) { ?>
                             <div class="row">
-                                <div class="col-md-8"> 
+                                <div class="col-lg-8"> 
                                     <!-- About Employee start -->
                                     <div class="job-header">
                                         <div class="contentbox pad0">
@@ -151,32 +151,34 @@ use yii\widgets\ActiveForm;
                                             </div>
                                             <div class="page-heading cv-work-experience">
                                                 <h3>Education - Academic</h3>
-                                                <?php
-                                                if (!empty($model_education)) {
-                                                    ?>
-                                                    <table class="table inner-tbl1">
-                                                        <tr>
-                                                            <th>Course Name</th>
-                                                            <th>Colege/ University</th>
-                                                            <th>Country</th>
-                                                            <th>From</th>
-                                                            <th>To</th>
-                                                        </tr>
-                                                        <?php foreach ($model_education as $education) { ?>
-                                                            <tr>
-                                                                <td><?= $education->course_name ?></td>
-                                                                <td><?= $education->collage_university ?></td>
-                                                                <td><?= $education->country != '' ? \common\models\Country::findOne($education->country)->country_name : '' ?></td>
-                                                                <td><?= date("M Y", strtotime($education->from_year)) ?></td>
-                                                                <td><?= date("M Y", strtotime($education->to_year)) ?></td>
-                                                            </tr>
-                                                        <?php }
-                                                        ?>
-                                                    </table>
+                                                <div class="table-responsive">
                                                     <?php
-                                                }
-                                                ?>
+                                                    if (!empty($model_education)) {
+                                                        ?>
+                                                        <table class="table inner-tbl1">
+                                                            <tr>
+                                                                <th>Course Name</th>
+                                                                <th>Colege/ University</th>
+                                                                <th>Country</th>
+                                                                <th>From</th>
+                                                                <th>To</th>
+                                                            </tr>
+                                                            <?php foreach ($model_education as $education) { ?>
+                                                                <tr>
+                                                                    <td><?= $education->course_name ?></td>
+                                                                    <td><?= $education->collage_university ?></td>
+                                                                    <td><?= $education->country != '' ? \common\models\Country::findOne($education->country)->country_name : '' ?></td>
+                                                                    <td><?= date("M Y", strtotime($education->from_year)) ?></td>
+                                                                    <td><?= date("M Y", strtotime($education->to_year)) ?></td>
+                                                                </tr>
+                                                            <?php }
+                                                            ?>
+                                                        </table>
+                                                        <?php
+                                                    }
+                                                    ?>
 
+                                                </div>
                                             </div>
                                             <div class="page-heading">
                                                 <h3>Interests/ Hobbies</h3>
@@ -272,7 +274,7 @@ use yii\widgets\ActiveForm;
                                     </div>
 
                                 </div>
-                                <div class="col-md-4"> 
+                                <div class="col-lg-4"> 
                                     <!-- Candidate Detail start -->
                                     <div class="job-header">
                                         <div class="jobdetail">
@@ -295,8 +297,8 @@ use yii\widgets\ActiveForm;
                                                     <div class="col-md-6 col-xs-6"><span><?= $model->gender != '' ? \common\models\Gender::findOne($model->gender)->gender : '' ?>  </span></div>
                                                 </li>
                                                 <li class="row">
-                                                    <div class="col-md-6 col-xs-6">DOB:</div>
-                                                    <div class="col-md-6 col-xs-6"><span> <?= date('d-m-Y', strtotime($model->dob)) ?> </span></div>
+                                                    <div class="col-md-6 col-xs-6">Date of birth:</div>
+                                                    <div class="col-md-6 col-xs-6"><span> <?= date('d M Y', strtotime($model->dob)) ?> </span></div>
                                                 </li>
                                             </ul>
                                         </div>

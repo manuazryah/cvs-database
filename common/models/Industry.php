@@ -42,7 +42,7 @@ class Industry extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'id' => 'ID',
-            'industry_name' => 'Industry Name',
+            'industry_name' => 'Category',
             'status' => 'Status',
             'CB' => 'Cb',
             'UB' => 'Ub',

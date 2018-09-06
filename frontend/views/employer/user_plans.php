@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <div class="col-lg-12">
                                                 <h5><?= $value->package_name ?></h5>
                                                 <h1><?= $value->package_price ?> $</h1>
-                                                <span>per/month</span>
+                                               
                                             </div>
                                         </div>
                                         <ul>
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </ul>
                                         <div class="col-lg-12">
                                             <div class="buynow-sec">
-                                                <a href="javascript:;" onclick="jQuery('#modal-1').modal('show', {backdrop: 'fade'});" class="buy-now">Buy Now</a>
+                                                <a href="javascript:;" onclick="jQuery('#modal-1').modal('show', {backdrop: 'fade'});" class="buy-now">Order Now</a>
                                                 <?php if ($i == 1) { ?>
                                                     <?php // Html::a('Buy Now', 'javascript:void(0)', ['class' => 'buy-now']) ?>
                                                 <?php } else { ?>
@@ -106,6 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+    
 </div>
 
 

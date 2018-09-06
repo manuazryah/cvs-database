@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel common\models\IndustrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Industries';
+$this->title = 'Categories';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="industry-index">

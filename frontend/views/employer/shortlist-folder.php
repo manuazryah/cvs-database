@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= \common\widgets\Alert::widget() ?>
                     <section class="mailbox-env">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 box">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 box">
                                 <div class="job_title">Folders</div>
                                 <div class="clearfix"></div>
                                 <div class="page-heading check-label shortlist-folder-label pad0 mt0 mb0">
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
+                            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 prit0 shortlisted-folder">
                                 <div class="clearfix"></div>
                                 <div class="page_listing candidate">
                                     <?php

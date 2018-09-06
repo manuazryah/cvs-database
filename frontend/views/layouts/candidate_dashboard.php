@@ -22,7 +22,7 @@ AppAsset::register($this);
     <body>
         <?php $this->beginBody() ?>
 
-        <div class="header-stricky">
+        <div class="header-stricky jobseeker-header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
@@ -44,14 +44,14 @@ AppAsset::register($this);
                                         . '</i>';
                                         ?>
                             </div>
-                            <div class="navbar-header">
+<!--                            <div class="navbar-header">
                                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                                     <span class="sr-only">Toggle navigation</span>
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                 </button>
-                            </div>
+                            </div>-->
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav scrollto">
                                     <li class="dropdown user-prfile-img hidden-sm hidden-xs"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><img width="20" height="20" src="<?= Yii::$app->homeUrl ?>images/icons/user-icon-3.svg" alt="" class="img-responsive" /> Hi <b><?= Yii::$app->session['candidate']['id'] != '' ? Yii::$app->session['candidate']['user_name'] : '' ?></b> <i class=" fa fa-angle-down"></i></a>

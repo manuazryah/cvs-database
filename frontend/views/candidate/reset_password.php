@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
     <section class="manage">
         <div class="container">
             <div class="row">
-                <div class="col-lg-2 col-md-2 col-sm-2 col-lg-12">
+                <div class="col-lg-2 col-md-3 col-sm-3 col-lg-12">
                     <aside  id="target" class="aside">
                         <h4 class="title">My Account</h4>
                         <ul>
@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
                     </aside>
                 </div>
 
-                <div class="col-lg-10 col-md-10 col-sm-10 col-lg-12">
+                <div class="col-lg-10 col-md-9 col-sm-9 col-lg-12">
                     <div class="rightside-box">
                         <?= \common\widgets\Alert::widget(); ?>
                         <?php

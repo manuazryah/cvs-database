@@ -2926,3 +2926,15 @@ form .form-group.has-error .help-block {
 .form-group iframe{
     width: 100% !important;
 } 
+.formpanel .exp-from-date{
+    padding: 2px 13px;
+}
+.formpanel .exp-to-date{
+    padding: 2px 13px;
+}
+.formpanel .edu-from-date{
+    padding: 2px 13px;
+}
+.formpanel .edu-to-date{
+    padding: 2px 13px;
+}

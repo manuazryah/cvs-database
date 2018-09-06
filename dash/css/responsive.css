@@ -8,6 +8,12 @@
     .pricing-table .package-details ul li{
         font-size: 12px;
     }
+    .admin-users-index .account-info .top-box-btm p {
+        font-size: 12px;
+    }
+    .admin-users-index .account-info .top-box-btm p span {
+        font-size: 14px;
+    }
 }
 @media (min-width:992px) and (max-width:1200px){
     .pricing-table .package-details ul li{
@@ -42,6 +48,72 @@
     }
     .my-account .form-control{
         font-size: 13px;
+    }
+    .admin-users-index .account-info .top-box-btm p{
+        font-size: 10px;
+    }
+    .admin-users-index .account-info .top-box-btm p span{
+        font-size: 11px;
+    }
+    .admin-users-index .mailbox-env .box .main-title{
+        font-size: 14px;
+    }
+    .admin-users-index .mailbox-env .box .job_title{
+        font-size: 13px;
+    }
+    .admin-users-index .mailbox-env .box input.form-control{
+        font-size: 12px;
+    }
+    .text-shorting h1 strong{
+        font-size: 14px;
+    }
+    .admin-users-index .actively-looking{
+        padding: 0 12px; 
+    }
+    .admin-users-index .employed-still-looking{
+        padding: 0 12px; 
+    }
+    .admin-users-index .employed-not-looking{
+        padding: 0 12px; 
+    }
+    .skills-sec .skills-list li{
+        margin-bottom: 5px;
+    }
+    .bottom-box .last-login span i, .bottom-box .last-login span em{
+        font-size: 11px;
+    }
+    .bottom-box .featured-tag{
+        font-size: 12px;
+        padding: 4px 25px;
+    }
+    .bottom-box .featured-tag:before, .bottom-box .featured-tag:after{
+        font-size: 11px;
+        top: 6px;
+    }
+    .job-header .jobinfo .candidateinfo .title{
+        font-size: 20px;
+    }
+    .job-header .jobinfo .candidateinfo .desi {
+        font-size: 14px;
+    }
+    .job-header .jobinfo .candidateinfo .loctext{
+        font-size: 12px;
+    }
+    .employer-cv-view .loctext span{
+        font-size: 11px;
+    }
+    .jobdetail h3 {
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+    .jobdetail .notes textarea {
+        max-width: 100%;
+    }
+    .fright span {
+        margin-top: 24px;
+    }
+    .contact_details strong {
+        line-height: 24px;
     }
 }
 @media (min-width:768px) and (max-width:992px){
@@ -141,10 +213,615 @@
         padding: 6px 9px;
         margin-top: -3px;
     }
-    .navbar .sign-out button i{
-        font-size
+    .admin-users-index .account-info .top-box-btm p{
+        font-size: 10px;
+    }
+    .admin-users-index .account-info .top-box-btm p span{
+        font-size: 11px;
+    }
+    .admin-users-index .mailbox-env .box .main-title{
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .admin-users-index .mailbox-env .box .job_title{
+        font-size: 14px;
+        border-bottom: 0px solid #d5d3d3;
+        padding: 11px 15px;
+        margin-bottom: 5px;
+        background: #343e44;
+        color: #fff;
+    }
+    .admin-users-index .mailbox-env .box input.form-control{
+        font-size: 12px;
+    }
+    .text-shorting h1 strong{
+        font-size: 14px;
+    }
+    .admin-users-index .actively-looking{
+        padding: 0 12px; 
+    }
+    .admin-users-index .employed-still-looking{
+        padding: 0 12px; 
+    }
+    .admin-users-index .employed-not-looking{
+        padding: 0 12px; 
+    }
+    .skills-sec .skills-list li{
+        margin-bottom: 5px;
+    }
+    .bottom-box .last-login span i, .bottom-box .last-login span em{
+        font-size: 11px;
+    }
+    .bottom-box .featured-tag{
+        font-size: 12px;
+        padding: 4px 25px;
+    }
+    .bottom-box .featured-tag:before, .bottom-box .featured-tag:after{
+        font-size: 11px;
+        top: 6px;
+    }
+    .page_listing #leftdiv{
+        padding-left: 0px;
+    }
+    .page_listing .tab-image{
+        margin-left: 10px;
+    }
+    .search-desktop-view{
+        display: none;
+    }
+    .search-mobile-view{
+        display: block;
+    }
+    .search-mobile-view .modal-dialog {
+        width: 45%;
+        margin: 0px auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .admin-users-index .account-info{
+        margin-top: 15px;
+    }
+    .admin-users-index .account-info .top-box-btm{
+        text-align: center;
+        padding: 0;
+    }
+    .admin-users-index .account-info .top-box-btm .blft{
+        text-align: center;
+        border: none;
+        border-top: 1px solid #56c1fa;
+    }
+    .admin-users-index .account-info .top-box-btm .brit{
+        text-align: center;
+        border: none;
+        border-bottom: 1px solid #56c1fa;
+    }
+    .form-control.select2-container .select2-choices{
+        max-height: 50px;
+        padding: 5px 2px;
+        overflow-y: scroll;
+    }
+    .select2-container-multi .select2-choices .select2-search-field input{
+        box-shadow: none;
+    }
+    .job-header .jobinfo .candidateinfo .title{
+        font-size: 20px;
+    }
+    .job-header .jobinfo .candidateinfo .desi {
+        font-size: 14px;
+    }
+    .job-header .jobinfo .candidateinfo .loctext{
+        font-size: 12px;
+    }
+    .employer-cv-view .loctext span{
+        font-size: 11px;
+    }
+    .jobdetail h3 {
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+    .jobdetail .notes textarea {
+        max-width: 100%;
+    }
+    .fright span {
+        margin-top: 24px;
+    }
+    .contact_details strong {
+        line-height: 24px;
+    }
+    .cv-work-experience .inner-tbl1 tr{
+        display: grid;
+        float: left;
+        width: 50%;
+    }
+    .cv-work-experience .inner-tbl1 tr:nth-child(2){
+        border-left: 0px;
+    }
+    .cv-work-experience .inner-tbl1 tr td{
+        padding: 10px 15px;
+        border-left: 0;
+        overflow-y: scroll;
+        max-height: 39px;
+    }
+    .cv-work-experience .inner-tbl1 tr td::-webkit-scrollbar{
+        display: none;
+    }
+    .admin-users-index table.current-package tr{
+        display: grid;
+        float: left;
+        width: 50%;
+    }
+    .admin-users-index table.current-package tr td,  .admin-users-index table.current-package tr th{
+        border-bottom: 1px solid #e6e4e4 !important;
+    }
+    .admin-users-index table.current-package tr td{
+        overflow-y: scroll;
+        max-height: 38px;
+        padding: 10px !important;
+    }
+    .admin-users-index table.current-package tr td::-webkit-scrollbar{
+        display: none;
+    }
+    table.current-package tr td:last-child a{
+        padding: 0px;
+    }
+    .admin-users-index .table-responsive{
+        border: none;
+    }
+    .packages-index .package-status .pack-head{
+        font-size: 11px;
     }
 }
+@media (min-width:578px) and (max-width:768px){
+    .admin-users-index .account-info .top-box-btm p{
+        font-size: 10px;
+    }
+    .admin-users-index .account-info .top-box-btm p span{
+        font-size: 11px;
+    }
+    .admin-users-index .mailbox-env .box .main-title{
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .admin-users-index .mailbox-env .box .job_title{
+        font-size: 14px;
+        border-bottom: 0px solid #d5d3d3;
+        padding: 11px 15px;
+        margin-bottom: 5px;
+        background: #343e44;
+        color: #fff;
+    }
+    .admin-users-index .mailbox-env .box input.form-control{
+        font-size: 12px;
+    }
+    .text-shorting h1 strong{
+        font-size: 14px;
+    }
+    .admin-users-index .actively-looking{
+        padding: 0 12px; 
+    }
+    .admin-users-index .employed-still-looking{
+        padding: 0 12px; 
+    }
+    .admin-users-index .employed-not-looking{
+        padding: 0 12px; 
+    }
+    .skills-sec .skills-list li{
+        margin-bottom: 5px;
+    }
+    .bottom-box .last-login span i, .bottom-box .last-login span em{
+        font-size: 11px;
+    }
+    .bottom-box .featured-tag{
+        font-size: 12px;
+        padding: 4px 25px;
+    }
+    .bottom-box .featured-tag:before, .bottom-box .featured-tag:after{
+        font-size: 11px;
+        top: 6px;
+    }
+    .page_listing #leftdiv{
+        padding-left: 0px;
+    }
+    .page_listing .tab-image{
+        margin-left: 10px;
+    }
+    .search-desktop-view{
+        display: none;
+    }
+    .search-mobile-view{
+        display: block;
+    }
+    .refid{
+        position: relative;
+        top: 0;
+    }
+    .candidate .sorting_content .contact_details.vissible-xs span{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .admin-users-index .page_listing .button-box{
+        border-top: 1px solid #e1e1e1;
+        border-bottom: 1px solid #e1e1e1;
+        padding: 10px 20px 10px 20px;
+    }
+    .admin-users-index .page_listing .button-div{
+        padding: 10px 20px 10px 20px;
+        padding-top: 10px !important;
+        width: 100%;
+        border: none;
+    }
+    .search-mobile-view .modal-dialog {
+        width: 55%;
+        margin: 0px auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .admin-users-index .account-info{
+        margin-top: 15px;
+    }
+    .admin-users-index .account-info .top-box-btm{
+        text-align: center;
+        padding: 0;
+    }
+    .admin-users-index .account-info .top-box-btm .blft{
+        text-align: center;
+        border: none;
+        border-top: 1px solid #56c1fa;
+    }
+    .admin-users-index .account-info .top-box-btm .brit{
+        text-align: center;
+        border: none;
+        border-bottom: 1px solid #56c1fa;
+    }
+    .form-control.select2-container .select2-choices{
+        max-height: 50px;
+        padding: 5px 2px;
+        overflow-y: scroll;
+    }
+    .select2-container-multi .select2-choices .select2-search-field input{
+        box-shadow: none;
+    }
+    .job-header .jobinfo .candidateinfo .title{
+        font-size: 20px;
+    }
+    .job-header .jobinfo .candidateinfo .desi {
+        font-size: 14px;
+    }
+    .job-header .jobinfo .candidateinfo .loctext{
+        font-size: 12px;
+    }
+    .employer-cv-view .loctext span{
+        font-size: 11px;
+    }
+    .jobdetail h3 {
+        font-size: 16px;
+        text-transform: uppercase;
+        margin-top: 0;
+    }
+    .jobdetail .notes textarea {
+        max-width: 100%;
+    }
+    .fright span {
+        margin-top: 24px;
+    }
+    .contact_details strong {
+        line-height: 24px;
+    }
+    .job-header .jobinfo .candidateinfo.cont-right{
+        border-left: 0px;
+        border-top: 1px solid #e4e4e4;
+        padding: unset;
+        padding-left: 0px;
+        padding-top: 15px;
+    }
+    /*    .cv-work-experience .inner-tbl1 tr{
+            display: grid;
+            float: left;
+            width: 50%;
+        }
+        .cv-work-experience .inner-tbl1 tr:nth-child(2){
+            border-left: 0px;
+        }
+        .cv-work-experience .inner-tbl1 tr td{
+            padding: 10px 15px;
+            border-left: 0;
+            overflow-y: scroll;
+            max-height: 39px;
+        }
+        .cv-work-experience .inner-tbl1 tr td::-webkit-scrollbar{
+            display: none;
+        }*/
+    .admin-users-index table.current-package tr{
+        display: grid;
+        float: left;
+        width: 50%;
+    }
+    .admin-users-index table.current-package tr td,  .admin-users-index table.current-package tr th{
+        border-bottom: 1px solid #e6e4e4 !important;
+    }
+    .admin-users-index table.current-package tr td{
+        overflow-y: scroll;
+        max-height: 38px;
+        padding: 10px !important;
+    }
+    .admin-users-index table.current-package tr td::-webkit-scrollbar{
+        display: none;
+    }
+    table.current-package tr td:last-child a{
+        padding: 0px;
+    }
+    .admin-users-index .table-responsive{
+        border: none;
+    }
+    .packages-index .package-status .pack-head{
+        font-size: 11px;
+    }
+    .packages-index .package-status .pl0{
+        padding-left: 10px;
+        margin-bottom: 5px;
+    }
+    .packages-index .package-status .pr0{
+        padding-right: 10px;
+    }
+    .packages-index a.button1{
+        float: left !important;
+    }
+}
+@media only screen and (max-width:578px){
+    .admin-users-index .account-info .top-box-btm p{
+        font-size: 10px;
+    }
+    .admin-users-index .account-info .top-box-btm p span{
+        font-size: 11px;
+    }
+    .admin-users-index .mailbox-env .box .main-title{
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .admin-users-index .mailbox-env .box .job_title{
+        font-size: 14px;
+        border-bottom: 0px solid #d5d3d3;
+        padding: 11px 15px;
+        margin-bottom: 5px;
+        background: #343e44;
+        color: #fff;
+    }
+    .admin-users-index .mailbox-env .box input.form-control{
+        font-size: 12px;
+    }
+    .text-shorting h1 strong{
+        font-size: 14px;
+    }
+    .admin-users-index .actively-looking{
+        padding: 0 12px; 
+        font-size: 10px;
+    }
+    .admin-users-index .employed-still-looking{
+        padding: 0 12px; 
+        font-size: 10px;
+    }
+    .admin-users-index .employed-not-looking{
+        padding: 0 12px; 
+        font-size: 10px;
+    }
+    .skills-sec .skills-list li{
+        margin-bottom: 5px;
+    }
+    .bottom-box .last-login span i, .bottom-box .last-login span em{
+        font-size: 11px;
+    }
+    .bottom-box .featured-tag{
+        font-size: 12px;
+        padding: 4px 25px;
+    }
+    .bottom-box .featured-tag:before, .bottom-box .featured-tag:after{
+        font-size: 11px;
+        top: 6px;
+    }
+    .page_listing #leftdiv{
+        padding-left: 0px;
+    }
+    .page_listing .tab-image{
+        margin-left: 10px;
+    }
+    .search-desktop-view{
+        display: none;
+    }
+    .search-mobile-view{
+        display: block;
+    }
+    .search-mobile-view .modal-dialog {
+        width: 80%;
+        margin: 0px auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .refid{
+        position: relative;
+        top: 0;
+    }
+    .candidate .sorting_content .contact_details.vissible-xs span{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .admin-users-index .page_listing .button-box{
+        border-top: 1px solid #e1e1e1;
+        border-bottom: 1px solid #e1e1e1;
+        padding: 10px 15px 10px 15px !important;
+    }
+    .admin-users-index .page_listing .button-box .button-sec {
+        margin-top: 0px; 
+    }
+    .candidate .sorting_content .bottom_text{
+        border: none;
+    }
+    .admin-users-index .page_listing .button-div{
+        padding: 10px 15px 10px 15px;
+        padding-top: 10px !important;
+        width: 100%;
+        border: none;
+    }
+    .admin-users-index .page_listing .bottom-box .last-login{
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #e1e1e1;
+    }
+    .admin-users-index .page_listing .bottom-box .last-login:last-child{
+        border: none;
+    }
+    .admin-users-index .account-info{
+        margin-top: 15px;
+    }
+    .admin-users-index .account-info .top-box-btm{
+        text-align: center;
+        padding: 0;
+    }
+    .admin-users-index .account-info .top-box-btm .blft{
+        text-align: center;
+        border: none;
+        border-top: 1px solid #56c1fa;
+    }
+    .admin-users-index .account-info .top-box-btm .brit{
+        text-align: center;
+        border: none;
+        border-bottom: 1px solid #56c1fa;
+    }
+    .form-control.select2-container .select2-choices{
+        max-height: 50px;
+        padding: 5px 2px;
+        overflow-y: scroll;
+    }
+    .select2-container-multi .select2-choices .select2-search-field input{
+        box-shadow: none;
+    }
+    .admin-users-index .contact_details .firm li{
+        font-size: 11px;
+    }
+    .sorting_content:hover {
+        border-left: 1px solid #e1e1e1;
+        border-top: 3px solid #2caef4;
+    }
+    .job-header .jobinfo .candidateinfo .title{
+        font-size: 20px;
+    }
+    .job-header .jobinfo .candidateinfo .desi {
+        font-size: 14px;
+    }
+    .job-header .jobinfo .candidateinfo .loctext{
+        font-size: 12px;
+    }
+    .employer-cv-view .loctext span{
+        font-size: 11px;
+    }
+    .jobdetail h3 {
+        font-size: 16px;
+        text-transform: uppercase;
+        margin-top: 0;
+    }
+    .jobdetail .notes textarea {
+        max-width: 100%;
+    }
+    .fright span {
+        margin-top: 24px;
+    }
+    .contact_details strong {
+        line-height: 24px;
+    }
+    .job-header .jobinfo .candidateinfo.cont-right{
+        border-left: 0px;
+        border-top: 1px solid #e4e4e4;
+        padding: unset;
+        padding-left: 0px;
+        padding-top: 15px;
+    }
+    .cv-work-experience .inner-tbl1 tr{
+        display: grid;
+        float: left;
+        width: 50%;
+    }
+    .cv-work-experience .inner-tbl1 tr:nth-child(2){
+        border-left: 0px;
+    }
+    .cv-work-experience .inner-tbl1 tr td{
+        padding: 10px 15px;
+        border-left: 0;
+        overflow-y: scroll;
+        max-height: 39px;
+    }
+    .cv-work-experience .inner-tbl1 tr td::-webkit-scrollbar{
+        display: none;
+    }
+    .cv-work-experience .contact_details .fright{
+        float: left;
+    }
+    .cv-work-experience .contact_details .fright span{
+        margin-top: 10px;
+    }
+    .job-header .jobinfo .candidateinfo{
+        padding-bottom: 10px;
+    }
+    .job-header .jobinfo .candidateinfo .userPic{
+        float: none;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+    .package-details .button1{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .admin-users-index .employee-create .btn-success{
+        width: 100%;
+    }
+    .admin-users-index table.current-package tr{
+        display: grid;
+        float: left;
+        width: 50%;
+    }
+    .admin-users-index table.current-package tr td,  .admin-users-index table.current-package tr th{
+        border-bottom: 1px solid #e6e4e4 !important;
+    }
+    .admin-users-index table.current-package tr td{
+        overflow-y: scroll;
+        max-height: 38px;
+        padding: 10px !important;
+    }
+    .admin-users-index table.current-package tr td::-webkit-scrollbar{
+        display: none;
+    }
+    table.current-package tr td:last-child a{
+        padding: 0px;
+    }
+    .admin-users-index .table-responsive{
+        border: none;
+    }
+    .packages-index .package-status{
+        padding: 0px;
+    }
+    .packages-index .package-status .pack-head{
+        font-size: 11px;
+    }
+    .packages-index .package-status .pl0{
+        padding: 0px;
+        margin-bottom: 5px;
+    }
+    .packages-index .package-status .pr0{
+        padding: 0px;
+    }
+    .packages-index .button1{
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .packages-index a.button1{
+        float: left !important;
+        margin-bottom: 0px;
+    }
+    .shortlisted-folder{
+        padding-left: 0px;
+    }
+}
+
 @media (min-width:600px) and (max-width:768px){
     .my-account .manage .rightside-box{
         margin-top: 25px !important;
@@ -233,8 +910,19 @@
         display: inline-block;
         float: right;
         position: absolute;
-        right: 80px;
-        top: 18px;
+        right: 35px;
+        top: 3px;
+        background: transparent;
+        border: none;
+    }
+    .navbar .sign-out:hover, .navbar .sign-out:focus{
+        background: transparent;
+    }
+    .navbar .sign-out i{
+        top: 2px;
+        background: #00adf1;
+        color: #fff;
+        padding: 5px 5px;
     }
     .navbar .sign-out button{
         background: white;
@@ -345,8 +1033,8 @@
         display: inline-block;
         float: right;
         position: absolute;
-        right: 80px;
-        top: 18px;
+        right: 35px;
+        top: 8px;
     }
     .navbar .sign-out button{
         background: white;

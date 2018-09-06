@@ -13,13 +13,18 @@ use dosamigos\ckeditor\CKEditor;
 /* @var $model common\models\Candidate */
 
 $course_datas = common\models\Courses::find()->where(['status' => 1])->all();
-$country_datas = common\models\Country::find()->where(['status' => 1])->all();
+$country_datas = common\models\Country::find()->where(['status' => 1])->orderBy(['country_name' => SORT_ASC])->all();
 $city_datas = [];
 if ($model->current_country != '') {
     $city_datas = ArrayHelper::map(\common\models\City::find()->where(['country' => $model->current_country])->all(), 'id', 'city');
 }
 $previous_date = date('Y-m-d', strtotime('-1 day'));
 $current_date = date('Y-m-d');
+if (!empty($model)) {
+    $candidate_id = $model->id;
+} else {
+    $candidate_id = '';
+}
 ?>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
@@ -88,7 +93,7 @@ $current_date = date('Y-m-d');
                                     <div class="formpanel">
                                         <div class="delete-account">
                                             <?=
-                                            Html::a('', ['delete-profile'], ['class' => ' prof-del delete-profile', 'title' => [
+                                            Html::a('', ['delete-profile'], ['class' => 'prof-del delete-profile', 'title' => [
                                                     'Delete Profile',
                                                 ], 'data' => [
                                                     'confirm' => 'Are you sure you want to delete your profile?',
@@ -105,12 +110,12 @@ $current_date = date('Y-m-d');
                                                         if ($model->photo != '') {
                                                             $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
                                                             if (file_exists($dirPath)) {
-                                                                echo '<img class="img-responsive" style="" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                                                echo '<img class="img-responsive" id="profle_img_" style="" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
                                                             } else {
-                                                                echo '<img class="img-responsive" style="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                                                                echo '<img class="img-responsive" id="profle_img_temp" style="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
                                                             }
                                                         } else {
-                                                            echo '<img class="img-responsive" style="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                                                            echo '<img class="img-responsive" id="profle_img_temp"  style="" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
                                                         }
                                                         if ($model->photo != '') {
                                                             $label = '<i class="fa fa-camera"></i> Update Profile Picture';
@@ -119,6 +124,7 @@ $current_date = date('Y-m-d');
                                                         }
                                                         ?>
                                                         <?= $form->field($model, 'photo')->fileInput(['maxlength' => true])->label($label) ?>
+                                                        <span class = "required-size">Image dimension 200W ☓ 200H</span>
                                                     </div>
                                                     <div class="profile-header">
                                                         <h3 class="main-heading"><?= $user->user_name ?></h3>
@@ -144,7 +150,7 @@ $current_date = date('Y-m-d');
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6 p-l">
-                                                <?php $countries = ArrayHelper::map(Country::findAll(['status' => 1]), 'id', 'country_name'); ?>
+                                                <?php $countries = ArrayHelper::map(Country::find()->where(['status' => 1])->orderBy(['country_name' => SORT_ASC])->all(), 'id', 'country_name'); ?>
                                                 <?= $form->field($model, 'nationality')->dropDownList($countries, ['prompt' => '-Choose a Nationality-']) ?>
                                             </div>
                                             <div class="form-group col-md-6 p-r">
@@ -203,13 +209,13 @@ $current_date = date('Y-m-d');
 //                                                $skills = ArrayHelper::map(\common\models\Skills::find()->where(['in', 'industry', $model->industry])->all(), 'id', 'skill');
                                             }
                                             ?>
-                                            <?php $industries = ArrayHelper::map(\common\models\Industry::find()->where(['status' => 1])->andWhere(['>', 'id', 0])->all(), 'id', 'industry_name'); ?>
-                                            <?= $form->field($model, 'industry')->dropDownList($industries, ['prompt' => 'Choose Industry', 'multiple' => 'multiple'])->label('Industries') ?>
+                                            <?php $industries = ArrayHelper::map(\common\models\Industry::find()->where(['status' => 1])->andWhere(['>', 'id', 0])->orderBy(['industry_name' => SORT_ASC])->all(), 'id', 'industry_name'); ?>
+                                            <?= $form->field($model, 'industry')->dropDownList($industries, ['prompt' => 'Choose Industry', 'multiple' => 'multiple'])->label('Category') ?>
                                             <?= Html::button('<span> Not in the list ? Request New</span>', ['value' => Url::to('../candidate/add-industry'), 'class' => 'btn btn-icon btn-white extra_btn candidate_prof_add modalButton']) ?>
                                         </div>
 
                                         <div class="form-group col-md-12 p-l p-r marg-bot-0">
-                                            <?php $skills = ArrayHelper::map(\common\models\Skills::find()->where(['status' => 1])->all(), 'id', 'skill'); ?>
+                                            <?php $skills = ArrayHelper::map(\common\models\Skills::find()->where(['status' => 1])->orderBy(['skill' => SORT_ASC])->all(), 'id', 'skill'); ?>
                                             <?php
                                             if (isset($model->skill) && $model->skill != '') {
                                                 $model->skill = explode(',', $model->skill);
@@ -247,7 +253,7 @@ $current_date = date('Y-m-d');
                                                                     <div class="formrow">
                                                                         <input id="exp_from_date-<?= $i ?>" type="date" name="expupdatee[<?= $datas->id; ?>][from_date][]" class="form-control exp-from-date" placeholder="Join From" value="<?= $datas->from_date ?>">
                                                                         <label for="chkispresent" class="chkbox-lbl">
-                                                                            <input type="checkbox" data-val="<?= $datas->present_status ?>" class="chkispresent" id="chkispresent-<?= $i ?>" name="expupdatee[<?= $datas->id; ?>][present_status][]" <?= $datas->present_status == 1 ? ' checked' : '' ?>/>
+                                                                            <input value="<?= $datas->present_status ?>" type="checkbox" data-val="<?= $datas->present_status ?>" class="chkispresent" id="chkispresent-<?= $i ?>" name="expupdatee[<?= $datas->id; ?>][present_status][]" <?= $datas->present_status == 1 ? ' checked' : '' ?>/>
                                                                             I currently work here
                                                                         </label>
                                                                     </div>
@@ -292,58 +298,58 @@ $current_date = date('Y-m-d');
                                             ?>
                                             <input type="hidden" id="experience_row_count" value="<?= $i ?>"/>
                                             <?php
-                                            if (empty($model_experience)) {
-                                                ?>
-                                                <div class="append-box">
-                                                    <!--<a href=""><button class="remove"><i class="fa fa-close"></i></button></a>-->
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="formrow">
-                                                                <input type="text" name="expcreate[company_name][]" class="form-control" placeholder="Company">
-                                                            </div>
+//                                            if (empty($model_experience)) {
+                                            ?>
+                                            <div class="append-box">
+                                                <a class="ibtnDele remove"><i class="fa fa-close"></i></a>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <input type="text" name="expcreate[company_name][]" class="form-control" placeholder="Company">
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="formrow">
-                                                                <input type="text" name="expcreate[designation][]" class="form-control" placeholder="Designation">
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <input type="text" name="expcreate[designation][]" class="form-control" placeholder="Designation">
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <div class="formrow">
-                                                                <input id="exp_from_date-<?= $i ?>" type="date" name="expcreate[from_date][]" class="form-control exp-from-date" placeholder="Join From" value="<?= date('Y-m-d', strtotime('-1 month')) ?>">
-                                                                <label for="chkispresent" class="chkbox-lbl">
-                                                                    <input type="checkbox" id="chkispresent-<?= $i ?>" class="chkispresent" name="expcreate[present_status][]"/>
-                                                                    I currently work here
-                                                                </label>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="formrow">
+                                                            <input id="exp_from_date-<?= $i ?>" type="date" name="expcreate[from_date][]" class="form-control exp-from-date" placeholder="Join From" value="<?= date('Y-m-d', strtotime('-1 month')) ?>">
+                                                            <label for="chkispresent" class="chkbox-lbl">
+                                                                <input type="checkbox" id="chkispresent-<?= $i ?>" class="chkispresent" name="expcreate[present_status][]"/>
+                                                                I currently work here
+                                                            </label>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <div id="ispresent-<?= $i ?>" class="ispresent" style="display: none">
-                                                                Present
-                                                            </div>
-                                                            <div id="notpresent-<?= $i ?>" class="notpresent">
-                                                                <input id="exp_to_date-<?= $i ?>" type="date" name="expcreate[to_date][]" class="form-control exp-to-date" placeholder="End on" value="<?= date('Y-m-d') ?>">
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div id="ispresent-<?= $i ?>" class="ispresent" style="display: none">
+                                                            Present
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <div class="formrow">
-                                                                <select class="form-control" name="expcreate[country][]">
-                                                                    <option value="">Select Country</option>
-                                                                    <?php foreach ($country_datas as $country_data) { ?>
-                                                                        <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
-                                                                    <?php }
-                                                                    ?>
-                                                                </select>
-                                                            </div>
+                                                        <div id="notpresent-<?= $i ?>" class="notpresent">
+                                                            <input id="exp_to_date-<?= $i ?>" type="date" name="expcreate[to_date][]" class="form-control exp-to-date" placeholder="End on" value="<?= date('Y-m-d') ?>">
                                                         </div>
-                                                        <div class="col-md-12">
-                                                            <div class="formrow">
-                                                                <textarea class="textarea form-control" name="expcreate[job_responsibility][]" placeholder="Job Responsibility"></textarea>
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="formrow">
+                                                            <select class="form-control" name="expcreate[country][]">
+                                                                <option value="">Select Country</option>
+                                                                <?php foreach ($country_datas as $country_data) { ?>
+                                                                    <option value="<?= $country_data->id ?>"><?= $country_data->country_name ?></option>
+                                                                <?php }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="formrow">
+                                                            <textarea class="textarea form-control" name="expcreate[job_responsibility][]" placeholder="Job Responsibility"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php
-                                            }
+                                            </div>
+                                            <?php
+//                                            }
                                             ?>
                                         </div>
                                         <div class="form-group field-portcalldatarob-fresh_water_arrival_quantity">
@@ -432,6 +438,7 @@ $current_date = date('Y-m-d');
                                             <input type="hidden" id="education_row_count" value="<?= $j ?>"/>
                                             <?php // if (empty($model_education)) { ?>
                                             <div class="append-box">
+                                                <a class="ibtnDel remove"><i class="fa fa-close"></i></a>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="formrow">
@@ -494,7 +501,7 @@ $current_date = date('Y-m-d');
                                             <textarea class="textarea form-control" name="CandidateProfile[extra_curricular_activities]"><?= $model->extra_curricular_activities ?></textarea>
                                         </div>
                                         <div class="form-group col-md-6 p-l">
-                                            <?php $languages = ArrayHelper::map(\common\models\Languages::findAll(['status' => 1]), 'id', 'language'); ?>
+                                            <?php $languages = ArrayHelper::map(\common\models\Languages::find()->where(['status' => 1])->orderBy(['language' => SORT_ASC])->all(), 'id', 'language'); ?>
                                             <?php
                                             if (isset($model->languages_known) && $model->languages_known != '') {
                                                 $model->languages_known = explode(',', $model->languages_known);
@@ -662,6 +669,51 @@ $current_date = date('Y-m-d');
 </script>
 <script>
     $(document).ready(function () {
+        $(document).on('change', '#candidateprofile-photo', function () {
+            var url = "<?= Yii::$app->homeUrl ?>candidate/upload-profile";
+            ajaxFormSubmit(url, '#w0', function (output) {
+                var data = JSON.parse(output);
+                if (data.status == 'success') {
+                    var d = new Date();
+                    var candidate_id = '<?= $candidate_id ?>';
+                    if (candidate_id !== "") {
+                        $("#profle_img_").attr("src", data.file + '?' + d.getTime());
+                    } else {
+                        $("#profle_img_temp").attr("src", data.file + '?' + d.getTime());
+                    }
+                    $('.im_progress').fadeOut();
+                } else {
+                    alert("Something went wrong.Please try again.");
+                    $(".img_preview").hide();
+                }
+
+            });
+        });
+
+        function ajaxFormSubmit(url, form, callback) {
+            var formData = new FormData($(form)[0]);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                datatype: 'json',
+                beforeSend: function () {
+// do some loading options
+                },
+                success: function (data) {
+                    callback(data);
+                },
+                complete: function () {
+// success alerts
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
         $(document).on('click', '#addexperience', function (event) {
             var row_id = $('#experience_row_count').val();
             var next = parseInt(row_id) + 1;
@@ -686,8 +738,6 @@ $current_date = date('Y-m-d');
             $(this).parents('.append-box').remove();
             return false;
         });
-
-
         $(document).on('click', '.expremove', function (event) {
             event.preventDefault();
             var current_row_id = $(this).attr('id').match(/\d+/); // 123456
@@ -717,13 +767,10 @@ $current_date = date('Y-m-d');
                 }
             });
         });
-
-
         $(document).on('blur', '.exp-from-date', function (event) {
             var current_row_id = $(this).attr('id').match(/\d+/);
             getFromDate(current_row_id);
         });
-
         $(document).on('blur', '.exp-to-date', function (event) {
             var current_row_id = $(this).attr('id').match(/\d+/);
             getToDate(current_row_id);
@@ -732,21 +779,23 @@ $current_date = date('Y-m-d');
             var current_row_id = $(this).attr('id').match(/\d+/);
             getEduFromDate(current_row_id);
         });
-
-        $(document).on('blur', '.edup-to-date', function (event) {
+        $(document).on('blur', '.edu-to-date', function (event) {
             var current_row_id = $(this).attr('id').match(/\d+/);
             getEduToDate(current_row_id);
         });
-
         $(document).on('click', '.chkispresent', function (event) {
             var current_row_id = $(this).attr('id').match(/\d+/);
             if ($(this).is(":checked")) {
                 $("#ispresent-" + current_row_id).show();
                 $("#notpresent-" + current_row_id).hide();
+                $("#chkispresent-" + current_row_id).val(1);
                 getFromDate(current_row_id);
             } else {
                 $("#ispresent-" + current_row_id).hide();
                 $("#notpresent-" + current_row_id).show();
+                $("#chkispresent-" + current_row_id).val(2);
+                var strDate = '<?php echo $current_date; ?>';
+                $('#exp_to_date-' + current_row_id).val(strDate);
                 getFromDate(current_row_id);
             }
         });
@@ -756,26 +805,6 @@ $current_date = date('Y-m-d');
                     .find('#modalContent')
                     .load($(this).attr("value"));
         });
-//        experienceCheck();
-//        $(document).on('change', 'input[type=radio][name=present_status]', function () {
-//            var row_count = $('#experience_row_count').val();
-//            for (i = 1; i <= row_count; i++) {
-//                if ($("#exp_present_status_btn-" + i).prop("checked")) {
-//                    $("#exp_present_status-" + i).val(1);
-//                    $("#ispresent-" + i).show();
-//                    $("#notpresent-" + i).hide();
-//                    getFromDate(i);
-//                    getFromDate(i);
-//                } else {
-//                    $("#exp_present_status-" + i).val(0);
-//                    $("#ispresent-" + i).hide();
-//                    $("#notpresent-" + i).show();
-//                    getFromDate(i);
-//                    getFromDate(i);
-//                }
-//
-//            }
-//        });
     });
     function getToDate(current_row_id) {
         var to_date = $('#exp_to_date-' + current_row_id).val();
@@ -832,19 +861,19 @@ $current_date = date('Y-m-d');
             });
         }
     }
-//    function experienceCheck() {
-//        var row_count = $('#experience_row_count').val();
-//        for (i = 1; i < row_count; i++) {
-//            var exval = $('#chkispresent-' + i).attr("data-val");
-//            if (exval == 1) {
-//                $("#ispresent-" + i).show();
-//                $("#notpresent-" + i).hide();
-//            } else {
-//                $("#ispresent-" + i).hide();
-//                $("#notpresent-" + i).show();
-//            }
-//        }
-//    }
+    function experienceCheck() {
+        var row_count = $('#experience_row_count').val();
+        for (i = 1; i < row_count; i++) {
+            var exval = $('#chkispresent-' + i).attr("data-val");
+            if (exval == 1) {
+                $("#ispresent-" + i).show();
+                $("#notpresent-" + i).hide();
+            } else {
+                $("#ispresent-" + i).hide();
+                $("#notpresent-" + i).show();
+            }
+        }
+    }
 </script>
 <script src="<?= Yii::$app->homeUrl ?>js/wysihtml5-0.3.0.js"></script>
 <script src="<?= Yii::$app->homeUrl ?>js/bootstrap-wysihtml5.js"></script>

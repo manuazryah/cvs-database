@@ -112,7 +112,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                         <div class="search-scroll">
                                             <table id="skillTable">
                                                 <?php
-                                                $skills = common\models\Skills::find()->where(['status' => 1])->andWhere(['<>', 'industry', 0])->all();
+                                                $skills = common\models\Skills::find()->where(['status' => 1])->all();
                                                 $arr_skill = [];
                                                 if (!empty($skills)) {
 //                                        foreach ($skills as $skill) {

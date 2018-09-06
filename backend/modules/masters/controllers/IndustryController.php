@@ -14,7 +14,7 @@ use yii\db\Expression;
  * IndustryController implements the CRUD actions for Industry model.
  */
 class IndustryController extends Controller {
-    
+
     public function beforeAction($action) {
         if (!parent::beforeAction($action)) {
             return false;
@@ -58,9 +58,9 @@ class IndustryController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post()) && Yii::$app->SetValues->Attributes($model) && $model->save()) {
             if (isset($id) && $id != '')
-                Yii::$app->session->setFlash('success', "Updated Successfully");
+                Yii::$app->session->setFlash('success', "Category Updated Successfully");
             else
-                Yii::$app->session->setFlash('success', "Industry created Successfully");
+                Yii::$app->session->setFlash('success', "Category created Successfully");
             $model = new Industry();
             return $this->redirect(['index']);
         }
@@ -130,17 +130,17 @@ class IndustryController extends Controller {
         } else {
             foreach ($industry_exists as $value) {
                 $industry = explode(',', $value->industry);
-                $new_arr =[];
-                if(!empty($industry)){
+                $new_arr = [];
+                if (!empty($industry)) {
                     foreach ($industry as $val) {
-                        if($val != $id){
-                            $new_arr[]=$val;
+                        if ($val != $id) {
+                            $new_arr[] = $val;
                         }
                     }
                 }
-                if(!empty($new_arr)){
+                if (!empty($new_arr)) {
                     $new_industry = implode(",", $new_arr);
-                }else{
+                } else {
                     $new_industry = '';
                 }
                 $value->industry = $new_industry;

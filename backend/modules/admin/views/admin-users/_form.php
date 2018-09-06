@@ -16,7 +16,7 @@ use yii\helpers\ArrayHelper;
     <?= \common\widgets\Alert::widget(); ?>
     <div class="row">
         <div class='col-md-6 col-sm-6 col-xs-12'>
-            <?php $posts = ArrayHelper::map(AdminPosts::findAll(['status' => 1]), 'id', 'post_name'); ?>
+            <?php $posts = ArrayHelper::map(AdminPosts::find()->where(['status' => 1])->orderBy(['post_name' => SORT_ASC])->all(), 'id', 'post_name'); ?>
             <?= $form->field($model, 'post_id')->dropDownList($posts, ['prompt' => '-Choose a Post-']) ?>
 
         </div>

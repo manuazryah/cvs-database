@@ -54,7 +54,19 @@ $action = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
 
                 <!-- Mobile Toggles Links -->
                 <div class="nav navbar-mobile">
-
+                    
+                    <div class="pull-right">
+                        <?php
+                        echo ''
+                        . Html::beginForm(['/employer/logout'], 'post', ['style' => 'margin-bottom: 0px; padding: 0px;']) . '<a style="padding-bottom:0px;">'
+                        . Html::submitButton(
+                                '<i class="fa fa-sign-out"></i> Sign out', ['class' => 'btn btn-white sign-out',]
+                        ) . '</a>'
+                        . Html::endForm()
+                        . '';
+                        ?>
+                    </div>
+                    
                     <!-- This will toggle the mobile menu and will be visible only on mobile devices -->
                     <div class="mobile-menu-toggle">
                         <a href="#" data-toggle="mobile-menu-horizontal">
@@ -141,10 +153,7 @@ $action = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
         <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
             <div class="sidebar-menu toggle-others fixed">
-
                 <div class="sidebar-menu-inner">
-
-
 
                     <ul id="main-menu" class="main-menu">
                         <li class="<?= $action == 'employer/home' ? 'active' : '' ?>">
@@ -163,7 +172,6 @@ $action = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
                             <?= Html::a('<i class="fa fa-folder-open"></i> <span class="title">Shortlist Folder</span>', ['/employer/shortlist-folder'], ['class' => 'title']) ?>
                         </li>
                     </ul>
-
                 </div>
 
             </div>
@@ -196,10 +204,9 @@ $action = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
             </div>
         </div>
 
-        <!-- Page Loading Overlay -->
-        <!--        <div class="page-loading-overlay">
-                    <div class="loader-2"></div>
-                </div>-->
+        <div class="page-loading-overlay">
+            <div class="loader-2"></div>
+        </div>
         <?php $this->endBody() ?>
     </body>
 </html>

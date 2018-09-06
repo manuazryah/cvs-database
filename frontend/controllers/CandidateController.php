@@ -38,6 +38,17 @@ class CandidateController extends Controller {
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function actions() {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
+
     public function beforeAction($action) {
         if (!parent::beforeAction($action)) {
             return false;
@@ -336,10 +347,12 @@ class CandidateController extends Controller {
                 $arr[$i]['country'] = $val;
                 $i++;
             }
-            $i = 0;
-            foreach ($create['present_status'] as $val) {
-                $arr[$i]['present_status'] = $val;
-                $i++;
+            if (isset($create['present_status']) && $create['present_status'] != '') {
+                $i = 0;
+                foreach ($create['present_status'] as $val) {
+                    $arr[$i]['present_status'] = $val;
+                    $i++;
+                }
             }
             $this->SaveExperience($arr, $model);
         }
@@ -351,8 +364,12 @@ class CandidateController extends Controller {
      */
     public function SaveExperience($arr, $model) {
         foreach ($arr as $val) {
-            if ($val['present_status'] == 'on') {
-                $present_status = 1;
+            if (isset($val['present_status'])) {
+                if ($val['present_status'][0] == 1) {
+                    $present_status = 1;
+                } else {
+                    $present_status = 0;
+                }
             } else {
                 $present_status = 0;
             }
@@ -391,8 +408,12 @@ class CandidateController extends Controller {
                 $arr[$key]['job_responsibility'] = $val['job_responsibility'][0];
                 $arr[$key]['from_date'] = $val['from_date'][0];
                 $arr[$key]['country'] = $val['country'][0];
-                if ($val['present_status'][0] == 'on') {
-                    $present_status = 1;
+                if (isset($val['present_status'])) {
+                    if ($val['present_status'][0] == 1) {
+                        $present_status = 1;
+                    } else {
+                        $present_status = 0;
+                    }
                 } else {
                     $present_status = 0;
                 }
@@ -530,8 +551,8 @@ class CandidateController extends Controller {
     public function actionGetAcadamics() {
         if (Yii::$app->request->isAjax) {
             $j = $_POST['next'];
-            $course_datas = \common\models\Courses::find()->where(['status' => 1])->all();
-            $country_datas = \common\models\Country::find()->where(['status' => 1])->all();
+            $course_datas = \common\models\Courses::find()->where(['status' => 1])->orderBy(['course_name' => SORT_ASC])->all();
+            $country_datas = \common\models\Country::find()->where(['status' => 1])->orderBy(['country_name' => SORT_ASC])->all();
             $new_row = $this->renderPartial('academics_row', [
                 'course_datas' => $course_datas,
                 'country_datas' => $country_datas,
@@ -566,7 +587,7 @@ class CandidateController extends Controller {
     public function actionGetExperience() {
         if (Yii::$app->request->isAjax) {
             $i = $_POST['next'];
-            $country_datas = \common\models\Country::find()->where(['status' => 1])->all();
+            $country_datas = \common\models\Country::find()->where(['status' => 1])->orderBy(['country_name' => SORT_ASC])->all();
             $new_row = $this->renderPartial('experince_row', [
                 'country_datas' => $country_datas,
                 'i' => $i,
@@ -655,6 +676,7 @@ class CandidateController extends Controller {
             'model_experience' => $model_experience,
             'candidate' => $candidate,
         ]);
+//        echo $content; exit;
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE,
@@ -662,7 +684,7 @@ class CandidateController extends Controller {
             'orientation' => Pdf::ORIENT_PORTRAIT,
             'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+//            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
             'cssInline' => '.kv-heading-1{font-size:18px}',
             'options' => ['title' => ''],
             'methods' => [
@@ -776,6 +798,48 @@ class CandidateController extends Controller {
             $from_date = date('Y-m-d', strtotime('-1 day', strtotime($to_date)));
         }
         return $from_date;
+    }
+
+    public function actionUploadProfile() {
+
+        $id = Yii::$app->session['candidate']['id'];
+        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        if (empty($model)) {
+            $dir = Yii::$app->basePath . '/../uploads/temp/';
+            if (isset($_FILES['CandidateProfile'])) {
+                $image = $_FILES['CandidateProfile'];
+                $ext = pathinfo($image['name']['photo'], PATHINFO_EXTENSION);
+                $destination = $dir . $id . '.' . $ext;
+                $isuploaded = move_uploaded_file($image['tmp_name']['photo'], $destination);
+                if ($isuploaded) {
+
+                    $file = 'https://www.cvsdatabase.com/uploads/temp/' . $id . '.' . $ext;
+
+                    echo json_encode(array("status" => "success", "message" => "File has been uploaded successfully", "file" => $file));
+                } else {
+                    echo json_encode(array("status" => "fail", "message" => "Some error to upload this file"));
+                }
+            } else {
+                echo json_encode(array("status" => "fail", "message" => "File size can't more than 1 MB"));
+            }
+        } else {
+            if (isset($_FILES['CandidateProfile'])) {
+                $dir = Yii::$app->basePath . '/../uploads/candidate/profile_picture/';
+                $image = $_FILES['CandidateProfile'];
+                $ext = pathinfo($image['name']['photo'], PATHINFO_EXTENSION);
+                $destination = $dir . $model->id . '.' . $ext;
+                $isuploaded = move_uploaded_file($image['tmp_name']['photo'], $destination);
+                if ($isuploaded) {
+
+                    $file = 'https://www.cvsdatabase.com/uploads/candidate/profile_picture/' . $model->id . '.' . $ext;
+                    echo json_encode(array("status" => "success", "message" => "File has been uploaded successfully", "file" => $file));
+                } else {
+                    echo json_encode(array("status" => "fail", "message" => "Some error to upload this file"));
+                }
+            } else {
+                echo json_encode(array("status" => "fail", "message" => "File size can't more than 1 MB"));
+            }
+        }
     }
 
 }

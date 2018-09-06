@@ -69,7 +69,7 @@ use yii\helpers\Html;
                                         <div class="col-lg-12">
                                             <h5><?= $value->package_name ?></h5>
                                             <h1><?= $value->package_price ?> $</h1>
-                                            <span>per/month</span>
+                                          
                                         </div>
                                     </div>
                                     <ul>
@@ -78,7 +78,7 @@ use yii\helpers\Html;
                                     </ul>
                                     <div class="col-lg-12">
                                         <div class="buynow-sec">
-                                            <?= Html::a('Buy Now', ['/employer/index'],['class'=>'buy-now']) ?>
+                                            <?= Html::a('Order Now', ['/employer/index'],['class'=>'buy-now']) ?>
                                         </div>
                                     </div>
                                 </div>

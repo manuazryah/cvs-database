@@ -463,7 +463,7 @@ class EmployerController extends Controller {
             }
         }
         $query2 = new yii\db\Query();
-        $query2->select(['*'])->from('work_experiance')->andWhere(['or', ['like', 'company_name', $data], ['like', 'designation', $data],]);
+        $query2->select(['*'])->from('work_experiance')->andWhere(['or', ['like', 'company_name', $data], ['like', 'designation', $data], ['like', 'job_responsibility', $data],]);
         $command3 = $query2->createCommand();
         $result3 = $command3->queryAll();
         if (!empty($result3)) {
@@ -771,7 +771,9 @@ class EmployerController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate() {
+
         $id = Yii::$app->user->identity->id;
+
         $model = $this->findModel($id);
         $model->scenario = 'update';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -970,7 +972,7 @@ class EmployerController extends Controller {
                 Yii::$app->session->setFlash('error', "You Can't view CVs.Please Select a Package");
             } else {
                 $candidate = \common\models\Candidate::findOne($candidate_profile->candidate_id);
-                $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $id])->one();
+                $view_cv = \common\models\CvViewHistory::find()->where(['employer_id' => Yii::$app->session['employer_data']['id'], 'candidate_id' => $candidate_profile->candidate_id])->one();
                 $model = \common\models\CandidateProfile::findOne($id);
                 $model_education = \common\models\CandidateEducation::find()->where(['candidate_id' => $candidate_profile->candidate_id])->all();
                 $model_experience = \common\models\WorkExperiance::find()->where(['candidate_id' => $candidate_profile->candidate_id])->all();
@@ -981,8 +983,8 @@ class EmployerController extends Controller {
                         if ($packages->no_of_downloads_left >= 1) {
                             $packages->no_of_downloads_left = $packages->no_of_downloads_left - 1;
                             $packages->update();
-                            $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $id);
-                            $this->CandidateEmail($id);
+                            $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $candidate_profile->candidate_id);
+                            // $this->CandidateEmail($id);
                             Yii::$app->session->setFlash('success', "One credit is deducted from your package.");
                             return $this->render('cv-view', [
                                         'model' => $model,
@@ -992,11 +994,11 @@ class EmployerController extends Controller {
                                         'notes' => $notes,
                             ]);
                         } else {
-                            Yii::$app->session->setFlash('error', "You Can't view CVs.Please Upgrade Your Package");
+                            Yii::$app->session->setFlash('error', "Sorry. You cannot view this CV. Because your plan is expired/ you have no credits. Kindly <a style='background: none;color: blue;padding-left: 10px;font-size: 13px;' href='https://www.cvsdatabase.com/upgrade-package'>Upgrade Your Package</a>.");
                             return $this->redirect(Yii::$app->request->referrer);
                         }
                     } else {
-                        Yii::$app->session->setFlash('error', "You Can't view CVs.Because Your plan has expired.Please Upgrade Your Package");
+                        Yii::$app->session->setFlash('error', "Sorry. You cannot view this CV. Because your plan is expired/ you have no credits. Kindly <a style='background: none;color: blue;padding-left: 10px;font-size: 13px;' href='https://www.cvsdatabase.com/upgrade-package'>Upgrade Your Package</a>.");
                         return $this->redirect(Yii::$app->request->referrer);
                     }
                 } else {
@@ -1396,7 +1398,7 @@ class EmployerController extends Controller {
 // To send HTML mail, the Content-type header must be set
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
-                "From: 'noreplay@cvsdatabase.com";
+                "From: 'noreply@cvsdatabase.com";
         mail($to, $subject, $message, $headers);
     }
 

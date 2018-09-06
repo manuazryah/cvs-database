@@ -8,9 +8,9 @@ use yii\widgets\ActiveForm;
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="rightside-box" style="background: #ffffff; margin-top: 25px; margin-bottom: 60px; padding: 22px; border: solid 1px #e1e1e1; border-radius: 0px;">
+                    <div class="rightside-box" style="background: #ffffff; margin-top: 25px; margin-bottom: 60px; padding: 22px; border-radius: 0px;">
                         <!-- Job Header start -->
-                        <div class="job-header" style="background: #fff; border: 1px solid #e4e4e4; margin-bottom: 30px;">
+                        <div class="job-header" style="background: #fff;  margin-bottom: 30px;">
                             <div class="jobinfo" style="padding: 25px; border-bottom: 1px solid #e4e4e4;">
                                 <div class="row" style="margin-right: -15px; margin-left: -15px;">
                                     <div class="col-md-12 col-sm-12" style="width: 100%;"> 
@@ -18,17 +18,19 @@ use yii\widgets\ActiveForm;
                                         <div class="candidateinfo im-user-detail">
                                             <table style="width: 100%">
                                                 <tr>
-                                                    <td style="width: 25%; margin-right: 15px;">
-                                                        <?php
-                                                        if ($model->photo != '') {
-                                                            $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
-                                                            if (file_exists($dirPath)) {
-                                                                echo '<img class="img-responsive"  style="vertical-align: middle; display: block; max-width: 100%; height: auto;" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
-                                                            } else {
-                                                                echo '';
+                                                    <td style="width: 25%;">
+                                                        <div style=" margin-right: 15px; float: left; width: 150px; height: 150px; background: #cbcbcb; margin-right: 20px; margin-top: 8px; display: flex; overflow: hidden;">
+                                                            <?php
+                                                            if ($model->photo != '') {
+                                                                $dirPath = Yii::getAlias(Yii::$app->params['uploadPath']) . '/uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo;
+                                                                if (file_exists($dirPath)) {
+                                                                    echo '<img class="img-responsive"  style="vertical-align: middle; display: block; max-width: 200px; height: 200px;" src="' . Yii::$app->homeUrl . 'uploads/candidate/profile_picture/' . $model->id . '.' . $model->photo . '"/>';
+                                                                } else {
+                                                                    echo '';
+                                                                }
                                                             }
-                                                        }
-                                                        ?>
+                                                            ?>
+                                                        </div>
                                                     </td>
                                                     <td style="width: 70%">
                                                         <table style="width: 100%">

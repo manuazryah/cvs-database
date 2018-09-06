@@ -48,7 +48,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                     ?>
                     <div class="">
                         <div class="box">
-                            <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12 pad0 search-sec mtop60">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0 search-sec mtop60">
                                 <?= \common\widgets\Alert::widget() ?>
                                 <?php
                                 $form1 = ActiveForm::begin([
@@ -63,22 +63,359 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 pad0">
                                         <?= $form1->field($model_filter, 'location')->dropDownList($city_datas, ['multiple' => TRUE])->label(FALSE) ?>
                                     </div>
-                                    <div class="col-lg-2 col-md-5 col-sm-5 col-xs-12 pad0">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pad0">
                                         <?= Html::submitButton('Search', ['class' => 'btn btn-default fright']) ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="search-filter-summery">
-                                <h3 class="panel-title">Search Result : Total <span>&nbsp;&nbsp;<?= $dataProvider->getTotalCount() > 0 ? $dataProvider->getTotalCount():'No' ?> Cvs&nbsp;&nbsp;</span>  Found</h3>
+                                <h3 class="panel-title">Search Result : Total <span>&nbsp;&nbsp;<?= $dataProvider->getTotalCount() > 0 ? $dataProvider->getTotalCount() : 'No' ?> Cvs&nbsp;&nbsp;</span>  Found</h3>
                             </div>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="panel panel-default">
                         <section class="mailbox-env">
+                            <div class="box search-mobile-view">
+                                <div class="filter-head">
+                                    <h4 data-toggle="modal" data-target="#exampleModalLong" class="main-title">Refine your search <i class="fa fa fa-plus"></i></h4>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-backdrop in"></div>
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="button-header">
+                                                <button type="button" class="close-button" data-dismiss="modal" aria-label="Close"><i class="fa fa fa-close"></i></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo">Industries <span class="right-span">+</span></div>
+
+                                                    <div id="demo" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <input class="form-control" type="text" id="industryInput" onkeyup="industryFunction()" placeholder="Search for industries" title="Type Industry Name" autocomplete="off">
+                                                            <div class="search-scroll">
+                                                                <table id="industryTable">
+                                                                    <?php
+                                                                    $industries = common\models\Industry::find()->where(['status' => 1])->andWhere(['<>', 'id', 0])->all();
+                                                                    $arr_industry = [];
+                                                                    if (!empty($industries)) {
+//                                        foreach ($industries as $industry) {
+//                                            $arr_industry[$industry['id']] = $industry['industry_name'];
+//                                        }
+                                                                        foreach ($industries as $industry) {
+                                                                            if ($model_filter->industries != '' && isset($model_filter->industries)) {
+                                                                                if (in_array($industry->id, $model_filter->industries)) {
+                                                                                    $check1 = 'checked';
+                                                                                } else {
+                                                                                    $check1 = '';
+                                                                                }
+                                                                            } else {
+                                                                                $check1 = '';
+                                                                            }
+                                                                            ?>
+                                                                            <tr class="">
+                                                                                <td>
+                                                                                    <label><input type="checkbox" <?= $check1 ?> name="CvFilter[industries][]" value="<?= $industry->id ?>"> <?= $industry->industry_name ?></label>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <?php
+                                                                        }
+                                                                    }
+//                                    echo $form1->field($model_filter, 'industries[]')->checkboxList($arr_industry, ['class' => 'check-label'])->label(FALSE);
+                                                                    ?>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo2">Skills <span class="right-span">+</span></div>
+
+                                                    <div id="demo2" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <input class="form-control" type="text" id="skillInput" onkeyup="skillFunction()" placeholder="Search for skills" title="Type Skill" autocomplete="off">
+                                                            <div class="search-scroll">
+                                                                <table id="skillTable">
+                                                                    <?php
+                                                                    $skills = common\models\Skills::find()->where(['status' => 1])->all();
+                                                                    $arr_skill = [];
+                                                                    if (!empty($skills)) {
+//                                        foreach ($skills as $skill) {
+//                                            $arr_skill[$skill['id']] = $skill['skill'];
+//                                        }
+                                                                        foreach ($skills as $skill) {
+                                                                            if ($model_filter->skills != '' && isset($model_filter->skills)) {
+                                                                                if (in_array($skill->id, $model_filter->skills)) {
+                                                                                    $check2 = 'checked';
+                                                                                } else {
+                                                                                    $check2 = '';
+                                                                                }
+                                                                            } else {
+                                                                                $check2 = '';
+                                                                            }
+                                                                            ?>
+                                                                            <tr class="">
+                                                                                <td>
+                                                                                    <label><input type="checkbox" <?= $check2 ?> name="CvFilter[skills][]" value="<?= $skill->id ?>"> <?= $skill->skill ?></label>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <?php
+                                                                        }
+                                                                    }
+//                                    echo $form1->field($model_filter, 'skills[]')->checkboxList($arr_skill, ['class' => 'check-label'])->label(FALSE);
+                                                                    ?>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo3">Job Type <span class="right-span">+</span></div>
+
+                                                    <div id="demo3" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <div class="search-noscroll">
+                                                                <?php
+                                                                $job_categories = common\models\JobType::find()->where(['status' => 1])->all();
+                                                                $arr_job = [];
+                                                                if (!empty($job_categories)) {
+                                                                    foreach ($job_categories as $job_category) {
+                                                                        if ($model_filter->job_types != '' && isset($model_filter->job_types)) {
+                                                                            if (in_array($job_category->id, $model_filter->job_types)) {
+                                                                                $check2 = 'checked';
+                                                                            } else {
+                                                                                $check2 = '';
+                                                                            }
+                                                                        } else {
+                                                                            $check2 = '';
+                                                                        }
+                                                                        ?>
+                                                                        <label><input type="checkbox" <?= $check2 ?> name="CvFilter[job_types][]" value="<?= $job_category->id ?>"> <?= $job_category->job_type ?></label>
+                                                                        <?php
+                                                                    }
+                                                                }
+//                                    echo $form1->field($model_filter, 'job_types[]')->checkboxList($arr_job, ['class' => 'check-label'])->label(FALSE);
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo4">Monthly Salary <span class="right-span">+</span></div>
+
+                                                    <div id="demo4" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <div class="search-scroll pad-tp">
+                                                                <?php
+                                                                $salary_ranges = common\models\ExpectedSalary::find()->where(['status' => 1])->all();
+                                                                $arr_sal = [];
+                                                                if (!empty($salary_ranges)) {
+                                                                    foreach ($salary_ranges as $salary_range) {
+                                                                        if ($model_filter->salary_range != '' && isset($model_filter->salary_range)) {
+                                                                            if (in_array($salary_range->id, $model_filter->salary_range)) {
+                                                                                $check3 = 'checked';
+                                                                            } else {
+                                                                                $check3 = '';
+                                                                            }
+                                                                        } else {
+                                                                            $check3 = '';
+                                                                        }
+                                                                        ?>
+                                                                        <label><input type="checkbox" <?= $check3 ?> name="CvFilter[salary_range][]" value="<?= $salary_range->id ?>"> <?= $salary_range->salary_range ?></label>
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo5">Nationality <span class="right-span">+</span></div>
+
+                                                    <div id="demo5" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <input class="form-control" type="text" id="nationality" onkeyup="nationalityFunction()" placeholder="Search for nationality" title="Type Skill" autocomplete="off">
+                                                            <div class="search-scroll">
+                                                                <table id="nationalityTable">
+                                                                    <?php
+                                                                    $nationalities = common\models\Country::find()->where(['status' => 1])->all();
+                                                                    $arr_nationality = [];
+                                                                    if (!empty($nationalities)) {
+                                                                        foreach ($nationalities as $nationality) {
+                                                                            if ($model_filter->nationality != '' && isset($model_filter->nationality)) {
+                                                                                if (in_array($nationality->id, $model_filter->nationality)) {
+                                                                                    $check4 = 'checked';
+                                                                                } else {
+                                                                                    $check4 = '';
+                                                                                }
+                                                                            } else {
+                                                                                $check4 = '';
+                                                                            }
+                                                                            ?>
+                                                                            <tr class="">
+                                                                                <td>
+                                                                                    <label><input type="checkbox" <?= $check4 ?> name="CvFilter[nationality][]" value="<?= $nationality->id ?>"> <?= $nationality->country_name ?></label>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <?php
+                                                                        }
+                                                                    }
+                                                                    ?>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo6">Experience <span class="right-span">+</span></div>
+
+                                                    <div id="demo6" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <div class="search-scroll pad-tp">
+                                                                <?php
+                                                                $experiences = \common\models\ExperienceSearch::find()->where(['status' => 1])->all();
+                                                                $arr_experiences = [];
+                                                                if (!empty($experiences)) {
+                                                                    foreach ($experiences as $experience) {
+                                                                        if ($model_filter->experience != '' && isset($model_filter->experience)) {
+                                                                            if (in_array($experience->id, $model_filter->experience)) {
+                                                                                $check8 = 'checked';
+                                                                            } else {
+                                                                                $check8 = '';
+                                                                            }
+                                                                        } else {
+                                                                            $check8 = '';
+                                                                        }
+                                                                        ?>
+                                                                        <label><input type="checkbox" <?= $check8 ?> name="CvFilter[experience][]" value="<?= $experience->id ?>"> <?= $experience->experience_search ?></label>
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo7">Gender <span class="right-span">+</span></div>
+
+                                                    <div id="demo7" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <div class="search-noscroll">
+                                                                <?php
+                                                                $genders = common\models\Gender::find()->where(['status' => 1])->all();
+                                                                $arr_sal = [];
+                                                                if (!empty($genders)) {
+                                                                    foreach ($genders as $gender) {
+                                                                        if ($model_filter->gender != '' && isset($model_filter->gender)) {
+                                                                            if (in_array($gender->id, $model_filter->gender)) {
+                                                                                $check7 = 'checked';
+                                                                            } else {
+                                                                                $check7 = '';
+                                                                            }
+                                                                        } else {
+                                                                            $check7 = '';
+                                                                        }
+                                                                        ?>
+                                                                        <label><input type="checkbox" <?= $check7 ?> name="CvFilter[gender][]" value="<?= $gender->id ?>"> <?= $gender->gender ?></label>
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo8">Languages <span class="right-span">+</span></div>
+
+                                                    <div id="demo8" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <div class="search-scroll pad-tp">
+                                                                <?php
+                                                                $languages = common\models\Languages::find()->where(['status' => 1])->all();
+                                                                $arr_sal = [];
+                                                                if (!empty($languages)) {
+                                                                    foreach ($languages as $language) {
+                                                                        if ($model_filter->language != '' && isset($model_filter->language)) {
+                                                                            if (in_array($language->id, $model_filter->language)) {
+                                                                                $check5 = 'checked';
+                                                                            } else {
+                                                                                $check5 = '';
+                                                                            }
+                                                                        } else {
+                                                                            $check5 = '';
+                                                                        }
+                                                                        ?>
+                                                                        <label><input type="checkbox" <?= $check5 ?> name="CvFilter[language][]" value="<?= $language->id ?>"> <?= $language->language ?></label>
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="filter-mobile-box"><!--filter-mobile-box-->
+                                                    <div id="button" type="button" class="filter-list-button job_title" data-toggle="collapse" data-target="#demo9">Job Status <span class="right-span">+</span></div>
+
+                                                    <div id="demo9" class="collapse categories-filter" val='button'>
+                                                        <div class="page-heading check-label">
+                                                            <div class="search-noscroll">
+                                                                <?php
+                                                                $job_status_datas = common\models\JobStatus::find()->where(['status' => 1])->all();
+                                                                $arr_sal = [];
+                                                                if (!empty($job_status_datas)) {
+                                                                    foreach ($job_status_datas as $job_status_data) {
+                                                                        if ($model_filter->job_status != '' && isset($model_filter->job_status)) {
+                                                                            if (in_array($job_status_data->id, $model_filter->job_status)) {
+                                                                                $check6 = 'checked';
+                                                                            } else {
+                                                                                $check6 = '';
+                                                                            }
+                                                                        } else {
+                                                                            $check6 = '';
+                                                                        }
+                                                                        ?>
+                                                                        <label><input type="checkbox" <?= $check6 ?> name="CvFilter[job_status][]" value="<?= $job_status_data->id ?>"> <?= $job_status_data->job_status ?></label>
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+
                             <div class="">
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 box">
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 box search-desktop-view">
                                     <h4 class="main-title">Refine your search</h4>
                                     <div class="Left-nav">
                                         <div class="job_title">Industries</div>
@@ -124,7 +461,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                             <div class="search-scroll">
                                                 <table id="skillTable">
                                                     <?php
-                                                    $skills = common\models\Skills::find()->where(['status' => 1])->andWhere(['<>', 'industry', 0])->all();
+                                                    $skills = common\models\Skills::find()->where(['status' => 1])->all();
                                                     $arr_skill = [];
                                                     if (!empty($skills)) {
 //                                        foreach ($skills as $skill) {
@@ -340,7 +677,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                     </div>
                                 </div>
                                 <?php // Html::submitButton('Search', ['class' => 'btn btn-default'])        ?>
-                                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 prit0">
+                                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 prit0">
                                     <div class="col-md-9 col-sm-9 p-l">
                                         <div class="page-heading mb0" style="padding: 10px 0px; padding-bottom: 10px;">
                                             <?php
@@ -437,7 +774,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                
+
                 <p><?= Html::a('<button type="button" class="btn btn-primary">Log in</button>', ['employer/index']) ?> to read the CV</p>
             </div>
         </div>

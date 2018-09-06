@@ -17,7 +17,7 @@ use yii\widgets\Pjax;
                     <p><mark>Submit your C.V and get selected by top recruiters <br>in the UAE and other Gulf countries</mark></p>
                 </div>
             </div>
-            <div class="col-md-4" style="position: relative; float: right;">
+            <div class="col-md-4 signup-box">
                 <div id="form" class="form-fixed">
                     <h3>submit your <strong>CV</strong> now</h3>
                     <div id="userform">
@@ -246,27 +246,27 @@ use yii\widgets\Pjax;
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-sm-6">
                     <div class="block1">
                         <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog1.jpg" alt="" class="img-responsive"></a>
                         <div class="block1_desc">
-                            <div class="col-md-2 col-sm-2 padding-left text-right">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-left text-right">
                                 <h3>April 25, <span>2017</span></h3>
                             </div>
-                            <div class="col-md-10 col-sm-10">
+                            <div class="col-md-10 col-sm-10 col-xs-10">
                                 <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies tellus eget condimentum nisi.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-sm-6">
                     <div class="block1">
                         <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog2.jpg" alt="" class="img-responsive"></a>
                         <div class="block1_desc">
-                            <div class="col-md-2 col-sm-2 padding-left text-right">
+                            <div class="col-md-2 col-sm-2 col-xs-2 padding-left text-right">
                                 <h3>March 13, <span>2017</span></h3>
                             </div>
-                            <div class="col-md-10 col-sm-10">
+                            <div class="col-md-10 col-sm-10 col-xs-10">
                                 <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies tellus eget condimentum nisi.</p>
                             </div>
                         </div>

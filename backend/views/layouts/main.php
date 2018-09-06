@@ -146,7 +146,7 @@ AppAsset::register($this);
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Courses', ['/masters/courses/index'], ['class' => 'title']) ?>
                                 </li>
                                 <li>
-                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Industry', ['/masters/industry/index'], ['class' => 'title']) ?>
+                                    <?= Html::a('<i class="fa fa-angle-double-right"></i> Category', ['/masters/industry/index'], ['class' => 'title']) ?>
                                 </li>
                                 <li>
                                     <?= Html::a('<i class="fa fa-angle-double-right"></i> Skills', ['/masters/skills/index'], ['class' => 'title']) ?>
@@ -326,7 +326,7 @@ AppAsset::register($this);
                                         <?= Html::a('<i class="fa fa-angle-double-right"></i> Courses', ['/masters/courses/index'], ['class' => 'title']) ?>
                                     </li>
                                     <li>
-                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Industry', ['/masters/industry/index'], ['class' => 'title']) ?>
+                                        <?= Html::a('<i class="fa fa-angle-double-right"></i> Category', ['/masters/industry/index'], ['class' => 'title']) ?>
                                     </li>
                                     <li>
                                         <?= Html::a('<i class="fa fa-angle-double-right"></i> Skills', ['/masters/skills/index'], ['class' => 'title']) ?>

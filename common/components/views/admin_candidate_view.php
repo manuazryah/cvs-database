@@ -9,14 +9,7 @@ use common\models\LoginHistory;
  * and open the template in the editor.
  */
 $candidate = \common\models\Candidate::find()->where(['id' => $model->candidate_id])->one();
-$log_history = LoginHistory::find()->where(['client_id' => $model->candidate_id])->orderBy(['id' => SORT_DESC])->one();
-if (!empty($log_history)) {
-    if ($log_history->log_in_time != '') {
-        $last_login = date("d M Y", strtotime($log_history->log_in_time));
-    }
-} else {
-    $last_login = '';
-}
+$last_login = $model->date_of_updation;
 $model_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->all();
 $tot_diff = 0;
 $month = 0;
@@ -65,13 +58,14 @@ $short_list_count = array_unique($short_list_count);
 if (count($short_list_count) > 0) {
     $msg = count($short_list_count) . ' Other employers viewed / shortlisted this CV';
 } else {
-    $msg = 'No Other Employers Shortlisted this CV';
+    $msg = 'No Other employers viewed / shortlisted this CV';
 }
 $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['highest_qualification' => 1])->one();
 if (empty($qualification)) {
     $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
 }
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
+$education = \common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->all();
 ?>
 <?php if ($candidate->status == 1) { ?>
     <div class="sorting_content" id="admin-cv-listing">
@@ -180,6 +174,25 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 </div>
             </div>
         </div>
+        <!--/**************Qualification**************/-->
+        <div class="col-xs-12">
+            <div class="contact_details p-l skills-sec">
+                <span><strong>Qualification:</strong> 
+                    <ul class="skills-list">
+                        <?php
+                        if (!empty($education)) {
+                            foreach ($education as $qualification) {
+                                ?>
+                                <li><?= $qualification->course_name ?></li>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <!--/******************/-->
         <div class="col-md-12">
             <div class="contact_details p-l skills-sec">
                 <span><strong>Skills:</strong> 
@@ -204,7 +217,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
         </div>
         <div class="bottom-box col-lg-12">
             <div class="last-login col-md-4 col-sm-4 p-l">
-                <span><i>Last Logged in : <?= $last_login ?></i></span>
+                <span><i>Last Logged in : <?= date("d M Y", strtotime($last_login)); ?></i></span>
             </div>
             <div class="last-login col-md-3 col-sm-3 p-l">
                 <?php if ($model->featured_cv == 1) { ?>
@@ -230,7 +243,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
         </div>
         <div class="bottom-box col-lg-12">
             <div class="last-login col-md-6 col-sm-6 p-l">
-                <span><i>Last Logged in : <?= $last_login ?></i></span>
+                <span><i>Last Logged in : <?= date("d M Y", strtotime($last_login)); ?></i></span>
             </div>
             <div class="last-login col-md-6 col-sm-6 p-l text-right">
                 <span><em><?= $msg ?></em></span>

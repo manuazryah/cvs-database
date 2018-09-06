@@ -50,7 +50,7 @@ use yii\helpers\ArrayHelper;
 
         </div>
         <div class='col-md-3 col-sm-6 col-xs-12 left_padd'>
-            <?php $countries = ArrayHelper::map(\common\models\Country::findAll(['status' => 1]), 'id', 'country_name'); ?>
+            <?php $countries = ArrayHelper::map(\common\models\Country::find()->where(['status' => 1])->orderBy(['country_name' => SORT_ASC])->all(), 'id', 'country_name'); ?>
             <?= $form->field($model, 'country')->dropDownList($countries, ['prompt' => '-Choose a Country-']) ?>
 
         </div>

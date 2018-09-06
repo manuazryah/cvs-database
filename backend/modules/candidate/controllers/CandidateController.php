@@ -578,9 +578,9 @@ class CandidateController extends Controller {
             $aditional->from_date = $val['from_date'];
             $aditional->country = $val['country'];
             $aditional->present_status = $val['present_status'];
-            if($aditional->present_status == 1){
+            if ($aditional->present_status == 1) {
                 $aditional->to_date = '';
-            }else{
+            } else {
                 $aditional->to_date = $val['to_date'];
             }
             if (!empty($aditional->company_name)) {
@@ -606,10 +606,10 @@ class CandidateController extends Controller {
                 $arr[$key]['from_date'] = $val['from_date'][0];
                 $arr[$key]['country'] = $val['country'][0];
                 $arr[$key]['present_status'] = $val['present_status'][0];
-                if($val['present_status'][0] == 1){
-                     $arr[$key]['to_date'] = '';
-                }else{
-                     $arr[$key]['to_date'] = $val['to_date'][0];
+                if ($val['present_status'][0] == 1) {
+                    $arr[$key]['to_date'] = '';
+                } else {
+                    $arr[$key]['to_date'] = $val['to_date'][0];
                 }
                 $i++;
             }
@@ -1004,7 +1004,7 @@ class CandidateController extends Controller {
             }
         }
         $query2 = new yii\db\Query();
-        $query2->select(['*'])->from('work_experiance')->andWhere(['or', ['like', 'company_name', $data], ['like', 'designation', $data],]);
+        $query2->select(['*'])->from('work_experiance')->andWhere(['or', ['like', 'company_name', $data], ['like', 'designation', $data], ['like', 'job_responsibility', $data],]);
         $command3 = $query2->createCommand();
         $result3 = $command3->queryAll();
         if (!empty($result3)) {
@@ -1312,7 +1312,49 @@ class CandidateController extends Controller {
         }
         return $from_date;
     }
-    
+
+    public function actionUploadProfile() {
+
+        $id = Yii::$app->session['candidate']['id'];
+        $model = CandidateProfile::find()->where(['candidate_id' => $id])->one();
+        if (empty($model)) {
+            $dir = Yii::$app->basePath . '/../uploads/temp/';
+            if (isset($_FILES['CandidateProfile'])) {
+                $image = $_FILES['CandidateProfile'];
+                $ext = pathinfo($image['name']['photo'], PATHINFO_EXTENSION);
+                $destination = $dir . $id . '.' . $ext;
+                $isuploaded = move_uploaded_file($image['tmp_name']['photo'], $destination);
+                if ($isuploaded) {
+
+                    $file = 'https://www.cvsdatabase.com/uploads/temp/' . $id . '.' . $ext;
+
+                    echo json_encode(array("status" => "success", "message" => "File has been uploaded successfully", "file" => $file));
+                } else {
+                    echo json_encode(array("status" => "fail", "message" => "Some error to upload this file"));
+                }
+            } else {
+                echo json_encode(array("status" => "fail", "message" => "File size can't more than 1 MB"));
+            }
+        } else {
+            if (isset($_FILES['CandidateProfile'])) {
+                $dir = Yii::$app->basePath . '/../uploads/candidate/profile_picture/';
+                $image = $_FILES['CandidateProfile'];
+                $ext = pathinfo($image['name']['photo'], PATHINFO_EXTENSION);
+                $destination = $dir . $model->id . '.' . $ext;
+                $isuploaded = move_uploaded_file($image['tmp_name']['photo'], $destination);
+                if ($isuploaded) {
+
+                    $file = 'https://www.cvsdatabase.com/uploads/candidate/profile_picture/' . $model->id . '.' . $ext;
+                    echo json_encode(array("status" => "success", "message" => "File has been uploaded successfully", "file" => $file));
+                } else {
+                    echo json_encode(array("status" => "fail", "message" => "Some error to upload this file"));
+                }
+            } else {
+                echo json_encode(array("status" => "fail", "message" => "File size can't more than 1 MB"));
+            }
+        }
+    }
+
     public function actionExports() {
         $test = '';
         $model = Candidate::find()->all();

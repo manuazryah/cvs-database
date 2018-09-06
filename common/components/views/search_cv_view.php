@@ -9,14 +9,7 @@ use common\models\LoginHistory;
  * and open the template in the editor.
  */
 $candidate = \common\models\Candidate::find()->where(['id' => $model->candidate_id])->one();
-$log_history = LoginHistory::find()->where(['client_id' => $model->candidate_id])->orderBy(['id' => SORT_DESC])->one();
-if (!empty($log_history)) {
-    if ($log_history->log_in_time != '') {
-        $last_login = date("d M Y", strtotime($log_history->log_in_time));
-    }
-} else {
-    $last_login = '';
-}
+$last_login = $model->date_of_updation;
 $model_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->all();
 $tot_diff = 0;
 $month = 0;
@@ -51,31 +44,35 @@ if ($model->name_view == 1) {
 $short_list_data = \common\models\ShortList::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
 $cvview_list_data = \common\models\CvViewHistory::find()->where(['candidate_id' => $model->candidate_id])->andWhere(['!=', 'employer_id', Yii::$app->session['employer_data']['id']])->all();
 $short_list_count = [];
-if(!empty($short_list_data)){
+if (!empty($short_list_data)) {
     foreach ($short_list_data as $short_list_val) {
-       $short_list_count[] = $short_list_val->employer_id;
+        $short_list_count[] = $short_list_val->employer_id;
     }
 }
-if(!empty($cvview_list_data)){
+if (!empty($cvview_list_data)) {
     foreach ($cvview_list_data as $cvview_list_val) {
         $short_list_count[] = $cvview_list_val->employer_id;
     }
 }
-$short_list_count = array_unique($short_list_count); 
+$short_list_count = array_unique($short_list_count);
 if (count($short_list_count) > 0) {
     $msg = count($short_list_count) . ' Other employers viewed / shortlisted this CV';
 } else {
-    $msg = '';
+    $msg = 'No Other employers viewed / shortlisted this CV';
 }
 $qualification = common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->orderBy(['to_year' => SORT_DESC])->one();
 $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $model->candidate_id])->limit(3)->orderBy(['to_date' => SORT_DESC])->all();
+$education = \common\models\CandidateEducation::find()->where(['candidate_id' => $model->candidate_id])->all();
 ?>
 <?php if ($candidate->status == 1) { ?>
     <div class="sorting_content">
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 prit0" id="leftdiv">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 prit0" id="leftdiv">
+            <div class="contact_details p-r refid hidden-lg hidden-md hidden-sm vissible-xs">
+                <span><strong>cv #</strong> <?= $profile_info->user_id ?></span>
+            </div>
             <div class="overflow">
                 <div class="bottom_text">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 pad0">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 pad0 profile-image">
                         <div class="tab-image">
                             <?php
                             if ($model->photo != '') {
@@ -85,13 +82,13 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                                 } else {
                                     echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
                                 }
-                            }else {
-                                    echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
-                                }
+                            } else {
+                                echo '<img width="70" height="70" class="img-responsive" src="' . Yii::$app->homeUrl . 'images/user-5.jpg"/>';
+                            }
                             ?>
                         </div>
                     </div>
-                    <div class="contact_details col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                    <div class="contact_details col-lg-10 col-md-10 col-sm-10 col-xs-12">
                         <div class="text-shorting">
                             <div class="contact_details p-l">
                                 <h1><strong><?= $name ?></strong></h1>
@@ -138,10 +135,10 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 p-l prit0" id="rightdiv">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 p-l prit0" id="rightdiv">
             <div class="button-box prit0">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
-                    <div class="contact_details col-md-12 col-sm-12 p-r refid">
+                    <div class="contact_details col-md-12 col-sm-12 p-r refid hidden-xs">
                         <span><strong>cv #</strong> <?= $profile_info->user_id ?></span>
                     </div>
                     <div class="contact_details col-md-12 col-sm-12 p-l">
@@ -159,22 +156,22 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-l prit0">
-                <div class="button-box ptop0">
+                <div class="button-box ptop0 button-div">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pad0">
                         <div class="button-sec">
                             <?php if (isset(Yii::$app->user->identity->id)) { ?>
                                 <?= Html::a('View CV', ['view-cv', 'id' => Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id)], ['class' => 'button3']) ?>
                             <?php } else { ?>
-                                 <?= Html::a('View CV', 'javascript:void(0)', ['class' => 'table-btn-default myBtn', 'id' => 'myBtn']) ?>
-                                ?>
+                                <?= Html::a('View CV', 'javascript:void(0)', ['class' => 'table-btn-default myBtn', 'id' => 'myBtn']) ?>
+
                             <?php } ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-           <!--/**************Qualification**************/-->
-        <div class="col-md-12">
+        <!--/**************Qualification**************/-->
+        <div class="col-xs-12">
             <div class="contact_details p-l skills-sec">
                 <span><strong>Qualification:</strong> 
                     <ul class="skills-list">
@@ -192,7 +189,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
             </div>
         </div>
         <!--/******************/-->
-        <div class="col-md-12">
+        <div class="col-xs-12">
             <div class="contact_details p-l skills-sec">
                 <span><strong>Skills:</strong> 
                     <ul class="skills-list">
@@ -206,7 +203,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                                     <li><?= $skill_row->skill ?></li>
                                 <?php }
                                 ?>
-                            <?php
+                                <?php
                             }
                         }
                         ?>
@@ -214,18 +211,17 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
                 </span>
             </div>
         </div>
-        <div class="bottom-box col-lg-12">
-           <div class="last-login col-md-4 col-sm-4 p-l">
-                <span><i>Last Logged in : <?= $last_login ?></i></span>
+        <div class="bottom-box col-xs-12">
+            <div class="last-login col-md-4 col-sm-4 col-xs-4 p-l">
+                <span><i>Last Logged in : <?= date("d M Y", strtotime($last_login)); ?></i></span>
             </div>
-            <div class="last-login col-md-3 col-sm-3 p-l">
-                <?php
-                if($model->featured_cv == 1){ ?>
-                   <span class="featured-tag">Featured</span>
-               <?php }
+            <div class="last-login col-md-3 col-sm-3 col-xs-3 p-l">
+                <?php if ($model->featured_cv == 1) { ?>
+                    <span class="featured-tag">Featured</span>
+                <?php }
                 ?>
             </div>
-            <div class="last-login col-md-5 col-sm-5 p-l text-right">
+            <div class="last-login col-md-5 col-sm-5 col-xs-5 p-l text-right">
                 <span><em><?= $msg ?></em></span>
             </div>
         </div>
@@ -243,7 +239,7 @@ $work_experiences = \common\models\WorkExperiance::find()->where(['candidate_id'
         </div>
         <div class="bottom-box col-lg-12">
             <div class="last-login col-md-6 col-sm-6 p-l">
-                <span><i>Last Logged in : <?= $last_login ?></i></span>
+                <span><i>Last Logged in : <?= date("d M Y", strtotime($last_login)); ?></i></span>
             </div>
             <div class="last-login col-md-6 col-sm-6 p-l text-right">
                 <span><em><?= $msg ?></em></span>

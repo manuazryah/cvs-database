@@ -15,4 +15,5 @@ return [
     'jobseeker/index' => '/candidate/index',
     'jobseeker/online-curriculum-vitae' => '/candidate/online-curriculum-vitae',
     'jobseeker/reset-password' => '/candidate/reset-password',
+    'blog' => '/employer/blog',
 ];

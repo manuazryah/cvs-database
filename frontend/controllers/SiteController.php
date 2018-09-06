@@ -30,12 +30,12 @@ class SiteController extends Controller {
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'signup', 'resend-email-varification', 'forgot', 'new-password'],
                 'rules' => [
-                        [
+                    [
                         'actions' => ['signup', 'resend-email-varification', 'forgot', 'new-password'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
-                        [
+                    [
                         'actions' => ['logout', 'resend-email-varification', 'forgot', 'new-password'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -300,7 +300,7 @@ class SiteController extends Controller {
         $token = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $token);
         $user_data = Candidate::find()->where(['id' => $token])->one();
         if ($user_data->email_varification_status == 1) {
-
+            
         }
         if (!empty($user_data)) {
             if ($user_data->email_varification_status == 0) {
@@ -363,7 +363,7 @@ class SiteController extends Controller {
 // To send HTML mail, the Content-type header must be set
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
-                "From: 'noreplay@cvsdatabase.com";
+                "From: 'norepay@cvsdatabase.com";
         mail($to, $subject, $message, $headers);
     }
 
@@ -398,14 +398,13 @@ class SiteController extends Controller {
             Yii::$app->getSession()->setFlash('error', "You can't reset password using this link.Please Try again");
         }
     }
-   
-     public function actionPrivacyPolicy() {
+
+    public function actionPrivacyPolicy() {
         return $this->render('privacy_policy');
     }
-     public function actionConditions() {
+
+    public function actionConditions() {
         return $this->render('conditions');
     }
 
-
 }
-

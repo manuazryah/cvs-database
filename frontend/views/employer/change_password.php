@@ -28,16 +28,16 @@ $this->title = 'Change Password';
                             $form = ActiveForm::begin();
                             ?>
                             <div class="row">
-                                <div class="form-group col-md-4 p-l">
+                                <div class="form-group col-lg-4 p-l">
                                     <?= $form->field($model, 'password')->passwordInput()->label('Old Password *') ?>
                                 </div>
-                                <div class="form-group col-md-4 p-l">
+                                <div class="form-group col-lg-4 p-l">
                                     <?= $form->field($model, 'new_password')->passwordInput()->label('New Password *') ?>
                                 </div>
-                                <div class="form-group col-md-4 p-l">
+                                <div class="form-group col-lg-4 p-l">
                                     <?= $form->field($model, 'confirm_password')->passwordInput()->label('Confirm Password *') ?>
                                 </div>
-                                <div class="form-group col-md-12 p-l">
+                                <div class="form-group col-md-12 col-xs-12 p-l">
                                     <?= Html::submitButton('Submit', ['class' => 'btn btn-success']) ?>
                                 </div>
                                 <?php ActiveForm::end(); ?>
