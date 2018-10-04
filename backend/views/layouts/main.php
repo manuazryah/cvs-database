@@ -177,6 +177,9 @@ AppAsset::register($this);
 
                         </ul>
                     </li>
+                    <li>
+                        <?= Html::a('<i class="fa fa-envelope-o"></i> Contact Enquiry', ['/admin/contact-enquiry/index'], ['class' => 'title']) ?>
+                    </li>
                 </ul>
 
                 <!-- notifications and other links -->
@@ -356,6 +359,9 @@ AppAsset::register($this);
                                 </li>
 
                             </ul>
+                        </li>
+                        <li>
+                            <?= Html::a('<i class="fa fa-envelope-o"></i> Contact Enquiry', ['/admin/contact-enquiry/index'], ['class' => 'title']) ?>
                         </li>
                     </ul>
 

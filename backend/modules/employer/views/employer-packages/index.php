@@ -53,6 +53,38 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'filter' => ArrayHelper::map(Employer::find()->asArray()->all(), 'id', 'first_name'),
                             ],
                             [
+                                'attribute' => 'employer_no',
+                                'label' => 'Employer No',
+                                'value' => function ($model) {
+                                    $employer = '';
+                                    if ($model->employer_id != '') {
+                                        $employer = Employer::find()->where(['id' => $model->employer_id])->one();
+                                    }
+                                    if (!empty($employer) && $employer != '') {
+                                        return $employer->employer_no;
+                                    } else {
+                                        return '';
+                                    }
+                                },
+                                'filter' => ArrayHelper::map(Employer::find()->asArray()->all(), 'id', 'employer_no'),
+                            ],
+                            [
+                                'attribute' => 'employer_email',
+                                'label' => 'Email',
+                                'value' => function ($model) {
+                                    $employer = '';
+                                    if ($model->employer_id != '') {
+                                        $employer = Employer::find()->where(['id' => $model->employer_id])->one();
+                                    }
+                                    if (!empty($employer) && $employer != '') {
+                                        return $employer->email;
+                                    } else {
+                                        return '';
+                                    }
+                                },
+                                'filter' => ArrayHelper::map(Employer::find()->asArray()->all(), 'id', 'email'),
+                            ],
+                            [
                                 'attribute' => 'package',
                                 'value' => function ($model) {
                                     return $model->package == '' ? '' : common\models\Packages::findOne($model->package)->package_name;

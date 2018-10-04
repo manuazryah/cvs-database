@@ -44,19 +44,19 @@ use yii\db\ActiveRecord;
      */
     public function rules() {
         return [
-                [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'create'],
-                [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'update'],
-                [['user_name'], 'required', 'message' => 'Email is Required', 'on' => 'forgot'],
-                [['country', 'status','review_status'], 'integer'],
-                [['address'], 'string'],
-                [['DOC', 'DOU', 'email_varification','description','last_login'], 'safe'],
-                [['first_name', 'last_name', 'email', 'password', 'company_name', 'location', 'company_email', 'position'], 'string', 'max' => 100],
-                [['phone', 'company_phone_number'], 'string', 'max' => 20],
-                [['email'], 'unique', 'on' => 'create'],
-                [['email'], 'unique', 'on' => 'update'],
-                [['email', 'company_email'], 'email'],
-                [['email', 'password'], 'required', 'on' => 'login'],
-                [['password'], 'validatePassword', 'on' => 'login'],
+            [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'create'],
+            [['first_name', 'last_name', 'email', 'password'], 'required', 'on' => 'update'],
+            [['user_name'], 'required', 'message' => 'Email is Required', 'on' => 'forgot'],
+            [['country', 'status', 'review_status'], 'integer'],
+            [['address'], 'string'],
+            [['DOC', 'DOU', 'email_varification', 'description', 'last_login', 'employer_no'], 'safe'],
+            [['first_name', 'last_name', 'email', 'password', 'company_name', 'location', 'company_email', 'position'], 'string', 'max' => 100],
+            [['phone', 'company_phone_number'], 'string', 'max' => 20],
+            [['email'], 'unique', 'on' => 'create'],
+            [['email'], 'unique', 'on' => 'update'],
+            [['email', 'company_email'], 'email'],
+            [['email', 'password'], 'required', 'on' => 'login'],
+            [['password'], 'validatePassword', 'on' => 'login'],
         ];
     }
 
@@ -72,7 +72,7 @@ use yii\db\ActiveRecord;
                 $this->addError($attribute, 'Incorrect username or password.');
             } else {
                 if ($user->status == 1) {
-                     Yii::$app->session['employer_data'] = $user->attributes;
+                    Yii::$app->session['employer_data'] = $user->attributes;
                 } else {
                     $this->addError($attribute, 'Your account has been deactivated. Kindly send email to admin@cvsdatabase.com');
                 }
@@ -149,7 +149,11 @@ use yii\db\ActiveRecord;
      * @inheritdoc
      */
     public static function findIdentityByAccessToken($token, $type = null) {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.
+
+        
+
+        ');
     }
 
     public function getId() {

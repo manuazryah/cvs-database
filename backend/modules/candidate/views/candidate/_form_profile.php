@@ -114,6 +114,7 @@ if (!empty($model)) {
                                                         }
                                                         ?>
                                                         <?= $form->field($model, 'photo')->fileInput(['maxlength' => true])->label($label) ?>
+                                                        <span class="required-size">Image dimension 200W ☓ 200H</span>
                                                     </div>
                                                     <div class="profile-header">
                                                         <h3 class="main-heading"><?= $user->user_name ?></h3>

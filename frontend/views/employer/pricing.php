@@ -37,6 +37,7 @@ use yii\helpers\Html;
                             </div>
                         </div>
                         <ul>
+                            <li class="features-div">Features</li>
                             <li>Validity</li>
                             <li>Total Downloads</li>
                         </ul>
@@ -48,18 +49,15 @@ use yii\helpers\Html;
                     foreach ($model as $value) {
                         if (!empty($value)) {
                             $i++;
-                            if($i == 1){
+                            if ($i == 1) {
                                 $cls = 'free';
-                            }elseif($i == 2){
+                            } elseif ($i == 2) {
                                 $cls = 'platinum';
-                            }
-                            elseif($i == 3){
+                            } elseif ($i == 3) {
                                 $cls = 'gold';
-                            }
-                            elseif($i == 4){
+                            } elseif ($i == 4) {
                                 $cls = 'silver';
-                            }
-                            elseif($i == 5){
+                            } elseif ($i == 5) {
                                 $cls = 'bronze';
                             }
                             ?>
@@ -68,26 +66,31 @@ use yii\helpers\Html;
                                     <div class="pricing-heading">
                                         <div class="col-lg-12">
                                             <h5><?= $value->package_name ?></h5>
-                                            <h1><?= $value->package_price ?> $</h1>
-                                          
+                                            <h1><?= floatval($value->package_price) ?> $</h1>
+
                                         </div>
                                     </div>
                                     <ul>
+                                        <div class="features-li">
+                                            <li>Search our CV database of professional candidates.</li>
+                                            <li>Advanced filter options.</li>
+                                            <li>Your unlocked CVs stay permanently.</li>
+                                        </div>
                                         <li><?= $value->no_of_days ?> Days</li>
                                         <li><?= $value->no_of_downloads ?> Downloads</li>
                                     </ul>
                                     <div class="col-lg-12">
                                         <div class="buynow-sec">
-                                            <?= Html::a('Order Now', ['/employer/index'],['class'=>'buy-now']) ?>
+            <?= Html::a('Order Now', ['/employer/index'], ['class' => 'buy-now']) ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <?php
-                        }
-                    }
-                }
-                ?>
+            <?php
+        }
+    }
+}
+?>
             </div>
         </div>
     </section>

@@ -8,7 +8,6 @@ use frontend\assets\AppAsset;
 AppAsset::register($this);
 $jobseaker_count = common\models\Candidate::find()->where(['status' => 1])->count();
 $employer_count = common\models\Employer::find()->where(['status' => 1])->count();
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -198,7 +197,7 @@ $employer_count = common\models\Employer::find()->where(['status' => 1])->count(
                     </div>
                     <div class="col-md-9">
                         <div class="text-right who">
-                            <?php //<?= Html::a('Employer', ['/employer/index'], ['class' => 'login active']) ?>
+                            <?php //<?= Html::a('Employer', ['/employer/index'], ['class' => 'login active'])  ?>
                             <?= Html::a('Jobseeker', ['/site/index'], ['class' => 'signup active']) ?>
                         </div>
                         <nav class="navbar navbar-default navbar-static-top">
@@ -233,9 +232,8 @@ $employer_count = common\models\Employer::find()->where(['status' => 1])->count(
                             <li><?= Html::a('About us', ['/site/about']) ?></li>
                             <li><?= Html::a('Conditions', ['/site/conditions']) ?></li>
                             <li><?= Html::a('Privacy policy', ['/site/privacy-policy']) ?></li>
-                             <li><?= Html::a('Blog', ['/employer/blog']) ?></li>
-                            <li><a href="">Careers with Us</a></li>
-                            <li><a href="">Contact us</a></li>
+                            <li><?= Html::a('Blog', ['/employer/blog']) ?></li>
+                            <li><?= Html::a('Contact us', ['/employer/contact']) ?></li>
                         </ul>
                     </div>
                     <div class="footer-block">
@@ -256,16 +254,14 @@ $employer_count = common\models\Employer::find()->where(['status' => 1])->count(
                             <li><a href="">FAQ - Employer</a></li>
                         </ul>
                     </div>
-                        
+
                     <div class="footer-block footer-block2">
                         <h5>Follow Us</h5>
                         <hr>
                         <ul class="follow">
-                            <li><a href="https://www.facebook.com/" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="https://twitter.com/" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="https://in.linkedin.com/" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
-<!--                            <li><a href="#" title="Google"><i class="fa fa-google-plus"></i></span></a></li>
-                            <li><a href="#" title="RSS"><i class="fa fa-rss"></i></a></li>-->
+                            <li><a href="https://www.facebook.com/CVsDatabasecom-1617580895012671/ " title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://www.linkedin.com/company/cvsdatabase/" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="https://twitter.com/Cvs_Database " title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
                         </ul>
                         <div class="border"></div>
                         <div class="register">
@@ -283,7 +279,7 @@ $employer_count = common\models\Employer::find()->where(['status' => 1])->count(
                         <div class="col-md-6 col-sm-6 padding-left">
                             <span>&#169; 2018 CVs Database. All rights reserved.</span>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>

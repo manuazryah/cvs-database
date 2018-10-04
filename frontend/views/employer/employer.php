@@ -60,6 +60,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
 
             <div class="col-md-4 signup-box">
                 <div id="form" class="form-fixed">
+                    <h3>Employer / Recruiter</h3>
                     <div id="userform">
                         <ul class="nav nav-tabs nav-justified" role="tablist">
                             <li class="<?= $flag == 1 ? 'active' : '' ?>"><a href="#login" role="tab" data-toggle="tab" aria-expanded="false">Log in</a></li>
@@ -142,7 +143,16 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                     <h2>Find Cvs by Skills, Industry  and Location</h2>
                     <p>Our comprehensive CVs database covers all functional areas and candidate skills that every company irrespective of size will be looking to recruit. Start your search today!</p>
                 </div>
-
+                <?php
+                $form2 = ActiveForm::begin([
+                            'action' => 'cv-search',
+                            'method' => 'post',
+                            'id' => 'filter-search',
+                ]);
+                ?>
+                <input type="hidden" id="skills_val" name="CvFilter[skill]" value="">
+                <input type="hidden" id="industry_val" name="CvFilter[industry]" value="">
+                <input type="hidden" id="loc_val" name="CvFilter[loc]" value="">
                 <div class="cvs-sort-list">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 pad0">
                         <div class="box">
@@ -150,7 +160,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                             <ul>
                                 <?php foreach ($industry_datas as $industry_data) { ?>
                                     <li>
-                                        <a href="#"><?= $industry_data->industry_name ?></a>
+                                        <a href="" class="industry-link" data-val="<?= $industry_data->id ?>"> <?= $industry_data->industry_name ?></a>
                                     </li>
                                 <?php }
                                 ?>
@@ -163,7 +173,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                             <ul>
                                 <?php foreach ($skills_datas as $skills_data) { ?>
                                     <li>
-                                        <a href="#"><?= $skills_data->skill ?></a>
+                                        <a href="" class="skill-link" data-val="<?= $skills_data->id ?>"> <?= $skills_data->skill ?></a>
                                     </li>
                                 <?php }
                                 ?>
@@ -174,10 +184,11 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                         <div class="box b0">
                             <h5 class="heading">CVs by location</h5>
                             <ul>
-                                <?php foreach ($city_datas as $city_data) {
+                                <?php
+                                foreach ($city_datas as $key => $city_data) {
                                     ?>
                                     <li>
-                                        <a href="#"> <?= $city_data ?></a>
+                                        <a href="" class="location-link" data-val="<?= $key ?>"> <?= $city_data ?></a>
                                     </li>
                                 <?php }
                                 ?>
@@ -185,6 +196,7 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                         </div>
                     </div>
                 </div>
+                <?php ActiveForm::end(); ?>
             </div>
             <div class="col-md-3">
                 <div class="Resume pad0">
@@ -212,32 +224,32 @@ $latest_cvs = common\models\CandidateProfile::find()->where(['status' => 1, 'fea
                                 <?php foreach ($latest_cvs as $latest_cv) { ?>
                                     <?php
                                     $model_experiences = \common\models\WorkExperiance::find()->where(['candidate_id' => $latest_cv->candidate_id])->all();
-$tot_diff = 0;
-$month = 0;
-$year = 0;
-foreach ($model_experiences as $experiences) {
-    $date1 = $experiences->from_date;
-    if ($experiences->present_status == 1) {
-        $date2 = date('Y-m-d');
-    } else {
-        $date2 = $experiences->to_date;
-    }
+                                    $tot_diff = 0;
+                                    $month = 0;
+                                    $year = 0;
+                                    foreach ($model_experiences as $experiences) {
+                                        $date1 = $experiences->from_date;
+                                        if ($experiences->present_status == 1) {
+                                            $date2 = date('Y-m-d');
+                                        } else {
+                                            $date2 = $experiences->to_date;
+                                        }
 
-    $ts1 = strtotime($date1);
-    $ts2 = strtotime($date2);
+                                        $ts1 = strtotime($date1);
+                                        $ts2 = strtotime($date2);
 
-    $year1 = date('Y', $ts1);
-    $year2 = date('Y', $ts2);
+                                        $year1 = date('Y', $ts1);
+                                        $year2 = date('Y', $ts2);
 
-    $month1 = date('m', $ts1);
-    $month2 = date('m', $ts2);
-    $tot_diff += (($year2 - $year1) * 12) + ($month2 - $month1);
-}
-if ($tot_diff > 0) {
-    $month = $tot_diff % 12;
-    $year = (int) ($tot_diff / 12);
-}
-?>
+                                        $month1 = date('m', $ts1);
+                                        $month2 = date('m', $ts2);
+                                        $tot_diff += (($year2 - $year1) * 12) + ($month2 - $month1);
+                                    }
+                                    if ($tot_diff > 0) {
+                                        $month = $tot_diff % 12;
+                                        $year = (int) ($tot_diff / 12);
+                                    }
+                                    ?>
                                     <div class="candidate-list">
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12 pl0">
                                             <div class="tab-image">
@@ -336,64 +348,64 @@ if ($tot_diff > 0) {
             <div class="row">
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe1.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/alshaya.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe2.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/azadea.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe3.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/dulsco.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe4.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/ge.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe5.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/germanclinic.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe6.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/gng.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe6.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/interior360.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe5.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/landmark.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe4.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/marriot.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe3.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/nmc.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe2.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/tayer.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe1.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/zulekha.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
             </div>
@@ -489,46 +501,6 @@ if ($tot_diff > 0) {
             </div>
         </div>
     </section>
-    <section class="blog">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center">
-                    <div class="page-heading">
-                        <h2>Latest News form <span>CVs Database</span></h2>
-                        <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="block1">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog1.jpg" alt="" class="img-responsive"></a>
-                        <div class="block1_desc">
-                            <div class="col-md-2 col-sm-2 col-xs-2 padding-left text-right">
-                                <h3>April 25, <span>2017</span></h3>
-                            </div>
-                            <div class="col-md-10 col-sm-10 col-xs-10">
-                                <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies tellus eget condimentum nisi.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="block1">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog2.jpg" alt="" class="img-responsive"></a>
-                        <div class="block1_desc">
-                            <div class="col-md-2 col-sm-2 col-xs-2 padding-left text-right">
-                                <h3>March 13, <span>2017</span></h3>
-                            </div>
-                            <div class="col-md-10 col-sm-10 col-xs-10">
-                                <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies tellus eget condimentum nisi.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 </main>
 <div id="returnModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -538,7 +510,7 @@ if ($tot_diff > 0) {
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <p><?= Html::a('<button type="button" class="btn btn-primary">Log in</button>', ['employer/index']) ?> to read the CV</p>
+                <p>Kindly <?= Html::a('login', ['employer/index']) ?> to view the CV.</p>
             </div>
         </div>
 
@@ -628,5 +600,24 @@ if ($tot_diff > 0) {
 <script>
     $('.myBtn').on('click', function () {
         $('#returnModal').modal('toggle');
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.industry-link').click(function () {
+            var industry = $(this).attr('data-val');
+            $("#industry_val").val(industry);
+            $("#filter-search").submit();
+        });
+        $('.skill-link').click(function () {
+            var skill = $(this).attr('data-val');
+            $("#skills_val").val(skill);
+            $("#filter-search").submit();
+        });
+        $('.location-link').click(function () {
+            var location = $(this).attr('data-val');
+            $("#loc_val").val(location);
+            $("#filter-search").submit();
+        });
     });
 </script>

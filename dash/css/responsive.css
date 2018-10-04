@@ -594,16 +594,16 @@
         font-size: 14px;
     }
     .admin-users-index .actively-looking{
-        padding: 0 12px; 
-        font-size: 10px;
+        padding: 0 7px; 
+        font-size: 10px !important;
     }
     .admin-users-index .employed-still-looking{
-        padding: 0 12px; 
-        font-size: 10px;
+        padding: 0 7px; 
+        font-size: 10px !important;
     }
     .admin-users-index .employed-not-looking{
-        padding: 0 12px; 
-        font-size: 10px;
+        padding: 0 7px; 
+        font-size: 10px !important;
     }
     .skills-sec .skills-list li{
         margin-bottom: 5px;
@@ -1118,7 +1118,7 @@
         float: none;
     }
     .modal-dialog {
-        width: 398px;
+        width: 100%;
         margin: 30px auto;
     }
     .btn-search {
@@ -1337,5 +1337,18 @@
     .register.job{ margin-left: 0px; margin-top: 10px;}
     .input-group-btn {
         right: 73px;
+    }
+    .admin-users-index .page_listing.candidate .summary{
+        position: unset;
+        text-align: left;
+    }
+    .admin-users-index .actively-looking{
+        font-size: 10px;
+    }
+    .admin-users-index .employed-still-looking{
+        font-size: 10px;
+    }
+    .admin-users-index .employed-not-looking{
+        font-size: 10px;
     }
 }

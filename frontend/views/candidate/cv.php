@@ -141,7 +141,7 @@ use yii\widgets\ActiveForm;
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <br>
-                                                            <span>Job Responsibilities: <?= $experience->job_responsibility ?></span>
+                                                            <span><?= $experience->job_responsibility ?></span>
                                                         </div>
                                                         <?php
                                                     }

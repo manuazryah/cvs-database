@@ -18,7 +18,7 @@ class EmployerSearch extends Employer {
     public function rules() {
         return [
             [['id', 'country', 'status'], 'integer'],
-            [['first_name', 'last_name', 'email', 'phone', 'password', 'company_name', 'location', 'address', 'company_email', 'company_phone_number', 'position', 'DOC', 'DOU'], 'safe'],
+            [['first_name', 'last_name', 'email', 'phone', 'password', 'company_name', 'location', 'address', 'company_email', 'company_phone_number', 'position', 'DOC', 'DOU', 'employer_no'], 'safe'],
         ];
     }
 
@@ -73,6 +73,7 @@ class EmployerSearch extends Employer {
                 ->andFilterWhere(['like', 'address', $this->address])
                 ->andFilterWhere(['like', 'company_email', $this->company_email])
                 ->andFilterWhere(['like', 'company_phone_number', $this->company_phone_number])
+                ->andFilterWhere(['like', 'employer_no', $this->employer_no])
                 ->andFilterWhere(['like', 'position', $this->position]);
 
         return $dataProvider;

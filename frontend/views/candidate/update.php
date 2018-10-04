@@ -14,6 +14,13 @@ use dosamigos\ckeditor\CKEditor;
 
 $course_datas = common\models\Courses::find()->where(['status' => 1])->all();
 $country_datas = common\models\Country::find()->where(['status' => 1])->orderBy(['country_name' => SORT_ASC])->all();
+$city_list = \common\models\City::find()->select('country')->distinct()->all();
+$country_arr = [];
+if (!empty($city_list)) {
+    foreach ($city_list as $city_list_val) {
+        $country_arr[] = $city_list_val->country;
+    }
+}
 $city_datas = [];
 if ($model->current_country != '') {
     $city_datas = ArrayHelper::map(\common\models\City::find()->where(['country' => $model->current_country])->all(), 'id', 'city');
@@ -154,7 +161,8 @@ if (!empty($model)) {
                                                 <?= $form->field($model, 'nationality')->dropDownList($countries, ['prompt' => '-Choose a Nationality-']) ?>
                                             </div>
                                             <div class="form-group col-md-6 p-r">
-                                                <?= $form->field($model, 'current_country')->dropDownList($countries, ['prompt' => '-Choose a Country-']) ?>
+                                                <?php $countries1 = ArrayHelper::map(Country::find()->where(['status' => 1, 'id' => $country_arr])->orderBy(['country_name' => SORT_ASC])->all(), 'id', 'country_name'); ?>
+                                                <?= $form->field($model, 'current_country')->dropDownList($countries1, ['prompt' => '-Choose a Country-']) ?>
                                             </div>
                                             <div class="form-group col-md-6 p-l">
                                                 <?= $form->field($model, 'current_city')->dropDownList($city_datas, ['prompt' => '-Choose a City-']) ?>
@@ -436,7 +444,7 @@ if (!empty($model)) {
                                             }
                                             ?>
                                             <input type="hidden" id="education_row_count" value="<?= $j ?>"/>
-                                            <?php // if (empty($model_education)) { ?>
+                                            <?php // if (empty($model_education)) {   ?>
                                             <div class="append-box">
                                                 <a class="ibtnDel remove"><i class="fa fa-close"></i></a>
                                                 <div class="row">

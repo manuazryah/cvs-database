@@ -444,8 +444,9 @@ a.table-btn-default {
     border: solid 1px #2190c9;
 }
 a.table-btn-default:hover, a.table-btn-default:focus{ background-color: #2190c9; color: rgb(255,255,255); border: solid 1px #2190c9;}
-.pagination {
+/*.pagination {
     margin: 20px 0 0;
+    border: 1px solid #8bb0c3;
 }
 .pagination>li>a, .pagination>li>span{
     border: none;
@@ -455,7 +456,7 @@ a.table-btn-default:hover, a.table-btn-default:focus{ background-color: #2190c9;
 .pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover, .pagination>li:first-child>a, .pagination>li:first-child>span, .pagination>li:last-child>a, .pagination>li:last-child>span, .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
     color: rgb(255,255,255);
     background-color: #2190c9;
-}
+}*/
 /*********our_site*******/
 .our_site{
     background: url(../images/home/bg.jpg) no-repeat left top/cover;
@@ -623,8 +624,8 @@ a.table-btn-default:hover, a.table-btn-default:focus{ background-color: #2190c9;
 }
 .heading4 h2 span{ color: #1b72ba;font-weight: 400; }
 hr {
-    margin-top: 35px;
-    margin-bottom: 35px;
+    margin-top: 10px;
+    margin-bottom: 5px;
     border: 1px solid #e1e1e1;
     width: 170px;
     margin-left: 0;
@@ -1383,7 +1384,7 @@ label span{ color: #7d7d7d; font-weight: 500;}
     width: 91%;
 }
 .form-fixed h3{
-    font-size: 29px;
+    font-size: 28px;
     color: rgb(255,255,255);
     text-transform: uppercase;
     font-weight: 400;
@@ -4512,7 +4513,7 @@ button, html input[type=button], input[type=reset], input[type=submit] {
     margin-bottom: 0px;
 }
 .pricing-table .package-pricing ul li{
-    font-size: 14px;
+    font-size: 10px;
     text-transform: uppercase;
     font-weight: 400;
     color: #849090;
@@ -4521,6 +4522,12 @@ button, html input[type=button], input[type=reset], input[type=submit] {
     border-right: 1px solid #e2e2e2;
     border-bottom: 1px solid #e2e2e2;
     min-height: 51px;
+}
+.pricing-table .package-details ul li.features-div {
+    padding: 83px 15px;
+    font-size: 16px;
+    font-weight: 400;
+    background: #fff;
 }
 .pricing-table .package-pricing ul li:nth-child(2){
     background: rgb(255,255,255);
@@ -5031,3 +5038,6 @@ button, html input[type=button], input[type=reset], input[type=submit] {
 }
 
 /************************************************404_END*********************************************/
+.contact-page .form-control{
+    margin-bottom: 30px;
+}

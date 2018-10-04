@@ -37,7 +37,7 @@ class EmployerRegister extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-                [['first_name', 'email', 'password', 'password_repeat', 'location'], 'required'],
+                [['first_name', 'email', 'password', 'password_repeat'], 'required'],
                 [['country', 'status','review_status'], 'integer'],
                 [['address'], 'string'],
                 [['DOC', 'DOU', 'email_varification','description'], 'safe'],

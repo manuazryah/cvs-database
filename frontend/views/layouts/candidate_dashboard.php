@@ -35,23 +35,23 @@ AppAsset::register($this);
                             <a class="site-logo hidden-lg hidden-md visible-sm visible-xs" href="index.php"><img src="<?= Yii::$app->homeUrl ?>images/home/site-logo.png" alt="" class="img-responsive" /></a>
                             <div class=" hidden-lg hidden-md">   
                                 <?php
-                                        echo '<i>'
-                                        . Html::beginForm(['/candidate/logout'], 'post', ['style' => '', 'class' => 'sign-out']) . '<a>'
-                                        . Html::submitButton(
-                                                '<i class="fa fa-sign-out" aria-hidden="true"></i> Sign out', ['class' => '', 'style' => '']
-                                        ) . '</a>'
-                                        . Html::endForm()
-                                        . '</i>';
-                                        ?>
+                                echo '<i>'
+                                . Html::beginForm(['/candidate/logout'], 'post', ['style' => '', 'class' => 'sign-out']) . '<a>'
+                                . Html::submitButton(
+                                        '<i class="fa fa-sign-out" aria-hidden="true"></i> Sign out', ['class' => '', 'style' => '']
+                                ) . '</a>'
+                                . Html::endForm()
+                                . '</i>';
+                                ?>
                             </div>
-<!--                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
-                            </div>-->
+                            <!--                            <div class="navbar-header">
+                                                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                                                <span class="sr-only">Toggle navigation</span>
+                                                                <span class="icon-bar"></span>
+                                                                <span class="icon-bar"></span>
+                                                                <span class="icon-bar"></span>
+                                                            </button>
+                                                        </div>-->
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav scrollto">
                                     <li class="dropdown user-prfile-img hidden-sm hidden-xs"><a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><img width="20" height="20" src="<?= Yii::$app->homeUrl ?>images/icons/user-icon-3.svg" alt="" class="img-responsive" /> Hi <b><?= Yii::$app->session['candidate']['id'] != '' ? Yii::$app->session['candidate']['user_name'] : '' ?></b> <i class=" fa fa-angle-down"></i></a>
@@ -99,5 +99,29 @@ AppAsset::register($this);
                 $('aside').removeClass('fixed');
             }
         });
+    });
+</script>
+<script>
+    $('.ui-dropdown').menu().hide();
+
+    $('#city-info .ui-dropper').button().click(function () {
+        // data-drop value and create ID to target dropdown
+        var menu = $('#' + $(this).attr('data-drop'));
+
+        // hide all OTHER dropdowns when we open one
+        $('.ui-menu:visible').not('#' + $(this).attr('data-drop')).hide();
+
+        // position the dropdown to the right, so it works on all buttons
+        // buttons at far right of screen will have menus flipped inward to avoid viewport collision
+        menu.toggle().position({
+            my: "right top",
+            at: "right top",
+            of: this
+        });
+        // on click of the document, close the menus
+        $(document).one("click", function () {
+//                                                            $('.ui-menu:visible').hide();
+        });
+        return false;
     });
 </script>

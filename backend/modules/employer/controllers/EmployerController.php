@@ -103,6 +103,8 @@ class EmployerController extends Controller {
                 $model->email_varification = 1;
             }
             if ($model->validate() && $model->save()) {
+                $model->employer_no = 'EMP' . (sprintf('%04d', $model->id));
+                $model->update();
                 $this->addPackage($model);
                 Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -133,6 +135,7 @@ class EmployerController extends Controller {
         $model->no_of_days_left = $package->no_of_days;
         $tran_no = $this->GenerateTransactionNo();
         $model->transaction_id = $tran_no;
+        $model->package_credit = $package->no_of_downloads;
         $model->no_of_downloads = $package->no_of_downloads;
         $model->no_of_downloads_left = $package->no_of_downloads;
         $model->created_date = date('Y-m-d');
@@ -290,8 +293,8 @@ class EmployerController extends Controller {
         }
         return $this->redirect(['shortlist-folders', 'id' => $id]);
     }
-    
-     public function actionExports() {
+
+    public function actionExports() {
         $test = '';
         $model = Employer::find()->all();
         if (!empty($model)) {

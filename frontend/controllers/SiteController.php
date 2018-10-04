@@ -255,44 +255,12 @@ class SiteController extends Controller {
     }
 
     public function sendMail($model) {
-
-//        echo '<a href="' . Yii::$app->homeUrl . 'site/new-password?token=' . $val . '">Click here change password</a>';
-//        exit;
         $to = $model->email;
-
-// subject
-        $subject = 'Email verification';
-
-// message
-        $message = '
-<html>
-<head>
-
-  <title>Email verification</title>
-</head>
-<body>
-  <p>Thank you very much for signing up at www.cvsdatabase.com !</p></br>
-<p>Please click on the below link to verify your email address:</p>
-  <table>
-
-    <tr>
-     <td style="padding: 30px 0px 30px 0px;"><a style=" background: #3498db; color: #ffffff;
-  font-size: 16px;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none; background-image: -webkit-linear-gradient(top, #3498db, #2980b9); background-image: -moz-linear-gradient(top, #3498db, #2980b9);background-image: -ms-linear-gradient(top, #3498db, #2980b9);background-image: -o-linear-gradient(top, #3498db, #2980b9);background-image: linear-gradient(to bottom, #3498db, #2980b9);-webkit-border-radius: 28;-moz-border-radius: 28;" href="http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'site/email-verification?token=' . Yii::$app->EncryptDecrypt->Encrypt('encrypt', $model->id) . '" >Click here</a></td>
-    </tr>
-
-  </table>
-<p> For any queries/ support kindly email to admin@cvsdatabase.com</p>
-</body>
-</html>
-';
-//        exit;
-// To send HTML mail, the Content-type header must be set
-        $headers = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
-                "From: 'admin@cvsdatabase.com";
-        mail($to, $subject, $message, $headers);
+        $message = Yii::$app->mailer->compose('candidate_varification_mail', ['model' => $model])
+                ->setFrom('noreply@cvsdatabase.com')
+                ->setTo($to)
+                ->setSubject('Email Varification');
+        $message->send();
         return true;
     }
 
@@ -358,13 +326,11 @@ class SiteController extends Controller {
 
     public function sendForgotMail($val, $model) {
         $to = $model->email;
-        $subject = 'Change password';
-        $message = $this->renderPartial('forgot_mail', ['model' => $model, 'val' => $val]);
-// To send HTML mail, the Content-type header must be set
-        $headers = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
-                "From: 'norepay@cvsdatabase.com";
-        mail($to, $subject, $message, $headers);
+        $message = Yii::$app->mailer->compose('forgot_jobseeker_mail', ['model' => $model, 'val' => $val]) // a view rendering result becomes the message body here
+                ->setFrom('noreply@cvsdatabase.com')
+                ->setTo($to)
+                ->setSubject('Change password');
+        $message->send();
     }
 
     public function tokenGenerator() {

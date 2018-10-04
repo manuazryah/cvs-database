@@ -26,6 +26,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
             return common\models\Country::findOne($model['country'])->country_name . ' - ' . $model['city'];
         }
 );
+$useragent = $_SERVER['HTTP_USER_AGENT'];
 ?>
 <div class="admin-users-index">
 
@@ -95,9 +96,9 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
 
                                                 <div id="demo" class="collapse categories-filter" val='button'>
                                                     <div class="page-heading check-label">
-                                                        <input class="form-control" type="text" id="industryInput" onkeyup="industryFunction()" placeholder="Search for industries" title="Type Industry Name" autocomplete="off">
+                                                        <input class="form-control" type="text" id="industryInput1" onkeyup="industryFunction1()" placeholder="Search for industries" title="Type Industry Name" autocomplete="off">
                                                         <div class="search-scroll">
-                                                            <table id="industryTable">
+                                                            <table id="industryTable1">
                                                                 <?php
                                                                 $industries = common\models\Industry::find()->where(['status' => 1])->andWhere(['<>', 'id', 0])->all();
                                                                 $arr_industry = [];
@@ -106,8 +107,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
 //                                            $arr_industry[$industry['id']] = $industry['industry_name'];
 //                                        }
                                                                     foreach ($industries as $industry) {
-                                                                        if ($model_filter->industries != '' && isset($model_filter->industries)) {
-                                                                            if (in_array($industry->id, $model_filter->industries)) {
+                                                                        if ($model_filter->industries1 != '' && isset($model_filter->industries1)) {
+                                                                            if (in_array($industry->id, $model_filter->industries1)) {
                                                                                 $check1 = 'checked';
                                                                             } else {
                                                                                 $check1 = '';
@@ -118,7 +119,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         ?>
                                                                         <tr class="">
                                                                             <td>
-                                                                                <label><input type="checkbox" <?= $check1 ?> name="CvFilter[industries][]" value="<?= $industry->id ?>"> <?= $industry->industry_name ?></label>
+                                                                                <label><input type="checkbox" <?= $check1 ?> name="CvFilter[industries1][]" value="<?= $industry->id ?>"> <?= $industry->industry_name ?></label>
                                                                             </td>
                                                                         </tr>
                                                                         <?php
@@ -137,9 +138,9 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
 
                                                 <div id="demo2" class="collapse categories-filter" val='button'>
                                                     <div class="page-heading check-label">
-                                                        <input class="form-control" type="text" id="skillInput" onkeyup="skillFunction()" placeholder="Search for skills" title="Type Skill" autocomplete="off">
+                                                        <input class="form-control" type="text" id="skillInput1" onkeyup="skillFunction1()" placeholder="Search for skills" title="Type Skill" autocomplete="off">
                                                         <div class="search-scroll">
-                                                            <table id="skillTable">
+                                                            <table id="skillTable1">
                                                                 <?php
                                                                 $skills = common\models\Skills::find()->where(['status' => 1])->all();
                                                                 $arr_skill = [];
@@ -148,8 +149,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
 //                                            $arr_skill[$skill['id']] = $skill['skill'];
 //                                        }
                                                                     foreach ($skills as $skill) {
-                                                                        if ($model_filter->skills != '' && isset($model_filter->skills)) {
-                                                                            if (in_array($skill->id, $model_filter->skills)) {
+                                                                        if ($model_filter->skills1 != '' && isset($model_filter->skills1)) {
+                                                                            if (in_array($skill->id, $model_filter->skills1)) {
                                                                                 $check2 = 'checked';
                                                                             } else {
                                                                                 $check2 = '';
@@ -160,7 +161,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         ?>
                                                                         <tr class="">
                                                                             <td>
-                                                                                <label><input type="checkbox" <?= $check2 ?> name="CvFilter[skills][]" value="<?= $skill->id ?>"> <?= $skill->skill ?></label>
+                                                                                <label><input type="checkbox" <?= $check2 ?> name="CvFilter[skills1][]" value="<?= $skill->id ?>"> <?= $skill->skill ?></label>
                                                                             </td>
                                                                         </tr>
                                                                         <?php
@@ -186,8 +187,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                             $arr_job = [];
                                                             if (!empty($job_categories)) {
                                                                 foreach ($job_categories as $job_category) {
-                                                                    if ($model_filter->job_types != '' && isset($model_filter->job_types)) {
-                                                                        if (in_array($job_category->id, $model_filter->job_types)) {
+                                                                    if ($model_filter->job_types1 != '' && isset($model_filter->job_types1)) {
+                                                                        if (in_array($job_category->id, $model_filter->job_types1)) {
                                                                             $check2 = 'checked';
                                                                         } else {
                                                                             $check2 = '';
@@ -196,7 +197,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         $check2 = '';
                                                                     }
                                                                     ?>
-                                                                    <label><input type="checkbox" <?= $check2 ?> name="CvFilter[job_types][]" value="<?= $job_category->id ?>"> <?= $job_category->job_type ?></label>
+                                                                    <label><input type="checkbox" <?= $check2 ?> name="CvFilter[job_types1][]" value="<?= $job_category->id ?>"> <?= $job_category->job_type ?></label>
                                                                     <?php
                                                                 }
                                                             }
@@ -218,8 +219,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                             $arr_sal = [];
                                                             if (!empty($salary_ranges)) {
                                                                 foreach ($salary_ranges as $salary_range) {
-                                                                    if ($model_filter->salary_range != '' && isset($model_filter->salary_range)) {
-                                                                        if (in_array($salary_range->id, $model_filter->salary_range)) {
+                                                                    if ($model_filter->salary_range1 != '' && isset($model_filter->salary_range1)) {
+                                                                        if (in_array($salary_range->id, $model_filter->salary_range1)) {
                                                                             $check3 = 'checked';
                                                                         } else {
                                                                             $check3 = '';
@@ -228,7 +229,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         $check3 = '';
                                                                     }
                                                                     ?>
-                                                                    <label><input type="checkbox" <?= $check3 ?> name="CvFilter[salary_range][]" value="<?= $salary_range->id ?>"> <?= $salary_range->salary_range ?></label>
+                                                                    <label><input type="checkbox" <?= $check3 ?> name="CvFilter[salary_range1][]" value="<?= $salary_range->id ?>"> <?= $salary_range->salary_range ?></label>
                                                                     <?php
                                                                 }
                                                             }
@@ -244,16 +245,16 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
 
                                                 <div id="demo5" class="collapse categories-filter" val='button'>
                                                     <div class="page-heading check-label">
-                                                        <input class="form-control" type="text" id="nationality" onkeyup="nationalityFunction()" placeholder="Search for nationality" title="Type Skill" autocomplete="off">
+                                                        <input class="form-control" type="text" id="nationality1" onkeyup="nationalityFunction1()" placeholder="Search for nationality" title="Type Skill" autocomplete="off">
                                                         <div class="search-scroll">
-                                                            <table id="nationalityTable">
+                                                            <table id="nationalityTable1">
                                                                 <?php
                                                                 $nationalities = common\models\Country::find()->where(['status' => 1])->all();
                                                                 $arr_nationality = [];
                                                                 if (!empty($nationalities)) {
                                                                     foreach ($nationalities as $nationality) {
-                                                                        if ($model_filter->nationality != '' && isset($model_filter->nationality)) {
-                                                                            if (in_array($nationality->id, $model_filter->nationality)) {
+                                                                        if ($model_filter->nationality1 != '' && isset($model_filter->nationality1)) {
+                                                                            if (in_array($nationality->id, $model_filter->nationality1)) {
                                                                                 $check4 = 'checked';
                                                                             } else {
                                                                                 $check4 = '';
@@ -264,7 +265,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         ?>
                                                                         <tr class="">
                                                                             <td>
-                                                                                <label><input type="checkbox" <?= $check4 ?> name="CvFilter[nationality][]" value="<?= $nationality->id ?>"> <?= $nationality->country_name ?></label>
+                                                                                <label><input type="checkbox" <?= $check4 ?> name="CvFilter[nationality1][]" value="<?= $nationality->id ?>"> <?= $nationality->country_name ?></label>
                                                                             </td>
                                                                         </tr>
                                                                         <?php
@@ -289,8 +290,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                             $arr_experiences = [];
                                                             if (!empty($experiences)) {
                                                                 foreach ($experiences as $experience) {
-                                                                    if ($model_filter->experience != '' && isset($model_filter->experience)) {
-                                                                        if (in_array($experience->id, $model_filter->experience)) {
+                                                                    if ($model_filter->experience1 != '' && isset($model_filter->experience1)) {
+                                                                        if (in_array($experience->id, $model_filter->experience1)) {
                                                                             $check8 = 'checked';
                                                                         } else {
                                                                             $check8 = '';
@@ -299,7 +300,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         $check8 = '';
                                                                     }
                                                                     ?>
-                                                                    <label><input type="checkbox" <?= $check8 ?> name="CvFilter[experience][]" value="<?= $experience->id ?>"> <?= $experience->experience_search ?></label>
+                                                                    <label><input type="checkbox" <?= $check8 ?> name="CvFilter[experience1][]" value="<?= $experience->id ?>"> <?= $experience->experience_search ?></label>
                                                                     <?php
                                                                 }
                                                             }
@@ -321,8 +322,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                             $arr_sal = [];
                                                             if (!empty($genders)) {
                                                                 foreach ($genders as $gender) {
-                                                                    if ($model_filter->gender != '' && isset($model_filter->gender)) {
-                                                                        if (in_array($gender->id, $model_filter->gender)) {
+                                                                    if ($model_filter->gender1 != '' && isset($model_filter->gender1)) {
+                                                                        if (in_array($gender->id, $model_filter->gender1)) {
                                                                             $check7 = 'checked';
                                                                         } else {
                                                                             $check7 = '';
@@ -331,7 +332,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         $check7 = '';
                                                                     }
                                                                     ?>
-                                                                    <label><input type="checkbox" <?= $check7 ?> name="CvFilter[gender][]" value="<?= $gender->id ?>"> <?= $gender->gender ?></label>
+                                                                    <label><input type="checkbox" <?= $check7 ?> name="CvFilter[gender1][]" value="<?= $gender->id ?>"> <?= $gender->gender ?></label>
                                                                     <?php
                                                                 }
                                                             }
@@ -353,8 +354,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                             $arr_sal = [];
                                                             if (!empty($languages)) {
                                                                 foreach ($languages as $language) {
-                                                                    if ($model_filter->language != '' && isset($model_filter->language)) {
-                                                                        if (in_array($language->id, $model_filter->language)) {
+                                                                    if ($model_filter->language1 != '' && isset($model_filter->language1)) {
+                                                                        if (in_array($language->id, $model_filter->language1)) {
                                                                             $check5 = 'checked';
                                                                         } else {
                                                                             $check5 = '';
@@ -363,7 +364,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         $check5 = '';
                                                                     }
                                                                     ?>
-                                                                    <label><input type="checkbox" <?= $check5 ?> name="CvFilter[language][]" value="<?= $language->id ?>"> <?= $language->language ?></label>
+                                                                    <label><input type="checkbox" <?= $check5 ?> name="CvFilter[language1][]" value="<?= $language->id ?>"> <?= $language->language ?></label>
                                                                     <?php
                                                                 }
                                                             }
@@ -385,8 +386,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                             $arr_sal = [];
                                                             if (!empty($job_status_datas)) {
                                                                 foreach ($job_status_datas as $job_status_data) {
-                                                                    if ($model_filter->job_status != '' && isset($model_filter->job_status)) {
-                                                                        if (in_array($job_status_data->id, $model_filter->job_status)) {
+                                                                    if ($model_filter->job_status1 != '' && isset($model_filter->job_status1)) {
+                                                                        if (in_array($job_status_data->id, $model_filter->job_status1)) {
                                                                             $check6 = 'checked';
                                                                         } else {
                                                                             $check6 = '';
@@ -395,7 +396,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         $check6 = '';
                                                                     }
                                                                     ?>
-                                                                    <label><input type="checkbox" <?= $check6 ?> name="CvFilter[job_status][]" value="<?= $job_status_data->id ?>"> <?= $job_status_data->job_status ?></label>
+                                                                    <label><input type="checkbox" <?= $check6 ?> name="CvFilter[job_status1][]" value="<?= $job_status_data->id ?>"> <?= $job_status_data->job_status ?></label>
                                                                     <?php
                                                                 }
                                                             }
@@ -417,8 +418,8 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                             $arr_folder = [];
                                                             if (!empty($folders)) {
                                                                 foreach ($folders as $folder) {
-                                                                    if ($model_filter->folder_name != '' && isset($model_filter->folder_name)) {
-                                                                        if (in_array($folder->folder_name, $model_filter->folder_name)) {
+                                                                    if ($model_filter->folder_name1 != '' && isset($model_filter->folder_name1)) {
+                                                                        if (in_array($folder->folder_name, $model_filter->folder_name1)) {
                                                                             $check8 = 'checked';
                                                                         } else {
                                                                             $check8 = '';
@@ -427,7 +428,7 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                                                         $check8 = '';
                                                                     }
                                                                     ?>
-                                                                    <label><input type="checkbox" <?= $check8 ?> name="CvFilter[folder_name][]" value="<?= $folder->folder_name ?>"> <?= $folder->folder_name ?></label>
+                                                                    <label><input type="checkbox" <?= $check8 ?> name="CvFilter[folder_name1][]" value="<?= $folder->folder_name ?>"> <?= $folder->folder_name ?></label>
                                                                     <?php
                                                                 }
                                                             }
@@ -755,54 +756,107 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                             }
                                         }
                                     }
-                                    if (isset($model_filter->industries) && $model_filter->industries != '') {
-                                        foreach ($model_filter->industries as $indus_value) {
-                                            $your_search_filter .= '"' . common\models\Industry::findOne($indus_value)->industry_name . '", ';
+                                    if (preg_match('/android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent) || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i', substr($useragent, 0, 4))) {
+                                        if (isset($model_filter->industries1) && $model_filter->industries1 != '') {
+                                            foreach ($model_filter->industries1 as $indus_value) {
+                                                $your_search_filter .= '"' . common\models\Industry::findOne($indus_value)->industry_name . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->skills) && $model_filter->skills != '') {
-                                        foreach ($model_filter->skills as $skills_value) {
-                                            $your_search_filter .= '"' . common\models\Skills::findOne($skills_value)->skill . '", ';
+                                        if (isset($model_filter->skills1) && $model_filter->skills1 != '') {
+                                            foreach ($model_filter->skills1 as $skills_value) {
+                                                $your_search_filter .= '"' . common\models\Skills::findOne($skills_value)->skill . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->job_types) && $model_filter->job_types != '') {
-                                        foreach ($model_filter->job_types as $job_type_value) {
-                                            $your_search_filter .= '"' . common\models\JobType::findOne($job_type_value)->job_type . '", ';
+                                        if (isset($model_filter->job_types1) && $model_filter->job_types1 != '') {
+                                            foreach ($model_filter->job_types1 as $job_type_value) {
+                                                $your_search_filter .= '"' . common\models\JobType::findOne($job_type_value)->job_type . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->salary_range) && $model_filter->salary_range != '') {
-                                        foreach ($model_filter->salary_range as $salary_range_value) {
-                                            $your_search_filter .= '"' . common\models\ExpectedSalary::findOne($salary_range_value)->salary_range . '", ';
+                                        if (isset($model_filter->salary_range1) && $model_filter->salary_range1 != '') {
+                                            foreach ($model_filter->salary_range1 as $salary_range_value) {
+                                                $your_search_filter .= '"' . common\models\ExpectedSalary::findOne($salary_range_value)->salary_range . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->nationality) && $model_filter->nationality != '') {
-                                        foreach ($model_filter->nationality as $nationality_value) {
-                                            $your_search_filter .= '"' . common\models\Country::findOne($nationality_value)->country_name . '", ';
+                                        if (isset($model_filter->nationality1) && $model_filter->nationality1 != '') {
+                                            foreach ($model_filter->nationality1 as $nationality_value) {
+                                                $your_search_filter .= '"' . common\models\Country::findOne($nationality_value)->country_name . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->experience) && $model_filter->experience != '') {
-                                        foreach ($model_filter->experience as $experience_value) {
-                                            $your_search_filter .= '"' . common\models\ExperienceSearch::findOne($experience_value)->experience_search . '", ';
+                                        if (isset($model_filter->experience1) && $model_filter->experience1 != '') {
+                                            foreach ($model_filter->experience1 as $experience_value) {
+                                                $your_search_filter .= '"' . common\models\ExperienceSearch::findOne($experience_value)->experience_search . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->gender) && $model_filter->gender != '') {
-                                        foreach ($model_filter->gender as $gender_value) {
-                                            $your_search_filter .= '"' . common\models\Gender::findOne($gender_value)->gender . '", ';
+                                        if (isset($model_filter->gender1) && $model_filter->gender1 != '') {
+                                            foreach ($model_filter->gender1 as $gender_value) {
+                                                $your_search_filter .= '"' . common\models\Gender::findOne($gender_value)->gender . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->language) && $model_filter->language != '') {
-                                        foreach ($model_filter->language as $language_value) {
-                                            $your_search_filter .= '"' . common\models\Languages::findOne($language_value)->language . '", ';
+                                        if (isset($model_filter->language1) && $model_filter->language1 != '') {
+                                            foreach ($model_filter->language1 as $language_value) {
+                                                $your_search_filter .= '"' . common\models\Languages::findOne($language_value)->language . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->job_status) && $model_filter->job_status != '') {
-                                        foreach ($model_filter->job_status as $job_status_value) {
-                                            $your_search_filter .= '"' . common\models\JobStatus::findOne($job_status_value)->job_status . '", ';
+                                        if (isset($model_filter->job_status1) && $model_filter->job_status1 != '') {
+                                            foreach ($model_filter->job_status1 as $job_status_value) {
+                                                $your_search_filter .= '"' . common\models\JobStatus::findOne($job_status_value)->job_status . '", ';
+                                            }
                                         }
-                                    }
-                                    if (isset($model_filter->folder_name) && $model_filter->folder_name != '') {
-                                        foreach ($model_filter->folder_name as $folder_name_value) {
-                                            $your_search_filter .= '"' . $folder_name_value . '", ';
+                                        if (isset($model_filter->folder_name1) && $model_filter->folder_name1 != '') {
+                                            foreach ($model_filter->folder_name1 as $folder_name_value) {
+                                                $your_search_filter .= '"' . $folder_name_value . '", ';
+                                            }
+                                        }
+                                    } else {
+                                        if (isset($model_filter->industries) && $model_filter->industries != '') {
+                                            foreach ($model_filter->industries as $indus_value) {
+                                                $your_search_filter .= '"' . common\models\Industry::findOne($indus_value)->industry_name . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->skills) && $model_filter->skills != '') {
+                                            foreach ($model_filter->skills as $skills_value) {
+                                                $your_search_filter .= '"' . common\models\Skills::findOne($skills_value)->skill . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->job_types) && $model_filter->job_types != '') {
+                                            foreach ($model_filter->job_types as $job_type_value) {
+                                                $your_search_filter .= '"' . common\models\JobType::findOne($job_type_value)->job_type . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->salary_range) && $model_filter->salary_range != '') {
+                                            foreach ($model_filter->salary_range as $salary_range_value) {
+                                                $your_search_filter .= '"' . common\models\ExpectedSalary::findOne($salary_range_value)->salary_range . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->nationality) && $model_filter->nationality != '') {
+                                            foreach ($model_filter->nationality as $nationality_value) {
+                                                $your_search_filter .= '"' . common\models\Country::findOne($nationality_value)->country_name . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->experience) && $model_filter->experience != '') {
+                                            foreach ($model_filter->experience as $experience_value) {
+                                                $your_search_filter .= '"' . common\models\ExperienceSearch::findOne($experience_value)->experience_search . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->gender) && $model_filter->gender != '') {
+                                            foreach ($model_filter->gender as $gender_value) {
+                                                $your_search_filter .= '"' . common\models\Gender::findOne($gender_value)->gender . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->language) && $model_filter->language != '') {
+                                            foreach ($model_filter->language as $language_value) {
+                                                $your_search_filter .= '"' . common\models\Languages::findOne($language_value)->language . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->job_status) && $model_filter->job_status != '') {
+                                            foreach ($model_filter->job_status as $job_status_value) {
+                                                $your_search_filter .= '"' . common\models\JobStatus::findOne($job_status_value)->job_status . '", ';
+                                            }
+                                        }
+                                        if (isset($model_filter->folder_name) && $model_filter->folder_name != '') {
+                                            foreach ($model_filter->folder_name as $folder_name_value) {
+                                                $your_search_filter .= '"' . $folder_name_value . '", ';
+                                            }
                                         }
                                     }
                                     ?>
@@ -815,6 +869,18 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
                                 echo ListView::widget([
                                     'dataProvider' => $dataProvider,
                                     'itemView' => '_item',
+                                    'pager' => [
+                                        'options' => ['class' => 'pagination'],
+                                        'prevPageLabel' => '<', // Set the label for the "previous" page button
+                                        'nextPageLabel' => '>', // Set the label for the "next" page button
+                                        'firstPageLabel' => '<<', // Set the label for the "first" page button
+                                        'lastPageLabel' => '>>', // Set the label for the "last" page button
+                                        'nextPageCssClass' => '>', // Set CSS class for the "next" page button
+                                        'prevPageCssClass' => '<', // Set CSS class for the "previous" page button
+                                        'firstPageCssClass' => '<<', // Set CSS class for the "first" page button
+                                        'lastPageCssClass' => '>>', // Set CSS class for the "last" page button
+                                        'maxButtonCount' => 5, // Set maximum number of page buttons that can be displayed
+                                    ],
                                 ]);
                                 ?>
                             </div>
@@ -918,6 +984,23 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
             }
         }
     }
+    function industryFunction1() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("industryInput1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("industryTable1");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
     function skillFunction() {
         var input, filter, table, tr, td, i;
         input = document.getElementById("skillInput");
@@ -935,11 +1018,45 @@ $city_datas = ArrayHelper::map(\common\models\City::find()->orderBy([new \yii\db
             }
         }
     }
+    function skillFunction1() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("skillInput1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("skillTable1");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
     function nationalityFunction() {
         var input, filter, table, tr, td, i;
         input = document.getElementById("nationality");
         filter = input.value.toUpperCase();
         table = document.getElementById("nationalityTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function nationalityFunction1() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("nationality1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("nationalityTable1");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[0];

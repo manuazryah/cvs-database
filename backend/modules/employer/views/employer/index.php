@@ -33,6 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
 //                                                            'id',
+                            [
+                                'attribute' => 'Employer No',
+                                'value' => function ($model) {
+                                    return $model->employer_no == '' ? '' : $model->employer_no;
+                                },
+                            ],
                             'first_name',
                             'last_name',
                             'email:email',

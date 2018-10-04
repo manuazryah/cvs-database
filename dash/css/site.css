@@ -2832,6 +2832,19 @@ input[type=checkbox], input[type=radio] {
 .pricing-table .package-details ul li:nth-child(2){
     background: #fff;
 }
+.pricing-table .package-details ul li.features-div{
+    padding: 90px 15px;
+    font-size: 16px;
+    font-weight: 400;
+    background: #fff;
+}
+.pricing-table .package-pricing ul .features-li li{
+    font-size: 12px;
+    text-transform: initial;
+    text-align: center;
+    padding: 15px 10px;
+}
+
 .pricing-table .package-pricing{
     display: grid;
     text-align: center;
@@ -3009,6 +3022,7 @@ input[type=checkbox], input[type=radio] {
 .job-header .contentbox .contact_details {
     padding-left: 10px !important;
     border-bottom: 1px solid #e4e4e4;
+    width: 100%;
 }
 .job-header .contentbox .contact_details:last-child{
     border: none;

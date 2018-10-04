@@ -101,7 +101,7 @@
         left: -15px;
     }
     .form-fixed h3{
-        font-size: 24px;
+        font-size: 23px;
     }
     .success_story .page-heading2{
         margin-right: 20px;
@@ -162,7 +162,7 @@
         float: none;
     }
     .modal-dialog {
-        width: 398px;
+        width: 80%;
         margin: 30px auto;
     }
     .btn-search {
@@ -282,6 +282,9 @@
         right: 15px;
         width: 100%;
         top: 60px;
+    }
+    .my-account .field-candidateprofile-name .hide-view{
+        position: unset;
     }
     /*    .navbar-collapse.collapse.in{
             position: absolute;
@@ -956,6 +959,9 @@
         width: 100%;
         border: none;
     }
+    .my-account .candidate_prof_add{
+        margin: -7px 0 15px 0;
+    }
 }
 
 @media (min-width:600px) and (max-width:768px){
@@ -1281,6 +1287,7 @@
         top: 0;
         position: absolute;
         right: 0;
+        padding: 0 15px;
     }
     .header-stricky .who {
         right: 0;
@@ -1300,6 +1307,24 @@
         float: none;
         margin: 0 auto;
         margin-bottom: 20px;
+    }
+    .site-banner{
+        background-position: top left;
+    }
+    .admin-users-index .actively-looking{
+        padding: 0 7px; 
+        font-size: 10px !important;
+    }
+    .admin-users-index .employed-still-looking{
+        padding: 0 7px; 
+        font-size: 10px !important;
+    }
+    .admin-users-index .employed-not-looking{
+        padding: 0 7px; 
+        font-size: 10px !important;
+    }
+    .admin-users-index .page_listing .button-box .button-sec #myBtn {
+        width: 100%;
     }
 }
 
@@ -1381,5 +1406,11 @@
         border-left: 1px solid #e1e1e1;
         border-top: 3px solid #2caef4;
     } 
+    .form-fixed h3 {
+        font-size: 20px;
+    }
+    .search-filter-summery .panel-title {
+        font-size: 12px;
+    }
 }
 

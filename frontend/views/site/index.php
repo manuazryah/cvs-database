@@ -102,64 +102,64 @@ use yii\widgets\Pjax;
             <div class="row">
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe1.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/alshaya.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe2.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/azadea.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe3.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/dulsco.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe4.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/ge.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe5.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/germanclinic.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe6.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/gng.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe6.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/interior360.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe5.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/landmark.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe4.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/marriot.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe3.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/nmc.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe2.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/tayer.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="client">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/employe1.png" alt="" class="img-responsive"  /></a>
+                        <a href=""><img src="<?= yii::$app->homeUrl; ?>images/client/zulekha.png" alt="" class="img-responsive"  /></a>
                     </div>
                 </div>
             </div>
@@ -230,46 +230,6 @@ use yii\widgets\Pjax;
                 <div class="col-md-12 text-center">
                     <div class="vector_map">
                         <img src="<?= yii::$app->homeUrl; ?>images/home/map.png" alt="" class="img-responsive">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="blog">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center">
-                    <div class="page-heading">
-                        <h2>Latest News form <span>Jobseekers</span></h2>
-                        <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="block1">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog1.jpg" alt="" class="img-responsive"></a>
-                        <div class="block1_desc">
-                            <div class="col-md-2 col-sm-2 col-xs-2 padding-left text-right">
-                                <h3>April 25, <span>2017</span></h3>
-                            </div>
-                            <div class="col-md-10 col-sm-10 col-xs-10">
-                                <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies tellus eget condimentum nisi.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="block1">
-                        <a href="#"><img src="<?= yii::$app->homeUrl; ?>images/home/blog2.jpg" alt="" class="img-responsive"></a>
-                        <div class="block1_desc">
-                            <div class="col-md-2 col-sm-2 col-xs-2 padding-left text-right">
-                                <h3>March 13, <span>2017</span></h3>
-                            </div>
-                            <div class="col-md-10 col-sm-10 col-xs-10">
-                                <p>Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies tellus eget condimentum nisi.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

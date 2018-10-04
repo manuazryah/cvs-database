@@ -73,6 +73,8 @@ class EmployerController extends Controller {
             }
             $model_register->review_status = 0;
             if ($model_register->validate() && $model_register->save()) {
+                $model_register->employer_no = 'EMP' . (sprintf('%04d', $model_register->id));
+                $model_register->update();
                 $this->addPackage($model_register);
                 $this->sendMail($model_register);
                 Yii::$app->session->setFlash('success', 'Thank you for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
@@ -119,56 +121,125 @@ class EmployerController extends Controller {
         if ($active_candidate != '' && !empty($active_candidate)) {
             $dataProvider->query->andWhere(['candidate_id' => $active_candidate]);
         }
+        $useragent = $_SERVER['HTTP_USER_AGENT'];
         if ($model_filter->load(Yii::$app->request->post())) {
             if ($model_filter->keyword != '') {
                 $keywords = $this->getFilterKeywords($model_filter->keyword);
                 $dataProvider->query->andWhere(['id' => $keywords]);
             }
             if ($model_filter->location != '') {
-//                $location_datas = $this->getLocationDatas($model_filter->location);
-//                $dataProvider->query->andWhere(['id' => $location_datas]);
                 $locations = $this->getLocations($model_filter->location);
                 $dataProvider->query->andWhere(['id' => $locations]);
             }
-            if ($model_filter->industries != '') {
-                $filter_industry = $this->getFilterIndustry($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_industry]);
+            if ($model_filter->loc != '') {
+                $model_filter->location[] = $model_filter->loc;
+                $locations = $this->getLocations($model_filter->location);
+                $dataProvider->query->andWhere(['id' => $locations]);
             }
-            if ($model_filter->skills != '') {
-                $filter_skills = $this->getFilterSkills($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_skills]);
+            if (preg_match('/android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent) || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i', substr($useragent, 0, 4))) {
+                if ($model_filter->industries1 != '') {
+                    $filter_industry = $this->getFilterIndustry1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_industry]);
+                }
+                if ($model_filter->skills1 != '') {
+                    $filter_skills = $this->getFilterSkills1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_skills]);
+                }
+                if ($model_filter->job_types1 != '') {
+                    $filter_job_types = $this->getFilterJobType1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_job_types]);
+                }
+                if ($model_filter->salary_range1 != '') {
+                    $filter_salary_range = $this->getFilterSalaryRange1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_salary_range]);
+                }
+                if ($model_filter->gender1 != '') {
+                    $filter_gender = $this->getFilterGender1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_gender]);
+                }
+                if ($model_filter->language1 != '') {
+                    $filter_language = $this->getFilterLanguage1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_language]);
+                }
+                if ($model_filter->job_status1 != '') {
+                    $filter_job_status = $this->getFilterJobStatus1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_job_status]);
+                }
+                if ($model_filter->nationality1 != '') {
+                    $filter_nationality = $this->getFilterNationality1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_nationality]);
+                }
+                if ($model_filter->experience1 != '') {
+                    $filter_experience = $this->getFilterExperience1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_experience]);
+                }
+                if ($model_filter->folder_name1 != '') {
+                    $filter_folders = $this->getFilterFolder1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_folders]);
+                }
+            } else {
+                if ($model_filter->industries != '') {
+                    $filter_industry = $this->getFilterIndustry($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_industry]);
+                }
+                if ($model_filter->skills != '') {
+                    $filter_skills = $this->getFilterSkills($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_skills]);
+                }
+                if ($model_filter->job_types != '') {
+                    $filter_job_types = $this->getFilterJobType($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_job_types]);
+                }
+                if ($model_filter->salary_range != '') {
+                    $filter_salary_range = $this->getFilterSalaryRange($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_salary_range]);
+                }
+                if ($model_filter->gender != '') {
+                    $filter_gender = $this->getFilterGender($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_gender]);
+                }
+                if ($model_filter->language != '') {
+                    $filter_language = $this->getFilterLanguage($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_language]);
+                }
+                if ($model_filter->job_status != '') {
+                    $filter_job_status = $this->getFilterJobStatus($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_job_status]);
+                }
+                if ($model_filter->nationality != '') {
+                    $filter_nationality = $this->getFilterNationality($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_nationality]);
+                }
+                if ($model_filter->experience != '') {
+                    $filter_experience = $this->getFilterExperience($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_experience]);
+                }
+                if ($model_filter->folder_name != '') {
+                    $filter_folders = $this->getFilterFolder($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_folders]);
+                }
             }
-            if ($model_filter->job_types != '') {
-                $filter_job_types = $this->getFilterJobType($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_job_types]);
+            if ($model_filter->skill != '') {
+                if (preg_match('/android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent) || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i', substr($useragent, 0, 4))) {
+                    $model_filter->skills1[] = $model_filter->skill;
+                    $filter_skills = $this->getFilterSkills1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_skills]);
+                } else {
+                    $model_filter->skills[] = $model_filter->skill;
+                    $filter_skills = $this->getFilterSkills($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_skills]);
+                }
             }
-            if ($model_filter->salary_range != '') {
-                $filter_salary_range = $this->getFilterSalaryRange($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_salary_range]);
-            }
-            if ($model_filter->gender != '') {
-                $filter_gender = $this->getFilterGender($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_gender]);
-            }
-            if ($model_filter->language != '') {
-                $filter_language = $this->getFilterLanguage($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_language]);
-            }
-            if ($model_filter->job_status != '') {
-                $filter_job_status = $this->getFilterJobStatus($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_job_status]);
-            }
-            if ($model_filter->nationality != '') {
-                $filter_nationality = $this->getFilterNationality($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_nationality]);
-            }
-            if ($model_filter->experience != '') {
-                $filter_experience = $this->getFilterExperience($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_experience]);
-            }
-            if ($model_filter->folder_name != '') {
-                $filter_folders = $this->getFilterFolder($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_folders]);
+            if ($model_filter->industry != '') {
+                if (preg_match('/android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent) || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i', substr($useragent, 0, 4))) {
+                    $model_filter->industries1[] = $model_filter->industry;
+                    $filter_industry = $this->getFilterIndustry1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_industry]);
+                } else {
+                    $model_filter->industries[] = $model_filter->industry;
+                    $filter_industry = $this->getFilterIndustry($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_industry]);
+                }
             }
         }
         return $this->render('search-result', [
@@ -237,6 +308,8 @@ class EmployerController extends Controller {
             }
             $model->review_status = 0;
             if ($model->validate() && $model->save()) {
+                $model->employer_no = 'EMP' . (sprintf('%04d', $model->id));
+                $model->update();
                 $this->addPackage($model);
                 $this->sendMail($model);
                 Yii::$app->session->setFlash('success', 'Thanku for registering with us.. a mail has been sent to your mail id (check your spam folder too)');
@@ -283,37 +356,11 @@ class EmployerController extends Controller {
 
     public function sendMail($model) {
         $to = $model->email;
-        $subject = 'Email verification';
-//        echo $message = '
-        $message = '
-<html>
-<head>
-
-  <title>Email verification</title>
-</head>
-<body>
-  <p>Thank you very much for signing up at www.cvsdatabase.com !</p></br>
-<p>Please click on the below link to verify your email address:</p>
-  <table>
-
-    <tr>
-     <td style="padding: 30px 0px 30px 0px;"><a style=" background: #3498db; color: #ffffff;
-  font-size: 16px;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none; background-image: -webkit-linear-gradient(top, #3498db, #2980b9); background-image: -moz-linear-gradient(top, #3498db, #2980b9);background-image: -ms-linear-gradient(top, #3498db, #2980b9);background-image: -o-linear-gradient(top, #3498db, #2980b9);background-image: linear-gradient(to bottom, #3498db, #2980b9);-webkit-border-radius: 28;-moz-border-radius: 28;" href="http://' . Yii::$app->getRequest()->serverName . Yii::$app->homeUrl . 'employer/email-verification?token=' . $model->id . '" >Click here</a></td>
-    </tr>
-
-  </table>
-<p> For any queries/ support kindly email to admin@cvsdatabase.com</p>
-</body>
-</html>
-';
-//echo $message;        exit;
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= 'From: admin@cvsdatabase.com' . "\r\n";
-
-        mail($to, $subject, $message, $headers);
+        $message = Yii::$app->mailer->compose('employer_varification_mail', ['model' => $model])
+                ->setFrom('noreply@cvsdatabase.com')
+                ->setTo($to)
+                ->setSubject('Email Varification');
+        $message->send();
         return true;
     }
 
@@ -327,12 +374,21 @@ class EmployerController extends Controller {
         $featured_recent = $this->getRecentFeatured();
         $dataProvider->query->orderBy([new \yii\db\Expression('FIELD (id, ' . implode(',', $featured_recent) . ')')]);
         $user_plans = EmployerPackages::find()->where(['employer_id' => Yii::$app->session['employer_data']['id']])->one();
+        if (!empty($user_plans)) {
+            $now = time();
+            $date = $user_plans->end_date;
+            if (strtotime($date) < $now) {
+                $user_plans->no_of_downloads_left = 0;
+                $user_plans->save();
+            }
+        }
         $model = new CvSearch();
         $model_filter = new CvFilter();
         $active_candidate = $this->getActiveCandidate();
         if ($active_candidate != '' && !empty($active_candidate)) {
             $dataProvider->query->andWhere(['candidate_id' => $active_candidate]);
         }
+        $useragent = $_SERVER['HTTP_USER_AGENT'];
         if ($model_filter->load(Yii::$app->request->post())) {
             if ($model_filter->keyword != '') {
                 $keywords = $this->getFilterKeywords($model_filter->keyword);
@@ -342,45 +398,88 @@ class EmployerController extends Controller {
                 $locations = $this->getLocations($model_filter->location);
                 $dataProvider->query->andWhere(['id' => $locations]);
             }
-            if ($model_filter->industries != '') {
-                $filter_industry = $this->getFilterIndustry($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_industry]);
-            }
-            if ($model_filter->skills != '') {
-                $filter_skills = $this->getFilterSkills($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_skills]);
-            }
-            if ($model_filter->job_types != '') {
-                $filter_job_types = $this->getFilterJobType($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_job_types]);
-            }
-            if ($model_filter->salary_range != '') {
-                $filter_salary_range = $this->getFilterSalaryRange($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_salary_range]);
-            }
-            if ($model_filter->gender != '') {
-                $filter_gender = $this->getFilterGender($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_gender]);
-            }
-            if ($model_filter->language != '') {
-                $filter_language = $this->getFilterLanguage($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_language]);
-            }
-            if ($model_filter->job_status != '') {
-                $filter_job_status = $this->getFilterJobStatus($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_job_status]);
-            }
-            if ($model_filter->nationality != '') {
-                $filter_nationality = $this->getFilterNationality($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_nationality]);
-            }
-            if ($model_filter->experience != '') {
-                $filter_experience = $this->getFilterExperience($model_filter);
-                $dataProvider->query->andWhere(['id' => $filter_experience]);
-            }
-            if ($model_filter->folder_name != '') {
-                $filter_folders = $this->getFilterFolder($model_filter);
-                $dataProvider->query->andWhere(['candidate_id' => $filter_folders]);
+            if (preg_match('/android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent) || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i', substr($useragent, 0, 4))) {
+                if ($model_filter->industries1 != '') {
+                    $filter_industry = $this->getFilterIndustry1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_industry]);
+                }
+                if ($model_filter->skills1 != '') {
+                    $filter_skills = $this->getFilterSkills1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_skills]);
+                }
+                if ($model_filter->job_types1 != '') {
+                    $filter_job_types = $this->getFilterJobType1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_job_types]);
+                }
+                if ($model_filter->salary_range1 != '') {
+                    $filter_salary_range = $this->getFilterSalaryRange1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_salary_range]);
+                }
+                if ($model_filter->gender1 != '') {
+                    $filter_gender = $this->getFilterGender1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_gender]);
+                }
+                if ($model_filter->language1 != '') {
+                    $filter_language = $this->getFilterLanguage1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_language]);
+                }
+                if ($model_filter->job_status1 != '') {
+                    $filter_job_status = $this->getFilterJobStatus1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_job_status]);
+                }
+                if ($model_filter->nationality1 != '') {
+                    $filter_nationality = $this->getFilterNationality1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_nationality]);
+                }
+                if ($model_filter->experience1 != '') {
+                    $filter_experience = $this->getFilterExperience1($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_experience]);
+                }
+                if ($model_filter->folder_name1 != '') {
+                    $filter_folders = $this->getFilterFolder1($model_filter);
+                    $dataProvider->query->andWhere(['candidate_id' => $filter_folders]);
+                }
+            } else {
+                if ($model_filter->industries != '') {
+                    $filter_industry = $this->getFilterIndustry($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_industry]);
+                }
+                if ($model_filter->skills != '') {
+                    $filter_skills = $this->getFilterSkills($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_skills]);
+                }
+                if ($model_filter->job_types != '') {
+                    $filter_job_types = $this->getFilterJobType($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_job_types]);
+                }
+                if ($model_filter->salary_range != '') {
+                    $filter_salary_range = $this->getFilterSalaryRange($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_salary_range]);
+                }
+                if ($model_filter->gender != '') {
+                    $filter_gender = $this->getFilterGender($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_gender]);
+                }
+                if ($model_filter->language != '') {
+                    $filter_language = $this->getFilterLanguage($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_language]);
+                }
+                if ($model_filter->job_status != '') {
+                    $filter_job_status = $this->getFilterJobStatus($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_job_status]);
+                }
+                if ($model_filter->nationality != '') {
+                    $filter_nationality = $this->getFilterNationality($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_nationality]);
+                }
+                if ($model_filter->experience != '') {
+                    $filter_experience = $this->getFilterExperience($model_filter);
+                    $dataProvider->query->andWhere(['id' => $filter_experience]);
+                }
+                if ($model_filter->folder_name != '') {
+                    $filter_folders = $this->getFilterFolder($model_filter);
+                    $dataProvider->query->andWhere(['candidate_id' => $filter_folders]);
+                }
             }
         }
         return $this->render('dashboard', [
@@ -423,6 +522,22 @@ class EmployerController extends Controller {
     public function getFilterFolder($data) {
         $cv_data = [];
         foreach ($data->folder_name as $value) {
+            $query = new yii\db\Query();
+            $query->select(['*'])->from('short_list')->andWhere(['folder_name' => $value]);
+            $command = $query->createCommand();
+            $result = $command->queryAll();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['candidate_id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterFolder1($data) {
+        $cv_data = [];
+        foreach ($data->folder_name1 as $value) {
             $query = new yii\db\Query();
             $query->select(['*'])->from('short_list')->andWhere(['folder_name' => $value]);
             $command = $query->createCommand();
@@ -641,9 +756,95 @@ class EmployerController extends Controller {
         return $cv_data;
     }
 
+    public function getFilterExperience1($data) {
+        $cv_data = [];
+        $query = new yii\db\Query();
+        foreach ($data->experience1 as $value) {
+            if ($value == 1) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where([' >= ', 'total_experience', 1])
+                        ->andWhere(['<', 'total_experience', 2]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 2) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where([' >= ', 'total_experience', 2])
+                        ->andWhere(['<', 'total_experience', 5]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 3) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where([' >= ', 'total_experience', 5])
+                        ->andWhere(['<', 'total_experience', 10]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 4) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where([' >= ', 'total_experience', 10])
+                        ->andWhere(['<', 'total_experience', 15]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+            if ($value == 5) {
+                $query->select(['*'])
+                        ->from('candidate_profile')
+                        ->where([' >= ', 'total_experience', 15])
+                        ->andWhere(['<', 'total_experience', 20]);
+                $command = $query->createCommand();
+                $result = $command->queryAll();
+                if (!empty($result)) {
+                    foreach ($result as $ind_val) {
+                        $cv_data[] = $ind_val['id'];
+                    }
+                }
+            }
+        }
+        return $cv_data;
+    }
+
     public function getFilterNationality($data) {
         $cv_data = [];
         foreach ($data->nationality as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:nationality, nationality)'))->addParams([':nationality' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterNationality1($data) {
+        $cv_data = [];
+        foreach ($data->nationality1 as $value) {
             $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:nationality, nationality)'))->addParams([':nationality' => $value])->all();
             if (!empty($result)) {
                 foreach ($result as $ind_val) {
@@ -667,9 +868,35 @@ class EmployerController extends Controller {
         return $cv_data;
     }
 
+    public function getFilterJobStatus1($data) {
+        $cv_data = [];
+        foreach ($data->job_status1 as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:job_status, job_status)'))->addParams([':job_status' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
     public function getFilterLanguage($data) {
         $cv_data = [];
         foreach ($data->language as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:languages_known, languages_known)'))->addParams([':languages_known' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterLanguage1($data) {
+        $cv_data = [];
+        foreach ($data->language1 as $value) {
             $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:languages_known, languages_known)'))->addParams([':languages_known' => $value])->all();
             if (!empty($result)) {
                 foreach ($result as $ind_val) {
@@ -693,9 +920,35 @@ class EmployerController extends Controller {
         return $cv_data;
     }
 
+    public function getFilterGender1($data) {
+        $cv_data = [];
+        foreach ($data->gender1 as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:gender, gender)'))->addParams([':gender' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
     public function getFilterSalaryRange($data) {
         $cv_data = [];
         foreach ($data->salary_range as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:expected_salary, expected_salary)'))->addParams([':expected_salary' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterSalaryRange1($data) {
+        $cv_data = [];
+        foreach ($data->salary_range1 as $value) {
             $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:expected_salary, expected_salary)'))->addParams([':expected_salary' => $value])->all();
             if (!empty($result)) {
                 foreach ($result as $ind_val) {
@@ -719,6 +972,19 @@ class EmployerController extends Controller {
         return $cv_data;
     }
 
+    public function getFilterJobType1($data) {
+        $cv_data = [];
+        foreach ($data->job_types1 as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:job_type, job_type)'))->addParams([':job_type' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
     public function getFilterSkills($data) {
         $cv_data = [];
         foreach ($data->skills as $value) {
@@ -732,9 +998,35 @@ class EmployerController extends Controller {
         return $cv_data;
     }
 
+    public function getFilterSkills1($data) {
+        $cv_data = [];
+        foreach ($data->skills1 as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:skill, skill)'))->addParams([':skill' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
     public function getFilterIndustry($data) {
         $cv_data = [];
         foreach ($data->industries as $value) {
+            $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:industry, industry)'))->addParams([':industry' => $value])->all();
+            if (!empty($result)) {
+                foreach ($result as $ind_val) {
+                    $cv_data[] = $ind_val['id'];
+                }
+            }
+        }
+        return $cv_data;
+    }
+
+    public function getFilterIndustry1($data) {
+        $cv_data = [];
+        foreach ($data->industries1 as $value) {
             $result = \common\models\CandidateProfile::find()->where(new Expression('FIND_IN_SET(:industry, industry)'))->addParams([':industry' => $value])->all();
             if (!empty($result)) {
                 foreach ($result as $ind_val) {
@@ -855,7 +1147,7 @@ class EmployerController extends Controller {
      * @return string
      */
     public function actionEmailVerification($token) {
-
+        $token = Yii::$app->EncryptDecrypt->Encrypt('decrypt', $token);
         $user_data = Employer::find()->where(['id' => $token])->one();
         if (!empty($user_data)) {
             if ($user_data->email_varification == 0) {
@@ -913,8 +1205,8 @@ class EmployerController extends Controller {
             $model->no_of_days = $package->no_of_days;
             $model->no_of_days_left = $package->no_of_days;
             $model->package_credit = $package->no_of_downloads;
-            $model->no_of_downloads = $package->no_of_downloads + $old_package->no_of_downloads_left;
-            $model->no_of_downloads_left = $package->no_of_downloads + $old_package->no_of_downloads_left;
+            $model->no_of_downloads = $package->no_of_downloads;
+            $model->no_of_downloads_left = $package->no_of_downloads;
             $model->created_date = date('Y-m-d');
             if ($model->save()) {
                 $this->PlanHistory($model, $old_package);
@@ -984,7 +1276,7 @@ class EmployerController extends Controller {
                             $packages->no_of_downloads_left = $packages->no_of_downloads_left - 1;
                             $packages->update();
                             $this->SaveViewHistory(Yii::$app->session['employer_data']['id'], $candidate_profile->candidate_id);
-                            // $this->CandidateEmail($id);
+                            $this->CandidateEmail($id);
                             Yii::$app->session->setFlash('success', "One credit is deducted from your package.");
                             return $this->render('cv-view', [
                                         'model' => $model,
@@ -1004,7 +1296,7 @@ class EmployerController extends Controller {
                 } else {
                     $view_cv->date_of_view = date('Y-m-d');
                     $view_cv->update();
-//                    $this->CandidateEmail($id);
+                    $this->CandidateEmail($id);
 //                return $this->redirect(['view-cvs', 'id' => $candidate->user_id]);
                     Yii::$app->session->setFlash('success', "You have already viewed this CV. No credit is deducted from your package.");
                     return $this->render('cv-view', [
@@ -1037,35 +1329,18 @@ class EmployerController extends Controller {
     }
 
     public function CandidateEmail($candidate_id) {
-        $candidate = \common\models\Candidate::find()->where(['id' => $candidate_id])->one();
+        $candidate_profile = \common\models\CandidateProfile::findOne($candidate_id);
+        $candidate = \common\models\Candidate::find()->where(['id' => $candidate_profile->candidate_id])->one();
         $employer = Employer::find()->where(['id' => Yii::$app->session['employer_data']['id']])->one();
         if (!empty($candidate) && !empty($employer)) {
             $to = $candidate->email;
-            $subject = 'CVS Job Notification';
-
-// message
-            $message = '
-<html>
-<head>
-
-  <title>CVS Job Notification</title>
-</head>
-<body>
-  <p>Your CV is viewed by ' . $employer->company_name . '.</p>
-  
-</body>
-</html>
-';
-
-// To send HTML mail, the Content-type header must be set
-            $headers = "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-            $headers .= 'From: admin@cvsdatabase.com' . "\r\n";
-
-            mail($to, $subject, $message, $headers);
+            $message = Yii::$app->mailer->compose('job_notification_mail', ['candidate' => $candidate, 'employer' => $employer]) // a view rendering result becomes the message body here
+                    ->setFrom('noreply@cvsdatabase.com')
+                    ->setTo($to)
+                    ->setSubject('CVS Job Notification');
+            $message->send();
         }
         return true;
-        exit;
     }
 
     public function SaveViewHistory($employer, $candidate) {
@@ -1393,13 +1668,11 @@ class EmployerController extends Controller {
     public function sendForgotMail($val, $model) {
 
         $to = $model->email;
-        $subject = 'Change password';
-        $message = $this->renderPartial('forgot_mail', ['model' => $model, 'val' => $val]);
-// To send HTML mail, the Content-type header must be set
-        $headers = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n" .
-                "From: 'noreply@cvsdatabase.com";
-        mail($to, $subject, $message, $headers);
+        $message = Yii::$app->mailer->compose('forgot_mail', ['model' => $model, 'val' => $val]) // a view rendering result becomes the message body here
+                ->setFrom('noreply@cvsdatabase.com')
+                ->setTo($to)
+                ->setSubject('Change password');
+        $message->send();
     }
 
     public function actionNewPassword($token) {
@@ -1436,11 +1709,29 @@ class EmployerController extends Controller {
     }
 
     public function actionContact() {
-        $model = \common\models\Packages::find()->all();
         $this->layout = 'employer_home';
-        return $this->render('contact', [
+        $model = new \common\models\ContactEnquiry();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->date = date('Y-m-d');
+            if ($model->save()) {
+                $this->sendContactMail($model);
+                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
+            }
+            return $this->refresh();
+        } return $this->render('contact', [
                     'model' => $model,
         ]);
+    }
+
+    public function sendContactMail($model) {
+
+        $to = 'admin@cvsdatabase.com';
+        //       $to = 'manu@azryah.com';
+        $message = Yii::$app->mailer->compose('contact_mail', ['model' => $model]) // a view rendering result becomes the message body here
+                ->setFrom('noreply@cvsdatabase.com')
+                ->setTo($to)
+                ->setSubject($model->subject);
+        $message->send();
     }
 
     public function actionBlog() {
@@ -1492,6 +1783,14 @@ class EmployerController extends Controller {
                 $notes_exist->save();
             }
         }
+    }
+
+    public function actionTest() {
+        $message = Yii::$app->mailer->compose('mail') // a view rendering result becomes the message body here
+                ->setFrom('noreply@cvsdatabase.com')
+                ->setTo('manu@azryah.com')
+                ->setSubject('test');
+        $message->send();
     }
 
 }

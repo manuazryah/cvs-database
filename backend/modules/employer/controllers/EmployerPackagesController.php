@@ -152,8 +152,8 @@ class EmployerPackagesController extends Controller {
             $model->end_date = date('Y-m-d', strtotime($model->start_date . ' + ' . ($package->no_of_days - 1) . ' days'));
             $model->no_of_days = $package->no_of_days;
             $model->no_of_days_left = $package->no_of_days;
-            $model->no_of_downloads = $package->no_of_downloads + $old_package->no_of_downloads_left;
-            $model->no_of_downloads_left = $package->no_of_downloads + $old_package->no_of_downloads_left;
+            $model->no_of_downloads = $package->no_of_downloads;
+            $model->no_of_downloads_left = $package->no_of_downloads;
             $model->created_date = date('Y-m-d');
             if ($model->save()) {
                 $this->PlanHistory($model, $old_package);

@@ -6,7 +6,6 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
-
 ?>
 
 <div class="page_banner about block no-padding  gray">
@@ -20,8 +19,8 @@ use yii\captcha\Captcha;
                     </div>
                     <div class="page-breacrumbs">
                         <ul class="breadcrumbs">
-                            <li><a href="#" title="">Home</a></li>
-                            <li><a href="#" title="">About Us</a></li>
+                            <li><?= Html::a('Home', ['/site/index']) ?></li>
+                            <li><?= Html::a('About us', ['/site/about']) ?></li>
                         </ul>
                     </div>
                 </div>
@@ -33,16 +32,12 @@ use yii\captcha\Captcha;
     <div class="container">
         <div class="about_us">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="page-heading">
                         <span>Introduction</span>
                         <h2>Who We Are</h2>
                         <hr>
-                        <strong>Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</strong>
                     </div>
-
-                </div>
-                <div class="col-md-8">
                     <div class="about_right">
                         <p>
                             CVs Database is a provider of recruitment solutions and services. Our mission is to empower our clients to succeed with the best talents.

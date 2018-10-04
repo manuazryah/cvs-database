@@ -42,13 +42,13 @@ use yii\helpers\ArrayHelper;
         </div>
     </div>
     <div class="row">
-        <?php if ($model->isNewRecord) { ?>
+       
             <div class='col-md-4 col-sm-6 col-xs-12'>
 
                 <?= $form->field($model, 'user_name')->textInput(['maxlength' => true]) ?>
 
             </div>
-        <?php } ?>
+        
         <?php if ($model->isNewRecord) { ?>
             <div class='col-md-4 col-sm-6 col-xs-12'>
 

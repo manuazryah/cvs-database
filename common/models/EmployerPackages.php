@@ -21,6 +21,9 @@ use Yii;
  */
 class EmployerPackages extends \yii\db\ActiveRecord {
 
+    public $employer_no;
+    public $employer_email;
+
     /**
      * {@inheritdoc}
      */
@@ -33,9 +36,9 @@ class EmployerPackages extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-                [['employer_id', 'package'], 'required'],
-                [['employer_id', 'package', 'no_of_days', 'no_of_days_left', 'no_of_views', 'no_of_views_left', 'no_of_downloads_left'], 'integer'],
-                [['start_date', 'end_date', 'created_date', 'updated_date', 'transaction_id'], 'safe'],
+            [['employer_id', 'package'], 'required'],
+            [['employer_id', 'package', 'no_of_days', 'no_of_days_left', 'no_of_views', 'no_of_views_left', 'no_of_downloads_left'], 'integer'],
+            [['start_date', 'end_date', 'created_date', 'updated_date', 'transaction_id'], 'safe'],
         ];
     }
 

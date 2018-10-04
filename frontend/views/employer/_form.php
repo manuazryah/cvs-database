@@ -17,9 +17,9 @@ use dosamigos\ckeditor\CKEditor;
         <div class='col-md-3 col-sm-6 col-xs-12'>
             <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
         </div>
-        
+
         <div class='col-md-3 col-sm-6 col-xs-12'>
-            <?= $form->field($model, 'email')->textInput(['maxlength' => true,'readonly' => TRUE]) ?>
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'readonly' => TRUE]) ?>
         </div>
         <div class='col-md-3 col-sm-6 col-xs-12'>
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>

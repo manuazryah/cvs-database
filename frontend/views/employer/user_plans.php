@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div>
                             </div>
                             <ul>
+                                <li class="features-div">Features</li>
                                 <li>Validity</li>
                                 <li>Total Downloads</li>
                             </ul>
@@ -62,11 +63,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="pricing-heading">
                                             <div class="col-lg-12">
                                                 <h5><?= $value->package_name ?></h5>
-                                                <h1><?= $value->package_price ?> $</h1>
-                                               
+                                                <h1><?= floatval($value->package_price) ?> $</h1>
+
                                             </div>
                                         </div>
                                         <ul>
+                                            <div class="features-li">
+                                                <li>Search our CV database of professional candidates.</li>
+                                                <li>Advanced filter options.</li>
+                                                <li>Your unlocked CVs stay permanently.</li>
+                                            </div>
                                             <li><?= $value->no_of_days ?> Days</li>
                                             <li><?= $value->no_of_downloads ?> Downloads</li>
                                         </ul>
@@ -101,12 +107,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
                 <div class="modal-body" style="font-size: 14px;">
-                    Upgrade Your Package Kindly contact our <span style="color: #0e75ba;font-weight: 600;">Email :</span> <a style="color: #2986c3;" href="mailto:info@cvs.ae">admin@CVsDatabase.com</a>, <span style="color: #0e75ba;font-weight: 600;">Phone :</span> <a style="color: #2986c3;" href="tel:+971 50 4752515"> +971 50 4752515</a>
+                    To upgrade your package, Kindly contact us <span style="color: #0e75ba;font-weight: 600;">Email :</span> <a style="color: #2986c3;" href="mailto:info@cvs.ae">admin@CVsDatabase.com</a>, <span style="color: #0e75ba;font-weight: 600;">Phone :</span> <a style="color: #2986c3;" href="tel:+971 50 4752515"> +971 50 4752515</a>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </div>
 
 
